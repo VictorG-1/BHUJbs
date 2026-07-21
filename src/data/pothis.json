@@ -1,0 +1,919 @@
+[
+  {
+    "id": 1,
+    "primary_holder_name": "હીરજી શિવજી ભુતડા",
+    "city": "ભુજ",
+    "co_holders": [
+      "રામાબેન હીરજી ભૂતડા",
+      "મંગલદાસ હીરજી ભૂતડા",
+      "નીનાબેન મંગલદાસ ભૂતડા",
+      "ફૂલેશ મંગલદાસ ભૂતડા",
+      "(સર્વે પિતૃ)"
+    ],
+    "handover_name": "ઝવેરબેન મંગલદાસ ભૂતડા",
+    "contact_name": "પપુભાઇ/હર્ષાબેન",
+    "contact_mobile": "9998947501",
+    "family_id": null
+  },
+  {
+    "id": 2,
+    "primary_holder_name": "ઝવેરબેન મંગલદાસ ભુતડા(જી.જ.)",
+    "city": "ભુજ",
+    "co_holders": [],
+    "handover_name": "ઝવેરબેન મંગલદાસ ભૂતડા",
+    "contact_name": "પપુભાઇ/હર્ષાબેન",
+    "contact_mobile": "9909577711",
+    "family_id": null
+  },
+  {
+    "id": 3,
+    "primary_holder_name": "જગદીશ હીરજી ભૂતડા",
+    "city": "ભુજ",
+    "co_holders": [],
+    "handover_name": "જીગર જગદીશ ભૂતડા",
+    "contact_name": "જીગર જગદીશ ભૂતડા",
+    "contact_mobile": "9726066286",
+    "family_id": null
+  },
+  {
+    "id": 4,
+    "primary_holder_name": "શાંતિલાલ તુલસીદાસ ભૂતડા",
+    "city": "ભુજ",
+    "co_holders": [],
+    "handover_name": "મિલન શાંતિલાલ ભૂતડા",
+    "contact_name": "મિલન શાંતિલાલ ભૂતડા",
+    "contact_mobile": "9427818036",
+    "family_id": null
+  },
+  {
+    "id": 5,
+    "primary_holder_name": "લક્ષ્મીદાસ દેવજી ભૂતડા",
+    "city": "ભુજ",
+    "co_holders": [
+      "ઝવેરબેન લક્ષ્મીદાસ ભૂતડા",
+      "કલ્પનાબેન દીપક  ભૂતડા"
+    ],
+    "handover_name": "દીપક લક્ષ્મીદાસ ભૂતડા",
+    "contact_name": "દીપક લક્ષ્મીદાસ ભૂતડા",
+    "contact_mobile": "9426452425",
+    "family_id": null
+  },
+  {
+    "id": 6,
+    "primary_holder_name": "ચુનીલાલ હરિદાસ ભૂતડા(જી.જ.)",
+    "city": "ભુજ",
+    "co_holders": [
+      "રસીલાબેન ચુનીલાલ  ભૂતડા(જી.જ.)"
+    ],
+    "handover_name": null,
+    "contact_name": "જયેશ ભૂતડા",
+    "contact_mobile": "9724519204",
+    "family_id": null
+  },
+  {
+    "id": 7,
+    "primary_holder_name": "દીપક હરિદાસ ભૂતડા(જી.જ.)",
+    "city": "ભુજ",
+    "co_holders": [
+      "દમયંતીબેન દીપક ભૂતડા(જી.જ.)"
+    ],
+    "handover_name": null,
+    "contact_name": "દીપક ભૂતડા",
+    "contact_mobile": "8000454549",
+    "family_id": null
+  },
+  {
+    "id": 8,
+    "primary_holder_name": "નાનજી સામજી ભુતળા",
+    "city": "બીટા",
+    "co_holders": [
+      "(સર્વે પિતૃ)"
+    ],
+    "handover_name": null,
+    "contact_name": "યોગેશ અરવિંદ ભૂતડા",
+    "contact_mobile": "9879406564",
+    "family_id": null
+  },
+  {
+    "id": 9,
+    "primary_holder_name": "મીઠાબાઈ નાનજી  ભુતળા",
+    "city": "બીટા",
+    "co_holders": [],
+    "handover_name": null,
+    "contact_name": "મુકેશ હંસરાજ ભૂતડા",
+    "contact_mobile": "9909070750",
+    "family_id": null
+  },
+  {
+    "id": 10,
+    "primary_holder_name": "હંસરાજ નાનજી  ભુતળા",
+    "city": "બીટા",
+    "co_holders": [],
+    "handover_name": null,
+    "contact_name": "કરસનદાસ હંસરાજ ભૂતડા",
+    "contact_mobile": "9913549338",
+    "family_id": null
+  },
+  {
+    "id": 11,
+    "primary_holder_name": "હરખબેન હંસરાજ ભુતળા",
+    "city": "બીટા",
+    "co_holders": [],
+    "handover_name": null,
+    "contact_name": "નરશી હંસરાજ ભૂતડા",
+    "contact_mobile": "9712088253",
+    "family_id": null
+  },
+  {
+    "id": 12,
+    "primary_holder_name": "ખીમજી હંસરાજ ભુતળા",
+    "city": "બીટા",
+    "co_holders": [],
+    "handover_name": null,
+    "contact_name": "હિતેશ ખીમજી ભૂતડા",
+    "contact_mobile": "9978518133",
+    "family_id": null
+  },
+  {
+    "id": 13,
+    "primary_holder_name": "જગદીશ અરવિંદભાઈ ભુતળા",
+    "city": "બીટા",
+    "co_holders": [],
+    "handover_name": null,
+    "contact_name": "ઈશ્વર હરિદાસ ભૂતડા",
+    "contact_mobile": "9913058532",
+    "family_id": null
+  },
+  {
+    "id": 14,
+    "primary_holder_name": "વાલજી તેજપાલ ભોપા",
+    "city": "ભુજ",
+    "co_holders": [
+      "વીરમતી વાલજી ભોપા",
+      "દીપક વાલજી ભોપા"
+    ],
+    "handover_name": "ગૌરવ કિશોરભાઈ ભોપા",
+    "contact_name": "ગૌરવ કિશોરભાઈ ભોપા",
+    "contact_mobile": "9925875755",
+    "family_id": null
+  },
+  {
+    "id": 15,
+    "primary_holder_name": "સામજી ગોપાલજી ભેડકીયા(જી.જ.)",
+    "city": "ભુજ",
+    "co_holders": [
+      "કલાવંતીબેન સામજી  ભેડકીયા(જી.જ.)"
+    ],
+    "handover_name": null,
+    "contact_name": "પંકજ સામજી ભૂતડા",
+    "contact_mobile": "7984418791",
+    "family_id": null
+  },
+  {
+    "id": 16,
+    "primary_holder_name": "દેવજી ઉમરશી ભેડકીયા",
+    "city": "ભુજ",
+    "co_holders": [
+      "ચંપાબેન દેવજી ભેડકીયા",
+      "ચંદાગૌરી દેવજી ભેડકીયા",
+      "ગોકલદાસ દેવજી  ભેડકીયા",
+      "વિમળાબેન ગોકલદાસ ભેડકીયા"
+    ],
+    "handover_name": "અશોક ગોકલદાસ ભેડકીયા",
+    "contact_name": "અશોક ગોકલદાસ ભેડકીયા",
+    "contact_mobile": "9426454702",
+    "family_id": null
+  },
+  {
+    "id": 17,
+    "primary_holder_name": "રતનસી રણછોડ ચાંડક",
+    "city": "પનવેલ",
+    "co_holders": [
+      "રમીલા રતનસી ચાંડક",
+      "જીતેન્દ્ર રતનસી ચાંડક",
+      "સર્વે પિતૃઓ"
+    ],
+    "handover_name": "ઝંખનાબેન જીતેન્દ્ર ચાંડક,ભાવેશ રતનશી ચાંડક",
+    "contact_name": "ઝંખનાબેન જીતેન્દ્ર ચાંડક",
+    "contact_mobile": "9224263902",
+    "family_id": null
+  },
+  {
+    "id": 18,
+    "primary_holder_name": "ખીમજી ગોવિંદજી કરવા",
+    "city": "ભુજ",
+    "co_holders": [
+      "અમૃતબેન ખીમજી  કરવા",
+      "ગોવિંદજી હરિદાસ કરવા",
+      "વાલબાઈ ગોવિંદજી કરવા"
+    ],
+    "handover_name": "રાજેશ ખીમજી કરવા",
+    "contact_name": "રાજેશ ખીમજી કરવા",
+    "contact_mobile": "9427205725",
+    "family_id": null
+  },
+  {
+    "id": 19,
+    "primary_holder_name": "ભવાનજી ગોવિંદજી કરવા",
+    "city": "ભુજ",
+    "co_holders": [
+      "શાંતાબેન ભવાનજી કરવા"
+    ],
+    "handover_name": "રમેશ ભવાનજી કરવા",
+    "contact_name": "રમેશ ભવાનજી કરવા",
+    "contact_mobile": "9426903762",
+    "family_id": null
+  },
+  {
+    "id": 20,
+    "primary_holder_name": "લાલજી ગોવિંદજી કરવા",
+    "city": "ભુજ",
+    "co_holders": [
+      "ચંદનબેન લાલજી કરવા"
+    ],
+    "handover_name": "નયના,નીની,ચેતના",
+    "contact_name": "અલ્પેશ હરિભાઈ ભૂતડા",
+    "contact_mobile": "9823067219",
+    "family_id": null
+  },
+  {
+    "id": 21,
+    "primary_holder_name": "મેઘજી મોરારજી મલ્લ -સર્વે પિતૃઓ",
+    "city": "જખો",
+    "co_holders": [],
+    "handover_name": "શિવજી મેઘજી મલ્લ",
+    "contact_name": "શિવજી મેઘજી મલ્લ",
+    "contact_mobile": null,
+    "family_id": null
+  },
+  {
+    "id": 22,
+    "primary_holder_name": "મેઘજી મોરારજી  મલ્લ",
+    "city": "જખો",
+    "co_holders": [
+      "પાર્વતીબેન મેઘજી મલ્લ"
+    ],
+    "handover_name": "વલ્લભદાસ મેઘજી મલ્લ",
+    "contact_name": "વલ્લભદાસ મેઘજી મલ્લ",
+    "contact_mobile": null,
+    "family_id": null
+  },
+  {
+    "id": 23,
+    "primary_holder_name": "ભાવનાબેન ભવાનજી મલ્લ",
+    "city": "ભુજ",
+    "co_holders": [],
+    "handover_name": "ભવાનજી મેઘજી મલ્લ",
+    "contact_name": "ગૌતમ ભવાનજી મલ્લ",
+    "contact_mobile": "9909527400",
+    "family_id": null
+  },
+  {
+    "id": 24,
+    "primary_holder_name": "નરશીભાઈ મોરારજી  મલ્લ",
+    "city": "ગદક",
+    "co_holders": [
+      "ઝવેરબેન નરશી મલ્લ",
+      "સર્વે પિતૃઓ"
+    ],
+    "handover_name": "ઘનશ્યામભાઈ નરશીભાઈ મલ્લ",
+    "contact_name": "ઘનશ્યામભાઈ નરશીભાઈ મલ્લ",
+    "contact_mobile": "9969381051",
+    "family_id": null
+  },
+  {
+    "id": 25,
+    "primary_holder_name": "લીલાધર ગોવિંદજી મલ્લ",
+    "city": "વડોદરા",
+    "co_holders": [
+      "કેસરબાઈ લીલાધર મલ્લ",
+      "ગિરધારીલાલ  લીલાધર મલ્લ",
+      "દમયંતીબેન ગિરધારીલાલ  મલ્લ"
+    ],
+    "handover_name": "મનીશ ગિરધારીલાલ મલ્લ",
+    "contact_name": "મનીશ ગિરધારીલાલ મલ્લ",
+    "contact_mobile": "9426513132",
+    "family_id": null
+  },
+  {
+    "id": 26,
+    "primary_holder_name": "ઓધવજી વીરજી મલ્લ",
+    "city": "મુલુંડ",
+    "co_holders": [
+      "નાનબાઈ ઓધવજી મલ્લ",
+      "કુંવરબાઈ  ઓધવજી મલ્લ"
+    ],
+    "handover_name": "કિરીટ દામોદર મલ્લ",
+    "contact_name": "કિરીટ દામોદર મલ્લ",
+    "contact_mobile": "9930021208",
+    "family_id": null
+  },
+  {
+    "id": 27,
+    "primary_holder_name": "દામોદર ઓધવજી મલ્લ",
+    "city": "મુલુંડ",
+    "co_holders": [
+      "જેઠીબાઈ દામોદર મલ્લ",
+      "કિર્તી દામોદર મલ્લ"
+    ],
+    "handover_name": "કિરીટ દામોદર મલ્લ",
+    "contact_name": "કિરીટ દામોદર મલ્લ",
+    "contact_mobile": "9930021208",
+    "family_id": null
+  },
+  {
+    "id": 28,
+    "primary_holder_name": "દેવજી સામજી મલ્લ",
+    "city": "મુંબઈ",
+    "co_holders": [
+      "દમયંતીબેન દેવજી મલ્લ"
+    ],
+    "handover_name": "મહેશ દેવજી મલ્લ",
+    "contact_name": "મહેશ દેવજી મલ્લ",
+    "contact_mobile": "8884668471",
+    "family_id": null
+  },
+  {
+    "id": 29,
+    "primary_holder_name": "મહેશ દેવજી મલ્લ(જી.જ.)",
+    "city": "મુંબઈ",
+    "co_holders": [
+      "પુષ્પા મહેશ મલ્લ(જી.જ.)"
+    ],
+    "handover_name": "મહેશ દેવજી મલ્લ",
+    "contact_name": "મહેશ દેવજી મલ્લ",
+    "contact_mobile": "8884668471",
+    "family_id": null
+  },
+  {
+    "id": 30,
+    "primary_holder_name": "કલ્યાણજી પદમશી મલ્લ",
+    "city": "ડોમ્બીવલી",
+    "co_holders": [
+      "હરખબાઈ કલ્યાણજી મલ્લ",
+      "પ્રાગજી કલ્યાણજી મલ્લ",
+      "ઝવેરબેન પ્રાગજી મલ્લ",
+      "જમનાદાસ કલ્યાણજી મલ્લ",
+      "મધુબેન જમનાદાસ  મલ્લ",
+      "પ્રીતીબેન નીતિનભાઈ   મલ્લ"
+    ],
+    "handover_name": "નરેશ જમનાદાસ મલ્લ",
+    "contact_name": "નરેશ જમનાદાસ મલ્લ",
+    "contact_mobile": "9167560574",
+    "family_id": null
+  },
+  {
+    "id": 31,
+    "primary_holder_name": "મહેન્દ્ર મેઘજી મલ્લ(ગાંધી)",
+    "city": "મુંબઈ",
+    "co_holders": [
+      "ગુણવંતીબેન મહેન્દ્ર મલ્લ(ગાંધી)"
+    ],
+    "handover_name": "વિમલ મહેન્દ્ર ગાંધી",
+    "contact_name": "વિમલ મહેન્દ્ર ગાંધી",
+    "contact_mobile": "9833554030",
+    "family_id": null
+  },
+  {
+    "id": 32,
+    "primary_holder_name": "ગોમતીબેન મુળજીભાઈ માંડણ",
+    "city": "કોઠારા",
+    "co_holders": [],
+    "handover_name": "પોપટલાલ/પ્રવીણભાઈ મુળજી માંડણ",
+    "contact_name": "જીગીશુ પોપટલાલ માંડણ",
+    "contact_mobile": "9860126689",
+    "family_id": null
+  },
+  {
+    "id": 33,
+    "primary_holder_name": "લાલજી મુળજી માંડણ",
+    "city": "કોઠારા/ભુજ",
+    "co_holders": [
+      "મણીબેન લાલજી માંડણ",
+      "(સર્વે પિતૃ)"
+    ],
+    "handover_name": "પાર્થ કિરણ માંડણ",
+    "contact_name": "પાર્થ કિરણ માંડણ",
+    "contact_mobile": "9429173200",
+    "family_id": null
+  },
+  {
+    "id": 34,
+    "primary_holder_name": "કિરણ લાલજી માંડણ",
+    "city": "ભુજ/કોઠારા",
+    "co_holders": [],
+    "handover_name": "પાર્થ કિરણ માંડણ",
+    "contact_name": "પાર્થ કિરણ માંડણ",
+    "contact_mobile": "9429173200",
+    "family_id": null
+  },
+  {
+    "id": 35,
+    "primary_holder_name": "સામજી જીવરાજ માંડણ",
+    "city": "ડોમ્બીવલી",
+    "co_holders": [
+      "કલાવંતી સામજી માંડણ",
+      "પ્રભાવતીબેન કાંતિલાલ માંડણ",
+      "વિનોદ સામજી માંડણ",
+      "વર્ષાબેન વિનોદભાઈ માંડણ"
+    ],
+    "handover_name": "વર્ષાબેન વિનોદ માંડણ",
+    "contact_name": "હિમાંશુ વિનોદ માંડણ",
+    "contact_mobile": "9833110182",
+    "family_id": null
+  },
+  {
+    "id": 36,
+    "primary_holder_name": "ભાઈલાલ સામજી માંડણ(જી.જ.)",
+    "city": "ખપોલી",
+    "co_holders": [],
+    "handover_name": "વર્ષાબેન વિનોદ માંડણ",
+    "contact_name": "હિમાંશુ વિનોદ માંડણ",
+    "contact_mobile": "9833110182",
+    "family_id": null
+  },
+  {
+    "id": 37,
+    "primary_holder_name": "ચંદ્રકાંત વેલજી માંડણ",
+    "city": "ભુજ",
+    "co_holders": [
+      "દીપક ચંદ્રકાંત માંડણ"
+    ],
+    "handover_name": "જયંતિલાલ ચંદ્રકાંત માંડણ",
+    "contact_name": "જયંતિલાલ ચંદ્રકાંત માંડણ",
+    "contact_mobile": "9979323800",
+    "family_id": null
+  },
+  {
+    "id": 38,
+    "primary_holder_name": "હીરાબેન ચંદ્રકાંત માંડણ(જી.જ.)",
+    "city": "ભુજ",
+    "co_holders": [],
+    "handover_name": "નીતાબેન દીપક માંડણ",
+    "contact_name": "નીતાબેન દીપક માંડણ",
+    "contact_mobile": "9898673677",
+    "family_id": null
+  },
+  {
+    "id": 39,
+    "primary_holder_name": "વિજયાબેન નવીનભાઈ માંડણ(જી.જ.)",
+    "city": "મુંબઈ",
+    "co_holders": [],
+    "handover_name": "હીરાબેન ચંદ્રકાંત માંડણ",
+    "contact_name": "હીરાબેન ચંદ્રકાંત માંડણ",
+    "contact_mobile": null,
+    "family_id": null
+  },
+  {
+    "id": 40,
+    "primary_holder_name": "ભચીબેન  મનજી મુંદડા",
+    "city": "ભુજ",
+    "co_holders": [
+      "હરખબેન  વેલજી માંડણ"
+    ],
+    "handover_name": "ઉષાબેન જયંતિલાલ માંડણ",
+    "contact_name": null,
+    "contact_mobile": null,
+    "family_id": null
+  },
+  {
+    "id": 41,
+    "primary_holder_name": "જમનાદાસ મુરજી માંડણ",
+    "city": "પનવેલ",
+    "co_holders": [
+      "જયા જમનાદાસ માંડણ",
+      "મુરજી પરશોતમ માંડણ",
+      "સોનાબાઈ મુરજી માંડણ",
+      "લાલજી મુરજી માંડણ"
+    ],
+    "handover_name": "રેખા અનીલ ગીલ્ડા,ગીતા જીતેન્દ્ર ગીલ્ડા,ચેતના ચંપકલાલ સાવર,પ્રવીણ રોહિત નવધરે",
+    "contact_name": "પ્રવિણા રોહિત નવધરે",
+    "contact_mobile": "8849675425",
+    "family_id": null
+  },
+  {
+    "id": 42,
+    "primary_holder_name": "વીરજી ઉમરશી માંડણ",
+    "city": "ભુજ",
+    "co_holders": [
+      "વેલાબેન વીરજી માંડણ",
+      "લીલાધર વીરજી માંડણ",
+      "મંગળાબેન લીલાધર માંડણ"
+    ],
+    "handover_name": "મનીષ/વિઠલ લીલાધર માંડણ",
+    "contact_name": "મનીષ/વિઠલ લીલાધર માંડણ",
+    "contact_mobile": "9374339225",
+    "family_id": null
+  },
+  {
+    "id": 43,
+    "primary_holder_name": "રવિલાલ નરશી માંડણ",
+    "city": "ભુજ",
+    "co_holders": [
+      "નિરુપમા રવિલાલ માંડણ",
+      "નાનજી નરશી માંડણ"
+    ],
+    "handover_name": "યશ નાનજી માંડણ",
+    "contact_name": "યશ નાનજી માંડણ",
+    "contact_mobile": "9313139310",
+    "family_id": null
+  },
+  {
+    "id": 44,
+    "primary_holder_name": "શ્યામસુંદર દામોદર મણીયાર",
+    "city": "ડોમ્બીવલી",
+    "co_holders": [
+      "દમયંતીબેન  શ્યામસુંદર  મણીયાર"
+    ],
+    "handover_name": "વિજય શ્યામસુંદર મણીયાર",
+    "contact_name": "વિજય શ્યામસુંદર મણીયાર",
+    "contact_mobile": "9324109613",
+    "family_id": null
+  },
+  {
+    "id": 45,
+    "primary_holder_name": "પીતાંબર દામોદર મણીયાર",
+    "city": "પનવેલ",
+    "co_holders": [],
+    "handover_name": "બીનાબેન પીતાંબર મણીયાર",
+    "contact_name": "વિપુલ પીતાંબર મણીયાર",
+    "contact_mobile": "9819163904",
+    "family_id": null
+  },
+  {
+    "id": 46,
+    "primary_holder_name": "મહેન્દ્ર હરિદાસ મુંદડા",
+    "city": "ભુજ",
+    "co_holders": [
+      "લીલાધર હરિદાસ મુંદડા"
+    ],
+    "handover_name": "લતાબેન મહેન્દ્ર મુંદડા",
+    "contact_name": "લતાબેન મહેન્દ્ર મુંદડા",
+    "contact_mobile": "9328055175",
+    "family_id": null
+  },
+  {
+    "id": 47,
+    "primary_holder_name": "મંજુલાબેન દામોદર મુંદડા",
+    "city": "સતારા",
+    "co_holders": [
+      "(સર્વે પિતૃ)"
+    ],
+    "handover_name": "દામોદર રામદાસ મુંદડા",
+    "contact_name": "દામોદર રામદાસ મુંદડા",
+    "contact_mobile": "9529442241",
+    "family_id": null
+  },
+  {
+    "id": 48,
+    "primary_holder_name": "વિશનજી ઉમરશી  મુંદડા",
+    "city": "ઉધના",
+    "co_holders": [
+      "દમયંતી વિશનજી મુંદડા"
+    ],
+    "handover_name": "તારાચંદ વિશનજી મુંદડા",
+    "contact_name": "તારાચંદ વિશનજી મુંદડા",
+    "contact_mobile": "9824902602",
+    "family_id": null
+  },
+  {
+    "id": 49,
+    "primary_holder_name": "હીરજી વેલજી નવધરે",
+    "city": "નલીયા",
+    "co_holders": [
+      "શાંતાબેન હીરજી નવધરે"
+    ],
+    "handover_name": "હરેશ હીરજી નવધરે",
+    "contact_name": "હરેશ હીરજી નવધરે",
+    "contact_mobile": "9426215173",
+    "family_id": null
+  },
+  {
+    "id": 50,
+    "primary_holder_name": "તુલસીદાસ વીરજી નવધરે",
+    "city": "ભુજ",
+    "co_holders": [
+      "રૂક્ષ્મણી તુલસીદાસ નવધરે",
+      "ઉમરશી તુલસીદાસ નવધરે",
+      "પ્રગતીબેન ઉમરશી નવધરે"
+    ],
+    "handover_name": "વિજય ઉમરશી નવધરે",
+    "contact_name": "વિજય ઉમરશી નવધરે",
+    "contact_mobile": "9925446561",
+    "family_id": null
+  },
+  {
+    "id": 51,
+    "primary_holder_name": "જીવુબાઈ તુલસીદાસ નવધરે",
+    "city": "ભુજ",
+    "co_holders": [
+      "મુળજી તુલસીદાસ નવધરે",
+      "મંજુબેન તુલસીદાસ નવધરે"
+    ],
+    "handover_name": "રોહિત મુળજી નવધરે",
+    "contact_name": "રોહિત મુળજી નવધરે",
+    "contact_mobile": "9724157525",
+    "family_id": null
+  },
+  {
+    "id": 52,
+    "primary_holder_name": "હેમલતા બેન મુળજી નવધરે (જી.જ.)",
+    "city": "ભુજ",
+    "co_holders": [],
+    "handover_name": "રોહિત મુળજી નવધરે",
+    "contact_name": "રોહિત મુળજી નવધરે",
+    "contact_mobile": "9724157525",
+    "family_id": null
+  },
+  {
+    "id": 53,
+    "primary_holder_name": "નીકીબેન રોહિત  નવધરે",
+    "city": "ભુજ",
+    "co_holders": [],
+    "handover_name": "રોહિત મુળજી નવધરે",
+    "contact_name": "રોહિત મુળજી નવધરે",
+    "contact_mobile": "9724157525",
+    "family_id": null
+  },
+  {
+    "id": 54,
+    "primary_holder_name": "સરબાઈ ગોવિંદજી નવધરે",
+    "city": "ભુજ",
+    "co_holders": [
+      "દામોદર ચાંપશી નવધરે",
+      "પાર્વતીબેન દામોદર નવધરે",
+      "ચમનલાલ દામોદર નવધરે",
+      "જેઠાલાલ દામોદર નવધરે",
+      "હિમાંશી ખુશાલ નવધરે"
+    ],
+    "handover_name": "ખુશાલ દામોદર નવધરે",
+    "contact_name": "ખુશાલ દામોદર નવધરે",
+    "contact_mobile": "9426803487",
+    "family_id": null
+  },
+  {
+    "id": 55,
+    "primary_holder_name": "વાલજી ચાંપશી નવધરે",
+    "city": "ભુજ",
+    "co_holders": [
+      "હીરાલાલ વાલજી નવધરે"
+    ],
+    "handover_name": "ખુશાલ દામોદર નવધરે",
+    "contact_name": "શોભનાબેન હીરાલાલ નવધરે",
+    "contact_mobile": "7383456960",
+    "family_id": null
+  },
+  {
+    "id": 56,
+    "primary_holder_name": "દેવજી ચાંપશી નવધરે",
+    "city": "ભુજ",
+    "co_holders": [
+      "કુંવરબેન દેવજી નવધરે",
+      "દિનેશભાઈ દેવજી  નવધરે",
+      "રેખાબેન કાંતિલાલ નવધરે",
+      "ચંદ્રકાંત દેવજી  નવધરે",
+      "નીતિન અમૃતલાલ    નવધરે"
+    ],
+    "handover_name": "વીરચંદ દેવજી નવધરે-ભુજ",
+    "contact_name": "જયેશ અમૃતલાલ નવધરે/           રક્ષા વીરચંદ",
+    "contact_mobile": "૯૮૧૯૩૨૧૦૪૦/૬૩૫૩૩૯૪૧૬૫",
+    "family_id": null
+  },
+  {
+    "id": 57,
+    "primary_holder_name": "વસંતલાલ દેવજી  નવધરે",
+    "city": "અમદાવાદ",
+    "co_holders": [],
+    "handover_name": "ભારતીબેન વસંતલાલ નવધરે, ભૌમિક વસંતલાલ નવધરે",
+    "contact_name": "જીજ્ઞાબેન ભૌમિક નવધરે",
+    "contact_mobile": "૯૯૯૮૫૨૪૪૫૨/૯૯૯૮૯૨૯૮૦૪",
+    "family_id": null
+  },
+  {
+    "id": 58,
+    "primary_holder_name": "વિનોદભાઈ દેવજી  નવધરે",
+    "city": "સુરત",
+    "co_holders": [],
+    "handover_name": "ધવલ વિનોદભાઈ નવધરે",
+    "contact_name": null,
+    "contact_mobile": "9979991322",
+    "family_id": null
+  },
+  {
+    "id": 59,
+    "primary_holder_name": "માવજી કાનજી નવધરે",
+    "city": "ભુજ",
+    "co_holders": [
+      "લક્ષ્મીબેન માવજી નવધરે",
+      "મોહનલાલ માવજી નવધરે",
+      "બલવંત માવજી નવધરે"
+    ],
+    "handover_name": "રાજેશ મોહનલાલ નવધરે",
+    "contact_name": "પૂનમ રાજેશ નવધરે",
+    "contact_mobile": "9979198379",
+    "family_id": null
+  },
+  {
+    "id": 60,
+    "primary_holder_name": "કલાવંતી મોહનલાલ નવધરે(જી.જ.)",
+    "city": "ભુજ",
+    "co_holders": [],
+    "handover_name": "રાજેશ મોહનલાલ નવધરે",
+    "contact_name": "રાજેશ મોહનલાલ નવધરે",
+    "contact_mobile": "9825228330",
+    "family_id": null
+  },
+  {
+    "id": 61,
+    "primary_holder_name": "દામોદર માવજી નવધરે",
+    "city": "ભુજ",
+    "co_holders": [
+      "હીના સચિન નવધરે",
+      "જાગૃતિ પરેશ નવધરે"
+    ],
+    "handover_name": "સચિન દામોદર નવધરે",
+    "contact_name": "સચિન દામોદર નવધરે",
+    "contact_mobile": "9825226632",
+    "family_id": null
+  },
+  {
+    "id": 62,
+    "primary_holder_name": "લક્ષ્મીબેન મનજી રાઠી",
+    "city": "થાણા",
+    "co_holders": [
+      "નીખીલકુમાર  પદમશી રાઠી"
+    ],
+    "handover_name": "બીપીન વલ્લભદાસ રાઠી",
+    "contact_name": "બીપીન વલ્લભદાસ રાઠી",
+    "contact_mobile": "9987332628",
+    "family_id": null
+  },
+  {
+    "id": 63,
+    "primary_holder_name": "જમનાદાસ મનજી રાઠી",
+    "city": "થાણા",
+    "co_holders": [
+      "નીતિન જમનાદાસ રાઠી"
+    ],
+    "handover_name": "બીમલ વલ્લભદાસ રાઠી",
+    "contact_name": "બીમલ વલ્લભદાસ રાઠી",
+    "contact_mobile": "9821238801",
+    "family_id": null
+  },
+  {
+    "id": 64,
+    "primary_holder_name": "વાઘજી(લધુભાઈ)મનજી રાઠી",
+    "city": "થાણા",
+    "co_holders": [
+      "(સર્વે પિતૃ)"
+    ],
+    "handover_name": "મણીલાલ કાનજી રાઠી",
+    "contact_name": "મણીલાલ કાનજી રાઠી",
+    "contact_mobile": "9820392336",
+    "family_id": null
+  },
+  {
+    "id": 65,
+    "primary_holder_name": "ભુપેન્દ્ર વલ્લભદાસ રાઠી",
+    "city": "થાણા",
+    "co_holders": [
+      "(સર્વે પિતૃ)"
+    ],
+    "handover_name": "કિરણ જમનાદાસ રાઠી",
+    "contact_name": "કિરણ જમનાદાસ રાઠી",
+    "contact_mobile": "9820092022",
+    "family_id": null
+  },
+  {
+    "id": 66,
+    "primary_holder_name": "કાનબાઈ જીવરાજ રાઠી",
+    "city": "થાણા",
+    "co_holders": [
+      "વલ્લભદાસ જીવરાજ રાઠી",
+      "જમનાબેન  વલ્લભદાસ  રાઠી"
+    ],
+    "handover_name": "વિરમતીબેન વાઘજી રાઠી",
+    "contact_name": "વિરમતીબેન વાઘજી રાઠી",
+    "contact_mobile": "9699972001",
+    "family_id": null
+  },
+  {
+    "id": 67,
+    "primary_holder_name": "જશવંતલાલ હરખલાલ શારડા",
+    "city": "ભુજ",
+    "co_holders": [
+      "કૈલાશબેન જશવંતલાલ શારડા"
+    ],
+    "handover_name": "મનીશ જશવંતલાલ શારડા",
+    "contact_name": "મનીશ જશવંતલાલ શારડા",
+    "contact_mobile": "9408496521",
+    "family_id": null
+  },
+  {
+    "id": 68,
+    "primary_holder_name": "પરશોતમ ભગવાનજી શેઠ",
+    "city": "ભુજ",
+    "co_holders": [
+      "કલાવંતી પરશોતમ શેઠ",
+      "છોટાલાલ પરશોતમ શેઠ",
+      "ભગવતીબેન છોટાલાલ શેઠ",
+      "રમણીકલાલ પરશોતમ શેઠ",
+      "દેવાનંદ છોટાલાલ શેઠ",
+      "પુજાબેન દેવાનંદ શેઠ"
+    ],
+    "handover_name": "ભારતીબેન દેવાનંદ શેઠ",
+    "contact_name": "ભારતીબેન દેવાનંદ શેઠ",
+    "contact_mobile": "6351147168",
+    "family_id": null
+  },
+  {
+    "id": 69,
+    "primary_holder_name": "શાંતિલાલ બેચરદાસ શેઠ",
+    "city": "અંજાર",
+    "co_holders": [
+      "સાવિત્રીબેન શાંતિલાલ શેઠ",
+      "લક્ષ્મીકાંત  શાંતિલાલ શેઠ",
+      "શરદ લક્ષ્મીકાંત શેઠ",
+      "પ્રભાબેન  નટવરલાલ શેઠ",
+      "ભવદીપ નટવરલાલ શેઠ"
+    ],
+    "handover_name": "નટવરલાલ શેઠ",
+    "contact_name": "નટવરલાલ શેઠ",
+    "contact_mobile": "9426262944",
+    "family_id": null
+  },
+  {
+    "id": 70,
+    "primary_holder_name": "જવાહરલાલ મોરારજી  શેઠ",
+    "city": "ભુજ",
+    "co_holders": [
+      "નર્મદાબેન જવાહરલાલ શેઠ",
+      "જયેન્દ્ર જવાહરલાલ શેઠ",
+      "અનીલ મોરારજી શેઠ",
+      "(સર્વે પિતૃ)"
+    ],
+    "handover_name": "ગીતાબેન જયેન્દ્ર શેઠ",
+    "contact_name": "ગીતાબેન જયેન્દ્ર શેઠ",
+    "contact_mobile": "9429125011",
+    "family_id": null
+  },
+  {
+    "id": 71,
+    "primary_holder_name": "મહેશ મોરારજી શેઠ(જી.જ.)",
+    "city": "અંજાર",
+    "co_holders": [],
+    "handover_name": "પંકજ કોઠારી",
+    "contact_name": "પંકજ કોઠારી",
+    "contact_mobile": "9265539577",
+    "family_id": null
+  },
+  {
+    "id": 72,
+    "primary_holder_name": "છાયાબેન રાજેન્દ્ર શેઠ",
+    "city": "મુંબઈ",
+    "co_holders": [],
+    "handover_name": "હંસાબેન રાજેન્દ્ર શેઠ",
+    "contact_name": "હંસાબેન રાજેન્દ્ર શેઠ",
+    "contact_mobile": "9833766086",
+    "family_id": null
+  },
+  {
+    "id": 73,
+    "primary_holder_name": "સામજી નારાણદાસ સાવર",
+    "city": "ગોયલા",
+    "co_holders": [
+      "(સર્વે પિતૃ)"
+    ],
+    "handover_name": "અશોક ટોપણદાસ સાવર",
+    "contact_name": "અશોક ટોપણદાસ સાવર",
+    "contact_mobile": "9426430510",
+    "family_id": null
+  },
+  {
+    "id": 74,
+    "primary_holder_name": "ટોપણદાસ સામજી સાવર(જી.જ.)",
+    "city": "ભુજ",
+    "co_holders": [
+      "રંજનબેન ટોપણદાસ સાવર(જી.જ.)"
+    ],
+    "handover_name": "ટોપણદાસ સાવર",
+    "contact_name": "ટોપણદાસ સાવર",
+    "contact_mobile": "9979326621",
+    "family_id": null
+  },
+  {
+    "id": 75,
+    "primary_holder_name": "ચાંપશી લાલજી સોમાણી",
+    "city": "ભુજ",
+    "co_holders": [
+      "વાલબાઈ ચાંપશી સોમાણી",
+      "સામજી ચાંપશી સોમાણી",
+      "ઝવેરબેન સામજી સોમાણી",
+      "(સર્વે પિતૃ)"
+    ],
+    "handover_name": "સત્યવાન સોમાણી",
+    "contact_name": "સત્યવાન સોમાણી",
+    "contact_mobile": "8141680299",
+    "family_id": null
+  }
+]

@@ -1,0 +1,172 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+  schemas   = ["auth", "public"]
+}
+
+model users {
+  id             String          @id @db.Uuid
+  email          String?         @unique(map: "users_email_partial_key") @db.VarChar(255)
+  phone          String?         @unique
+  created_at     DateTime?       @db.Timestamptz(6)
+  updated_at     DateTime?       @db.Timestamptz(6)
+  admin_profiles admin_profiles?
+  families       families?
+
+  @@schema("auth")
+}
+
+model admin_profiles {
+  user_id    String   @id @db.Uuid
+  full_name  String
+  role       String   @default("admin")
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  users      users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model families {
+  id                                         String                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  auth_user_id                               String?                  @unique @db.Uuid
+  head_name                                  String
+  head_mobile                                String
+  city                                       String?
+  address                                    String?
+  wants_stay                                 Boolean                  @default(false)
+  pothi_id                                   Int?                     @unique
+  reference_pothi_id                         Int?
+  private_room_number                        String?
+  registration_type                          registration_type        @default(private_room)
+  pothi_locked_at                            DateTime?                @db.Timestamptz(6)
+  registration_code                          String                   @unique @default(dbgenerated("upper(substr(replace((gen_random_uuid())::text, '-'::text, ''::text), 1, 10))"))
+  created_at                                 DateTime                 @default(now()) @db.Timestamptz(6)
+  updated_at                                 DateTime                 @default(now()) @db.Timestamptz(6)
+  users                                      users?                   @relation(fields: [auth_user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  pothis_families_pothi_idTopothis           pothis?                  @relation("families_pothi_idTopothis", fields: [pothi_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "families_pothi_fk")
+  pothis_families_reference_pothi_idTopothis pothis?                  @relation("families_reference_pothi_idTopothis", fields: [reference_pothi_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "families_reference_pothi_fk")
+  members                                    members[]
+  pothis_pothis_family_idTofamilies          pothis?                  @relation("pothis_family_idTofamilies")
+  room_allocations                           room_allocations[]
+  whatsapp_notifications                     whatsapp_notifications[]
+
+  @@schema("public")
+}
+
+model pothis {
+  id                                           Int        @id
+  primary_holder_name                          String?
+  city                                         String?
+  co_holders                                   Json       @default("[]")
+  handover_name                                String?
+  contact_name                                 String?
+  contact_mobile                               String?
+  family_id                                    String?    @unique @db.Uuid
+  locked_at                                    DateTime?  @db.Timestamptz(6)
+  created_at                                   DateTime   @default(now()) @db.Timestamptz(6)
+  families_families_pothi_idTopothis           families?  @relation("families_pothi_idTopothis")
+  families_families_reference_pothi_idTopothis families[] @relation("families_reference_pothi_idTopothis")
+  families_pothis_family_idTofamilies          families?  @relation("pothis_family_idTofamilies", fields: [family_id], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  rooms                                         rooms[]
+
+  @@schema("public")
+}
+
+model members {
+  id                     String                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  family_id              String                   @db.Uuid
+  name                   String
+  age                    Int
+  gender                 gender_type
+  mobile                 String?
+  is_head                Boolean                  @default(false)
+  created_at             DateTime                 @default(now()) @db.Timestamptz(6)
+  families               families                 @relation(fields: [family_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  room_allocations       room_allocations?
+  whatsapp_notifications whatsapp_notifications[]
+
+  @@schema("public")
+}
+
+model rooms {
+  id               String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  room_number      String             @unique
+  venue_name       String?
+  section_name     String?
+  source_room_number String?
+  floor            String?
+  ac_type          String?
+  bed_count        Int?
+  extra_count      Int?
+  owner_type       String?
+  linked_pothi_id  Int?
+  allotment_note   String?
+  sort_order       Int?
+  room_type        registration_type
+  capacity         Int                @default(4)
+  created_at       DateTime           @default(now()) @db.Timestamptz(6)
+  pothis           pothis?            @relation(fields: [linked_pothi_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  room_allocations room_allocations[]
+
+  @@schema("public")
+}
+
+model room_allocations {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  room_id      String   @db.Uuid
+  member_id    String   @unique @db.Uuid
+  family_id    String   @db.Uuid
+  allocated_at DateTime @default(now()) @db.Timestamptz(6)
+  families     families @relation(fields: [family_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  members      members  @relation(fields: [member_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  rooms        rooms    @relation(fields: [room_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model whatsapp_notifications {
+  id                  String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  family_id           String?         @db.Uuid
+  member_id           String?         @db.Uuid
+  mobile              String
+  template_name       String
+  payload             Json            @default("{}")
+  status              whatsapp_status @default(queued)
+  provider_message_id String?
+  error               String?
+  created_at          DateTime        @default(now()) @db.Timestamptz(6)
+  sent_at             DateTime?       @db.Timestamptz(6)
+  families            families?       @relation(fields: [family_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  members             members?        @relation(fields: [member_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+enum gender_type {
+  male
+  female
+  other
+
+  @@schema("public")
+}
+
+enum registration_type {
+  pothi_room
+  private_room
+  general_room
+
+  @@schema("public")
+}
+
+enum whatsapp_status {
+  queued
+  sent
+  failed
+
+  @@schema("public")
+}

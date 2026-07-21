@@ -1,0 +1,14 @@
+node_modules
+dist
+.env
+.env.local
+.DS_Store
+.vercel
+.supabase
+vite-dev.log
+vite-dev.err
+
+/src/generated/prisma
+*.zip 
+*.zip 
+*.zip 

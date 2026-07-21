@@ -1,0 +1,36 @@
+{
+  "name": "bhuj-bhagwat-saptah",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc && vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "lint": "eslint . --ext ts,tsx --max-warnings 0",
+    "build:allotment-data": "node scripts/build-allotment-data.cjs",
+    "sync:allotment-data": "node scripts/sync-allotment-data.mjs"
+  },
+  "dependencies": {
+    "@prisma/client": "^7.8.0",
+    "@supabase/supabase-js": "^2.49.4",
+    "@vite-pwa/assets-generator": "^0.2.6",
+    "date-fns": "^4.1.0",
+    "lucide-react": "^0.468.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "vite-plugin-pwa": "^0.21.1",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@typescript-eslint/eslint-plugin": "^8.15.0",
+    "@typescript-eslint/parser": "^8.15.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.15.0",
+    "prisma": "^7.8.0",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11"
+  }
+}
