@@ -42,7 +42,7 @@ export function OtpPanel({
     <div className="otp-panel">
       <div className="otp-row">
         <button type="button" className="secondary" onClick={onSendOtp} disabled={otpSending || loading}>
-          {otpSending ? labels.sendingOtp : otpRequestId ? labels.resendOtp : labels.sendOtp}
+          {otpSending ? <><span className="loading-spinner" aria-hidden="true" /> {labels.sendingOtp}</> : otpRequestId ? labels.resendOtp : labels.sendOtp}
         </button>
         <input
           placeholder={labels.enterOtp}
@@ -58,7 +58,7 @@ export function OtpPanel({
           onClick={onVerifyOtp}
           disabled={otpVerifying || loading || !otpRequestId}
         >
-          {otpVerifying ? labels.verifyingOtp : verificationToken ? labels.verified : labels.verifyOtp}
+          {otpVerifying ? <><span className="loading-spinner" aria-hidden="true" /> {labels.verifyingOtp}</> : verificationToken ? labels.verified : labels.verifyOtp}
         </button>
       </div>
       {verificationToken ? <p className="inline-note otp-confirmation">{labels.verifyAgain}</p> : null}

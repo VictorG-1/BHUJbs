@@ -261,10 +261,28 @@ export async function downloadAdminWorkbook({ members, pothis, rooms, language =
       family_mobile: member.family_mobile ?? "",
       registration_type: member.registration_type ?? "",
       pothi: member.pothi ?? "",
+      venue: member.venue ?? "",
       room: member.room ?? ""
     }))
   );
   XLSX.utils.book_append_sheet(workbook, memberSheet, uniqueSheetName(language === "gu" ? "સભ્યો" : "Members", usedNames));
+
+  const guestListSheet = XLSX.utils.json_to_sheet(
+    members.map((member) => ({
+      name: member.name,
+      family: member.family_name ?? "",
+      mobile: member.mobile ?? "",
+      pothi: member.pothi ?? "",
+      venue: member.venue ?? "",
+      room: member.room ?? "",
+      registration_type: member.registration_type ?? ""
+    }))
+  );
+  XLSX.utils.book_append_sheet(
+    workbook,
+    guestListSheet,
+    uniqueSheetName(language === "gu" ? "મહેમાન યાદી" : "Guest List", usedNames)
+  );
 
   const pothiSheet = XLSX.utils.json_to_sheet(
     pothis.map((pothi) => ({

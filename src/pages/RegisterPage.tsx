@@ -928,8 +928,8 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
           <button className="secondary" type="button" onClick={() => resetAll("home", "yajman")} disabled={loading || cancelling}>
             {t.back}
           </button>
-          <button className="primary" type="submit" disabled={loading || !matchedYajman}>
-            {loading ? t.saving : t.complete}
+          <button className="primary" type="submit" disabled={loading || !matchedYajman} aria-busy={loading}>
+            {loading ? <><span className="loading-spinner" aria-hidden="true" /> {t.saving}</> : t.complete}
           </button>
           <button type="button" className="secondary" onClick={() => resetAll("yajman-form", "yajman")} disabled={loading || cancelling}>
             {t.clear}
@@ -1035,8 +1035,8 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
           <button className="secondary" type="button" onClick={() => resetAll("home", "yajman")} disabled={loading || cancelling}>
             {t.back}
           </button>
-          <button className="primary" type="submit" disabled={loading || !verificationToken}>
-            {loading ? t.saving : t.complete}
+          <button className="primary" type="submit" disabled={loading || !verificationToken} aria-busy={loading}>
+            {loading ? <><span className="loading-spinner" aria-hidden="true" /> {t.saving}</> : t.complete}
           </button>
           <button type="button" className="secondary" onClick={() => resetAll("guest-form", "guest")} disabled={loading || cancelling}>
             {t.clear}

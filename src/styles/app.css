@@ -747,6 +747,22 @@ h2 {
   margin-bottom: 0;
 }
 
+.loading-spinner {
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  margin-right: 0.35rem;
+  vertical-align: -0.12em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: button-spin 0.7s linear infinite;
+}
+
+@keyframes button-spin {
+  to { transform: rotate(360deg); }
+}
+
 .member-row {
   display: grid;
   grid-template-columns: minmax(180px, 2fr) minmax(90px, 0.7fr) minmax(130px, 1fr) minmax(160px, 1.2fr);

@@ -251,19 +251,27 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
 
   const exportMembers = useMemo(
     () =>
-      members.map((member) => ({
-        name: member.name,
-        age: member.age,
-        gender: member.gender,
-        mobile: member.mobile ?? "",
-        family_id: member.families?.id ?? "",
-        family_name: member.families?.head_name ?? "",
-        family_mobile: member.families?.head_mobile ?? "",
-        city: member.families?.city ?? "",
-        registration_type: member.families?.registration_type ?? "",
-        pothi: member.families?.pothi_id ?? member.families?.reference_pothi_id ?? "",
-        room: member.room_allocations?.[0]?.rooms?.room_number ?? ""
-      })),
+      members.map((member) => {
+        const family = member.families;
+        const roomDetails = member.room_allocations?.[0]?.rooms;
+        const registrationType = family?.registration_type ?? "";
+        return {
+          name: member.name,
+          age: member.age,
+          gender: member.gender,
+          mobile: member.mobile ?? "",
+          family_id: family?.id ?? "",
+          family_name: family?.head_name ?? "",
+          family_mobile: family?.head_mobile ?? "",
+          city: family?.city ?? "",
+          registration_type: registrationType,
+          pothi: registrationType === "general_room"
+            ? "General"
+            : family?.pothi_id ?? family?.reference_pothi_id ?? "",
+          venue: roomDetails?.venue_name ?? "",
+          room: roomDetails?.room_number ?? ""
+        };
+      }),
     [members]
   );
 
@@ -484,6 +492,7 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
                   <th>{t.family}</th>
                   <th>{t.pothis}</th>
                   <th>{t.type}</th>
+                  <th>{language === "gu" ? "વેન્યુ" : "Venue"}</th>
                   <th>{t.room}</th>
                 </tr>
               </thead>
@@ -492,7 +501,9 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
                   <tr key={member.id}>
                     <td>{member.name}</td>
                     <td>{member.families?.head_name}</td>
-                    <td>{member.families?.pothi_id ?? member.families?.reference_pothi_id ?? "-"}</td>
+                    <td>{member.families?.registration_type === "general_room"
+                      ? "General"
+                      : member.families?.pothi_id ?? member.families?.reference_pothi_id ?? "-"}</td>
                     <td>
                       {member.families?.registration_type === "pothi_room" ? (
                         <StatusPill tone="amber">{t.yajmanRoom}</StatusPill>
@@ -502,12 +513,13 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
                         <StatusPill tone="blue">{t.privateRoomGuests}</StatusPill>
                       )}
                     </td>
+                    <td>{member.room_allocations?.[0]?.rooms?.venue_name ?? "-"}</td>
                     <td>{member.room_allocations?.[0]?.rooms?.room_number ?? "-"}</td>
                   </tr>
                 ))}
                 {!filtered.length ? (
                   <tr>
-                    <td colSpan={5}>{t.noRows}</td>
+                    <td colSpan={6}>{t.noRows}</td>
                   </tr>
                 ) : null}
               </tbody>
