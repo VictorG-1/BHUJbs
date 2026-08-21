@@ -27,10 +27,6 @@ export function LandingPage({ language, onNavigate }: PublicPageProps) {
             <button className="secondary" onClick={() => onNavigate("itinerary")}>{gu ? "કાર્યક્રમ જુઓ" : "View itinerary"}</button>
           </div>
         </div>
-        <div className="landing-art" aria-label="Event logos">
-          <img src="/logo-1.png" alt="Shree Kutchi Maheshwari Samaj" />
-          <img src="/logo-2.png" alt="Bhagwan Krishna" />
-        </div>
       </div>
 
       <div className="event-action-grid">
