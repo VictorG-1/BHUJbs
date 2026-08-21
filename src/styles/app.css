@@ -186,8 +186,18 @@ h2 {
   min-width: 92px;
 }
 
-.mobile-menu-toggle,
+.topbar nav button,
+.language-toggle,
+.mobile-menu-toggle {
+  font-size: 1.02rem;
+  font-weight: 650;
+}
+
 .language-toggle {
+  display: inline-flex;
+}
+
+.mobile-menu-toggle {
   display: none;
 }
 
@@ -299,6 +309,8 @@ h2 {
   padding: 1.2rem;
   text-align: left;
   align-content: start;
+  justify-content: start;
+  justify-items: start;
   background: var(--surface);
   border-color: rgba(223, 159, 58, 0.38);
 }
@@ -474,6 +486,24 @@ h2 {
   border-top: 1px solid rgba(223, 159, 58, 0.34);
   background: #fff1dc;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.footer-credits {
+  grid-column: 1 / -1;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(223, 159, 58, 0.28);
+  text-align: center;
+}
+
+.footer-credits a {
+  color: var(--muted);
+  font-size: 0.82rem;
+  text-decoration: none;
+}
+
+.footer-credits a:hover {
+  color: var(--accent);
+  text-decoration: underline;
 }
 
 .site-footer > div:first-child {
@@ -1157,10 +1187,17 @@ th {
 @media (max-width: 780px) {
   .topbar {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto auto;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
     align-items: center;
     gap: 0.65rem;
     padding: 0.75rem 1rem;
+  }
+
+  .topbar .brand {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    width: 100%;
   }
 
   .topbar nav {
@@ -1200,12 +1237,18 @@ th {
   }
 
   .mobile-menu-toggle {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: start;
     border: 1px solid var(--line-strong);
     background: var(--surface-soft);
     color: var(--navy);
   }
 
   .language-toggle {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: end;
     border: 1px solid var(--line-strong);
     background: var(--surface-soft);
   }
@@ -1232,7 +1275,7 @@ th {
   }
 
   .brand-copy strong {
-    font-size: 1.02rem;
+    font-size: 1.12rem;
   }
 
   .brand-copy span {
@@ -1361,7 +1404,7 @@ th {
   }
 
   .brand-copy strong {
-    font-size: 0.92rem;
+    font-size: 1rem;
   }
 
   .brand-copy span {

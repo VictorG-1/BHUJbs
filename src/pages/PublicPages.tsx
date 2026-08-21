@@ -194,8 +194,8 @@ export function SiteFooter({ language, onNavigate }: PublicPageProps) {
   return (
     <footer className="site-footer">
       <div>
-        <strong>Shrimad Samuha Bhagwat Saptah</strong>
-        <span>Shree Kutchi Maheshwari Samaj Bhuj</span>
+        <strong>{gu ? "શ્રીમદ સમૂહ ભાગવત સપ્તાહ" : "Shrimad Samuha Bhagwat Saptah"}</strong>
+        <span>{gu ? "શ્રી કચ્છી મહેશ્વરી સમાજ ભુજ" : "Shree Kutchi Maheshwari Samaj Bhuj"}</span>
       </div>
       <div className="footer-links">
         <button onClick={() => onNavigate("register")}>{gu ? "નોંધણી" : "Registration"}</button>
@@ -204,7 +204,14 @@ export function SiteFooter({ language, onNavigate }: PublicPageProps) {
         <button onClick={() => onNavigate("sponsors")}>{gu ? "પ્રાયોજકો" : "Sponsors"}</button>
         <button onClick={() => onNavigate("terms")}>{gu ? "શરતો" : "Terms"}</button>
       </div>
-      <small>Official event registration and information portal.</small>
+      <small>{gu ? "અધિકૃત ઇવેન્ટ નોંધણી અને માહિતી પોર્ટલ." : "Official event registration and information portal."}</small>
+      <div className="footer-credits">
+        <a href="https://www.teamfullstack.in" target="_blank" rel="noreferrer">
+          {gu
+            ? "ભારતમાં ❤️ સાથે ડિઝાઇન અને ડેવલપ કરેલ: પાર્થ ચેતના પિયુષ ગગદાણી, થાણે"
+            : "Designed and Developed with ❤️ in 🇮🇳 by Parth Chetna Piyush Gagdani, Thane"}
+        </a>
+      </div>
     </footer>
   );
 }
