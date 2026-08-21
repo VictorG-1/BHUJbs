@@ -2,6 +2,19 @@ import { supabase } from "./supabase";
 import type { RegisterFamilyInput, RegistrationResult, SendOtpResult, VerifyOtpResult } from "./types";
 import * as XLSX from "xlsx";
 
+function getSupabasePublicKey() {
+  return import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ?? import.meta.env.VITE_SUPABASE_ANON_KEY ?? "";
+}
+
+function getSupabasePublicHeaders() {
+  const key = getSupabasePublicKey();
+  return {
+    // Supabase publishable keys are opaque API keys, not JWTs. They belong
+    // in `apikey`; sending them as Bearer tokens causes gateway rejection.
+    apikey: key
+  };
+}
+
 async function extractFunctionError(error: unknown, fallbackMessage: string) {
   if (!error) return fallbackMessage;
 
@@ -56,7 +69,7 @@ async function invokeOtp<T>(
         "Content-Type": "application/json",
         ...(import.meta.env.DEV
           ? {}
-          : { apikey: import.meta.env.VITE_SUPABASE_ANON_KEY ?? import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY })
+          : getSupabasePublicHeaders())
       },
       body: JSON.stringify(body)
     });
@@ -99,7 +112,7 @@ export async function registerFamily(input: RegisterFamilyInput) {
   const { data: sessionData } = await supabase.auth.getSession();
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
-    apikey: import.meta.env.VITE_SUPABASE_ANON_KEY ?? import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY
+    ...getSupabasePublicHeaders()
   };
   if (sessionData.session?.access_token) {
     headers.Authorization = `Bearer ${sessionData.session.access_token}`;
@@ -139,7 +152,7 @@ export async function cancelRegistration(input: { familyId?: string; registratio
       "Content-Type": "application/json",
       ...(import.meta.env.DEV
         ? {}
-        : { apikey: import.meta.env.VITE_SUPABASE_ANON_KEY ?? import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY })
+        : getSupabasePublicHeaders())
     },
     body: JSON.stringify(input)
   });
@@ -158,7 +171,7 @@ export async function getMyRegistration(input: { mobile: string; verificationTok
       "Content-Type": "application/json",
       ...(import.meta.env.DEV
         ? {}
-        : { apikey: import.meta.env.VITE_SUPABASE_ANON_KEY ?? import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY })
+        : getSupabasePublicHeaders())
     },
     body: JSON.stringify(input)
   });
