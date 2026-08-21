@@ -7,7 +7,7 @@ Full-stack PWA for Bhagwat Saptah guest registration, pothi-based room allotment
 - React + TypeScript + Vite PWA
 - Supabase PostgreSQL, Auth, Storage-ready project structure
 - Supabase Edge Functions as API routes
-- WhatsApp via Twilio or WATI
+- OTP SMS via Combirds REST API
 
 ## What Is Included
 
@@ -49,18 +49,23 @@ Full-stack PWA for Bhagwat Saptah guest registration, pothi-based room allotment
    ```bash
    supabase secrets set SUPABASE_URL=...
    supabase secrets set SUPABASE_SERVICE_ROLE_KEY=...
-   supabase secrets set WHATSAPP_PROVIDER=twilio
-   supabase secrets set TWILIO_ACCOUNT_SID=...
-   supabase secrets set TWILIO_AUTH_TOKEN=...
-   supabase secrets set TWILIO_WHATSAPP_FROM=whatsapp:+14155238886
+   supabase secrets set COMBIRDS_API_KEY=...
+   supabase secrets set COMBIRDS_SENDER_ID=TFLSTK
+   supabase secrets set COMBIRDS_TEMPLATE_ID=...
+
+   OTP message template:
+   Dear {#var#} user, your OTP for login to https://www.teamfullstack.in/ is: {#var#}. Do not share this code with anyone. - Team Full Stack
+   supabase secrets set COMBIRDS_SMS_BASE_URL=https://smsapi.edumarcsms.com
    ```
 
-   For WATI, set `WHATSAPP_PROVIDER=wati`, `WATI_BASE_URL`, and `WATI_API_TOKEN`.
+   The OTP flow uses the Combirds SMS REST API. Keep the keys only on the server side.
 
 6. Deploy functions:
 
    ```bash
   supabase functions deploy register-family
+  supabase functions deploy send-sms-otp
+  supabase functions deploy verify-sms-otp
   supabase functions deploy send-whatsapp
   supabase functions deploy export-data
    ```
@@ -87,9 +92,12 @@ The current UI is a first operational dashboard. For production, add an admin lo
 - `register-family`: registers either a pothi room or a private room guest list, creates the room, assigns members, and sends registration WhatsApp.
 - `send-whatsapp`: manual notification endpoint.
 - `export-data`: CSV export for admin reporting.
+- `send-sms-otp`: Combirds OTP sender for login and registration.
 
 ## Notes
 
 - Pothi locking is enforced at the database layer. Once `families.pothi_id` is set, it cannot be changed.
 - `families.auth_user_id` is optional, so you can run registration without OTP during setup.
 - Each pothi row also has a unique `family_id`, preventing double assignment.
+- Combirds send endpoint: `https://smsapi.edumarcsms.com`
+- Combirds delivery/status host: `https://api.edumarcsms.com`

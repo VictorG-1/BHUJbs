@@ -4,15 +4,11 @@ import fallbackPothisData from "../data/pothis.json";
 import fallbackRoomsData from "../data/rooms.json";
 import { PothiGrid } from "../components/PothiGrid";
 import { StatusPill } from "../components/StatusPill";
-import { downloadExportData } from "../lib/api";
+import { downloadAdminWorkbook, downloadExportData } from "../lib/api";
 import { checkSupabaseConnection, supabase } from "../lib/supabase";
 import type { AdminMemberRow, Pothi, RoomInventory } from "../lib/types";
 
-type Filter = {
-  pothi: string;
-  type: string;
-  room: string;
-};
+type Language = "en" | "gu";
 
 function normalizeRoom(room: Partial<RoomInventory> & { capacity?: number | null }): RoomInventory {
   return {
@@ -33,18 +29,107 @@ function normalizeRoom(room: Partial<RoomInventory> & { capacity?: number | null
   };
 }
 
+function venueTabName(room: RoomInventory) {
+  return room.venue_name.toUpperCase() === "HOTEL" && room.section_name ? room.section_name : room.venue_name;
+}
+
 const fallbackPothis = fallbackPothisData as Pothi[];
 const fallbackRooms = (fallbackRoomsData as Array<RoomInventory & { capacity?: number | null }>).map(normalizeRoom);
 
-export function AdminPage() {
+const copy = {
+  en: {
+    eyebrow: "Admin dashboard",
+    title: "Guests, rooms and pothis",
+    subtitle:
+      "Use Supabase Auth and add admin users to admin_profiles before going live. Offline mode shows the imported pothi and room inventory without live registrations.",
+    loginEyebrow: "Admin login",
+    loginTitle: "Sign in to manage guests",
+    loginText:
+      "Use a Supabase Auth account that exists in admin_profiles to access the dashboard.",
+    email: "Email",
+    password: "Password",
+    signIn: "Sign in",
+    signOut: "Sign out",
+    exportCsv: "Export CSV",
+    families: "Families",
+    members: "Members",
+    pothiRooms: "Pothi rooms",
+    privateRooms: "Private rooms",
+    generalRooms: "General rooms",
+    pothis: "Pothis",
+    filtersTitle: "Master search",
+    masterSearch: "Search guests, mobile, family, pothi, venue, room or type",
+    yajmanRoom: "Pothi Yajman room",
+    privateRoomGuests: "Private room guests",
+    generalRoomGuests: "General room guests",
+    guestList: "Guest list",
+    name: "Name",
+    family: "Family",
+    type: "Type",
+    room: "Room",
+    noRows: "No registrations found for the current filters.",
+    noOffline: "No live registrations in offline mode yet.",
+    pothiOccupancy: "Pothi occupancy",
+    importedInventory: "Imported room inventory",
+    registeredView: "Registered room view",
+    generalInventory: "General inventory"
+  },
+  gu: {
+    eyebrow: "એડમિન ડેશબોર્ડ",
+    title: "મહેમાનો, રૂમ અને પોથી",
+    subtitle:
+      "લાઇવ પર જતાં પહેલાં Supabase Auth નો ઉપયોગ કરો અને admin_profiles માં એડમિન ઉમેરો. ઓફલાઇન મોડમાં ફક્ત આયાત કરેલી પોથી અને રૂમ સૂચિ દેખાય છે.",
+    loginEyebrow: "એડમિન લોગિન",
+    loginTitle: "મહેમાનો સંભાળવા સાઇન ઇન કરો",
+    loginText:
+      "ડેશબોર્ડ જોવા માટે admin_profiles માં હાજર Supabase Auth એકાઉન્ટનો ઉપયોગ કરો.",
+    email: "ઈમેઇલ",
+    password: "પાસવર્ડ",
+    signIn: "સાઇન ઇન",
+    signOut: "સાઇન આઉટ",
+    exportCsv: "CSV એક્સપોર્ટ",
+    families: "પરિવારો",
+    members: "સભ્યો",
+    pothiRooms: "પોથી રૂમ",
+    privateRooms: "પ્રાઇવેટ રૂમ",
+    generalRooms: "જનરલ રૂમ",
+    pothis: "પોથીઓ",
+    filtersTitle: "માસ્ટર સર્ચ",
+    masterSearch: "મહેમાન, મોબાઇલ, પરિવાર, પોથી, વેન્યુ, રૂમ અથવા પ્રકાર શોધો",
+    yajmanRoom: "પોથી યજમાન રૂમ",
+    privateRoomGuests: "પ્રાઇવેટ રૂમ મહેમાન",
+    generalRoomGuests: "જનરલ રૂમ મહેમાન",
+    guestList: "મહેમાન સૂચિ",
+    name: "નામ",
+    family: "પરિવાર",
+    type: "પ્રકાર",
+    room: "રૂમ",
+    noRows: "આ ફિલ્ટર માટે કોઈ નોંધણી મળી નથી.",
+    noOffline: "ઓફલાઇન મોડમાં હજી કોઈ લાઇવ નોંધણી નથી.",
+    pothiOccupancy: "પોથી ઓક્યુપન્સી",
+    importedInventory: "આયાત કરેલ રૂમ સૂચિ",
+    registeredView: "નોંધાયેલ રૂમ દૃશ્ય",
+    generalInventory: "જનરલ સૂચિ"
+  }
+} as const;
+
+type AdminPageProps = {
+  language?: Language;
+};
+
+export function AdminPage({ language = "en" }: AdminPageProps) {
+  const t = copy[language];
   const [session, setSession] = useState<Session | null>(null);
-  const [localMode, setLocalMode] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [members, setMembers] = useState<AdminMemberRow[]>([]);
   const [pothis, setPothis] = useState<Pothi[]>(fallbackPothis);
   const [roomsInventory, setRoomsInventory] = useState<RoomInventory[]>(fallbackRooms);
-  const [filters, setFilters] = useState<Filter>({ pothi: "", type: "", room: "" });
+  const [masterSearch, setMasterSearch] = useState("");
+  const [searchVenue, setSearchVenue] = useState("all");
+  const [searchType, setSearchType] = useState("all");
+  const [searchPothi, setSearchPothi] = useState("all");
+  const [selectedVenue, setSelectedVenue] = useState("all");
   const [status, setStatus] = useState("");
   const [connectionError, setConnectionError] = useState("");
 
@@ -87,30 +172,30 @@ export function AdminPage() {
 
   useEffect(() => {
     if (session) {
-      setLocalMode(false);
       void load();
     }
   }, [session]);
 
-  useEffect(() => {
-    if (!localMode) return;
-    setMembers([]);
-    setPothis(fallbackPothis);
-    setRoomsInventory(fallbackRooms);
-    setStatus("Offline admin view loaded.");
-  }, [localMode]);
-
   const filtered = useMemo(() => {
+    const query = masterSearch.trim().toLowerCase();
     return members.filter((member) => {
       const family = member.families;
-      const room = member.room_allocations?.[0]?.rooms?.room_number ?? "";
+      const roomDetails = member.room_allocations?.[0]?.rooms;
+      const room = roomDetails?.room_number ?? "";
       const pothi = family?.pothi_id ?? family?.reference_pothi_id ?? "";
-      if (filters.pothi && String(pothi) !== filters.pothi) return false;
-      if (filters.type && family?.registration_type !== filters.type) return false;
-      if (filters.room && room !== filters.room) return false;
-      return true;
+      const memberVenue = roomDetails?.venue_name?.toUpperCase() === "HOTEL" && roomDetails?.section_name
+        ? roomDetails.section_name
+        : roomDetails?.venue_name ?? "";
+      if (searchVenue !== "all" && memberVenue !== searchVenue) return false;
+      if (searchType !== "all" && family?.registration_type !== searchType) return false;
+      if (searchPothi !== "all" && String(pothi) !== searchPothi) return false;
+      const haystack = [member.name, member.mobile, family?.head_name, family?.head_mobile, family?.city, room, pothi, family?.registration_type]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+      return !query || haystack.includes(query);
     });
-  }, [filters, members]);
+  }, [masterSearch, members, searchPothi, searchType, searchVenue]);
 
   const occupiedRooms = useMemo(() => {
     const map = new Map<string, AdminMemberRow[]>();
@@ -122,17 +207,45 @@ export function AdminPage() {
     return [...map.entries()].sort(([a], [b]) => a.localeCompare(b));
   }, [members]);
 
-  const inventoryRooms = useMemo(() => {
-    return roomsInventory.filter((room) => {
-      if (filters.type && room.room_type !== filters.type) return false;
-      if (filters.room && room.room_number !== filters.room) return false;
-      if (filters.pothi) {
-        const linked = room.linked_pothi_id ? String(room.linked_pothi_id) : "";
-        if (linked !== filters.pothi) return false;
-      }
-      return true;
-    });
-  }, [filters, roomsInventory]);
+  const roomAllocationBoard = useMemo(() => {
+    const occupancy = new Map<string, AdminMemberRow[]>();
+    for (const member of members) {
+      const room = member.room_allocations?.[0]?.rooms?.room_number;
+      if (!room) continue;
+      occupancy.set(room, [...(occupancy.get(room) ?? []), member]);
+    }
+
+    return roomsInventory
+      .filter((room) => selectedVenue === "all" || venueTabName(room) === selectedVenue)
+      .filter((room) => searchVenue === "all" || venueTabName(room) === searchVenue)
+      .filter((room) => searchType === "all" || room.room_type === searchType)
+      .filter((room) => searchPothi === "all" || String(room.linked_pothi_id ?? "") === searchPothi)
+      .filter((room) => {
+        const query = masterSearch.trim().toLowerCase();
+        if (!query) return true;
+        return [room.room_number, room.venue_name, room.section_name, room.room_type, room.owner_type, room.linked_pothi_id]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase()
+          .includes(query);
+      })
+      .map((room) => ({
+        room,
+        occupants: occupancy.get(room.room_number) ?? []
+      }))
+      .sort((left, right) => {
+        const venueCompare = left.room.venue_name.localeCompare(right.room.venue_name);
+        if (venueCompare !== 0) return venueCompare;
+        const orderCompare = (left.room.sort_order ?? 9999) - (right.room.sort_order ?? 9999);
+        if (orderCompare !== 0) return orderCompare;
+        return left.room.room_number.localeCompare(right.room.room_number);
+      });
+  }, [masterSearch, members, roomsInventory, searchPothi, searchType, searchVenue, selectedVenue]);
+
+  const venueNames = useMemo(
+    () => [...new Set(roomsInventory.map(venueTabName).filter(Boolean))].sort(),
+    [roomsInventory]
+  );
 
   const stats = {
     members: members.length,
@@ -143,31 +256,97 @@ export function AdminPage() {
     occupiedPothis: pothis.filter((pothi) => pothi.family_id).length
   };
 
+  const exportMembers = useMemo(
+    () =>
+      members.map((member) => ({
+        name: member.name,
+        age: member.age,
+        gender: member.gender,
+        mobile: member.mobile ?? "",
+        family_id: member.families?.id ?? "",
+        family_name: member.families?.head_name ?? "",
+        family_mobile: member.families?.head_mobile ?? "",
+        city: member.families?.city ?? "",
+        registration_type: member.families?.registration_type ?? "",
+        pothi: member.families?.pothi_id ?? member.families?.reference_pothi_id ?? "",
+        room: member.room_allocations?.[0]?.rooms?.room_number ?? ""
+      })),
+    [members]
+  );
+
+  const exportPothis = useMemo(
+    () =>
+      pothis.map((pothi) => ({
+        id: pothi.id,
+        primary_holder_name: pothi.primary_holder_name ?? "",
+        city: pothi.city ?? "",
+        contact_name: pothi.contact_name ?? "",
+        contact_mobile: pothi.contact_mobile ?? "",
+        family_id: pothi.family_id ?? "",
+        status: pothi.family_id ? (language === "gu" ? "ભરાયેલ" : "Occupied") : language === "gu" ? "ખાલી" : "Open"
+      })),
+    [language, pothis]
+  );
+
+  const exportRooms = useMemo(
+    () =>
+      roomsInventory.map((room) => ({
+        room_number: room.room_number,
+        venue_name: room.venue_name,
+        section_name: room.section_name,
+        floor: room.floor ?? "",
+        room_type: room.room_type,
+        total_capacity: room.total_capacity,
+        owner_type: room.owner_type,
+        linked_pothi_id: room.linked_pothi_id ?? "",
+        allotment_note: room.allotment_note ?? ""
+      })),
+    [roomsInventory]
+  );
+
   async function handleExport() {
-    setStatus("Preparing export...");
+    setStatus(language === "gu" ? "એક્સપોર્ટ તૈયાર કરી રહ્યા છીએ..." : "Preparing export...");
     try {
       await downloadExportData();
-      setStatus("Export downloaded.");
+      setStatus(language === "gu" ? "એક્સપોર્ટ ડાઉનલોડ થયું." : "Export downloaded.");
     } catch (error) {
-      setStatus(error instanceof Error ? error.message : "Export failed.");
+      setStatus(error instanceof Error ? error.message : language === "gu" ? "એક્સપોર્ટ નિષ્ફળ થયું." : "Export failed.");
+    }
+  }
+
+  async function handleWorkbookExport() {
+    setStatus(language === "gu" ? "વર્કબુક તૈયાર કરી રહ્યા છીએ..." : "Preparing workbook...");
+    try {
+      await downloadAdminWorkbook({
+        members: exportMembers,
+        pothis: exportPothis,
+        rooms: exportRooms,
+        language
+      });
+      setStatus(language === "gu" ? "વર્કબુક ડાઉનલોડ થઈ ગઈ." : "Workbook downloaded.");
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : language === "gu" ? "વર્કબુક નિષ્ફળ થઈ." : "Workbook export failed.");
     }
   }
 
   async function handleLogin(event: React.FormEvent) {
     event.preventDefault();
-    setStatus("Signing in...");
+    setStatus(language === "gu" ? "સાઇન ઇન કરી રહ્યા છીએ..." : "Signing in...");
 
     const connection = await checkSupabaseConnection();
     if (!connection.ok) {
       setConnectionError(connection.message);
-      setStatus("Cannot sign in until Supabase is reachable.");
+      setStatus(language === "gu" ? "Supabase ઉપલબ્ધ ન થાય ત્યાં સુધી સાઇન ઇન કરી શકાતું નથી." : "Cannot sign in until Supabase is reachable.");
       return;
     }
 
     try {
       const login = supabase.auth.signInWithPassword({ email, password });
       const timeout = new Promise<{ error: { message: string } }>((resolve) => {
-        window.setTimeout(() => resolve({ error: { message: "Login timed out. Check your internet connection and Supabase project URL." } }), 15000);
+        window.setTimeout(
+          () => resolve({ error: { message: language === "gu" ? "લોગિન સમય સમાપ્ત થયો. તમારા ઇન્ટરનેટ અને Supabase project URL તપાસો." : "Login timed out. Check your internet connection and Supabase project URL." } }),
+          15000
+        );
       });
       const { error } = await Promise.race([login, timeout]);
 
@@ -176,10 +355,7 @@ export function AdminPage() {
         return;
       }
 
-      const { data: adminProfile, error: adminError } = await supabase
-        .from("admin_profiles")
-        .select("user_id")
-        .maybeSingle();
+      const { data: adminProfile, error: adminError } = await supabase.from("admin_profiles").select("user_id").maybeSingle();
 
       if (adminError) {
         setStatus(adminError.message);
@@ -188,40 +364,37 @@ export function AdminPage() {
       }
 
       if (!adminProfile) {
-        setStatus("This account is not an admin. Ask an owner to add your user to admin_profiles.");
+        setStatus(language === "gu" ? "આ એકાઉન્ટ એડમિન નથી. owner ને admin_profiles માં ઉમેરવા કહો." : "This account is not an admin. Ask an owner to add your user to admin_profiles.");
         await supabase.auth.signOut();
         return;
       }
 
-      setStatus("Admin signed in.");
+      setStatus(language === "gu" ? "એડમિન સાઇન ઇન થયા." : "Admin signed in.");
     } catch (error) {
-      setStatus(error instanceof Error ? error.message : "Sign in failed.");
+      setStatus(error instanceof Error ? error.message : language === "gu" ? "સાઇન ઇન નિષ્ફળ થયું." : "Sign in failed.");
     }
   }
 
-  if (!session && !localMode) {
+  if (!session) {
     return (
       <section className="page-section compact">
-        <div className="section-heading">
-          <p className="eyebrow">Admin login</p>
-          <h1>Sign in to manage guests</h1>
-          <p>Use a Supabase Auth account that exists in admin_profiles, or open the offline admin view for the imported allotment data.</p>
+        <div className="dashboard-hero">
+          <p className="eyebrow">{t.loginEyebrow}</p>
+          <h1>{t.loginTitle}</h1>
+          <p>{t.loginText}</p>
         </div>
         {connectionError ? <p className="form-message">{connectionError}</p> : null}
-        <form className="scan-panel" onSubmit={handleLogin}>
+        <form className="auth-card auth-form" onSubmit={handleLogin}>
           <label>
-            Email
+            {t.email}
             <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} required />
           </label>
           <label>
-            Password
+            {t.password}
             <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} required />
           </label>
           <div className="button-row">
-            <button className="primary">Sign in</button>
-            <button type="button" className="secondary" onClick={() => setLocalMode(true)}>
-              Open offline admin view
-            </button>
+            <button className="primary">{t.signIn}</button>
           </div>
           {status ? <p className="form-message">{status}</p> : null}
         </form>
@@ -231,56 +404,102 @@ export function AdminPage() {
 
   return (
     <section className="page-section">
-      <div className="section-heading">
-        <p className="eyebrow">Admin dashboard</p>
-        <h1>Guests, rooms and pothis</h1>
-        <p>{localMode ? "Offline mode shows the imported pothi and room inventory without live registrations." : "Use Supabase Auth and add admin users to admin_profiles before going live."}</p>
+      <div className="admin-shell">
+        <div className="admin-hero">
+          <div className="dashboard-hero dashboard-hero-wide">
+            <p className="eyebrow">{t.eyebrow}</p>
+            <h1>{t.title}</h1>
+            <p>{t.subtitle}</p>
+          </div>
+          <div className="admin-hero-meta">
+            <div>
+              <span>{language === "gu" ? "મોડ" : "Mode"}</span>
+              <strong>{language === "gu" ? "લાઇવ" : "Live"}</strong>
+            </div>
+            <div>
+              <span>{language === "gu" ? "પોથી" : "Pothis"}</span>
+              <strong>{stats.occupiedPothis}/75</strong>
+            </div>
+            <div>
+              <span>{language === "gu" ? "રૂમ" : "Rooms"}</span>
+              <strong>{roomsInventory.length}</strong>
+            </div>
+          </div>
+          <div className="admin-actions admin-actions-bar">
+            <button className="secondary" onClick={handleWorkbookExport}>{language === "gu" ? "એક્સેલ વર્કબુક" : "Excel workbook"}</button>
+            <button className="secondary" onClick={handleExport}>{t.exportCsv}</button>
+            <button className="secondary" onClick={() => supabase.auth.signOut()}>{t.signOut}</button>
+          </div>
+        </div>
       </div>
 
-      <div className="metric-row">
-        <div><strong>{stats.families}</strong><span>Families</span></div>
-        <div><strong>{stats.members}</strong><span>Members</span></div>
-        <div><strong>{stats.pothiRooms}</strong><span>Pothi rooms</span></div>
-        <div><strong>{stats.privateRooms}</strong><span>Private rooms</span></div>
-        <div><strong>{stats.generalRooms}</strong><span>General rooms</span></div>
-        <div><strong>{stats.occupiedPothis}/75</strong><span>Pothis</span></div>
+      <div className="dashboard-panel dashboard-panel-hero">
+        <div className="panel-header panel-header-inline">
+          <div>
+            <h2>{language === "gu" ? "ઝાંખી" : "Overview"}</h2>
+            <p>{language === "gu" ? "એક નજરમાં નોંધણી, રૂમ અને પોથી સ્થિતિ." : "A quick read on registrations, rooms and pothis."}</p>
+          </div>
+          <div className="summary-note">
+            <span>{language === "gu" ? "તૈયાર" : "Ready"}</span>
+            <strong>{language === "gu" ? "લાઇવ ડેશબોર્ડ" : "Live dashboard"}</strong>
+          </div>
+        </div>
+        <div className="metric-row admin-metric-row">
+          <div><strong>{stats.families}</strong><span>{t.families}</span></div>
+          <div><strong>{stats.members}</strong><span>{t.members}</span></div>
+          <div><strong>{stats.pothiRooms}</strong><span>{t.pothiRooms}</span></div>
+          <div><strong>{stats.privateRooms}</strong><span>{t.privateRooms}</span></div>
+          <div><strong>{stats.generalRooms}</strong><span>{t.generalRooms}</span></div>
+          <div><strong>{stats.occupiedPothis}/75</strong><span>{t.pothis}</span></div>
+        </div>
       </div>
 
-      <div className="admin-actions">
-        {!localMode ? <button className="secondary" onClick={handleExport}>Export CSV</button> : null}
-        {localMode ? (
-          <button className="secondary" onClick={() => { setLocalMode(false); setStatus(""); }}>
-            Back to admin login
-          </button>
-        ) : (
-          <button className="secondary" onClick={() => supabase.auth.signOut()}>Sign out</button>
-        )}
-      </div>
       {status ? <p className="form-message">{status}</p> : null}
 
-      <div className="filter-row">
-        <input placeholder="Pothi number" value={filters.pothi} onChange={(event) => setFilters({ ...filters, pothi: event.target.value })} />
-        <select value={filters.type} onChange={(event) => setFilters({ ...filters, type: event.target.value })}>
-          <option value="">All room types</option>
-          <option value="pothi_room">Pothi Yajman room</option>
-          <option value="private_room">Private room guests</option>
-          <option value="general_room">General room guests</option>
-        </select>
-        <input placeholder="Room number" value={filters.room} onChange={(event) => setFilters({ ...filters, room: event.target.value })} />
+      <div className="dashboard-panel dashboard-panel-surface">
+        <div className="panel-header panel-header-inline">
+          <div>
+            <h2>{t.filtersTitle}</h2>
+            <p>{language === "gu" ? "સમગ્ર ડેશબોર્ડમાં એક જ શોધથી મહેમાન અને રૂમ શોધો." : "Search the entire dashboard from one place."}</p>
+          </div>
+        </div>
+        <div className="master-search-row">
+          <input aria-label={t.filtersTitle} placeholder={t.masterSearch} value={masterSearch} onChange={(event) => setMasterSearch(event.target.value)} />
+          <select aria-label="Venue" value={searchVenue} onChange={(event) => setSearchVenue(event.target.value)}>
+            <option value="all">{language === "gu" ? "બધા વેન્યુ" : "All venues"}</option>
+            {venueNames.map((venue) => <option key={venue} value={venue}>{venue}</option>)}
+          </select>
+          <select aria-label="Room type" value={searchType} onChange={(event) => setSearchType(event.target.value)}>
+            <option value="all">{language === "gu" ? "બધા પ્રકાર" : "All room types"}</option>
+            <option value="pothi_room">{t.yajmanRoom}</option>
+            <option value="private_room">{t.privateRoomGuests}</option>
+            <option value="general_room">{t.generalRoomGuests}</option>
+          </select>
+          <select aria-label="Pothi" value={searchPothi} onChange={(event) => setSearchPothi(event.target.value)}>
+            <option value="all">{language === "gu" ? "બધી પોથી" : "All pothis"}</option>
+            {pothis.map((pothi) => <option key={pothi.id} value={String(pothi.id)}>Pothi {pothi.id}</option>)}
+          </select>
+          {masterSearch ? <button type="button" className="secondary" onClick={() => setMasterSearch("")}>{language === "gu" ? "સાફ કરો" : "Clear"}</button> : null}
+        </div>
       </div>
 
       <div className="admin-grid">
-        <div>
-          <h2>Guest list</h2>
+        <div className="dashboard-panel dashboard-panel-surface">
+          <div className="panel-header panel-header-inline">
+            <div>
+              <h2>{t.guestList}</h2>
+              <p>{language === "gu" ? "તમામ મહેમાનો અને તેમના રૂમ સ્ટેટસ." : "All guests and their room status."}</p>
+            </div>
+          </div>
           <div className="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Family</th>
-                  <th>Pothi</th>
-                  <th>Type</th>
-                  <th>Room</th>
+                  <th>{t.name}</th>
+                  <th>{t.family}</th>
+                  <th>{t.pothis}</th>
+                  <th>{t.type}</th>
+                  <th>{t.room}</th>
                 </tr>
               </thead>
               <tbody>
@@ -291,11 +510,11 @@ export function AdminPage() {
                     <td>{member.families?.pothi_id ?? member.families?.reference_pothi_id ?? "-"}</td>
                     <td>
                       {member.families?.registration_type === "pothi_room" ? (
-                        <StatusPill tone="amber">Pothi Yajman room</StatusPill>
+                        <StatusPill tone="amber">{t.yajmanRoom}</StatusPill>
                       ) : member.families?.registration_type === "general_room" ? (
-                        <StatusPill tone="green">General room</StatusPill>
+                        <StatusPill tone="green">{t.generalRoomGuests}</StatusPill>
                       ) : (
-                        <StatusPill tone="blue">Private room</StatusPill>
+                        <StatusPill tone="blue">{t.privateRoomGuests}</StatusPill>
                       )}
                     </td>
                     <td>{member.room_allocations?.[0]?.rooms?.room_number ?? "-"}</td>
@@ -303,7 +522,7 @@ export function AdminPage() {
                 ))}
                 {!filtered.length ? (
                   <tr>
-                    <td colSpan={5}>{localMode ? "No live registrations in offline mode yet." : "No registrations found for the current filters."}</td>
+                    <td colSpan={5}>{t.noRows}</td>
                   </tr>
                 ) : null}
               </tbody>
@@ -311,31 +530,51 @@ export function AdminPage() {
           </div>
         </div>
 
-        <aside>
-          <h2>Pothi occupancy</h2>
+        <aside className="dashboard-panel sticky-panel dashboard-panel-surface">
+          <div className="panel-header panel-header-inline">
+            <div>
+              <h2>{t.pothiOccupancy}</h2>
+              <p>{language === "gu" ? "ખાલી અને ભરાયેલ પોથીઓનું દૃશ્ય." : "Open and occupied pothis at a glance."}</p>
+            </div>
+          </div>
           <PothiGrid pothis={pothis} />
         </aside>
       </div>
 
-      <div>
-        <h2>{localMode ? "Imported room inventory" : "Registered room view"}</h2>
-        <div className="room-grid">
-          {localMode
-            ? inventoryRooms.map((room) => (
-                <article className="room-card" key={room.room_number}>
+      <div className="dashboard-panel dashboard-panel-surface">
+        <div className="panel-header panel-header-inline">
+          <div>
+            <h2>{t.registeredView}</h2>
+            <p>{language === "gu" ? "વેન્યુ પ્રમાણે જુદું પાડેલ રૂમ અને ઓક્યુપન્સી વિહંગાવલોકન." : "Venue-segregated room and occupancy view."}</p>
+          </div>
+        </div>
+        <div className="venue-tabs" role="tablist" aria-label={language === "gu" ? "વેન્યુ પસંદ કરો" : "Select venue"}>
+          <button type="button" className={selectedVenue === "all" ? "active" : "secondary"} onClick={() => setSelectedVenue("all")}>
+            {language === "gu" ? "બધા વેન્યુ" : "All venues"}
+          </button>
+          {venueNames.map((venue) => (
+            <button type="button" key={venue} className={selectedVenue === venue ? "active" : "secondary"} onClick={() => setSelectedVenue(venue)}>
+              {venue}
+            </button>
+          ))}
+        </div>
+        <div className="room-allocation-board">
+          {roomAllocationBoard.map(({ room, occupants }) => (
+            <article className="room-allocation-card" key={room.room_number}>
+              <div className="room-allocation-head">
+                <div>
                   <strong>{room.room_number}</strong>
-                  <span>{`${room.room_type.replace("_", " ")} | ${room.total_capacity} beds`}</span>
-                  <small>{[room.venue_name, room.section_name, room.floor].filter(Boolean).join(" | ")}</small>
-                  <small>{room.linked_pothi_id ? `Pothi ${room.linked_pothi_id}` : "General inventory"}</small>
-                </article>
-              ))
-            : occupiedRooms.map(([room, occupants]) => (
-                <article className="room-card" key={room}>
-                  <strong>{room}</strong>
-                  <span>{occupants.length}/4</span>
-                  {occupants.map((member) => <small key={member.id}>{member.name}</small>)}
-                </article>
-              ))}
+                  <small>{room.total_capacity} {language === "gu" ? "ક્ષમતા" : "capacity"}</small>
+                </div>
+                <StatusPill tone={occupants.length >= room.total_capacity ? "red" : occupants.length > 0 ? "amber" : "gray"}>
+                  {occupants.length}/{room.total_capacity}
+                </StatusPill>
+              </div>
+              <div className="allocation-occupants">
+                {occupants.length ? occupants.map((member) => <span key={member.id}>{member.name}</span>) : <span>{language === "gu" ? "ખાલી" : "Vacant"}</span>}
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </section>

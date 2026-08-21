@@ -7,6 +7,22 @@ type CancelInput = {
   headMobile?: string;
 };
 
+function normalizeMobile(value: string) {
+  return value.replace(/\D/g, "");
+}
+
+function describeError(error: unknown) {
+  if (error instanceof Error && error.message.trim()) return error.message.trim();
+  if (error && typeof error === "object") {
+    const value = error as { message?: unknown; details?: unknown; hint?: unknown; code?: unknown };
+    return [value.message, value.details, value.hint]
+      .filter((part): part is string => typeof part === "string" && part.trim().length > 0)
+      .map((part) => part.trim())
+      .join(" ") || (typeof value.code === "string" ? `Database error ${value.code}.` : "Cancellation failed.");
+  }
+  return "Cancellation failed.";
+}
+
 Deno.serve(async (req) => {
   const options = handleOptions(req);
   if (options) return options;
@@ -32,7 +48,7 @@ Deno.serve(async (req) => {
     if (familyError) throw familyError;
     if (!family) return json({ error: "Registration not found." }, 404);
 
-    if (body.headMobile && family.head_mobile !== body.headMobile) {
+    if (body.headMobile && normalizeMobile(family.head_mobile) !== normalizeMobile(body.headMobile)) {
       return json({ error: "Mobile number does not match this registration." }, 403);
     }
 
@@ -66,6 +82,6 @@ Deno.serve(async (req) => {
       registrationCode: family.registration_code
     });
   } catch (error) {
-    return json({ error: error instanceof Error ? error.message : "Cancellation failed." }, 500);
+    return json({ error: describeError(error) }, 500);
   }
 });

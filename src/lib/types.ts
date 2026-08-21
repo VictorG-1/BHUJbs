@@ -19,6 +19,8 @@ export type RegisterFamilyInput = {
   pothiId?: number;
   relatedPothiId?: number;
   privateRoomNumber?: string;
+  stayFrom: string;
+  stayTo: string;
   members: FamilyMemberInput[];
 };
 
@@ -26,6 +28,7 @@ export type SendOtpResult = {
   requestId: string;
   expiresAt: string;
   sent: boolean;
+  smsSubmitted?: boolean;
 };
 
 export type VerifyOtpResult = {
@@ -44,6 +47,8 @@ export type RegistrationResult = {
     registration_code: string;
     registration_type: RegistrationType;
     room_number: string | null;
+    stay_from?: string | null;
+    stay_to?: string | null;
   };
   members: RegisteredMember[];
   allocations: {

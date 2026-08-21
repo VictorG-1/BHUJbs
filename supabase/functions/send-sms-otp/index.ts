@@ -2,6 +2,12 @@ import { handleOptions, json } from "../_shared/cors.ts";
 import { sendSms } from "../_shared/sms.ts";
 import { serviceClient } from "../_shared/supabase.ts";
 
+function buildOtpMessage(otp: string, firstVariable = "KMS") {
+  const label = firstVariable.trim() || "user";
+  const prefix = firstVariable.trim() ? `Dear ${label} user` : "Dear user";
+  return `${prefix}, your OTP for login to https://www.teamfullstack.in/ is: ${otp}. Do not share this code with anyone. - Team Full Stack`;
+}
+
 type SendOtpInput = {
   mobile?: string;
   purpose?: "yajman" | "guest";
@@ -68,10 +74,7 @@ Deno.serve(async (req) => {
 
     if (insertError) throw insertError;
 
-    const message =
-      body.purpose === "yajman"
-        ? `Welcome to the KMS Bhuj, Bhagwat Saptah powered by SMSINDIAHU. Your OTP for Pothi Yajman login is ${otp}`
-        : `Welcome to the KMS Bhuj, Bhagwat Saptah powered by SMSINDIAHU. Your OTP for guest registration is ${otp}`;
+    const message = buildOtpMessage(otp, Deno.env.get("COMBIRDS_TEMPLATE_FIRST_VAR") ?? "KMS");
     await sendSms({ mobile, message });
 
     return json({

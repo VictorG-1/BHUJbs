@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import fallbackPothisData from "../data/pothis.json";
 import fallbackRoomsData from "../data/rooms.json";
 import { OtpPanel } from "../components/OtpPanel";
-import { cancelRegistration, registerFamily, sendSmsOtp, verifySmsOtp } from "../lib/api";
+import { cancelRegistration, getMyRegistration, registerFamily, sendSmsOtp, verifySmsOtp } from "../lib/api";
 import { supabase } from "../lib/supabase";
 import type { FamilyMemberInput, Pothi, RegistrationResult, RoomInventory } from "../lib/types";
 
@@ -16,6 +16,9 @@ const blankMember: FamilyMemberInput = {
   gender: "male",
   mobile: ""
 };
+
+const EVENT_START_DATE = "2026-11-14";
+const EVENT_END_DATE = "2026-11-20";
 
 const fallbackPothis = fallbackPothisData as Pothi[];
 const fallbackRooms = (fallbackRoomsData as RoomInventory[]).map(normalizeRoomInventory);
@@ -62,7 +65,7 @@ const copy = {
     yajmanCard: "Pothi Yajman Login",
     yajmanCardText: "Login with the mapped yajman mobile number, verify OTP, then add room members and private-room guests.",
     guestCard: "General Guest Login",
-    guestCardText: "Enter your details, verify your mobile with OTP, then add family members for automatic room allotment.",
+    guestCardText: "Enter your details, verify your mobile with OTP, then add family members for automatic room allotment. No Pothi linkage is needed for this path.",
     continue: "Continue",
     back: "Back",
     mobile: "Mobile",
@@ -78,7 +81,7 @@ const copy = {
       "Login with the same mobile number that is mapped to the Pothi Yajman contact. After OTP verification, we will show the yajman profile and room details automatically.",
     guestLoginTitle: "General Guest login",
     guestLoginText:
-      "Enter your details and verify your mobile number with OTP before continuing to the guest registration form.",
+      "Enter your details and verify your mobile number with OTP before continuing to the guest registration form. Any valid mobile number can be used here.",
     guestOtpSent: "OTP sent to your mobile number.",
     guestOtpVerified: "Mobile number verified. Continue to the guest form.",
     guestOtpRequired: "Verify your mobile number with OTP before continuing.",
@@ -107,7 +110,7 @@ const copy = {
     addPrivateGuest: "Add private-room guest",
     guestRegistration: "General guest registration",
     guestRegistrationText:
-      "Use this tab for self and family registration. If the same mobile number is already mapped to an existing family registration, we will show a popup instead of creating a duplicate entry.",
+      "Use this tab for self and family registration. The mobile number does not need to be linked to any Pothi or Pothi Yajman. If the same mobile number is already mapped to an existing family registration, we will show a popup instead of creating a duplicate entry.",
     autoGuestAllocation: "Automatic guest allocation",
     groundFirst: (ground: number, first: number) =>
       `General stock currently includes ${ground} ground-floor rooms and ${first} first-floor rooms before overflow.`,
@@ -223,6 +226,8 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
   const [headName, setHeadName] = useState("");
   const [headMobile, setHeadMobile] = useState("");
   const [city, setCity] = useState("");
+  const [stayFrom, setStayFrom] = useState(EVENT_START_DATE);
+  const [stayTo, setStayTo] = useState(EVENT_END_DATE);
   const [yajmanRoomMembers, setYajmanRoomMembers] = useState<FamilyMemberInput[]>(
     Array.from({ length: 4 }, (_value, index) => createBlankMember({ isHead: index === 0 }))
   );
@@ -241,6 +246,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
   const [otpCode, setOtpCode] = useState("");
   const [verificationToken, setVerificationToken] = useState("");
   const [otpStatus, setOtpStatus] = useState("");
+  const [otpError, setOtpError] = useState("");
   const [message, setMessage] = useState("");
   const [duplicateMessage, setDuplicateMessage] = useState("");
   const [result, setResult] = useState<RegistrationResult | null>(null);
@@ -318,23 +324,34 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
 
     const grouped = new Map<
       string,
-      { room_number: string; venue_name?: string | null; section_name?: string | null; floor?: string | null; members: string[] }
+      { room_number: string; venue_name?: string | null; capacity: number; members: string[] }
     >();
 
     for (const allocation of result.allocations) {
       const existing = grouped.get(allocation.room_number) ?? {
         room_number: allocation.room_number,
         venue_name: allocation.venue_name,
-        section_name: allocation.section_name,
-        floor: allocation.floor,
+        capacity: roomInventory.find((room) => room.room_number === allocation.room_number)?.total_capacity ?? 0,
         members: []
       };
+      existing.capacity = existing.capacity || roomInventory.find((room) => room.room_number === allocation.room_number)?.total_capacity || 0;
       existing.members.push(allocation.member_name);
       grouped.set(allocation.room_number, existing);
     }
 
     return [...grouped.values()];
-  }, [result]);
+  }, [result, roomInventory]);
+
+  const allocationVenueSummary = useMemo(() => {
+    const grouped = new Map<string, typeof allocationRoomSummary>();
+    for (const room of allocationRoomSummary) {
+      const venue = room.venue_name || "Other venue";
+      const roomsForVenue = grouped.get(venue) ?? [];
+      roomsForVenue.push(room);
+      grouped.set(venue, roomsForVenue);
+    }
+    return [...grouped.entries()];
+  }, [allocationRoomSummary]);
 
   useEffect(() => {
     if (!activePothi) return;
@@ -350,12 +367,15 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
     setOtpCode("");
     setVerificationToken("");
     setOtpStatus("");
+    setOtpError("");
   }
 
   function resetAll(nextStage: RegisterStage = "home", nextTab: RegisterTab = "yajman") {
     setHeadName("");
     setHeadMobile("");
     setCity("");
+    setStayFrom(EVENT_START_DATE);
+    setStayTo(EVENT_END_DATE);
     setPothiId(undefined);
     setYajmanRoomMembers(Array.from({ length: 4 }, (_value, index) => createBlankMember({ isHead: index === 0 })));
     setPrivateRoomGuests([]);
@@ -363,6 +383,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
     resetOtpState();
     setMessage("");
     setDuplicateMessage("");
+    setOtpError("");
     setResult(null);
     setTab(nextTab);
     setStage(nextStage);
@@ -402,6 +423,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
     setOtpSending(true);
     setMessage("");
     setOtpStatus("");
+    setOtpError("");
     try {
       const data = await sendSmsOtp({ mobile: headMobile, purpose });
       if (!data) throw new Error("OTP provider returned an empty response.");
@@ -409,7 +431,9 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
       setVerificationToken("");
       setOtpStatus(purpose === "yajman" ? "OTP sent to the Pothi Yajman mobile number." : t.guestOtpSent);
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : "OTP send failed.");
+      const nextError = error instanceof Error ? error.message : "OTP send failed.";
+      setOtpError(nextError);
+      setMessage(nextError);
     } finally {
       setOtpSending(false);
     }
@@ -423,6 +447,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
 
     setOtpVerifying(true);
     setMessage("");
+    setOtpError("");
     try {
       const data = await verifySmsOtp({
         mobile: headMobile,
@@ -452,8 +477,16 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
       setVerificationToken(data.verificationToken);
       setOtpStatus(t.guestOtpVerified);
       setStage("guest-form");
+      try {
+        const existing = await getMyRegistration({ mobile: headMobile, verificationToken: data.verificationToken });
+        if (existing) setResult(existing);
+      } catch {
+        // Room lookup is an enhancement after OTP verification; it must not block a new registration.
+      }
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : "OTP verification failed.");
+      const nextError = error instanceof Error ? error.message : "OTP verification failed.";
+      setOtpError(nextError);
+      setMessage(nextError);
     } finally {
       setOtpVerifying(false);
     }
@@ -485,6 +518,12 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
 
         if (!matchedYajman || !pothiId) {
           setMessage("This mobile number is not mapped to a valid Pothi Yajman.");
+          setLoading(false);
+          return;
+        }
+
+        if (!stayFrom || !stayTo) {
+          setMessage("Please select the stay start and end dates.");
           setLoading(false);
           return;
         }
@@ -526,6 +565,8 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
           verificationToken,
           registrationType: "pothi_room",
           pothiId,
+          stayFrom,
+          stayTo,
           members: [...yajmanPayload, ...privatePayload]
         });
         setResult(data);
@@ -546,6 +587,12 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
         return;
       }
 
+      if (!stayFrom || !stayTo) {
+        setMessage("Please select the stay start and end dates.");
+        setLoading(false);
+        return;
+      }
+
       if (!verificationToken) {
         setMessage(t.guestOtpRequired);
         setLoading(false);
@@ -559,6 +606,8 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
         address: "",
         verificationToken,
         registrationType: "general_room",
+        stayFrom,
+        stayTo,
         members: guestPayload
       });
       setResult(data);
@@ -640,7 +689,8 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
                 enterOtp: t.enterOtp,
                 verifyOtp: t.verifyOtp,
                 verifyingOtp: t.verifyingOtp,
-                verified: t.verified
+                verified: t.verified,
+                verifyAgain: language === "gu" ? "ચકાસાયેલ નંબર. જરૂર પડે તો ફરી OTP ચકાસી શકો." : "Verified number. You can re-check OTP if needed."
               }}
               otpCode={otpCode}
               otpRequestId={otpRequestId}
@@ -648,6 +698,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
               otpSending={otpSending}
               otpVerifying={otpVerifying}
               otpStatus={otpStatus}
+              otpError={otpError}
               loading={loading}
               onOtpCodeChange={setOtpCode}
               onSendOtp={() => void handleSendOtp("yajman")}
@@ -693,7 +744,8 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
               enterOtp: t.enterOtp,
               verifyOtp: t.verifyOtp,
               verifyingOtp: t.verifyingOtp,
-              verified: t.verified
+              verified: t.verified,
+              verifyAgain: language === "gu" ? "ચકાસાયેલ નંબર. જરૂર પડે તો ફરી OTP ચકાસી શકો." : "Verified number. You can re-check OTP if needed."
             }}
             otpCode={otpCode}
             otpRequestId={otpRequestId}
@@ -701,6 +753,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
             otpSending={otpSending}
             otpVerifying={otpVerifying}
             otpStatus={otpStatus}
+            otpError={otpError}
             loading={loading}
             onOtpCodeChange={setOtpCode}
             onSendOtp={() => void handleSendOtp("guest")}
@@ -776,6 +829,17 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
               ))}
             </div>
           ) : null}
+        </div>
+
+        <div className="wide-field date-range-grid">
+          <label>
+            Stay from
+            <input type="date" min={EVENT_START_DATE} max={EVENT_END_DATE} value={stayFrom} onChange={(event) => setStayFrom(event.target.value)} required />
+          </label>
+          <label>
+            Stay until
+            <input type="date" min={stayFrom || EVENT_START_DATE} max={EVENT_END_DATE} value={stayTo} onChange={(event) => setStayTo(event.target.value)} required />
+          </label>
         </div>
 
         <div className="wide-field">
@@ -907,6 +971,17 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
           <input value={city} onChange={(event) => setCity(event.target.value)} />
         </label>
 
+        <div className="wide-field date-range-grid">
+          <label>
+            Stay from
+            <input type="date" min={EVENT_START_DATE} max={EVENT_END_DATE} value={stayFrom} onChange={(event) => setStayFrom(event.target.value)} required />
+          </label>
+          <label>
+            Stay until
+            <input type="date" min={stayFrom || EVENT_START_DATE} max={EVENT_END_DATE} value={stayTo} onChange={(event) => setStayTo(event.target.value)} required />
+          </label>
+        </div>
+
         <div className="wide-field field-stack">
           <h2>{t.guestRegistration}</h2>
           <p className="inline-note">{t.guestRegistrationText}</p>
@@ -994,15 +1069,27 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
             <p className="inline-note">
               {result.family.registration_type === "pothi_room" ? t.yajmanSaved : t.guestsSaved}
             </p>
+            <p className="inline-note stay-dates">
+              Stay: {result.family.stay_from || "-"} to {result.family.stay_to || "-"}
+            </p>
 
-            <div className="room-portfolio">
-              {allocationRoomSummary.map((room) => (
-                <article className="room-info-card" key={room.room_number}>
-                  <strong>{room.room_number}</strong>
-                  <span>{room.members.length} guest(s)</span>
-                  <small>{[room.venue_name, room.section_name, room.floor].filter(Boolean).join(" | ")}</small>
-                  <small>{room.members.join(", ")}</small>
-                </article>
+            <div className="registered-venue-list">
+              {allocationVenueSummary.map(([venue, venueRooms]) => (
+                <section className="registered-venue" key={venue}>
+                  <div className="registered-venue-heading">
+                    <strong>{venue}</strong>
+                    <small>{venueRooms.length} room(s)</small>
+                  </div>
+                  <div className="registered-room-grid">
+                    {venueRooms.map((room) => (
+                      <article className="registered-room-card" key={room.room_number}>
+                        <strong>{room.room_number}</strong>
+                        <span>Capacity: {room.capacity || room.members.length}</span>
+                        <small>{room.members.join(", ")}</small>
+                      </article>
+                    ))}
+                  </div>
+                </section>
               ))}
             </div>
 

@@ -42,6 +42,8 @@ model families {
   pothi_id                                   Int?                     @unique
   reference_pothi_id                         Int?
   private_room_number                        String?
+  stay_from                                  DateTime?                @db.Date
+  stay_to                                    DateTime?                @db.Date
   registration_type                          registration_type        @default(private_room)
   pothi_locked_at                            DateTime?                @db.Timestamptz(6)
   registration_code                          String                   @unique @default(dbgenerated("upper(substr(replace((gen_random_uuid())::text, '-'::text, ''::text), 1, 10))"))

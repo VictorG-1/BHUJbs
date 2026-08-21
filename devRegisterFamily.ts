@@ -1,6 +1,4 @@
-import { handleOptions, json } from "../_shared/cors.ts";
-import { serviceClient } from "../_shared/supabase.ts";
-import { sendWhatsApp } from "../_shared/whatsapp.ts";
+import type { SupabaseClient } from "@supabase/supabase-js";
 
 type MemberInput = {
   name: string;
@@ -10,7 +8,7 @@ type MemberInput = {
   isHead?: boolean;
 };
 
-type RegisterInput = {
+export type RegisterInput = {
   headName: string;
   headMobile: string;
   city?: string;
@@ -42,6 +40,12 @@ type PendingAllocation = {
   venueName: string | null;
   sectionName: string | null;
   floor: string | null;
+};
+
+type RegisterSuccess = {
+  family: Record<string, unknown>;
+  members: Array<{ id: string; name: string }>;
+  allocations: Array<Record<string, unknown>>;
 };
 
 const EVENT_START_DATE = "2026-11-14";
@@ -133,10 +137,7 @@ function planPrivateRoomAllocations(
   return plan;
 }
 
-async function planGeneralRoomAllocations(
-  supabase: ReturnType<typeof serviceClient>,
-  familyMembers: MemberInput[]
-) {
+async function planGeneralRoomAllocations(supabase: SupabaseClient, familyMembers: MemberInput[]) {
   const { data: rooms, error: roomsError } = await supabase
     .from("rooms")
     .select("id, room_number, venue_name, section_name, floor, capacity, sort_order")
@@ -203,7 +204,6 @@ async function planGeneralRoomAllocations(
 
           return {
             room,
-            state,
             remainingSlots,
             canUse,
             canFitWhole: remainingSlots >= remaining.length,
@@ -248,33 +248,31 @@ async function planGeneralRoomAllocations(
   return plan;
 }
 
-Deno.serve(async (req) => {
-  const options = handleOptions(req);
-  if (options) return options;
-
+export async function registerFamilyDev(
+  body: RegisterInput,
+  supabase: SupabaseClient
+): Promise<{ ok: true; data: RegisterSuccess } | { ok: false; status: number; error: string }> {
   try {
-    const body = (await req.json()) as RegisterInput;
     if (!body.headName || !body.headMobile || !body.registrationType || !body.members?.length || !body.stayFrom || !body.stayTo) {
-      return json({ error: "Name, mobile, stay dates, registration type and members are required." }, 400);
+      return { ok: false, status: 400, error: "Name, mobile, stay dates, registration type and members are required." };
     }
     if (body.stayFrom < EVENT_START_DATE || body.stayTo > EVENT_END_DATE || body.stayTo < body.stayFrom) {
-      return json({ error: "Stay dates must be between 14 November 2026 and 20 November 2026." }, 400);
+      return { ok: false, status: 400, error: "Stay dates must be between 14 November 2026 and 20 November 2026." };
     }
 
     const filledMembers = body.members.filter((member) => member.name.trim());
     if (!filledMembers.length) {
-      return json({ error: "Please add at least one member before submitting." }, 400);
+      return { ok: false, status: 400, error: "Please add at least one member before submitting." };
     }
     if (body.registrationType === "pothi_room" && filledMembers.length < 4) {
-      return json({ error: "Pothi Yajman registration needs 4 members for the allotted pothi room." }, 400);
+      return { ok: false, status: 400, error: "Pothi Yajman registration needs 4 members for the allotted pothi room." };
     }
 
-    const supabase = serviceClient();
     const normalizedMobile = normalizeMobile(body.headMobile);
 
     if (body.registrationType === "pothi_room" || body.registrationType === "general_room") {
       if (!body.verificationToken) {
-        return json({ error: "Please verify your mobile number with OTP before registering." }, 403);
+        return { ok: false, status: 403, error: "Please verify your mobile number with OTP before registering." };
       }
 
       const { data: otpVerification, error: otpError } = await supabase
@@ -286,45 +284,23 @@ Deno.serve(async (req) => {
 
       if (otpError) throw otpError;
       if (!otpVerification || !otpVerification.verified_at || otpVerification.consumed_at) {
-        return json({ error: "Please verify your mobile number with OTP before registering." }, 403);
-      }
-    }
-
-    const authHeader = req.headers.get("Authorization") ?? "";
-    const token = authHeader.replace("Bearer ", "");
-    let authUserId: string | null = null;
-
-    if (token) {
-      const { data: authData, error: authError } = await supabase.auth.getUser(token);
-      if (!authError && authData.user) {
-        if (authData.user.phone && normalizeMobile(authData.user.phone) !== normalizedMobile) {
-          return json({ error: "Verified mobile does not match the registration mobile." }, 403);
-        }
-
-        authUserId = authData.user.id;
-
-        const { data: existingFamily, error: existingError } = await supabase
-          .from("families")
-          .select("id, registration_code")
-          .eq("auth_user_id", authUserId)
-          .maybeSingle();
-
-        if (existingError) throw existingError;
-        if (existingFamily) {
-          return json({ error: `This mobile number is already registered. Family code: ${existingFamily.registration_code}.` }, 409);
-        }
+        return { ok: false, status: 403, error: "Please verify your mobile number with OTP before registering." };
       }
     }
 
     const { data: mobileMatchedFamily, error: mobileMatchError } = await supabase
       .from("families")
-      .select("id, registration_code")
-      .eq("head_mobile", body.headMobile)
+      .select("id, registration_code, head_mobile")
+      .or(`head_mobile.eq.${body.headMobile},head_mobile.eq.${normalizedMobile}`)
       .maybeSingle();
 
     if (mobileMatchError) throw mobileMatchError;
     if (mobileMatchedFamily) {
-      return json({ error: `This registration is already done. Family code: ${mobileMatchedFamily.registration_code}.` }, 409);
+      return {
+        ok: false,
+        status: 409,
+        error: `This registration is already done. Family code: ${mobileMatchedFamily.registration_code}.`
+      };
     }
 
     let pothiId: number | null = null;
@@ -336,7 +312,9 @@ Deno.serve(async (req) => {
     let plannedAllocations: PendingAllocation[] = [];
 
     if (body.registrationType === "pothi_room") {
-      if (!body.pothiId) return json({ error: "No Pothi Yajman mapping was found for this mobile number." }, 400);
+      if (!body.pothiId) {
+        return { ok: false, status: 400, error: "No Pothi Yajman mapping was found for this mobile number." };
+      }
 
       const { data: pothi, error: pothiError } = await supabase
         .from("pothis")
@@ -345,9 +323,11 @@ Deno.serve(async (req) => {
         .maybeSingle();
 
       if (pothiError) throw pothiError;
-      if (!pothi || pothi.family_id) return json({ error: "Selected pothi is no longer available." }, 409);
+      if (!pothi || pothi.family_id) {
+        return { ok: false, status: 409, error: "Selected pothi is no longer available." };
+      }
       if (normalizeMobile(pothi.contact_mobile ?? "") !== normalizedMobile) {
-        return json({ error: "This mobile number does not match the mapped Pothi Yajman contact." }, 403);
+        return { ok: false, status: 403, error: "This mobile number does not match the mapped Pothi Yajman contact." };
       }
 
       pothiId = body.pothiId;
@@ -388,10 +368,16 @@ Deno.serve(async (req) => {
 
           if (privateRoomsError) throw privateRoomsError;
           if (!privateRooms?.length) {
-            return json({ error: "This pothi holder does not have linked private rooms for additional guests." }, 400);
+            return {
+              ok: false,
+              status: 400,
+              error: "This pothi holder does not have linked private rooms for additional guests."
+            };
           }
 
-          plannedAllocations.push(...planPrivateRoomAllocations(privateRooms as RoomRow[], extraPrivateMembers, 4));
+          plannedAllocations.push(
+            ...planPrivateRoomAllocations(privateRooms as RoomRow[], extraPrivateMembers, 4)
+          );
         }
       } else {
         primaryRoomNumber = `POTHI-${String(body.pothiId).padStart(2, "0")}`;
@@ -408,77 +394,68 @@ Deno.serve(async (req) => {
           capacity: 4
         };
       }
-    } else {
-      if (body.registrationType === "private_room" && !body.relatedPothiId) {
-        return json({ error: "Please select the related pothi holder." }, 400);
+    } else if (body.registrationType === "private_room") {
+      if (!body.relatedPothiId) {
+        return { ok: false, status: 400, error: "Please select the related pothi holder." };
       }
 
-      if (body.relatedPothiId) {
-        const { data: linkedPothi, error: linkedPothiError } = await supabase
-          .from("pothis")
-          .select("id")
-          .eq("id", body.relatedPothiId)
-          .maybeSingle();
-
-        if (linkedPothiError) throw linkedPothiError;
-        if (!linkedPothi) return json({ error: "Linked pothi was not found." }, 404);
-        referencePothiId = body.relatedPothiId;
+      referencePothiId = body.relatedPothiId;
+      if (!body.privateRoomNumber?.trim()) {
+        return { ok: false, status: 400, error: "Please select the booked private room." };
       }
 
-      if (body.registrationType === "private_room") {
-        if (!body.privateRoomNumber?.trim()) {
-          return json({ error: "Please select the booked private room." }, 400);
-        }
+      privateRoomNumber = body.privateRoomNumber.trim();
+      primaryRoomNumber = privateRoomNumber;
 
-        privateRoomNumber = body.privateRoomNumber.trim();
-        primaryRoomNumber = privateRoomNumber;
+      const { data: bookedRoom, error: bookedRoomError } = await supabase
+        .from("rooms")
+        .select("id, room_number, venue_name, section_name, floor, linked_pothi_id, owner_type")
+        .eq("room_number", primaryRoomNumber)
+        .maybeSingle();
 
-        const { data: bookedRoom, error: bookedRoomError } = await supabase
-          .from("rooms")
-          .select("id, room_number, venue_name, section_name, floor, linked_pothi_id, owner_type")
-          .eq("room_number", primaryRoomNumber)
-          .maybeSingle();
+      if (bookedRoomError) throw bookedRoomError;
 
-        if (bookedRoomError) throw bookedRoomError;
-
-        if (bookedRoom) {
-          if (bookedRoom.owner_type !== "PRIVATE" || bookedRoom.linked_pothi_id !== body.relatedPothiId) {
-            return json({ error: `Room ${primaryRoomNumber} is not available for this pothi holder.` }, 409);
-          }
-          roomId = bookedRoom.id;
-          plannedAllocations = filledMembers.map((_member, memberIndex) => ({
-            memberIndex,
-            roomId: bookedRoom.id,
-            roomNumber: bookedRoom.room_number,
-            venueName: bookedRoom.venue_name,
-            sectionName: bookedRoom.section_name,
-            floor: bookedRoom.floor
-          }));
-        } else {
-          roomPayload = {
-            room_number: primaryRoomNumber,
-            room_type: body.registrationType,
-            venue_name: "Private Booking",
-            section_name: "Imported Later",
-            source_room_number: primaryRoomNumber,
-            owner_type: "PRIVATE",
-            linked_pothi_id: body.relatedPothiId,
-            allotment_note: body.headName,
-            sort_order: 9999,
-            capacity: 4
+      if (bookedRoom) {
+        if (bookedRoom.owner_type !== "PRIVATE" || bookedRoom.linked_pothi_id !== body.relatedPothiId) {
+          return {
+            ok: false,
+            status: 409,
+            error: `Room ${primaryRoomNumber} is not available for this pothi holder.`
           };
         }
+        roomId = bookedRoom.id;
+        plannedAllocations = filledMembers.map((_member, memberIndex) => ({
+          memberIndex,
+          roomId: bookedRoom.id,
+          roomNumber: bookedRoom.room_number,
+          venueName: bookedRoom.venue_name,
+          sectionName: bookedRoom.section_name,
+          floor: bookedRoom.floor
+        }));
       } else {
-        plannedAllocations = await planGeneralRoomAllocations(supabase, filledMembers);
-        const uniqueRooms = [...new Set(plannedAllocations.map((allocation) => allocation.roomNumber))];
-        primaryRoomNumber = uniqueRooms.length === 1 ? uniqueRooms[0] : `${uniqueRooms.length} rooms assigned`;
+        roomPayload = {
+          room_number: primaryRoomNumber,
+          room_type: body.registrationType,
+          venue_name: "Private Booking",
+          section_name: "Imported Later",
+          source_room_number: primaryRoomNumber,
+          owner_type: "PRIVATE",
+          linked_pothi_id: body.relatedPothiId,
+          allotment_note: body.headName,
+          sort_order: 9999,
+          capacity: 4
+        };
       }
+    } else {
+      plannedAllocations = await planGeneralRoomAllocations(supabase, filledMembers);
+      const uniqueRooms = [...new Set(plannedAllocations.map((allocation) => allocation.roomNumber))];
+      primaryRoomNumber = uniqueRooms.length === 1 ? uniqueRooms[0] : `${uniqueRooms.length} rooms assigned`;
     }
 
     const { data: family, error: familyError } = await supabase
       .from("families")
       .insert({
-        auth_user_id: authUserId,
+        auth_user_id: null,
         head_name: body.headName,
         head_mobile: body.headMobile,
         city: body.city ?? null,
@@ -543,7 +520,7 @@ Deno.serve(async (req) => {
     }
 
     if (!plannedAllocations.length) {
-      return json({ error: "Room allocation could not be prepared for this registration." }, 500);
+      return { ok: false, status: 500, error: "Room allocation could not be prepared for this registration." };
     }
 
     const { error: allocationError } = await supabase.from("room_allocations").insert(
@@ -578,45 +555,22 @@ Deno.serve(async (req) => {
       floor: allocation.floor
     }));
 
-    const uniqueRooms = [...new Set(responseAllocations.map((allocation) => allocation.room_number))];
-    const roomMessage =
-      uniqueRooms.length === 1 ? uniqueRooms[0] : `${uniqueRooms.length} rooms assigned`;
-    const message = `Jai Shree Krishna. Registration confirmed for Bhagwat Saptah. Code: ${family.registration_code}. Room: ${roomMessage}.`;
-    const notification = {
-      family_id: family.id,
-      mobile: body.headMobile,
-      template_name: "registration_confirmation",
-      payload: { message, pothiId, referencePothiId, roomNumber: roomMessage }
+    return {
+      ok: true,
+      data: {
+        family: {
+          ...family,
+          room_number: primaryRoomNumber
+        },
+        members,
+        allocations: responseAllocations
+      }
     };
-
-    const { data: queued } = await supabase.from("whatsapp_notifications").insert(notification).select("id").single();
-
-    try {
-      const result = await sendWhatsApp({ mobile: body.headMobile, message });
-      if (queued?.id) {
-        await supabase
-          .from("whatsapp_notifications")
-          .update({ status: "sent", provider_message_id: result.id, sent_at: new Date().toISOString() })
-          .eq("id", queued.id);
-      }
-    } catch (error) {
-      if (queued?.id) {
-        await supabase
-          .from("whatsapp_notifications")
-          .update({ status: "failed", error: error instanceof Error ? error.message : String(error) })
-          .eq("id", queued.id);
-      }
-    }
-
-    return json({
-      family: {
-        ...family,
-        room_number: primaryRoomNumber
-      },
-      members,
-      allocations: responseAllocations
-    });
   } catch (error) {
-    return json({ error: describeError(error) }, 500);
+    return {
+      ok: false,
+      status: 500,
+      error: describeError(error)
+    };
   }
-});
+}

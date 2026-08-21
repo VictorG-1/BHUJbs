@@ -6,6 +6,7 @@ type OtpPanelLabels = {
   verifyOtp: string;
   verifyingOtp: string;
   verified: string;
+  verifyAgain: string;
 };
 
 type OtpPanelProps = {
@@ -16,6 +17,7 @@ type OtpPanelProps = {
   otpSending: boolean;
   otpVerifying: boolean;
   otpStatus: string;
+  otpError?: string;
   loading?: boolean;
   onOtpCodeChange: (value: string) => void;
   onSendOtp: () => void;
@@ -30,6 +32,7 @@ export function OtpPanel({
   otpSending,
   otpVerifying,
   otpStatus,
+  otpError,
   loading = false,
   onOtpCodeChange,
   onSendOtp,
@@ -58,7 +61,9 @@ export function OtpPanel({
           {otpVerifying ? labels.verifyingOtp : verificationToken ? labels.verified : labels.verifyOtp}
         </button>
       </div>
+      {verificationToken ? <p className="inline-note otp-confirmation">{labels.verifyAgain}</p> : null}
       {otpStatus ? <p className="inline-note otp-status">{otpStatus}</p> : null}
+      {otpError ? <p className="form-message otp-error">{otpError}</p> : null}
     </div>
   );
 }
