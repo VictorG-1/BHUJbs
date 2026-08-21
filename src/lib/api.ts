@@ -2,17 +2,11 @@ import { supabase } from "./supabase";
 import type { RegisterFamilyInput, RegistrationResult, SendOtpResult, VerifyOtpResult } from "./types";
 import * as XLSX from "xlsx";
 
-function getSupabasePublicKey() {
-  return import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ?? import.meta.env.VITE_SUPABASE_ANON_KEY ?? "";
-}
-
 function getSupabasePublicHeaders() {
-  const key = getSupabasePublicKey();
-  return {
-    // Supabase publishable keys are opaque API keys, not JWTs. They belong
-    // in `apikey`; sending them as Bearer tokens causes gateway rejection.
-    apikey: key
-  };
+  // OTP, registration, cancellation and lookup functions are deployed with
+  // verify_jwt=false. Omitting the optional API key prevents stale Vercel
+  // keys from being rejected by the Supabase gateway before CORS/function code.
+  return {};
 }
 
 async function extractFunctionError(error: unknown, fallbackMessage: string) {
