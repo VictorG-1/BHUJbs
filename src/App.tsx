@@ -11,6 +11,7 @@ type Language = "en" | "gu";
 export default function App() {
   const [page, setPage] = useState<Page>(() => (window.location.pathname === "/admin" ? "admin" : "landing"));
   const [language, setLanguage] = useState<Language>("en");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handlePopState = () => setPage(window.location.pathname === "/admin" ? "admin" : "landing");
@@ -22,6 +23,7 @@ export default function App() {
     const path = nextPage === "admin" ? "/admin" : "/";
     window.history.pushState({}, "", path);
     setPage(nextPage);
+    setMobileMenuOpen(false);
   }
 
   return (
@@ -37,7 +39,17 @@ export default function App() {
             <span>Shree Kutchi Maheshwari Samaj Bhuj</span>
           </div>
         </button>
-        <nav>
+        <button
+          className="mobile-menu-toggle"
+          type="button"
+          aria-expanded={mobileMenuOpen}
+          aria-controls="main-navigation"
+          onClick={() => setMobileMenuOpen((current) => !current)}
+        >
+          <span className="menu-icon" aria-hidden="true"><i /><i /><i /></span>
+          <span>{mobileMenuOpen ? "Close" : "Menu"}</span>
+        </button>
+        <nav id="main-navigation" className={mobileMenuOpen ? "is-open" : ""}>
           <button className={page === "register" ? "active" : ""} onClick={() => navigate("register")}>
             {language === "gu" ? "નોંધણી" : "Register"}
           </button>
@@ -53,13 +65,13 @@ export default function App() {
           <button className={page === "terms" ? "active" : ""} onClick={() => navigate("terms")}>
             {language === "gu" ? "શરતો" : "Terms"}
           </button>
-          <button
-            className={language === "gu" ? "active" : ""}
-            onClick={() => setLanguage((current) => (current === "en" ? "gu" : "en"))}
-          >
-            {language === "gu" ? "English" : "ગુજરાતી"}
-          </button>
         </nav>
+        <button
+          className={`language-toggle ${language === "gu" ? "active" : ""}`}
+          onClick={() => setLanguage((current) => (current === "en" ? "gu" : "en"))}
+        >
+          {language === "gu" ? "English" : "ગુજરાતી"}
+        </button>
       </header>
 
       {!isSupabaseConfigured ? (

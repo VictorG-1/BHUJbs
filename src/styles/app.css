@@ -186,6 +186,11 @@ h2 {
   min-width: 92px;
 }
 
+.mobile-menu-toggle,
+.language-toggle {
+  display: none;
+}
+
 .active,
 .primary {
   background: var(--accent);
@@ -1151,21 +1156,70 @@ th {
 
 @media (max-width: 780px) {
   .topbar {
-    align-items: flex-start;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 0.65rem;
     padding: 0.75rem 1rem;
   }
 
   .topbar nav {
-    width: 100%;
-    justify-content: flex-start;
-    overflow-x: auto;
-    padding-bottom: 0.15rem;
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 1rem;
+    z-index: 20;
+    display: none;
+    width: min(250px, calc(100vw - 2rem));
+    padding: 0.55rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 8px;
+    background: var(--surface);
+    box-shadow: 0 18px 42px rgba(31, 24, 53, 0.18);
+  }
+
+  .topbar nav.is-open {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
   }
 
   .topbar nav button {
-    flex: 0 0 auto;
-    min-width: 78px;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .mobile-menu-toggle,
+  .language-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    min-width: 0;
+    padding: 0.65rem 0.75rem;
+    white-space: nowrap;
+  }
+
+  .mobile-menu-toggle {
+    border: 1px solid var(--line-strong);
+    background: var(--surface-soft);
+    color: var(--navy);
+  }
+
+  .language-toggle {
+    border: 1px solid var(--line-strong);
+    background: var(--surface-soft);
+  }
+
+  .menu-icon {
+    display: grid;
+    gap: 3px;
+  }
+
+  .menu-icon i {
+    display: block;
+    width: 1rem;
+    height: 2px;
+    background: currentColor;
   }
 
   .brand {
@@ -1212,11 +1266,28 @@ th {
 
   .landing-hero {
     min-height: 0;
-    padding: 1.25rem;
+    gap: 1.4rem;
+    padding: 1.25rem 1rem 1.5rem;
   }
 
   .landing-copy h1 {
+    max-width: 12ch;
     font-size: 2.25rem;
+    line-height: 1.04;
+  }
+
+  .landing-lede {
+    font-size: 1rem;
+  }
+
+  .event-date-badge {
+    width: 100%;
+  }
+
+  .landing-art {
+    justify-content: center;
+    gap: 0.5rem;
+    padding-top: 0.35rem;
   }
 
   .itinerary-row {
@@ -1303,27 +1374,17 @@ th {
     font-size: 0.72rem;
   }
 
-  .topbar nav {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    overflow: visible;
-  }
-
-  .topbar nav button {
-    width: 100%;
-    min-width: 0;
-  }
-
   h1 {
     font-size: 2rem;
   }
 
   .landing-copy h1 {
-    font-size: 2rem;
+    font-size: 2.05rem;
   }
 
   .landing-art img {
-    width: 34%;
+    width: 44%;
+    max-width: 150px;
   }
 
   .button-row,
