@@ -1,0 +1,19 @@
+project_id = "zvvuoiiftbfnnwzpnnyq"
+
+# These functions perform their own OTP/verification checks and are called
+# directly by the public registration flow, so the Supabase gateway must not
+# require a user JWT before invoking them.
+[functions.send-sms-otp]
+verify_jwt = false
+
+[functions.verify-sms-otp]
+verify_jwt = false
+
+[functions.register-family]
+verify_jwt = false
+
+[functions.cancel-registration]
+verify_jwt = false
+
+[functions.get-registration]
+verify_jwt = false

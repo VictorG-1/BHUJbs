@@ -48,16 +48,26 @@ async function invokeOtp<T>(
   const endpoint = import.meta.env.DEV
     ? `/dev-api/${functionName}`
     : `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/${functionName}`;
-  const response = await fetch(endpoint, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      ...(import.meta.env.DEV
-        ? {}
-        : { apikey: import.meta.env.VITE_SUPABASE_ANON_KEY ?? import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY })
-    },
-    body: JSON.stringify(body)
-  });
+  let response: Response;
+  try {
+    response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(import.meta.env.DEV
+          ? {}
+          : { apikey: import.meta.env.VITE_SUPABASE_ANON_KEY ?? import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY })
+      },
+      body: JSON.stringify(body)
+    });
+  } catch (error) {
+    if (error instanceof TypeError && /fetch/i.test(error.message)) {
+      throw new Error(
+        `Cannot reach ${functionName}. Deploy the Supabase Edge Function and check its production URL and CORS settings.`
+      );
+    }
+    throw error;
+  }
 
   const payload = (await response.json().catch(() => ({}))) as (T & { error?: string; message?: string }) | null;
   if (!response.ok) {
