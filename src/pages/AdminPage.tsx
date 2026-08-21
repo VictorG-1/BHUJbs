@@ -5,7 +5,7 @@ import fallbackRoomsData from "../data/rooms.json";
 import { PothiGrid } from "../components/PothiGrid";
 import { StatusPill } from "../components/StatusPill";
 import { downloadAdminWorkbook, downloadExportData } from "../lib/api";
-import { checkSupabaseConnection, supabase } from "../lib/supabase";
+import { supabase } from "../lib/supabase";
 import type { AdminMemberRow, Pothi, RoomInventory } from "../lib/types";
 
 type Language = "en" | "gu";
@@ -131,7 +131,6 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
   const [searchPothi, setSearchPothi] = useState("all");
   const [selectedVenue, setSelectedVenue] = useState("all");
   const [status, setStatus] = useState("");
-  const [connectionError, setConnectionError] = useState("");
 
   async function load() {
     const [{ data: memberData, error: memberError }, { data: pothiData, error: pothiError }, { data: roomData, error: roomError }] = await Promise.all([
@@ -157,12 +156,6 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
     setRoomsInventory(((roomData ?? []) as Array<RoomInventory & { capacity?: number | null }>).map(normalizeRoom));
     setStatus("");
   }
-
-  useEffect(() => {
-    void checkSupabaseConnection().then((result) => {
-      setConnectionError(result.ok ? "" : result.message);
-    });
-  }, []);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => setSession(data.session));
@@ -333,13 +326,6 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
     event.preventDefault();
     setStatus(language === "gu" ? "સાઇન ઇન કરી રહ્યા છીએ..." : "Signing in...");
 
-    const connection = await checkSupabaseConnection();
-    if (!connection.ok) {
-      setConnectionError(connection.message);
-      setStatus(language === "gu" ? "Supabase ઉપલબ્ધ ન થાય ત્યાં સુધી સાઇન ઇન કરી શકાતું નથી." : "Cannot sign in until Supabase is reachable.");
-      return;
-    }
-
     try {
       const login = supabase.auth.signInWithPassword({ email, password });
       const timeout = new Promise<{ error: { message: string } }>((resolve) => {
@@ -383,7 +369,6 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
           <h1>{t.loginTitle}</h1>
           <p>{t.loginText}</p>
         </div>
-        {connectionError ? <p className="form-message">{connectionError}</p> : null}
         <form className="auth-card auth-form" onSubmit={handleLogin}>
           <label>
             {t.email}
