@@ -24,7 +24,8 @@ const fallbackPothis = fallbackPothisData as Pothi[];
 const fallbackRooms = (fallbackRoomsData as RoomInventory[]).map(normalizeRoomInventory);
 
 function normalizeMobile(mobile: string) {
-  return mobile.replace(/\D/g, "");
+  const digits = mobile.replace(/\D/g, "");
+  return digits.length > 10 ? digits.slice(-10) : digits;
 }
 
 function createBlankMember(overrides: Partial<FamilyMemberInput> = {}): FamilyMemberInput {
@@ -258,7 +259,10 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
       .select("id, family_id, primary_holder_name, city, co_holders, handover_name, contact_name, contact_mobile")
       .order("id")
       .then(({ data, error }) => {
-        if (!error && data?.length) setPothis(data as Pothi[]);
+        if (!error && data?.length) {
+          const liveById = new Map((data as Pothi[]).map((pothi) => [pothi.id, pothi]));
+          setPothis(fallbackPothis.map((fallback) => ({ ...fallback, ...liveById.get(fallback.id) })));
+        }
       });
   }, []);
 

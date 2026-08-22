@@ -4,7 +4,8 @@ import { serviceClient } from "../_shared/supabase.ts";
 type LookupInput = { mobile?: string; verificationToken?: string };
 
 function normalizeMobile(value: string) {
-  return value.replace(/\D/g, "");
+  const digits = value.replace(/\D/g, "");
+  return digits.length > 10 ? digits.slice(-10) : digits;
 }
 
 function describeError(error: unknown) {

@@ -14,7 +14,8 @@ type SendOtpInput = {
 };
 
 function normalizeMobile(mobile: string) {
-  return mobile.replace(/\D/g, "");
+  const digits = mobile.replace(/\D/g, "");
+  return digits.length > 10 ? digits.slice(-10) : digits;
 }
 
 async function sha256(value: string) {
