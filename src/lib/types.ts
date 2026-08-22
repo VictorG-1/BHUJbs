@@ -29,6 +29,11 @@ export type SendOtpResult = {
   expiresAt: string;
   sent: boolean;
   smsSubmitted?: boolean;
+  mappedPothi?: {
+    id: number;
+    primary_holder_name?: string | null;
+    city?: string | null;
+  };
 };
 
 export type VerifyOtpResult = {

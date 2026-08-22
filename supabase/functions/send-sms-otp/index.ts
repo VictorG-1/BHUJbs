@@ -37,11 +37,12 @@ Deno.serve(async (req) => {
     if (mobile.length < 10) return json({ error: "Enter a valid mobile number." }, 400);
 
     const supabase = serviceClient();
+    let mappedPothi: { id: number; primary_holder_name: string | null; city: string | null } | undefined;
 
     if (body.purpose === "yajman") {
       const { data: pothis, error: pothiError } = await supabase
         .from("pothis")
-        .select("id, contact_mobile")
+        .select("id, primary_holder_name, city, contact_mobile")
         .not("contact_mobile", "is", null);
 
       if (pothiError) throw pothiError;
@@ -50,6 +51,11 @@ Deno.serve(async (req) => {
       if (!pothi) {
         return json({ error: "This mobile number is not mapped to any Pothi Yajman contact." }, 404);
       }
+      mappedPothi = {
+        id: pothi.id,
+        primary_holder_name: pothi.primary_holder_name,
+        city: pothi.city
+      };
     }
 
     const otp = String(Math.floor(100000 + Math.random() * 900000));
@@ -80,7 +86,8 @@ Deno.serve(async (req) => {
     return json({
       requestId: record.id,
       expiresAt,
-      sent: true
+      sent: true,
+      ...(mappedPothi ? { mappedPothi } : {})
     });
   } catch (error) {
     return json({ error: error instanceof Error ? error.message : "OTP send failed." }, 500);

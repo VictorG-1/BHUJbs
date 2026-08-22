@@ -247,6 +247,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
   const [verificationToken, setVerificationToken] = useState("");
   const [otpStatus, setOtpStatus] = useState("");
   const [otpError, setOtpError] = useState("");
+  const [otpMappedPothi, setOtpMappedPothi] = useState<Pothi | null>(null);
   const [message, setMessage] = useState("");
   const [duplicateMessage, setDuplicateMessage] = useState("");
   const [result, setResult] = useState<RegistrationResult | null>(null);
@@ -368,6 +369,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
     setVerificationToken("");
     setOtpStatus("");
     setOtpError("");
+    setOtpMappedPothi(null);
   }
 
   function resetAll(nextStage: RegisterStage = "home", nextTab: RegisterTab = "yajman") {
@@ -427,6 +429,15 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
     try {
       const data = await sendSmsOtp({ mobile: headMobile, purpose });
       if (!data) throw new Error("OTP provider returned an empty response.");
+      if (purpose === "yajman" && data.mappedPothi) {
+        setOtpMappedPothi({
+          id: data.mappedPothi.id,
+          primary_holder_name: data.mappedPothi.primary_holder_name ?? "",
+          city: data.mappedPothi.city ?? "",
+          contact_mobile: headMobile,
+          family_id: null
+        });
+      }
       setOtpRequestId(data.requestId);
       setVerificationToken("");
       setOtpStatus(purpose === "yajman" ? "OTP sent to the Pothi Yajman mobile number." : t.guestOtpSent);
@@ -458,7 +469,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
 
       if (purpose === "yajman") {
         const normalized = normalizeMobile(headMobile);
-        const matchedPothi = pothiOptions.find((pothi) => normalizeMobile(pothi.contact_mobile ?? "") === normalized);
+        const matchedPothi = otpMappedPothi ?? pothiOptions.find((pothi) => normalizeMobile(pothi.contact_mobile ?? "") === normalized);
         if (!matchedPothi) {
           setVerificationToken("");
           setOtpStatus("");
