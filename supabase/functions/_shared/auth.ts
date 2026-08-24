@@ -2,6 +2,10 @@ import { json } from "./cors.ts";
 import { serviceClient } from "./supabase.ts";
 
 export async function requireAdmin(req: Request) {
+  return requireStaff(req, ["admin"]);
+}
+
+export async function requireStaff(req: Request, roles = ["admin", "subadmin"]) {
   const authHeader = req.headers.get("Authorization") ?? "";
   const token = authHeader.replace("Bearer ", "");
   if (!token) return { error: json({ error: "Admin login required." }, 401) };
@@ -12,12 +16,12 @@ export async function requireAdmin(req: Request) {
 
   const { data: profile, error: profileError } = await supabase
     .from("admin_profiles")
-    .select("user_id")
+    .select("user_id, role")
     .eq("user_id", userData.user.id)
     .maybeSingle();
 
   if (profileError) throw profileError;
-  if (!profile) return { error: json({ error: "Admin access required." }, 403) };
+  if (!profile || !roles.includes(profile.role)) return { error: json({ error: "Event staff access required." }, 403) };
 
-  return { supabase, user: userData.user };
+  return { supabase, user: userData.user, role: profile.role };
 }

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import fallbackPothisData from "../data/pothis.json";
 import fallbackRoomsData from "../data/rooms.json";
 import { OtpPanel } from "../components/OtpPanel";
+import { MemberQrCode } from "../components/MemberQrCode";
 import { cancelRegistration, getMyRegistration, registerFamily, sendSmsOtp, verifySmsOtp } from "../lib/api";
 import { supabase } from "../lib/supabase";
 import type { FamilyMemberInput, Pothi, RegistrationResult, RoomInventory } from "../lib/types";
@@ -481,6 +482,15 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
           return;
         }
         setVerificationToken(data.verificationToken);
+        try {
+          const existing = await getMyRegistration({ mobile: headMobile, verificationToken: data.verificationToken });
+          if (existing) {
+            setResult(existing);
+            return;
+          }
+        } catch {
+          // A new yajman continues into the registration form.
+        }
         setHeadName(matchedPothi.primary_holder_name || "");
         setCity(matchedPothi.city || "");
         setPothiId(matchedPothi.id);
@@ -1118,6 +1128,14 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
                   </small>
                 </article>
               ))}
+            </div>
+
+            <div className="member-qr-list">
+              <div className="panel-header-inline"><div><h3>Member QR codes</h3><p>Download and keep each member code ready for event entry.</p></div></div>
+              {result.members.map((member) => {
+                const allocation = result.allocations.find((item) => item.member_id === member.id);
+                return <MemberQrCode key={member.id} member={member} details={{ family_code: result.family.registration_code, venue: allocation?.venue_name ?? "", room: allocation?.room_number ?? "" }} />;
+              })}
             </div>
 
             <div className="button-row">

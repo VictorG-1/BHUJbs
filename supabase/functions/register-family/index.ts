@@ -508,7 +508,7 @@ Deno.serve(async (req) => {
     const { data: members, error: memberError } = await supabase
       .from("members")
       .insert(normalizedMembers)
-      .select("id, name");
+      .select("id, name, age, gender, mobile, qr_token");
 
     if (memberError) throw memberError;
 

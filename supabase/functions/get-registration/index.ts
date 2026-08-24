@@ -57,7 +57,7 @@ Deno.serve(async (req) => {
 
     const { data: members, error: membersError } = await supabase
       .from("members")
-      .select("id, name, age, gender, mobile, is_head")
+      .select("id, name, age, gender, mobile, is_head, qr_token")
       .eq("family_id", family.id)
       .order("created_at");
     if (membersError) throw membersError;
@@ -72,7 +72,7 @@ Deno.serve(async (req) => {
     return json({
       found: true,
       family: { ...family, room_number: allocations?.[0]?.rooms?.room_number ?? null },
-      members: (members ?? []).map(({ id, name }) => ({ id, name })),
+      members: (members ?? []).map(({ id, name, age, gender, mobile, qr_token }) => ({ id, name, age, gender, mobile, qr_token })),
       allocations: (allocations ?? []).map((allocation) => ({
         member_id: allocation.member_id,
         member_name: members?.find((member) => member.id === allocation.member_id)?.name ?? "Guest",

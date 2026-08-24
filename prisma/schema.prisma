@@ -17,6 +17,7 @@ model users {
   updated_at     DateTime?       @db.Timestamptz(6)
   admin_profiles admin_profiles?
   families       families?
+  qr_scans       qr_scans[]
 
   @@schema("auth")
 }
@@ -87,11 +88,27 @@ model members {
   gender                 gender_type
   mobile                 String?
   is_head                Boolean                  @default(false)
+  qr_token               String                   @unique @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  qr_revoked_at          DateTime?                @db.Timestamptz(6)
   created_at             DateTime                 @default(now()) @db.Timestamptz(6)
   families               families                 @relation(fields: [family_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   room_allocations       room_allocations?
   whatsapp_notifications whatsapp_notifications[]
+  qr_scans               qr_scans[]
 
+  @@schema("public")
+}
+
+model qr_scans {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  member_id  String   @db.Uuid
+  scan_type  String   @default("entry")
+  scanned_by String   @db.Uuid
+  scanned_at DateTime @default(now()) @db.Timestamptz(6)
+  members    members  @relation(fields: [member_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users      users    @relation(fields: [scanned_by], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([member_id, scan_type, scanned_at], map: "qr_scans_member_type_date_idx")
   @@schema("public")
 }
 

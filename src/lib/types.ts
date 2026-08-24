@@ -44,6 +44,11 @@ export type VerifyOtpResult = {
 export type RegisteredMember = {
   id: string;
   name: string;
+  age?: number;
+  gender?: Gender;
+  mobile?: string | null;
+  qr_token?: string;
+  qr_revoked_at?: string | null;
 };
 
 export type RegistrationResult = {
@@ -97,6 +102,8 @@ export type RoomInventory = {
 export type AdminMemberRow = {
   id: string;
   name: string;
+  qr_token?: string;
+  qr_revoked_at?: string | null;
   age: number;
   gender: Gender;
   mobile: string | null;

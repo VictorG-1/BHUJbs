@@ -1,26 +1,27 @@
 import { useEffect, useState } from "react";
 import { AdminPage } from "./pages/AdminPage";
+import { ScannerPage } from "./pages/ScannerPage";
 import { RegisterPage } from "./pages/RegisterPage";
 import { BroadcastPage, ItineraryPage, LandingPage, SiteFooter, SponsorsPage, TermsPage } from "./pages/PublicPages";
 import { isSupabaseConfigured } from "./lib/supabase";
 import "./styles/app.css";
 
-type Page = "landing" | "register" | "admin" | "itinerary" | "broadcast" | "sponsors" | "terms";
+type Page = "landing" | "register" | "admin" | "scanner" | "itinerary" | "broadcast" | "sponsors" | "terms";
 type Language = "en" | "gu";
 
 export default function App() {
-  const [page, setPage] = useState<Page>(() => (window.location.pathname === "/admin" ? "admin" : "landing"));
+  const [page, setPage] = useState<Page>(() => window.location.pathname === "/admin" ? "admin" : window.location.pathname === "/scanner" ? "scanner" : "landing");
   const [language, setLanguage] = useState<Language>("en");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handlePopState = () => setPage(window.location.pathname === "/admin" ? "admin" : "landing");
+    const handlePopState = () => setPage(window.location.pathname === "/admin" ? "admin" : window.location.pathname === "/scanner" ? "scanner" : "landing");
     window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
   }, []);
 
   function navigate(nextPage: Page) {
-    const path = nextPage === "admin" ? "/admin" : "/";
+    const path = nextPage === "admin" ? "/admin" : nextPage === "scanner" ? "/scanner" : "/";
     window.history.pushState({}, "", path);
     setPage(nextPage);
     setMobileMenuOpen(false);
@@ -84,6 +85,7 @@ export default function App() {
         {page === "landing" ? <LandingPage language={language} onNavigate={navigate} /> : null}
         {page === "register" ? <RegisterPage language={language} /> : null}
         {page === "admin" ? <AdminPage language={language} /> : null}
+        {page === "scanner" ? <ScannerPage /> : null}
         {page === "itinerary" ? <ItineraryPage language={language} onNavigate={navigate} /> : null}
         {page === "broadcast" ? <BroadcastPage language={language} onNavigate={navigate} /> : null}
         {page === "sponsors" ? <SponsorsPage language={language} onNavigate={navigate} /> : null}

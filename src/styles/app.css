@@ -805,6 +805,52 @@ h2 {
   margin-bottom: 0.75rem;
 }
 
+.member-qr-list {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.member-qr-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-soft);
+}
+
+.member-qr-card img {
+  width: 112px;
+  height: 112px;
+  object-fit: contain;
+  background: white;
+  border-radius: 4px;
+}
+
+.member-qr-card div {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.member-qr-card small { color: var(--muted); }
+.member-qr-card button { width: fit-content; }
+.qr-loading { width: 112px; height: 112px; display: grid; place-items: center; color: var(--muted); }
+.button-link { text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
+.scanner-panel { max-width: 620px; margin: 0 auto; display: grid; gap: 1rem; }
+.scanner-hero { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.scanner-signout { width: auto; min-width: 0; padding: 0.45rem 0.75rem; font-size: 0.85rem; white-space: nowrap; }
+.qr-reader { min-height: 300px; overflow: hidden; border: 1px solid var(--line); border-radius: 8px; background: #111; }
+.scan-result { display: grid; gap: 0.3rem; padding: 1rem; border: 1px solid #75bd91; border-radius: 8px; background: #effaf2; color: var(--navy); }
+.scan-result span, .scan-result small { color: var(--muted); }
+.manual-qr-form { display: grid; gap: 0.65rem; padding-top: 0.75rem; border-top: 1px solid var(--line); }
+.manual-qr-form textarea { width: 100%; resize: vertical; }
+.table-action { padding: 0.35rem 0.55rem; font-size: 0.78rem; border: 1px solid var(--line-strong); border-radius: 6px; background: var(--surface-soft); color: var(--navy); }
+.table-action:disabled { opacity: 0.65; cursor: default; }
+
 .date-range-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1468,4 +1514,9 @@ th {
   .detail-strip {
     overflow-wrap: anywhere;
   }
+
+  .member-qr-card { align-items: flex-start; }
+  .member-qr-card img, .qr-loading { width: 86px; height: 86px; }
+  .scanner-hero { align-items: stretch; }
+  .scanner-signout { align-self: flex-start; }
 }

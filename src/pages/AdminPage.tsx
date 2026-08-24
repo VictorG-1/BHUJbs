@@ -1,8 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
+import JSZip from "jszip";
+import QRCode from "qrcode";
 import type { Session } from "@supabase/supabase-js";
 import fallbackPothisData from "../data/pothis.json";
 import fallbackRoomsData from "../data/rooms.json";
 import { PothiGrid } from "../components/PothiGrid";
+import { qrPayload } from "../components/MemberQrCode";
 import { StatusPill } from "../components/StatusPill";
 import { downloadAdminWorkbook, downloadExportData } from "../lib/api";
 import { supabase } from "../lib/supabase";
@@ -123,6 +126,7 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [members, setMembers] = useState<AdminMemberRow[]>([]);
+  const [scanLogs, setScanLogs] = useState<Array<{ id: string; scan_type: string; scanned_at: string; members?: { name?: string } | null }>>([]);
   const [pothis, setPothis] = useState<Pothi[]>(fallbackPothis);
   const [roomsInventory, setRoomsInventory] = useState<RoomInventory[]>(fallbackRooms);
   const [masterSearch, setMasterSearch] = useState("");
@@ -133,19 +137,20 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
   const [status, setStatus] = useState("");
 
   async function load() {
-    const [{ data: memberData, error: memberError }, { data: pothiData, error: pothiError }, { data: roomData, error: roomError }] = await Promise.all([
+    const [{ data: memberData, error: memberError }, { data: pothiData, error: pothiError }, { data: roomData, error: roomError }, { data: scanData, error: scanError }] = await Promise.all([
       supabase
         .from("members")
-        .select("id, name, age, gender, mobile, is_head, families(id, head_name, head_mobile, city, wants_stay, pothi_id, reference_pothi_id, registration_type, private_room_number), room_allocations(rooms(room_number, venue_name, section_name))")
+        .select("id, name, age, gender, mobile, is_head, qr_token, qr_revoked_at, families(id, head_name, head_mobile, city, wants_stay, pothi_id, reference_pothi_id, registration_type, private_room_number), room_allocations(rooms(room_number, venue_name, section_name))")
         .order("name"),
       supabase.from("pothis").select("id, family_id").order("id"),
       supabase
         .from("rooms")
         .select("room_number, venue_name, section_name, source_room_number, floor, ac_type, bed_count, extra_count, capacity, owner_type, linked_pothi_id, allotment_note, room_type, sort_order")
-        .order("sort_order")
+        .order("sort_order"),
+      supabase.from("qr_scans").select("id, scan_type, scanned_at, members(name)").order("scanned_at", { ascending: false }).limit(100)
     ]);
 
-    const queryError = memberError ?? pothiError ?? roomError;
+    const queryError = memberError ?? pothiError ?? roomError ?? scanError;
     if (queryError) {
       setStatus(queryError.message);
       return;
@@ -154,6 +159,7 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
     setMembers((memberData ?? []) as unknown as AdminMemberRow[]);
     setPothis((pothiData ?? []) as Pothi[]);
     setRoomsInventory(((roomData ?? []) as Array<RoomInventory & { capacity?: number | null }>).map(normalizeRoom));
+    setScanLogs((scanData ?? []) as typeof scanLogs);
     setStatus("");
   }
 
@@ -330,6 +336,43 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
     }
   }
 
+  async function handleQrBulkDownload() {
+    setStatus(language === "gu" ? "QR કોડ તૈયાર કરી રહ્યા છીએ..." : "Preparing QR codes...");
+    try {
+      const zip = new JSZip();
+      for (const member of members) {
+        if (!member.qr_token) continue;
+        const roomDetails = member.room_allocations?.[0]?.rooms;
+        const dataUrl = await QRCode.toDataURL(qrPayload({
+          ...member,
+          family_code: member.families?.id ?? "",
+          venue: roomDetails?.venue_name ?? "",
+          room: roomDetails?.room_number ?? ""
+        }), { width: 500, margin: 2 });
+        zip.file(`${member.name.replace(/[^a-z0-9]+/gi, "-") || member.id}-qr.png`, dataUrl.split(",")[1], { base64: true });
+      }
+      const blob = await zip.generateAsync({ type: "blob" });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a"); anchor.href = url; anchor.download = "bhagwat-saptah-member-qr-codes.zip"; anchor.click(); URL.revokeObjectURL(url);
+      setStatus(language === "gu" ? "બધા QR કોડ ડાઉનલોડ થયા." : "All QR codes downloaded.");
+    } catch (error) { setStatus(error instanceof Error ? error.message : "QR download failed."); }
+  }
+
+  function downloadScanLog() {
+    const rows = [["guest_name", "scan_type", "scanned_at"], ...scanLogs.map((scan) => [scan.members?.name ?? "", scan.scan_type, scan.scanned_at])];
+    const csv = rows.map((row) => row.map((value) => `"${String(value).replace(/"/g, '""')}"`).join(",")).join("\n");
+    const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+    const anchor = document.createElement("a"); anchor.href = url; anchor.download = "bhagwat-saptah-qr-scan-log.csv"; anchor.click(); URL.revokeObjectURL(url);
+  }
+
+  async function revokeQr(member: AdminMemberRow) {
+    if (member.qr_revoked_at || !window.confirm(`Revoke QR for ${member.name}?`)) return;
+    const { error } = await supabase.from("members").update({ qr_revoked_at: new Date().toISOString() }).eq("id", member.id);
+    if (error) { setStatus(error.message); return; }
+    setMembers((current) => current.map((item) => item.id === member.id ? { ...item, qr_revoked_at: new Date().toISOString() } : item));
+    setStatus(`QR revoked for ${member.name}.`);
+  }
+
   async function handleLogin(event: React.FormEvent) {
     event.preventDefault();
     setStatus(language === "gu" ? "સાઇન ઇન કરી રહ્યા છીએ..." : "Signing in...");
@@ -349,7 +392,7 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
         return;
       }
 
-      const { data: adminProfile, error: adminError } = await supabase.from("admin_profiles").select("user_id").maybeSingle();
+      const { data: adminProfile, error: adminError } = await supabase.from("admin_profiles").select("user_id, role").eq("user_id", (await supabase.auth.getUser()).data.user?.id ?? "").maybeSingle();
 
       if (adminError) {
         setStatus(adminError.message);
@@ -357,7 +400,7 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
         return;
       }
 
-      if (!adminProfile) {
+      if (!adminProfile || adminProfile.role !== "admin") {
         setStatus(language === "gu" ? "આ એકાઉન્ટ એડમિન નથી. owner ને admin_profiles માં ઉમેરવા કહો." : "This account is not an admin. Ask an owner to add your user to admin_profiles.");
         await supabase.auth.signOut();
         return;
@@ -421,6 +464,9 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
           <div className="admin-actions admin-actions-bar">
             <button className="secondary" onClick={handleWorkbookExport}>{language === "gu" ? "એક્સેલ વર્કબુક" : "Excel workbook"}</button>
             <button className="secondary" onClick={handleExport}>{t.exportCsv}</button>
+            <button className="secondary" onClick={handleQrBulkDownload}>{language === "gu" ? "બધા QR ડાઉનલોડ" : "Download all QR codes"}</button>
+            <button className="secondary" onClick={downloadScanLog}>{language === "gu" ? "સ્કેન લોગ" : "Export scan log"}</button>
+            <a className="secondary button-link" href="/scanner">QR scanner</a>
             <button className="secondary" onClick={() => supabase.auth.signOut()}>{t.signOut}</button>
           </div>
         </div>
@@ -476,6 +522,17 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
         </div>
       </div>
 
+      <div className="dashboard-panel dashboard-panel-surface">
+        <div className="panel-header panel-header-inline">
+          <div><h2>{language === "gu" ? "QR સ્કેન રેકોર્ડ" : "QR scan record"}</h2><p>{language === "gu" ? "તાજેતરના માન્ય પ્રવેશ સ્કેન." : "Recent QR validations recorded during the event."}</p></div>
+        </div>
+        <div className="table-wrap">
+          <table><thead><tr><th>{t.name}</th><th>{language === "gu" ? "પ્રકાર" : "Scan type"}</th><th>{language === "gu" ? "સમય" : "Scanned at"}</th></tr></thead>
+            <tbody>{scanLogs.map((scan) => <tr key={scan.id}><td>{scan.members?.name ?? "-"}</td><td>{scan.scan_type}</td><td>{new Date(scan.scanned_at).toLocaleString()}</td></tr>)}{!scanLogs.length ? <tr><td colSpan={3}>{language === "gu" ? "હજી કોઈ સ્કેન નથી." : "No QR scans recorded yet."}</td></tr> : null}</tbody>
+          </table>
+        </div>
+      </div>
+
       <div className="admin-grid">
         <div className="dashboard-panel dashboard-panel-surface">
           <div className="panel-header panel-header-inline">
@@ -494,6 +551,7 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
                   <th>{t.type}</th>
                   <th>{language === "gu" ? "વેન્યુ" : "Venue"}</th>
                   <th>{t.room}</th>
+                  <th>QR</th>
                 </tr>
               </thead>
               <tbody>
@@ -515,11 +573,12 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
                     </td>
                     <td>{member.room_allocations?.[0]?.rooms?.venue_name ?? "-"}</td>
                     <td>{member.room_allocations?.[0]?.rooms?.room_number ?? "-"}</td>
+                    <td><button type="button" className="table-action" disabled={Boolean(member.qr_revoked_at)} onClick={() => void revokeQr(member)}>{member.qr_revoked_at ? "Revoked" : "Revoke"}</button></td>
                   </tr>
                 ))}
                 {!filtered.length ? (
                   <tr>
-                    <td colSpan={6}>{t.noRows}</td>
+                    <td colSpan={7}>{t.noRows}</td>
                   </tr>
                 ) : null}
               </tbody>
