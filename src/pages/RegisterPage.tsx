@@ -68,6 +68,7 @@ const copy = {
     yajmanCardText: "Login with the mapped yajman mobile number, verify OTP, then add room members and private-room guests.",
     guestCard: "General Guest Login",
     guestCardText: "Enter your details, verify your mobile with OTP, then add family members for automatic room allotment. No Pothi linkage is needed for this path.",
+    guestComingSoon: "Coming soon",
     continue: "Continue",
     back: "Back",
     mobile: "Mobile",
@@ -148,6 +149,7 @@ const copy = {
     yajmanCardText: "પોથી સાથે જોડાયેલ મોબાઇલથી લોગિન કરો, OTP ચકાસો અને પછી રૂમ માટેના સભ્યો ઉમેરો.",
     guestCard: "સામાન્ય મહેમાન લોગિન",
     guestCardText: "તમારી વિગતો દાખલ કરો, મોબાઇલ OTPથી ચકાસો અને પછી પરિવાર માટે ઓટો રૂમ ફાળવણીવાળા ફોર્મ પર આગળ વધો.",
+    guestComingSoon: "ટૂંક સમયમાં ઉપલબ્ધ",
     continue: "આગળ વધો",
     back: "પાછા જાઓ",
     mobile: "મોબાઇલ",
@@ -685,8 +687,8 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
         <article className="entry-card">
           <h2>{t.guestCard}</h2>
           <p>{t.guestCardText}</p>
-          <button type="button" className="primary" onClick={goToGuestLogin}>
-            {t.continue}
+          <button type="button" className="secondary" disabled>
+            {t.guestComingSoon}
           </button>
         </article>
       </div>

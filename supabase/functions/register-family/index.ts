@@ -265,6 +265,9 @@ Deno.serve(async (req) => {
     if (!filledMembers.length) {
       return json({ error: "Please add at least one member before submitting." }, 400);
     }
+    if (body.registrationType === "general_room") {
+      return json({ error: "General guest registration is coming soon." }, 403);
+    }
     if (body.registrationType === "pothi_room" && filledMembers.length > 4) {
       return json({ error: "Pothi Yajman registration can include a maximum of 4 allotted-room members." }, 400);
     }
