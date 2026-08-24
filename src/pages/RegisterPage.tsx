@@ -69,6 +69,18 @@ const copy = {
     guestCard: "General Guest Login",
     guestCardText: "Enter your details, verify your mobile with OTP, then add family members for automatic room allotment. No Pothi linkage is needed for this path.",
     guestComingSoon: "Coming soon",
+    addRoomMember: (count: number) => `Add room member (${count}/4)`,
+    noticesTitle: "Important registration information",
+    notices: [
+      "Use the mobile number registered with the Pothi Yajman for Pothi room registration.",
+      "OTP verification is required before continuing.",
+      "A Pothi Yajman may register 1 to 4 members in the allotted Pothi room.",
+      "Additional guests are placed only in linked private rooms, subject to available capacity.",
+      "Stay dates must be between 14 November 2026 and 20 November 2026.",
+      "Each mobile number can be used for only one registration. Existing registrations can be opened again with OTP.",
+      "After registration, save the room details and downloadable QR codes for every member.",
+      "Cancellation is available from the saved registration result before the event."
+    ],
     continue: "Continue",
     back: "Back",
     mobile: "Mobile",
@@ -150,6 +162,18 @@ const copy = {
     guestCard: "સામાન્ય મહેમાન લોગિન",
     guestCardText: "તમારી વિગતો દાખલ કરો, મોબાઇલ OTPથી ચકાસો અને પછી પરિવાર માટે ઓટો રૂમ ફાળવણીવાળા ફોર્મ પર આગળ વધો.",
     guestComingSoon: "ટૂંક સમયમાં ઉપલબ્ધ",
+    addRoomMember: (count: number) => `રૂમ સભ્ય ઉમેરો (${count}/4)`,
+    noticesTitle: "નોંધણી માટે મહત્વપૂર્ણ સૂચનાઓ",
+    notices: [
+      "પોથી રૂમ માટે પોથી યજમાન સાથે નોંધાયેલ મોબાઇલ નંબરનો ઉપયોગ કરો.",
+      "આગળ વધતા પહેલા OTP ચકાસણી જરૂરી છે.",
+      "પોથી યજમાન ફાળવેલા પોથી રૂમમાં 1 થી 4 સભ્યો નોંધાવી શકે છે.",
+      "વધારાના મહેમાનો ઉપલબ્ધ ક્ષમતા મુજબ જોડાયેલા પ્રાઇવેટ રૂમમાં ફાળવાશે.",
+      "રહેવાની તારીખ 14 નવેમ્બર 2026 થી 20 નવેમ્બર 2026 વચ્ચે હોવી જોઈએ.",
+      "દરેક મોબાઇલ નંબરથી માત્ર એક નોંધણી થશે. અગાઉની નોંધણી OTPથી ફરી ખોલી શકાશે.",
+      "નોંધણી પછી દરેક સભ્યની રૂમ માહિતી અને ડાઉનલોડ કરી શકાય તેવા QR કોડ સાચવો.",
+      "ઇવેન્ટ પહેલા સેવ થયેલા નોંધણી પરિણામમાંથી રદ કરવાની સુવિધા ઉપલબ્ધ છે."
+    ],
     continue: "આગળ વધો",
     back: "પાછા જાઓ",
     mobile: "મોબાઇલ",
@@ -676,7 +700,12 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
 
   function renderHome() {
     return (
-      <div className="auth-stage-grid">
+      <>
+        <section className="registration-notices">
+          <h2>{t.noticesTitle}</h2>
+          <ul>{t.notices.map((notice) => <li key={notice}>{notice}</li>)}</ul>
+        </section>
+        <div className="auth-stage-grid">
         <article className="entry-card">
           <h2>{t.yajmanCard}</h2>
           <p>{t.yajmanCardText}</p>
@@ -691,7 +720,8 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
             {t.guestComingSoon}
           </button>
         </article>
-      </div>
+        </div>
+      </>
     );
   }
 
@@ -908,7 +938,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
             onClick={() => setYajmanRoomMembers((current) => current.length < 4 ? [...current, createBlankMember()] : current)}
             disabled={yajmanRoomMembers.length >= 4}
           >
-            Add room member ({yajmanRoomMembers.length}/4)
+            {t.addRoomMember(yajmanRoomMembers.length)}
           </button>
         </div>
 
