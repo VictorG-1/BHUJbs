@@ -53,27 +53,26 @@ export function LandingPage({ language, onNavigate }: PublicPageProps) {
 export function ItineraryPage({ language, onNavigate }: PublicPageProps) {
   const gu = language === "gu";
   const schedule = [
-    ["14 Nov", "Opening ceremony and kalash yatra", "5:00 PM"],
-    ["15 Nov", "Bhagwat katha and evening aarti", "4:00 PM"],
-    ["16 Nov", "Bhagwat katha and community seva", "4:00 PM"],
-    ["17 Nov", "Bhagwat katha and cultural evening", "4:00 PM"],
-    ["18 Nov", "Bhagwat katha and bhajan sandhya", "4:00 PM"],
-    ["19 Nov", "Bhagwat katha and maha aarti", "4:00 PM"],
-    ["20 Nov", "Purnahuti, prasad and closing ceremony", "9:00 AM"]
+    { day: "01", date: gu ? "14.11.2026, શનિવાર" : "14 Nov 2026, Saturday", title: gu ? "પોથી યાત્રા, દીપ પ્રાગટ્ય અને કથારંભ" : "Pothi Yatra, lamp lighting and opening of Bhagwat Katha", details: gu ? ["પોથી યાત્રા: સવારે 8:00 કલાકે", "દીપ પ્રાગટ્ય: સવારે 9:30 કલાકે", "મંગલાચરણ / કથારંભ: સવારે 10:00 કલાકે"] : ["Pothi Yatra: 8:00 AM", "Lamp lighting: 9:30 AM", "Mangalacharan and Katha opening: 10:00 AM"] },
+    { day: "02", date: gu ? "15.11.2026, રવિવાર" : "15 Nov 2026, Sunday", title: gu ? "ભાગવત કથા અને સાંસ્કૃતિક કાર્યક્રમ" : "Bhagwat Katha and cultural programme", details: gu ? ["કથા સત્ર: બપોરે 3:00 થી સાંજે 7:00 કલાકે", "રાત્રિ સાંસ્કૃતિક કાર્યક્રમ: ડાંડિયા રાસ"] : ["Katha session: 3:00 PM to 7:00 PM", "Evening cultural programme: Dandiya Raas"] },
+    { day: "03", date: gu ? "16.11.2026, સોમવાર" : "16 Nov 2026, Monday", title: gu ? "ભાગવત કથા અને સાંસ્કૃતિક કાર્યક્રમ" : "Bhagwat Katha and cultural programme", details: gu ? ["કથા સત્ર: બપોરે 3:00 થી સાંજે 7:00 કલાકે", "રાત્રિ સાંસ્કૃતિક કાર્યક્રમ: ભુજ મહિલા મંડળ અને યુવતી મંડળ"] : ["Katha session: 3:00 PM to 7:00 PM", "Evening cultural programme by Bhuj Mahila Mandal and Yuvati Mandal"] },
+    { day: "04", date: gu ? "17.11.2026, મંગળવાર" : "17 Nov 2026, Tuesday", title: gu ? "શ્રી રામ જન્મ અને શ્રી કૃષ્ણ જન્મ મહોત્સવ" : "Shri Ram Janm and Shri Krishna Janm celebrations", details: gu ? ["કથા સત્ર: સવારે 9:00 થી બપોરે 12:00 અને બપોરે 3:00 થી સાંજે 6:00", "શ્રી રામ જન્મ: બપોરે 12:00 કલાકે", "શ્રી કૃષ્ણ જન્મ: સાંજે 5:30 કલાકે", "રાત્રિ કાર્યક્રમ: ભજન સંધ્યા"] : ["Katha sessions: 9:00 AM to 12:00 PM and 3:00 PM to 6:00 PM", "Shri Ram Janm: 12:00 PM", "Shri Krishna Janm: 5:30 PM", "Evening programme: Bhajan Sandhya"] },
+    { day: "05", date: gu ? "18.11.2026, બુધવાર" : "18 Nov 2026, Wednesday", title: gu ? "શ્રી ગોવર્ધન મહોત્સવ અને 56 ભોગ" : "Shri Govardhan Mahotsav and Chhappan Bhog", details: gu ? ["કથા સત્ર: બપોરે 3:00 થી સાંજે 7:00 કલાકે", "શ્રી ગોવર્ધન મહોત્સવ / 56 ભોગ", "રાત્રિ સાંસ્કૃતિક કાર્યક્રમ: ડાંડિયા રાસ"] : ["Katha session: 3:00 PM to 7:00 PM", "Shri Govardhan Mahotsav and Chhappan Bhog", "Evening cultural programme: Dandiya Raas"] },
+    { day: "06", date: gu ? "19.11.2026, ગુરુવાર" : "19 Nov 2026, Thursday", title: gu ? "ભાગવત કથા અને વિશેષ સાંસ્કૃતિક કાર્યક્રમ" : "Bhagwat Katha and special cultural programme", details: gu ? ["કથા સત્ર: બપોરે 3:00 થી સાંજે 7:00 કલાકે", "શ્રી રુક્મિણી-કૃષ્ણ વિવાહ પ્રસંગ", "કન્યા પક્ષ અને વર પક્ષ યજમાન પ્રસંગ", "રાત્રિ સાંસ્કૃતિક કાર્યક્રમ: મહિલા મંડળ"] : ["Katha session: 3:00 PM to 7:00 PM", "Shri Rukmini-Krishna Vivah episode", "Bride-side and groom-side yajman ceremony", "Evening cultural programme by the Mahila Mandal"] },
+    { day: "07", date: gu ? "20.11.2026, શુક્રવાર" : "20 Nov 2026, Friday", title: gu ? "સુદામા ચરિત્ર, નારાયણ યજ્ઞ અને પૂર્ણાહુતિ" : "Sudama Charitra, Narayan Yagna and Purnahuti", details: gu ? ["કથા સત્ર: સવારે 9:00 થી બપોરે 12:00 કલાકે", "સુદામા ચરિત્ર અને કથા સમાપન", "શ્રી નારાયણ યજ્ઞ: બપોરે 2:00 થી 4:00 કલાકે", "શ્રી નારાયણ ધૂન અને પૂર્ણાહુતિ"] : ["Katha session: 9:00 AM to 12:00 PM", "Sudama Charitra and conclusion of Katha", "Shri Narayan Yagna: 2:00 PM to 4:00 PM", "Shri Narayan Dhun and Purnahuti"] }
   ];
   return (
     <section className="public-page content-page">
       <div className="section-heading">
         <p className="eyebrow">{eventDates}</p>
         <h1>{gu ? "ઇવેન્ટ કાર્યક્રમ" : "Event itinerary"}</h1>
-        <p>{gu ? "વિગતવાર સમયપત્રક ટૂંક સમયમાં અપડેટ કરવામાં આવશે." : "A provisional programme is shown below. Detailed timings will be updated soon."}</p>
+        <p>{gu ? "આયોજકો દ્વારા આપવામાં આવેલા કાર્યક્રમ મુજબનું સમયપત્રક. સમય અથવા કાર્યક્રમમાં ફેરફાર થઈ શકે છે." : "Programme based on the schedule supplied by the organisers. Timings and sessions may be updated if required."}</p>
       </div>
       <div className="itinerary-list">
-        {schedule.map(([date, title, time]) => (
-          <article className="itinerary-row" key={date}>
-            <strong>{date}</strong>
-            <span>{title}</span>
-            <small>{time}</small>
+        {schedule.map((item) => (
+          <article className="itinerary-row" key={item.day}>
+            <strong>{item.day}</strong>
+            <div><b>{item.date}</b><span>{item.title}</span>{item.details.map((detail) => <small key={detail}>{detail}</small>)}</div>
           </article>
         ))}
       </div>
@@ -106,14 +105,10 @@ export function SponsorsPage({ language, onNavigate }: PublicPageProps) {
         <h1>{gu ? "ઇવેન્ટ પ્રાયોજકો" : "Event sponsors"}</h1>
         <p>{gu ? "પ્રાયોજકોની સંપૂર્ણ યાદી ટૂંક સમયમાં પ્રકાશિત થશે." : "Our sponsor directory will be published here soon."}</p>
       </div>
-      <div className="sponsor-placeholder-grid">
-        {["Seva Partner", "Community Partner", "Hospitality Partner"].map((label, index) => (
-          <article className="sponsor-placeholder" key={label}>
-            <span>0{index + 1}</span>
-            <strong>{gu ? "નામ ટૂંક સમયમાં" : label}</strong>
-            <small>{gu ? "વિગતો ટૂંક સમયમાં" : "Details coming soon"}</small>
-          </article>
-        ))}
+      <div className="coming-soon-panel">
+        <span className="coming-soon-mark">✦</span>
+        <h2>{gu ? "પ્રાયોજકોની માહિતી ટૂંક સમયમાં" : "Sponsors coming soon"}</h2>
+        <p>{gu ? "સેવા ભાગીદારો અને સહયોગીઓની અધિકૃત યાદી ટૂંક સમયમાં અહીં પ્રકાશિત કરવામાં આવશે." : "The official list of seva partners and supporters will be published here soon."}</p>
       </div>
       <button className="secondary page-back-button" onClick={() => onNavigate("landing")}>{gu ? "મુખ્ય પેજ" : "Back to home"}</button>
     </section>
