@@ -805,6 +805,8 @@ h2 {
   margin-bottom: 0.75rem;
 }
 
+.add-member-button { width: fit-content; }
+
 .member-qr-list {
   display: grid;
   gap: 0.75rem;
@@ -1385,6 +1387,8 @@ th {
   .member-row {
     grid-template-columns: 1fr;
   }
+
+  .add-member-button { width: 100%; }
 
   .date-range-grid {
     grid-template-columns: 1fr;

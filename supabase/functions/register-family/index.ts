@@ -265,8 +265,8 @@ Deno.serve(async (req) => {
     if (!filledMembers.length) {
       return json({ error: "Please add at least one member before submitting." }, 400);
     }
-    if (body.registrationType === "pothi_room" && filledMembers.length < 4) {
-      return json({ error: "Pothi Yajman registration needs 4 members for the allotted pothi room." }, 400);
+    if (body.registrationType === "pothi_room" && filledMembers.length > 4) {
+      return json({ error: "Pothi Yajman registration can include a maximum of 4 allotted-room members." }, 400);
     }
 
     const supabase = serviceClient();

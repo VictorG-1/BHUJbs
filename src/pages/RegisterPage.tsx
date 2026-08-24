@@ -97,15 +97,15 @@ const copy = {
     yajmanProfile: "Yajman profile",
     roomPortfolio: "Pothi Yajman room portfolio",
     roomPortfolioText:
-      "The first 4 members will go into the allotted pothi room. Any extra guests will be auto-placed into the linked private rooms shown below.",
+      "Add 1 to 4 members for the allotted pothi room. Any additional guests will be auto-placed into the linked private rooms shown below.",
     allottedRoom: "Allotted Pothi Room",
     roomNotSynced: "This pothi room has not been synced yet.",
-    exactFour: "Exactly 4 members will stay here",
+    exactFour: "Up to 4 members can stay here",
     linkedRooms: (count: number) => `${count} linked private room(s)`,
     privateSeats: (count: number) => `${count} additional private-room seat(s) available`,
     noLinkedRooms: "No private rooms linked to this pothi yet.",
     linkedRoomText: "Additional yajman guests will be auto-allotted across these rooms.",
-    fourMembers: "4 members for the allotted pothi room",
+    fourMembers: "Pothi room members (1 to 4)",
     additionalGuests: "Additional guests for linked private rooms",
     additionalGuestText: "These guests will be auto-allotted into the linked private rooms shown above.",
     noExtraGuests: "No extra private-room guests added yet.",
@@ -177,15 +177,15 @@ const copy = {
     yajmanProfile: "યજમાન પ્રોફાઇલ",
     roomPortfolio: "પોથી યજમાન રૂમ વિગતો",
     roomPortfolioText:
-      "પ્રથમ 4 સભ્યો ફાળવેલા પોથી રૂમમાં રહેશે. વધારાના મહેમાનો જોડાયેલા પ્રાઇવેટ રૂમમાં આપમેળે ફાળવાશે.",
+      "ફાળવેલા પોથી રૂમ માટે 1 થી 4 સભ્યો ઉમેરો. વધારાના મહેમાનો જોડાયેલા પ્રાઇવેટ રૂમમાં આપમેળે ફાળવાશે.",
     allottedRoom: "ફાળવેલ પોથી રૂમ",
     roomNotSynced: "આ પોથી રૂમ હજુ સિંક થયો નથી.",
-    exactFour: "ચોક્કસ 4 સભ્યો અહીં રહેશે",
+    exactFour: "અહીં વધુમાં વધુ 4 સભ્યો રહી શકે છે",
     linkedRooms: (count: number) => `${count} જોડાયેલ પ્રાઇવેટ રૂમ`,
     privateSeats: (count: number) => `${count} વધારાની બેઠક ઉપલબ્ધ`,
     noLinkedRooms: "આ પોથી માટે હજી પ્રાઇવેટ રૂમ જોડાયેલા નથી.",
     linkedRoomText: "વધારાના યજમાન મહેમાનો આ રૂમોમાં આપમેળે ફાળવાશે.",
-    fourMembers: "ફાળવેલા પોથી રૂમ માટે 4 સભ્યો",
+    fourMembers: "પોથી રૂમના સભ્યો (1 થી 4)",
     additionalGuests: "જોડાયેલા પ્રાઇવેટ રૂમ માટે વધારાના મહેમાનો",
     additionalGuestText: "આ મહેમાનો ઉપર દર્શાવેલા પ્રાઇવેટ રૂમોમાં આપમેળે ફાળવાશે.",
     noExtraGuests: "હજુ વધારાના મહેમાનો ઉમેરાયેલા નથી.",
@@ -231,7 +231,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
   const [stayFrom, setStayFrom] = useState(EVENT_START_DATE);
   const [stayTo, setStayTo] = useState(EVENT_END_DATE);
   const [yajmanRoomMembers, setYajmanRoomMembers] = useState<FamilyMemberInput[]>(
-    Array.from({ length: 4 }, (_value, index) => createBlankMember({ isHead: index === 0 }))
+    [createBlankMember({ isHead: true })]
   );
   const [privateRoomGuests, setPrivateRoomGuests] = useState<FamilyMemberInput[]>([]);
   const [generalGuests, setGeneralGuests] = useState<FamilyMemberInput[]>([
@@ -384,7 +384,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
     setStayFrom(EVENT_START_DATE);
     setStayTo(EVENT_END_DATE);
     setPothiId(undefined);
-    setYajmanRoomMembers(Array.from({ length: 4 }, (_value, index) => createBlankMember({ isHead: index === 0 })));
+    setYajmanRoomMembers([createBlankMember({ isHead: true })]);
     setPrivateRoomGuests([]);
     setGeneralGuests([createBlankMember({ isHead: true })]);
     resetOtpState();
@@ -564,8 +564,8 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
           .filter((member) => member.name.trim())
           .map((member) => ({ ...member, mobile: member.mobile || "" }));
 
-        if (yajmanPayload.length < 4) {
-          setMessage("Please enter all 4 members for the allotted pothi room.");
+        if (!yajmanPayload.length || yajmanPayload.length > 4) {
+          setMessage("Please enter between 1 and 4 members for the allotted pothi room.");
           setLoading(false);
           return;
         }
@@ -900,6 +900,14 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
               />
             </div>
           ))}
+          <button
+            type="button"
+            className="secondary add-member-button"
+            onClick={() => setYajmanRoomMembers((current) => current.length < 4 ? [...current, createBlankMember()] : current)}
+            disabled={yajmanRoomMembers.length >= 4}
+          >
+            Add room member ({yajmanRoomMembers.length}/4)
+          </button>
         </div>
 
         <div className="wide-field">
