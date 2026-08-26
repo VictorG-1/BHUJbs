@@ -75,6 +75,13 @@ export default function App() {
         </button>
       </header>
 
+      <div className="support-marquee" role="note" aria-label="Support contact details">
+        <div className="support-marquee-track">
+          <span>સામાન્ય સહાય માટે સંપર્ક કરો: શ્રી હિતેશ મંગલદાસ ભૂતડા અથવા શ્રી ખુશાલ દામોદર નવધરે - +9998947501 / +919426803487  •  ટેકનિકલ સહાય માટે સંપર્ક કરો: પાર્થ પિયુષ ગગડાણી - +919619118118  •  For general assistance, please contact Shree Hitesh Mangaldas Bhutada or Shree Khushal Damodar Navdhare - +9998947501 / +919426803487  •  For technical assistance, please contact Parth Piyush Gagdani - +919619118118</span>
+          <span aria-hidden="true">સામાન્ય સહાય માટે સંપર્ક કરો: શ્રી હિતેશ મંગલદાસ ભૂતડા અથવા શ્રી ખુશાલ દામોદર નવધરે - +9998947501 / +919426803487  •  ટેકનિકલ સહાય માટે સંપર્ક કરો: પાર્થ પિયુષ ગગડાણી - +919619118118  •  For general assistance, please contact Shree Hitesh Mangaldas Bhutada or Shree Khushal Damodar Navdhare - +9998947501 / +919426803487  •  For technical assistance, please contact Parth Piyush Gagdani - +919619118118</span>
+        </div>
+      </div>
+
       {!isSupabaseConfigured ? (
         <div className="config-banner">
           Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` to `.env` before connecting live data.

@@ -1,5 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
 :root {
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: "Plus Jakarta Sans", "Noto Sans Gujarati", "Nirmala UI", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: #1f1835;
   background: #fff7ef;
   --bg: #fff8f1;
@@ -219,6 +221,46 @@ h2 {
   padding: 0.85rem 1rem;
   background: var(--gold-soft);
   color: #694307;
+}
+
+.support-marquee {
+  overflow: hidden;
+  border-top: 1px solid rgba(241, 183, 52, 0.7);
+  border-bottom: 1px solid rgba(197, 18, 36, 0.65);
+  background: linear-gradient(90deg, #08284d 0%, #0c3565 50%, #08284d 100%);
+  color: #fffaf3;
+  white-space: nowrap;
+}
+
+.support-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: support-marquee-scroll 34s linear infinite;
+}
+
+.support-marquee-track span {
+  display: block;
+  padding: 0.62rem 3rem;
+  font-family: "Noto Sans Gujarati", "Plus Jakarta Sans", "Nirmala UI", sans-serif;
+  font-size: 0.83rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.support-marquee:hover .support-marquee-track,
+.support-marquee:focus-within .support-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes support-marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .support-marquee-track { animation: none; width: 100%; }
+  .support-marquee-track span:last-child { display: none; }
 }
 
 .page-section {
