@@ -1489,6 +1489,28 @@ th {
 
   .admin-actions-bar {
     justify-content: flex-start;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+  }
+
+  .admin-actions-bar button,
+  .admin-actions-bar .button-link {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .dashboard-panel {
+    padding: 0.8rem;
+  }
+
+  .admin-hero-meta div,
+  .summary-note {
+    padding: 0.75rem 0.85rem;
+  }
+
+  .table-wrap {
+    max-width: 100%;
   }
 
   .admin-hero-meta,
@@ -1591,6 +1613,10 @@ th {
   }
 
   .admin-hero-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-actions-bar {
     grid-template-columns: 1fr;
   }
 
