@@ -7,7 +7,7 @@ import fallbackRoomsData from "../data/rooms.json";
 import { PothiGrid } from "../components/PothiGrid";
 import { qrPayload } from "../components/MemberQrCode";
 import { StatusPill } from "../components/StatusPill";
-import { downloadAdminWorkbook, downloadExportData } from "../lib/api";
+import { cancelRegistration, downloadAdminWorkbook, downloadExportData } from "../lib/api";
 import { supabase } from "../lib/supabase";
 import type { AdminMemberRow, Pothi, RoomInventory } from "../lib/types";
 
@@ -65,6 +65,7 @@ const copy = {
     yajmanRoom: "Pothi Yajman room",
     privateRoomGuests: "Private room guests",
     generalRoomGuests: "General room guests",
+    cancelReservation: "Cancel reservation",
     guestList: "Guest list",
     name: "Name",
     family: "Family",
@@ -102,6 +103,7 @@ const copy = {
     yajmanRoom: "પોથી યજમાન રૂમ",
     privateRoomGuests: "પ્રાઇવેટ રૂમ મહેમાન",
     generalRoomGuests: "જનરલ રૂમ મહેમાન",
+    cancelReservation: "રિઝર્વેશન રદ કરો",
     guestList: "મહેમાન સૂચિ",
     name: "નામ",
     family: "પરિવાર",
@@ -175,11 +177,27 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
     }
   }, [session]);
 
+  function roomDetailsForMember(member: AdminMemberRow) {
+    const allocatedRoom = member.room_allocations?.[0]?.rooms;
+    if (allocatedRoom?.room_number) return allocatedRoom;
+
+    const family = member.families;
+    const pothiId = family?.pothi_id ?? family?.reference_pothi_id;
+    const fallbackRoom = roomsInventory.find((room) =>
+      (family?.private_room_number && room.room_number === family.private_room_number) ||
+      (pothiId !== null && pothiId !== undefined && room.linked_pothi_id === pothiId)
+    );
+
+    return fallbackRoom
+      ? { room_number: fallbackRoom.room_number, venue_name: venueTabName(fallbackRoom), section_name: fallbackRoom.section_name }
+      : null;
+  }
+
   const filtered = useMemo(() => {
     const query = masterSearch.trim().toLowerCase();
     return members.filter((member) => {
       const family = member.families;
-      const roomDetails = member.room_allocations?.[0]?.rooms;
+      const roomDetails = roomDetailsForMember(member);
       const room = roomDetails?.room_number ?? "";
       const pothi = family?.pothi_id ?? family?.reference_pothi_id ?? "";
       const memberVenue = roomDetails?.venue_name?.toUpperCase() === "HOTEL" && roomDetails?.section_name
@@ -199,7 +217,7 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
   const occupiedRooms = useMemo(() => {
     const map = new Map<string, AdminMemberRow[]>();
     for (const member of members) {
-      const room = member.room_allocations?.[0]?.rooms?.room_number;
+      const room = roomDetailsForMember(member)?.room_number;
       if (!room) continue;
       map.set(room, [...(map.get(room) ?? []), member]);
     }
@@ -209,7 +227,7 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
   const roomAllocationBoard = useMemo(() => {
     const occupancy = new Map<string, AdminMemberRow[]>();
     for (const member of members) {
-      const room = member.room_allocations?.[0]?.rooms?.room_number;
+      const room = roomDetailsForMember(member)?.room_number;
       if (!room) continue;
       occupancy.set(room, [...(occupancy.get(room) ?? []), member]);
     }
@@ -259,7 +277,7 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
     () =>
       members.map((member) => {
         const family = member.families;
-        const roomDetails = member.room_allocations?.[0]?.rooms;
+        const roomDetails = roomDetailsForMember(member);
         const registrationType = family?.registration_type ?? "";
         return {
           name: member.name,
@@ -342,7 +360,7 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
       const zip = new JSZip();
       for (const member of members) {
         if (!member.qr_token) continue;
-        const roomDetails = member.room_allocations?.[0]?.rooms;
+        const roomDetails = roomDetailsForMember(member);
         const dataUrl = await QRCode.toDataURL(qrPayload({
           ...member,
           family_code: member.families?.id ?? "",
@@ -365,12 +383,19 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
     const anchor = document.createElement("a"); anchor.href = url; anchor.download = "bhagwat-saptah-qr-scan-log.csv"; anchor.click(); URL.revokeObjectURL(url);
   }
 
-  async function revokeQr(member: AdminMemberRow) {
-    if (member.qr_revoked_at || !window.confirm(`Revoke QR for ${member.name}?`)) return;
-    const { error } = await supabase.from("members").update({ qr_revoked_at: new Date().toISOString() }).eq("id", member.id);
-    if (error) { setStatus(error.message); return; }
-    setMembers((current) => current.map((item) => item.id === member.id ? { ...item, qr_revoked_at: new Date().toISOString() } : item));
-    setStatus(`QR revoked for ${member.name}.`);
+  async function cancelReservation(member: AdminMemberRow) {
+    const familyId = member.families?.id;
+    if (!familyId || !window.confirm(`Cancel the complete reservation for ${member.families?.head_name ?? member.name}?`)) return;
+
+    setStatus(language === "gu" ? "રિઝર્વેશન રદ કરી રહ્યા છીએ..." : "Cancelling reservation...");
+    try {
+      await cancelRegistration({ familyId });
+      setMembers((current) => current.filter((item) => item.families?.id !== familyId));
+      setPothis((current) => current.map((pothi) => pothi.family_id === familyId ? { ...pothi, family_id: null } : pothi));
+      setStatus(language === "gu" ? "રિઝર્વેશન સફળતાપૂર્વક રદ થયું." : "Reservation cancelled successfully.");
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : language === "gu" ? "રિઝર્વેશન રદ થઈ શક્યું નથી." : "Reservation could not be cancelled.");
+    }
   }
 
   async function handleLogin(event: React.FormEvent) {
@@ -551,7 +576,7 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
                   <th>{t.type}</th>
                   <th>{language === "gu" ? "વેન્યુ" : "Venue"}</th>
                   <th>{t.room}</th>
-                  <th>QR</th>
+                  <th>{language === "gu" ? "રિઝર્વેશન" : "Reservation"}</th>
                 </tr>
               </thead>
               <tbody>
@@ -571,9 +596,9 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
                         <StatusPill tone="blue">{t.privateRoomGuests}</StatusPill>
                       )}
                     </td>
-                    <td>{member.room_allocations?.[0]?.rooms?.venue_name ?? "-"}</td>
-                    <td>{member.room_allocations?.[0]?.rooms?.room_number ?? "-"}</td>
-                    <td><button type="button" className="table-action" disabled={Boolean(member.qr_revoked_at)} onClick={() => void revokeQr(member)}>{member.qr_revoked_at ? "Revoked" : "Revoke"}</button></td>
+                    <td>{roomDetailsForMember(member)?.venue_name ?? "-"}</td>
+                    <td>{roomDetailsForMember(member)?.room_number ?? "-"}</td>
+                    <td><button type="button" className="table-action" disabled={!member.families?.id} onClick={() => void cancelReservation(member)}>{t.cancelReservation}</button></td>
                   </tr>
                 ))}
                 {!filtered.length ? (

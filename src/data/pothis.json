@@ -12,7 +12,7 @@
     ],
     "handover_name": "ઝવેરબેન મંગલદાસ ભૂતડા",
     "contact_name": "પપુભાઇ/હર્ષાબેન",
-    "contact_mobile": "9619118118",
+    "contact_mobile": "9998947501",
     "family_id": null
   },
   {
@@ -242,8 +242,8 @@
     "city": "જખો",
     "co_holders": [],
     "handover_name": "શિવજી મેઘજી મલ્લ",
-    "contact_name": "શિવજી મેઘજી મલ્લ",
-    "contact_mobile": null,
+    "contact_name": "Lalji Maheshwari",
+    "contact_mobile": "9925209711",
     "family_id": null
   },
   {
@@ -254,8 +254,8 @@
       "પાર્વતીબેન મેઘજી મલ્લ"
     ],
     "handover_name": "વલ્લભદાસ મેઘજી મલ્લ",
-    "contact_name": "વલ્લભદાસ મેઘજી મલ્લ",
-    "contact_mobile": null,
+    "contact_name": "Malti Maheshwari",
+    "contact_mobile": "9426217760",
     "family_id": null
   },
   {
@@ -415,7 +415,8 @@
       "કલાવંતી સામજી માંડણ",
       "પ્રભાવતીબેન કાંતિલાલ માંડણ",
       "વિનોદ સામજી માંડણ",
-      "વર્ષાબેન વિનોદભાઈ માંડણ"
+      "વર્ષાબેન વિનોદભાઈ માંડણ",
+      "ભાઈલાલ સામજી માંડણ"
     ],
     "handover_name": "વર્ષાબેન વિનોદ માંડણ",
     "contact_name": "હિમાંશુ વિનોદ માંડણ",
@@ -424,16 +425,6 @@
   },
   {
     "id": 36,
-    "primary_holder_name": "ભાઈલાલ સામજી માંડણ(જી.જ.)",
-    "city": "ખપોલી",
-    "co_holders": [],
-    "handover_name": "વર્ષાબેન વિનોદ માંડણ",
-    "contact_name": "હિમાંશુ વિનોદ માંડણ",
-    "contact_mobile": "9833110182",
-    "family_id": null
-  },
-  {
-    "id": 37,
     "primary_holder_name": "ચંદ્રકાંત વેલજી માંડણ",
     "city": "ભુજ",
     "co_holders": [
@@ -445,7 +436,7 @@
     "family_id": null
   },
   {
-    "id": 38,
+    "id": 37,
     "primary_holder_name": "હીરાબેન ચંદ્રકાંત માંડણ(જી.જ.)",
     "city": "ભુજ",
     "co_holders": [],
@@ -455,7 +446,7 @@
     "family_id": null
   },
   {
-    "id": 39,
+    "id": 38,
     "primary_holder_name": "વિજયાબેન નવીનભાઈ માંડણ(જી.જ.)",
     "city": "મુંબઈ",
     "co_holders": [],
@@ -465,7 +456,7 @@
     "family_id": null
   },
   {
-    "id": 40,
+    "id": 39,
     "primary_holder_name": "ભચીબેન  મનજી મુંદડા",
     "city": "ભુજ",
     "co_holders": [
@@ -477,7 +468,7 @@
     "family_id": null
   },
   {
-    "id": 41,
+    "id": 40,
     "primary_holder_name": "જમનાદાસ મુરજી માંડણ",
     "city": "પનવેલ",
     "co_holders": [
@@ -492,7 +483,7 @@
     "family_id": null
   },
   {
-    "id": 42,
+    "id": 41,
     "primary_holder_name": "વીરજી ઉમરશી માંડણ",
     "city": "ભુજ",
     "co_holders": [
@@ -506,7 +497,7 @@
     "family_id": null
   },
   {
-    "id": 43,
+    "id": 42,
     "primary_holder_name": "રવિલાલ નરશી માંડણ",
     "city": "ભુજ",
     "co_holders": [
@@ -519,7 +510,7 @@
     "family_id": null
   },
   {
-    "id": 44,
+    "id": 43,
     "primary_holder_name": "શ્યામસુંદર દામોદર મણીયાર",
     "city": "ડોમ્બીવલી",
     "co_holders": [
@@ -531,7 +522,7 @@
     "family_id": null
   },
   {
-    "id": 45,
+    "id": 44,
     "primary_holder_name": "પીતાંબર દામોદર મણીયાર",
     "city": "પનવેલ",
     "co_holders": [],
@@ -541,7 +532,7 @@
     "family_id": null
   },
   {
-    "id": 46,
+    "id": 45,
     "primary_holder_name": "મહેન્દ્ર હરિદાસ મુંદડા",
     "city": "ભુજ",
     "co_holders": [
@@ -553,7 +544,7 @@
     "family_id": null
   },
   {
-    "id": 47,
+    "id": 46,
     "primary_holder_name": "મંજુલાબેન દામોદર મુંદડા",
     "city": "સતારા",
     "co_holders": [
@@ -565,7 +556,7 @@
     "family_id": null
   },
   {
-    "id": 48,
+    "id": 47,
     "primary_holder_name": "વિશનજી ઉમરશી  મુંદડા",
     "city": "ઉધના",
     "co_holders": [
@@ -577,7 +568,7 @@
     "family_id": null
   },
   {
-    "id": 49,
+    "id": 48,
     "primary_holder_name": "હીરજી વેલજી નવધરે",
     "city": "નલીયા",
     "co_holders": [
@@ -589,7 +580,7 @@
     "family_id": null
   },
   {
-    "id": 50,
+    "id": 49,
     "primary_holder_name": "તુલસીદાસ વીરજી નવધરે",
     "city": "ભુજ",
     "co_holders": [
@@ -603,7 +594,7 @@
     "family_id": null
   },
   {
-    "id": 51,
+    "id": 50,
     "primary_holder_name": "જીવુબાઈ તુલસીદાસ નવધરે",
     "city": "ભુજ",
     "co_holders": [
@@ -616,7 +607,7 @@
     "family_id": null
   },
   {
-    "id": 52,
+    "id": 51,
     "primary_holder_name": "હેમલતા બેન મુળજી નવધરે (જી.જ.)",
     "city": "ભુજ",
     "co_holders": [],
@@ -626,7 +617,7 @@
     "family_id": null
   },
   {
-    "id": 53,
+    "id": 52,
     "primary_holder_name": "નીકીબેન રોહિત  નવધરે",
     "city": "ભુજ",
     "co_holders": [],
@@ -636,7 +627,7 @@
     "family_id": null
   },
   {
-    "id": 54,
+    "id": 53,
     "primary_holder_name": "સરબાઈ ગોવિંદજી નવધરે",
     "city": "ભુજ",
     "co_holders": [
@@ -652,7 +643,7 @@
     "family_id": null
   },
   {
-    "id": 55,
+    "id": 54,
     "primary_holder_name": "વાલજી ચાંપશી નવધરે",
     "city": "ભુજ",
     "co_holders": [
@@ -664,7 +655,7 @@
     "family_id": null
   },
   {
-    "id": 56,
+    "id": 55,
     "primary_holder_name": "દેવજી ચાંપશી નવધરે",
     "city": "ભુજ",
     "co_holders": [
@@ -680,7 +671,7 @@
     "family_id": null
   },
   {
-    "id": 57,
+    "id": 56,
     "primary_holder_name": "વસંતલાલ દેવજી  નવધરે",
     "city": "અમદાવાદ",
     "co_holders": [],
@@ -690,7 +681,7 @@
     "family_id": null
   },
   {
-    "id": 58,
+    "id": 57,
     "primary_holder_name": "વિનોદભાઈ દેવજી  નવધરે",
     "city": "સુરત",
     "co_holders": [],
@@ -700,7 +691,7 @@
     "family_id": null
   },
   {
-    "id": 59,
+    "id": 58,
     "primary_holder_name": "માવજી કાનજી નવધરે",
     "city": "ભુજ",
     "co_holders": [
@@ -714,7 +705,7 @@
     "family_id": null
   },
   {
-    "id": 60,
+    "id": 59,
     "primary_holder_name": "કલાવંતી મોહનલાલ નવધરે(જી.જ.)",
     "city": "ભુજ",
     "co_holders": [],
@@ -724,7 +715,7 @@
     "family_id": null
   },
   {
-    "id": 61,
+    "id": 60,
     "primary_holder_name": "દામોદર માવજી નવધરે",
     "city": "ભુજ",
     "co_holders": [
@@ -737,7 +728,7 @@
     "family_id": null
   },
   {
-    "id": 62,
+    "id": 61,
     "primary_holder_name": "લક્ષ્મીબેન મનજી રાઠી",
     "city": "થાણા",
     "co_holders": [
@@ -749,7 +740,7 @@
     "family_id": null
   },
   {
-    "id": 63,
+    "id": 62,
     "primary_holder_name": "જમનાદાસ મનજી રાઠી",
     "city": "થાણા",
     "co_holders": [
@@ -761,7 +752,7 @@
     "family_id": null
   },
   {
-    "id": 64,
+    "id": 63,
     "primary_holder_name": "વાઘજી(લધુભાઈ)મનજી રાઠી",
     "city": "થાણા",
     "co_holders": [
@@ -773,7 +764,7 @@
     "family_id": null
   },
   {
-    "id": 65,
+    "id": 64,
     "primary_holder_name": "ભુપેન્દ્ર વલ્લભદાસ રાઠી",
     "city": "થાણા",
     "co_holders": [
@@ -785,7 +776,7 @@
     "family_id": null
   },
   {
-    "id": 66,
+    "id": 65,
     "primary_holder_name": "કાનબાઈ જીવરાજ રાઠી",
     "city": "થાણા",
     "co_holders": [
@@ -798,7 +789,7 @@
     "family_id": null
   },
   {
-    "id": 67,
+    "id": 66,
     "primary_holder_name": "જશવંતલાલ હરખલાલ શારડા",
     "city": "ભુજ",
     "co_holders": [
@@ -810,7 +801,7 @@
     "family_id": null
   },
   {
-    "id": 68,
+    "id": 67,
     "primary_holder_name": "પરશોતમ ભગવાનજી શેઠ",
     "city": "ભુજ",
     "co_holders": [
@@ -827,7 +818,7 @@
     "family_id": null
   },
   {
-    "id": 69,
+    "id": 68,
     "primary_holder_name": "શાંતિલાલ બેચરદાસ શેઠ",
     "city": "અંજાર",
     "co_holders": [
@@ -843,7 +834,7 @@
     "family_id": null
   },
   {
-    "id": 70,
+    "id": 69,
     "primary_holder_name": "જવાહરલાલ મોરારજી  શેઠ",
     "city": "ભુજ",
     "co_holders": [
@@ -858,7 +849,7 @@
     "family_id": null
   },
   {
-    "id": 71,
+    "id": 70,
     "primary_holder_name": "મહેશ મોરારજી શેઠ(જી.જ.)",
     "city": "અંજાર",
     "co_holders": [],
@@ -868,7 +859,7 @@
     "family_id": null
   },
   {
-    "id": 72,
+    "id": 71,
     "primary_holder_name": "છાયાબેન રાજેન્દ્ર શેઠ",
     "city": "મુંબઈ",
     "co_holders": [],
@@ -878,7 +869,7 @@
     "family_id": null
   },
   {
-    "id": 73,
+    "id": 72,
     "primary_holder_name": "સામજી નારાણદાસ સાવર",
     "city": "ગોયલા",
     "co_holders": [
@@ -890,7 +881,7 @@
     "family_id": null
   },
   {
-    "id": 74,
+    "id": 73,
     "primary_holder_name": "ટોપણદાસ સામજી સાવર(જી.જ.)",
     "city": "ભુજ",
     "co_holders": [
@@ -902,7 +893,7 @@
     "family_id": null
   },
   {
-    "id": 75,
+    "id": 74,
     "primary_holder_name": "ચાંપશી લાલજી સોમાણી",
     "city": "ભુજ",
     "co_holders": [
