@@ -6,7 +6,7 @@ type PublicPageProps = {
   onNavigate: (page: PublicPage) => void;
 };
 
-const eventDates = "14 November 2026 - 20 November 2026";
+const eventDates = "13 November 2026 - 20 November 2026";
 
 export function LandingPage({ language, onNavigate }: PublicPageProps) {
   const gu = language === "gu";
@@ -135,7 +135,7 @@ export function TermsPage({ language, onNavigate }: PublicPageProps) {
           <h3>3. Room allocation</h3>
           <p>Room allocation depends on the submitted details, venue capacity, gender separation, senior-citizen preference, family grouping, pothi-linked rooms, private-room inventory, and availability. An allocation shown by the system is subject to administrative verification.</p>
           <h3>4. Event dates and stay</h3>
-          <p>The event stay window is 14 November 2026 through 20 November 2026. A registrant must select dates within this window. Registration does not guarantee services outside the selected or approved stay period.</p>
+          <p>The event stay window is 13 November 2026 through 20 November 2026. A registrant must select dates within this window. Registration does not guarantee services outside the selected or approved stay period.</p>
           <h3>5. Cancellation and changes</h3>
           <p>Cancellation can be requested through the registered mobile number and OTP-linked registration flow. Cancellation releases the associated room and pothi-linked reservation only after the system confirms the request. Changes may be subject to availability.</p>
           <h3>6. Event conduct</h3>

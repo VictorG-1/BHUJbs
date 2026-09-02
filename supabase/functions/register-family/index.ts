@@ -22,6 +22,7 @@ type RegisterInput = {
   privateRoomNumber?: string;
   stayFrom: string;
   stayTo: string;
+  pothiRoomMemberCount?: number;
   members: MemberInput[];
 };
 
@@ -44,7 +45,7 @@ type PendingAllocation = {
   floor: string | null;
 };
 
-const EVENT_START_DATE = "2026-11-14";
+const EVENT_START_DATE = "2026-11-13";
 const EVENT_END_DATE = "2026-11-20";
 
 function describeError(error: unknown, fallback = "Registration failed.") {
@@ -258,7 +259,7 @@ Deno.serve(async (req) => {
       return json({ error: "Name, mobile, stay dates, registration type and members are required." }, 400);
     }
     if (body.stayFrom < EVENT_START_DATE || body.stayTo > EVENT_END_DATE || body.stayTo < body.stayFrom) {
-      return json({ error: "Stay dates must be between 14 November 2026 and 20 November 2026." }, 400);
+      return json({ error: "Stay dates must be between 13 November 2026 and 20 November 2026." }, 400);
     }
 
     const filledMembers = body.members.filter((member) => member.name.trim());
@@ -268,8 +269,14 @@ Deno.serve(async (req) => {
     if (body.registrationType === "general_room") {
       return json({ error: "General guest registration is coming soon." }, 403);
     }
-    if (body.registrationType === "pothi_room" && filledMembers.length > 4) {
-      return json({ error: "Pothi Yajman registration can include a maximum of 4 allotted-room members." }, 400);
+    if (body.registrationType === "pothi_room") {
+      const pothiRoomMemberCount = body.pothiRoomMemberCount ?? Math.min(4, filledMembers.length);
+      if (!Number.isInteger(pothiRoomMemberCount) || pothiRoomMemberCount < 1 || pothiRoomMemberCount > 4) {
+        return json({ error: "Pothi Yajman registration can include 1 to 4 allotted-room members." }, 400);
+      }
+      if (pothiRoomMemberCount > filledMembers.length) {
+        return json({ error: "The pothi-room member count does not match the submitted members." }, 400);
+      }
     }
 
     const supabase = serviceClient();
@@ -366,8 +373,9 @@ Deno.serve(async (req) => {
       if (seededRoomError) throw seededRoomError;
 
       const seededRoom = seededRooms?.[0];
-      const pothiRoomMembers = filledMembers.slice(0, 4);
-      const extraPrivateMembers = filledMembers.slice(4);
+      const pothiRoomMemberCount = body.pothiRoomMemberCount ?? Math.min(4, filledMembers.length);
+      const pothiRoomMembers = filledMembers.slice(0, pothiRoomMemberCount);
+      const extraPrivateMembers = filledMembers.slice(pothiRoomMemberCount);
 
       if (seededRoom) {
         roomId = seededRoom.id;
@@ -438,7 +446,7 @@ Deno.serve(async (req) => {
 
         const { data: bookedRoom, error: bookedRoomError } = await supabase
           .from("rooms")
-          .select("id, room_number, venue_name, section_name, floor, linked_pothi_id, owner_type")
+          .select("id, room_number, venue_name, section_name, floor, capacity, linked_pothi_id, owner_type")
           .eq("room_number", primaryRoomNumber)
           .maybeSingle();
 
@@ -447,6 +455,12 @@ Deno.serve(async (req) => {
         if (bookedRoom) {
           if (bookedRoom.owner_type !== "PRIVATE" || bookedRoom.linked_pothi_id !== body.relatedPothiId) {
             return json({ error: `Room ${primaryRoomNumber} is not available for this pothi holder.` }, 409);
+          }
+          const capacity = fullRoomCapacity(bookedRoom as RoomRow);
+          if (filledMembers.length > capacity) {
+            return json({
+              error: `Room ${primaryRoomNumber} has capacity for ${capacity} guest${capacity === 1 ? "" : "s"}. Please reduce the guest count.`
+            }, 400);
           }
           roomId = bookedRoom.id;
           plannedAllocations = filledMembers.map((_member, memberIndex) => ({
@@ -458,6 +472,11 @@ Deno.serve(async (req) => {
             floor: bookedRoom.floor
           }));
         } else {
+          if (filledMembers.length > 4) {
+            return json({
+              error: `Room ${primaryRoomNumber} has capacity for 4 guests. Please reduce the guest count.`
+            }, 400);
+          }
           roomPayload = {
             room_number: primaryRoomNumber,
             room_type: body.registrationType,

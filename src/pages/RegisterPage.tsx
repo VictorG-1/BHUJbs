@@ -18,7 +18,7 @@ const blankMember: FamilyMemberInput = {
   mobile: ""
 };
 
-const EVENT_START_DATE = "2026-11-14";
+const EVENT_START_DATE = "2026-11-13";
 const EVENT_END_DATE = "2026-11-20";
 
 const fallbackPothis = fallbackPothisData as Pothi[];
@@ -76,7 +76,7 @@ const copy = {
       "OTP verification is required before continuing.",
       "A Pothi Yajman may register 1 to 4 members in the allotted Pothi room.",
       "Additional guests are placed only in linked private rooms, subject to available capacity.",
-      "Stay dates must be between 14 November 2026 and 20 November 2026.",
+      "Stay dates must be between 13 November 2026 and 20 November 2026.",
       "Each mobile number can be used for only one registration. Existing registrations can be opened again with OTP.",
       "After registration, save the room details and downloadable QR codes for every member.",
       "Cancellation is available from the saved registration result before the event."
@@ -618,6 +618,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
           pothiId,
           stayFrom,
           stayTo,
+          pothiRoomMemberCount: yajmanPayload.length,
           members: [...yajmanPayload, ...privatePayload]
         });
         setResult(data);

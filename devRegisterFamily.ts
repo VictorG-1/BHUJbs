@@ -48,7 +48,7 @@ type RegisterSuccess = {
   allocations: Array<Record<string, unknown>>;
 };
 
-const EVENT_START_DATE = "2026-11-14";
+const EVENT_START_DATE = "2026-11-13";
 const EVENT_END_DATE = "2026-11-20";
 
 function describeError(error: unknown, fallback = "Registration failed.") {
@@ -257,7 +257,7 @@ export async function registerFamilyDev(
       return { ok: false, status: 400, error: "Name, mobile, stay dates, registration type and members are required." };
     }
     if (body.stayFrom < EVENT_START_DATE || body.stayTo > EVENT_END_DATE || body.stayTo < body.stayFrom) {
-      return { ok: false, status: 400, error: "Stay dates must be between 14 November 2026 and 20 November 2026." };
+      return { ok: false, status: 400, error: "Stay dates must be between 13 November 2026 and 20 November 2026." };
     }
 
     const filledMembers = body.members.filter((member) => member.name.trim());
