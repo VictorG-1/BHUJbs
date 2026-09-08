@@ -326,9 +326,13 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
     const mobile = normalizeMobile(headMobile);
     return pothiOptions.find((pothi) => normalizeMobile(pothi.contact_mobile ?? "") === mobile);
   }, [headMobile, pothiOptions, verificationToken]);
+  const verifiedYajman = useMemo(
+    () => matchedYajman ?? otpMappedPothi ?? undefined,
+    [matchedYajman, otpMappedPothi]
+  );
   const activePothi = useMemo(
-    () => matchedYajman ?? pothiOptions.find((pothi) => pothi.id === pothiId),
-    [matchedYajman, pothiId, pothiOptions]
+    () => verifiedYajman ?? pothiOptions.find((pothi) => pothi.id === pothiId),
+    [pothiId, pothiOptions, verifiedYajman]
   );
   const availableCount = useMemo(
     () => pothiOptions.filter((pothi) => !pothi.family_id).length,
@@ -607,7 +611,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
           return;
         }
 
-        const resolvedPothi = matchedYajman ?? otpMappedPothi;
+        const resolvedPothi = verifiedYajman;
         if (!resolvedPothi || !pothiId) {
           setMessage("This mobile number is not mapped to a valid Pothi Yajman.");
           setLoading(false);
@@ -896,14 +900,14 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
   function renderYajmanForm() {
     return (
       <form className="form-grid" onSubmit={submit}>
-        {matchedYajman ? (
+        {verifiedYajman ? (
           <div className="wide-field field-stack">
             <h2>{t.yajmanProfile}</h2>
             <div className="detail-strip">
-              <strong>{matchedYajman.primary_holder_name ?? `Pothi ${matchedYajman.id}`}</strong>
-              <span>{`Pothi ${matchedYajman.id}`}</span>
-              <span>{matchedYajman.contact_mobile ?? headMobile}</span>
-              {matchedYajman.city ? <span>{matchedYajman.city}</span> : null}
+              <strong>{verifiedYajman.primary_holder_name ?? `Pothi ${verifiedYajman.id}`}</strong>
+              <span>{`Pothi ${verifiedYajman.id}`}</span>
+              <span>{verifiedYajman.contact_mobile ?? headMobile}</span>
+              {verifiedYajman.city ? <span>{verifiedYajman.city}</span> : null}
             </div>
           </div>
         ) : null}
@@ -912,7 +916,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
           <h2>{t.roomPortfolio}</h2>
           <p className="inline-note">{t.roomPortfolioText}</p>
 
-          {!matchedYajman ? (
+          {!verifiedYajman ? (
             <div className="room-info-card">
               <strong>{t.loginRequired}</strong>
               <small>{t.loginRequiredText}</small>
@@ -1048,7 +1052,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
             type="button"
             className="secondary"
             onClick={() => setPrivateRoomGuests((current) => [...current, createBlankMember()])}
-            disabled={!linkedPrivateRooms.length || privateRoomGuests.length >= totalPrivateCapacity}
+            disabled={!verifiedYajman || !linkedPrivateRooms.length || privateRoomGuests.length >= totalPrivateCapacity}
           >
             {t.addPrivateGuest}
           </button>
@@ -1062,7 +1066,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
           <button className="secondary" type="button" onClick={() => resetAll("home", "yajman")} disabled={loading || cancelling}>
             {t.back}
           </button>
-          <button className="primary" type="submit" disabled={loading || !matchedYajman} aria-busy={loading}>
+          <button className="primary" type="submit" disabled={loading || !verificationToken || !verifiedYajman} aria-busy={loading}>
             {loading ? <><span className="loading-spinner" aria-hidden="true" /> {t.saving}</> : t.complete}
           </button>
           <button type="button" className="secondary" onClick={() => resetAll("yajman-form", "yajman")} disabled={loading || cancelling}>
