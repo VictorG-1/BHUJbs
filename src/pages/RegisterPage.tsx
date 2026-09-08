@@ -300,7 +300,9 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
       .then(({ data, error }) => {
         if (!error && data?.length) {
           const liveById = new Map((data as Pothi[]).map((pothi) => [pothi.id, pothi]));
-          setPothis(fallbackPothis.map((fallback) => ({ ...fallback, ...liveById.get(fallback.id) })));
+          const merged = fallbackPothis.map((fallback) => ({ ...fallback, ...liveById.get(fallback.id) }));
+          const extraLivePothis = (data as Pothi[]).filter((pothi) => !fallbackPothis.some((fallback) => fallback.id === pothi.id));
+          setPothis([...merged, ...extraLivePothis]);
         }
       });
   }, []);
@@ -386,17 +388,6 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
     return [...grouped.values()];
   }, [result, roomInventory]);
 
-  const allocationVenueSummary = useMemo(() => {
-    const grouped = new Map<string, typeof allocationRoomSummary>();
-    for (const room of allocationRoomSummary) {
-      const venue = room.venue_name || "Other venue";
-      const roomsForVenue = grouped.get(venue) ?? [];
-      roomsForVenue.push(room);
-      grouped.set(venue, roomsForVenue);
-    }
-    return [...grouped.entries()];
-  }, [allocationRoomSummary]);
-
   const expandableCapacity = useMemo(() => {
     if (!result) return 0;
     const family = result.family;
@@ -417,6 +408,22 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
       0
     );
   }, [result, roomInventory]);
+
+  const dashboardRoomGroups = useMemo(() => {
+    const groups = [
+      { key: "pothi_room", title: "Pothi Room" },
+      { key: "private_room", title: "Private Room" },
+      { key: "other", title: "Other" }
+    ];
+    return groups.map((group) => ({
+      ...group,
+      rooms: allocationRoomSummary.filter((room) => {
+        const inventory = roomInventory.find((entry) => entry.room_number === room.room_number);
+        const type = inventory?.room_type ?? "other";
+        return group.key === "other" ? !["pothi_room", "private_room"].includes(type) : type === group.key;
+      })
+    })).filter((group) => group.rooms.length);
+  }, [allocationRoomSummary, roomInventory]);
 
   useEffect(() => {
     if (!activePothi) return;
@@ -600,7 +607,8 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
           return;
         }
 
-        if (!matchedYajman || !pothiId) {
+        const resolvedPothi = matchedYajman ?? otpMappedPothi;
+        if (!resolvedPothi || !pothiId) {
           setMessage("This mobile number is not mapped to a valid Pothi Yajman.");
           setLoading(false);
           return;
@@ -642,9 +650,9 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
         }
 
         const data = await registerFamily({
-          headName: matchedYajman.primary_holder_name || headName,
+          headName: resolvedPothi.primary_holder_name || headName,
           headMobile,
-          city: matchedYajman.city || city,
+          city: resolvedPothi.city || city,
           address: "",
           verificationToken,
           registrationType: "pothi_room",
@@ -1188,26 +1196,29 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
       {stage === "guest-form" ? renderGuestForm() : null}
 
       {result ? (
-        <div className="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="allocation-title">
-          <div className="modal-card">
-            <p className="eyebrow">{t.reservationSaved}</p>
-            <h2 id="allocation-title">{t.registrationCode(result.family.registration_code)}</h2>
-            <p className="inline-note">
-              {result.family.registration_type === "pothi_room" ? t.yajmanSaved : t.guestsSaved}
-            </p>
-            <p className="inline-note stay-dates">
-              Stay: {result.family.stay_from || "-"} to {result.family.stay_to || "-"}
-            </p>
+        <section className="registration-dashboard" aria-labelledby="allocation-title">
+          <div className="registration-dashboard-header">
+            <div>
+              <p className="eyebrow">{t.reservationSaved}</p>
+              <h2 id="allocation-title">{t.registrationCode(result.family.registration_code)}</h2>
+            </div>
+            <div className="dashboard-stay"><span>Stay dates</span><strong>{result.family.stay_from || "-"} to {result.family.stay_to || "-"}</strong></div>
+          </div>
+          <p className="inline-note">
+            {result.family.registration_type === "pothi_room" ? t.yajmanSaved : t.guestsSaved}
+          </p>
+          <div className="dashboard-summary-grid">
+            <div><span>Members</span><strong>{result.members.length}</strong></div>
+            <div><span>Rooms</span><strong>{allocationRoomSummary.length}</strong></div>
+            <div><span>Registration</span><strong>{result.family.registration_type === "pothi_room" ? "Pothi" : "Private"}</strong></div>
+          </div>
 
-            <div className="registered-venue-list">
-              {allocationVenueSummary.map(([venue, venueRooms]) => (
-                <section className="registered-venue" key={venue}>
-                  <div className="registered-venue-heading">
-                    <strong>{venue}</strong>
-                    <small>{venueRooms.length} room(s)</small>
-                  </div>
+            <div className="dashboard-room-groups">
+              {dashboardRoomGroups.map((group) => (
+                <section className="dashboard-room-group" key={group.key}>
+                  <div className="panel-header-inline"><div><h3>{group.title}</h3><p>{group.rooms.length} room(s) assigned</p></div></div>
                   <div className="registered-room-grid">
-                    {venueRooms.map((room) => (
+                    {group.rooms.map((room) => (
                       <article className="registered-room-card" key={room.room_number}>
                         <strong>{room.room_number}</strong>
                         <span>Capacity: {room.capacity || room.members.length}</span>
@@ -1216,18 +1227,6 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
                     ))}
                   </div>
                 </section>
-              ))}
-            </div>
-
-            <div className="allocation-list">
-              {result.allocations.map((allocation) => (
-                <article className="allocation-item" key={allocation.member_id}>
-                  <strong>{allocation.member_name}</strong>
-                  <span>{allocation.room_number}</span>
-                  <small>
-                    {[allocation.venue_name, allocation.section_name, allocation.floor].filter(Boolean).join(" | ") || t.roomSaved}
-                  </small>
-                </article>
               ))}
             </div>
 
@@ -1268,8 +1267,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
                 {t.registerAnother}
               </button>
             </div>
-          </div>
-        </div>
+        </section>
       ) : null}
 
       {duplicateMessage ? (

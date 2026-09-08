@@ -929,6 +929,17 @@ h2 {
 .add-member-form label { display: grid; gap: 0.35rem; color: var(--navy); font-weight: 700; }
 .add-member-form input, .add-member-form select { width: 100%; min-width: 0; }
 .add-member-form button { width: auto; min-width: 0; white-space: nowrap; }
+.registration-dashboard { display: grid; gap: 1rem; max-width: 1120px; margin: 1.5rem auto 0; padding: 1.25rem; border: 1px solid var(--line); border-radius: 8px; background: #fffdf9; box-shadow: 0 16px 36px rgba(25, 21, 45, 0.08); }
+.registration-dashboard-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--line); }
+.registration-dashboard-header h2 { margin: 0.25rem 0 0; }
+.dashboard-stay { display: grid; gap: 0.25rem; text-align: right; color: var(--muted); }
+.dashboard-stay strong { color: var(--navy); }
+.dashboard-summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+.dashboard-summary-grid div { display: grid; gap: 0.2rem; padding: 0.8rem 1rem; border-radius: 8px; background: #f2f6fb; }
+.dashboard-summary-grid span, .dashboard-room-group .panel-header-inline p { color: var(--muted); font-size: 0.88rem; }
+.dashboard-summary-grid strong { color: var(--navy); font-size: 1.1rem; }
+.dashboard-room-groups { display: grid; gap: 1rem; }
+.dashboard-room-group { display: grid; gap: 0.65rem; padding-top: 0.25rem; }
 .button-link { text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
 .scanner-panel { max-width: 620px; margin: 0 auto; display: grid; gap: 1rem; }
 .scanner-hero { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
@@ -1641,6 +1652,9 @@ th {
   .member-qr-card img, .qr-loading { width: 86px; height: 86px; }
   .add-member-form { grid-template-columns: 1fr 1fr; }
   .add-member-form label:first-child, .add-member-form label:nth-child(4), .add-member-form button { grid-column: 1 / -1; }
+  .registration-dashboard-header { display: grid; }
+  .dashboard-stay { text-align: left; }
+  .dashboard-summary-grid { grid-template-columns: 1fr; }
   .scanner-hero { align-items: stretch; }
   .scanner-signout { align-self: flex-start; }
 }
