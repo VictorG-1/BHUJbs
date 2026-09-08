@@ -3,7 +3,7 @@ import fallbackPothisData from "../data/pothis.json";
 import fallbackRoomsData from "../data/rooms.json";
 import { OtpPanel } from "../components/OtpPanel";
 import { MemberQrCode } from "../components/MemberQrCode";
-import { cancelRegistration, getMyRegistration, registerFamily, sendSmsOtp, verifySmsOtp } from "../lib/api";
+import { addFamilyMember, cancelRegistration, getMyRegistration, registerFamily, sendSmsOtp, verifySmsOtp } from "../lib/api";
 import { supabase } from "../lib/supabase";
 import type { FamilyMemberInput, Pothi, RegistrationResult, RoomInventory } from "../lib/types";
 
@@ -143,6 +143,10 @@ const copy = {
     cancelReservation: "Cancel reservation",
     cancellingReservation: "Cancelling reservation",
     registerAnother: "Register another",
+    addMember: "Register another member",
+    addMemberText: "There is still room available. Add a member to this registration.",
+    memberAdded: "Member added and room allocated.",
+    addingMember: "Adding member",
     alreadyRegistered: "Already registered",
     alreadyRegisteredText: "This mobile number already has a registration",
     okay: "Okay",
@@ -235,6 +239,10 @@ const copy = {
     cancelReservation: "રિઝર્વેશન રદ કરો",
     cancellingReservation: "રિઝર્વેશન રદ કરી રહ્યા છીએ",
     registerAnother: "ફરી નોંધણી કરો",
+    addMember: "વધુ સભ્ય નોંધાવો",
+    addMemberText: "રૂમમાં હજી જગ્યા ઉપલબ્ધ છે. આ નોંધણીમાં સભ્ય ઉમેરો.",
+    memberAdded: "સભ્ય ઉમેરાયો અને રૂમ ફાળવાયો.",
+    addingMember: "સભ્ય ઉમેરી રહ્યા છીએ",
     alreadyRegistered: "પહેલેથી નોંધાયેલ",
     alreadyRegisteredText: "આ મોબાઇલ નંબરથી નોંધણી પહેલેથી થઈ ગઈ છે",
     okay: "બરાબર",
@@ -279,6 +287,10 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
   const [message, setMessage] = useState("");
   const [duplicateMessage, setDuplicateMessage] = useState("");
   const [result, setResult] = useState<RegistrationResult | null>(null);
+  const [addMemberOpen, setAddMemberOpen] = useState(false);
+  const [addingMember, setAddingMember] = useState(false);
+  const [addMemberMessage, setAddMemberMessage] = useState("");
+  const [newMember, setNewMember] = useState<FamilyMemberInput>(createBlankMember());
 
   useEffect(() => {
     supabase
@@ -384,6 +396,27 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
     }
     return [...grouped.entries()];
   }, [allocationRoomSummary]);
+
+  const expandableCapacity = useMemo(() => {
+    if (!result) return 0;
+    const family = result.family;
+    const candidateRooms = family.registration_type === "pothi_room"
+      ? roomInventory.filter((room) =>
+          room.linked_pothi_id === family.pothi_id &&
+          (room.room_type === "pothi_room" || room.room_type === "private_room")
+        )
+      : family.private_room_number
+        ? roomInventory.filter((room) => room.room_number === family.private_room_number)
+        : [];
+    const occupied = new Map<string, number>();
+    for (const allocation of result.allocations) {
+      occupied.set(allocation.room_number, (occupied.get(allocation.room_number) ?? 0) + 1);
+    }
+    return candidateRooms.reduce(
+      (sum, room) => sum + Math.max(0, room.total_capacity - (occupied.get(room.room_number) ?? 0)),
+      0
+    );
+  }, [result, roomInventory]);
 
   useEffect(() => {
     if (!activePothi) return;
@@ -691,6 +724,30 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
       setMessage(error instanceof Error ? error.message : "Cancellation failed.");
     } finally {
       setCancelling(false);
+    }
+  }
+
+  async function handleAddMember(event: React.FormEvent) {
+    event.preventDefault();
+    if (!result || !verificationToken || !newMember.name.trim()) return;
+    setAddingMember(true);
+    setAddMemberMessage("");
+    try {
+      await addFamilyMember({
+        familyId: result.family.id,
+        mobile: headMobile,
+        verificationToken,
+        member: { ...newMember, isHead: false }
+      });
+      const refreshed = await getMyRegistration({ mobile: headMobile, verificationToken });
+      if (refreshed) setResult(refreshed);
+      setNewMember(createBlankMember());
+      setAddMemberOpen(false);
+      setAddMemberMessage(t.memberAdded);
+    } catch (error) {
+      setAddMemberMessage(error instanceof Error ? error.message : "Could not add the member.");
+    } finally {
+      setAddingMember(false);
     }
   }
 
@@ -1181,6 +1238,27 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
                 return <MemberQrCode key={member.id} member={member} details={{ family_code: result.family.registration_code, venue: allocation?.venue_name ?? "", room: allocation?.room_number ?? "" }} />;
               })}
             </div>
+
+            {expandableCapacity > 0 ? (
+              <div className="add-member-panel">
+                <div className="panel-header-inline">
+                  <div><h3>{t.addMember}</h3><p>{t.addMemberText} ({expandableCapacity} seat(s) available)</p></div>
+                  <button type="button" className="secondary compact-button" onClick={() => setAddMemberOpen((open) => !open)}>
+                    {addMemberOpen ? t.back : t.addMember}
+                  </button>
+                </div>
+                {addMemberOpen ? (
+                  <form className="add-member-form" onSubmit={handleAddMember}>
+                    <label>{t.memberName(0)}<input value={newMember.name} onChange={(event) => setNewMember((current) => ({ ...current, name: event.target.value }))} required /></label>
+                    <label>Age<input type="number" min="0" max="120" value={newMember.age} onChange={(event) => setNewMember((current) => ({ ...current, age: Number(event.target.value) }))} required /></label>
+                    <label>Gender<select value={newMember.gender} onChange={(event) => setNewMember((current) => ({ ...current, gender: event.target.value as FamilyMemberInput["gender"] }))}><option value="male">Male</option><option value="female">Female</option><option value="other">Other</option></select></label>
+                    <label>Mobile (optional)<input inputMode="numeric" value={newMember.mobile} onChange={(event) => setNewMember((current) => ({ ...current, mobile: event.target.value }))} /></label>
+                    <button className="primary" type="submit" disabled={addingMember || !newMember.name.trim()}>{addingMember ? <><span className="loading-spinner" aria-hidden="true" /> {t.addingMember}</> : t.addMember}</button>
+                  </form>
+                ) : null}
+                {addMemberMessage ? <p className="form-message">{addMemberMessage}</p> : null}
+              </div>
+            ) : null}
 
             <div className="button-row">
               <button type="button" className="secondary" onClick={handleCancellation} disabled={cancelling || loading}>

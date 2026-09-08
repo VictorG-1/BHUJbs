@@ -25,6 +25,13 @@ export type RegisterFamilyInput = {
   members: FamilyMemberInput[];
 };
 
+export type AddFamilyMemberInput = {
+  familyId: string;
+  mobile: string;
+  verificationToken: string;
+  member: FamilyMemberInput;
+};
+
 export type SendOtpResult = {
   requestId: string;
   expiresAt: string;
@@ -60,6 +67,8 @@ export type RegistrationResult = {
     room_number: string | null;
     stay_from?: string | null;
     stay_to?: string | null;
+    pothi_id?: number | null;
+    private_room_number?: string | null;
   };
   members: RegisteredMember[];
   allocations: {

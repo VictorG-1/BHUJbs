@@ -922,6 +922,13 @@ h2 {
 .member-qr-card small { color: var(--muted); }
 .member-qr-card button { width: fit-content; }
 .qr-loading { width: 112px; height: 112px; display: grid; place-items: center; color: var(--muted); }
+.add-member-panel { display: grid; gap: 0.9rem; margin-top: 1rem; padding: 1rem; border: 1px solid var(--line); border-radius: 8px; background: #fffaf2; }
+.add-member-panel .panel-header-inline { align-items: center; }
+.compact-button { width: auto; min-width: 0; padding: 0.55rem 0.8rem; }
+.add-member-form { display: grid; grid-template-columns: 1.5fr 0.65fr 0.9fr 1.2fr auto; gap: 0.7rem; align-items: end; }
+.add-member-form label { display: grid; gap: 0.35rem; color: var(--navy); font-weight: 700; }
+.add-member-form input, .add-member-form select { width: 100%; min-width: 0; }
+.add-member-form button { width: auto; min-width: 0; white-space: nowrap; }
 .button-link { text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
 .scanner-panel { max-width: 620px; margin: 0 auto; display: grid; gap: 1rem; }
 .scanner-hero { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
@@ -1632,6 +1639,8 @@ th {
 
   .member-qr-card { align-items: flex-start; }
   .member-qr-card img, .qr-loading { width: 86px; height: 86px; }
+  .add-member-form { grid-template-columns: 1fr 1fr; }
+  .add-member-form label:first-child, .add-member-form label:nth-child(4), .add-member-form button { grid-column: 1 / -1; }
   .scanner-hero { align-items: stretch; }
   .scanner-signout { align-self: flex-start; }
 }

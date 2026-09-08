@@ -1,5 +1,5 @@
 import { supabase } from "./supabase";
-import type { RegisterFamilyInput, RegistrationResult, SendOtpResult, VerifyOtpResult } from "./types";
+import type { AddFamilyMemberInput, RegisterFamilyInput, RegistrationResult, SendOtpResult, VerifyOtpResult } from "./types";
 import * as XLSX from "xlsx";
 
 function getSupabasePublicHeaders() {
@@ -172,6 +172,28 @@ export async function getMyRegistration(input: { mobile: string; verificationTok
   const payload = (await response.json().catch(() => ({}))) as RegistrationResult & { found?: boolean; error?: string; message?: string };
   if (response.status === 404 && payload.found === false) return null;
   if (!response.ok) throw new Error(payload.error ?? payload.message ?? `Could not load registration. (HTTP ${response.status})`);
+  return payload;
+}
+
+export async function addFamilyMember(input: AddFamilyMemberInput) {
+  const endpoint = import.meta.env.DEV
+    ? "/dev-api/add-family-member"
+    : `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/add-family-member`;
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...(import.meta.env.DEV
+        ? {}
+        : {
+            apikey: import.meta.env.VITE_SUPABASE_ANON_KEY ?? import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ?? "",
+            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY ?? import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ?? ""}`
+          })
+    },
+    body: JSON.stringify(input)
+  });
+  const payload = (await response.json().catch(() => ({}))) as { success?: boolean; error?: string; message?: string };
+  if (!response.ok) throw new Error(payload.error ?? payload.message ?? `Could not add member. (HTTP ${response.status})`);
   return payload;
 }
 
