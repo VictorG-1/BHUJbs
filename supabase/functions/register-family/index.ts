@@ -104,13 +104,14 @@ function fullRoomCapacity(room: Pick<RoomRow, "capacity">) {
 function planPrivateRoomAllocations(
   privateRooms: RoomRow[],
   members: MemberInput[],
-  startingMemberIndex: number
+  startingMemberIndex: number,
+  occupiedSeats = new Map<string, number>()
 ) {
   const plan: PendingAllocation[] = [];
   let cursor = 0;
 
   for (const room of privateRooms) {
-    const roomSlots = fullRoomCapacity(room);
+    const roomSlots = Math.max(0, fullRoomCapacity(room) - (occupiedSeats.get(room.id) ?? 0));
     for (let count = 0; count < roomSlots && cursor < members.length; count += 1) {
       plan.push({
         memberIndex: startingMemberIndex + cursor,
@@ -125,7 +126,10 @@ function planPrivateRoomAllocations(
   }
 
   if (cursor < members.length) {
-    const totalCapacity = privateRooms.reduce((sum, room) => sum + fullRoomCapacity(room), 0);
+    const totalCapacity = privateRooms.reduce(
+      (sum, room) => sum + Math.max(0, fullRoomCapacity(room) - (occupiedSeats.get(room.id) ?? 0)),
+      0
+    );
     throw new Error(
       `Only ${totalCapacity} private-room seats are available for this pothi holder, but ${members.length} additional guests were entered.`
     );
@@ -402,7 +406,22 @@ Deno.serve(async (req) => {
             return json({ error: "This pothi holder does not have linked private rooms for additional guests." }, 400);
           }
 
-          plannedAllocations.push(...planPrivateRoomAllocations(privateRooms as RoomRow[], extraPrivateMembers, 4));
+          const privateRoomRows = privateRooms as RoomRow[];
+          const { data: existingPrivateAllocations, error: existingPrivateAllocationsError } = await supabase
+            .from("room_allocations")
+            .select("room_id")
+            .in("room_id", privateRoomRows.map((room) => room.id));
+
+          if (existingPrivateAllocationsError) throw existingPrivateAllocationsError;
+
+          const occupiedSeats = new Map<string, number>();
+          for (const allocation of existingPrivateAllocations ?? []) {
+            occupiedSeats.set(allocation.room_id, (occupiedSeats.get(allocation.room_id) ?? 0) + 1);
+          }
+
+          plannedAllocations.push(
+            ...planPrivateRoomAllocations(privateRoomRows, extraPrivateMembers, pothiRoomMemberCount, occupiedSeats)
+          );
         }
       } else {
         primaryRoomNumber = `POTHI-${String(body.pothiId).padStart(2, "0")}`;
@@ -457,9 +476,16 @@ Deno.serve(async (req) => {
             return json({ error: `Room ${primaryRoomNumber} is not available for this pothi holder.` }, 409);
           }
           const capacity = fullRoomCapacity(bookedRoom as RoomRow);
-          if (filledMembers.length > capacity) {
+          const { count: occupiedCount, error: occupiedCountError } = await supabase
+            .from("room_allocations")
+            .select("id", { count: "exact", head: true })
+            .eq("room_id", bookedRoom.id);
+
+          if (occupiedCountError) throw occupiedCountError;
+          const availableCapacity = Math.max(0, capacity - (occupiedCount ?? 0));
+          if (filledMembers.length > availableCapacity) {
             return json({
-              error: `Room ${primaryRoomNumber} has capacity for ${capacity} guest${capacity === 1 ? "" : "s"}. Please reduce the guest count.`
+              error: `Room ${primaryRoomNumber} has ${availableCapacity} seat${availableCapacity === 1 ? "" : "s"} available out of ${capacity}. Please reduce the guest count.`
             }, 400);
           }
           roomId = bookedRoom.id;

@@ -983,10 +983,13 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
             type="button"
             className="secondary"
             onClick={() => setPrivateRoomGuests((current) => [...current, createBlankMember()])}
-            disabled={!linkedPrivateRooms.length}
+            disabled={!linkedPrivateRooms.length || privateRoomGuests.length >= totalPrivateCapacity}
           >
             {t.addPrivateGuest}
           </button>
+          {linkedPrivateRooms.length && privateRoomGuests.length >= totalPrivateCapacity ? (
+            <small className="inline-note">All available private-room capacity has been added.</small>
+          ) : null}
         </div>
 
         {message ? <p className="form-message">{message}</p> : null}
