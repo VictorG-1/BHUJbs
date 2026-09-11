@@ -287,7 +287,7 @@ h2 {
 
 .landing-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.35fr) minmax(250px, 0.65fr);
   align-items: center;
   min-height: 440px;
   padding: clamp(2rem, 7vw, 5.5rem);
@@ -330,6 +330,32 @@ h2 {
   font-weight: 800;
 }
 
+.landing-travel-panel {
+  display: grid;
+  gap: 1.25rem;
+  align-self: stretch;
+  min-height: 260px;
+  padding: 1.35rem;
+  border: 1px solid rgba(12, 53, 101, 0.16);
+  border-radius: 8px;
+  background: #f3f8f8;
+  box-shadow: 0 12px 30px rgba(12, 53, 101, 0.08);
+}
+
+.travel-panel-top,
+.travel-panel-place,
+.travel-panel-details { display: flex; justify-content: space-between; gap: 1rem; }
+.travel-panel-top { color: var(--navy); font-size: 0.78rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+.travel-panel-top b { color: var(--accent); }
+.travel-panel-place { align-items: center; justify-content: flex-start; }
+.travel-pin { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: var(--navy); color: #f5c45e; font-size: 0.7rem; }
+.travel-panel-place div, .travel-panel-details div { display: grid; gap: 0.2rem; }
+.travel-panel-place small, .travel-panel-details small { color: var(--muted); font-size: 0.74rem; }
+.travel-panel-place strong { color: var(--navy); font-size: 1.15rem; }
+.travel-panel-details { padding: 1rem 0; border-top: 1px solid rgba(12, 53, 101, 0.12); border-bottom: 1px solid rgba(12, 53, 101, 0.12); }
+.travel-panel-details strong { color: var(--navy); }
+.travel-panel-note { align-self: end; color: #4f6875; font-size: 0.84rem; line-height: 1.55; }
+
 .landing-art {
   display: none;
 }
@@ -355,6 +381,7 @@ h2 {
   justify-items: start;
   background: var(--surface);
   border-color: rgba(223, 159, 58, 0.38);
+  box-shadow: 0 8px 20px rgba(12, 53, 101, 0.04);
 }
 
 .event-action-card:hover {
@@ -379,6 +406,10 @@ h2 {
   min-height: 620px;
   margin: 0 auto;
 }
+
+.content-page > .section-heading { max-width: 760px; }
+.content-page > .section-heading h1 { margin-bottom: 0.5rem; }
+.content-page > .section-heading > p:last-child { color: var(--muted); line-height: 1.6; }
 
 .terms-content {
   display: grid;
@@ -552,7 +583,7 @@ h2 {
   align-items: center;
   padding: 1.5rem clamp(1rem, 4vw, 3rem);
   border-top: 1px solid rgba(223, 159, 58, 0.34);
-  background: #fff1dc;
+  background: #f3f8f8;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
@@ -578,6 +609,34 @@ h2 {
   display: grid;
   gap: 0.25rem;
 }
+
+.site-footer strong { color: var(--navy); font-size: 1rem; }
+.site-footer small { line-height: 1.5; }
+.footer-links button:hover { transform: none; box-shadow: none; color: var(--accent); background: transparent; }
+
+.auth-stage,
+.auth-stage-grid,
+.registration-notices { width: min(1100px, 100%); }
+.entry-card,
+.auth-card,
+.dashboard-panel,
+.scanner-panel { box-shadow: 0 14px 34px rgba(9, 47, 85, 0.06); }
+.entry-card h2,
+.auth-card h2,
+.dashboard-panel h2 { color: var(--navy); }
+.auth-card { border-color: #d7e2e6; background: #fff; }
+.auth-stage .section-heading { max-width: 700px; }
+.auth-stage .section-heading p { color: var(--muted); line-height: 1.6; }
+.dashboard-panel { border-color: #d7e2e6; background: #fff; }
+.dashboard-panel-hero { border-radius: 8px; background: #f3f8f8; }
+.admin-hero { border-color: #d7e2e6; background: linear-gradient(118deg, #092f55, #0d5367); color: #fff; }
+.admin-hero h1, .admin-hero h2, .admin-hero .eyebrow { color: #fff; }
+.admin-hero p { color: rgba(255,255,255,0.8); }
+.scanner-panel { border-color: #d7e2e6; background: #fff; }
+.scanner-hero { padding: 1.25rem; border-radius: 8px; background: #f3f8f8; }
+.room-allocation-card,
+.inventory-room-card { border-color: #d7e2e6; box-shadow: 0 6px 16px rgba(9, 47, 85, 0.04); }
+.table-wrap { border-color: #d7e2e6; box-shadow: 0 8px 20px rgba(9, 47, 85, 0.04); }
 
 .footer-links {
   display: flex;
@@ -1552,6 +1611,8 @@ th {
     gap: 1.4rem;
     padding: 1.6rem 1rem 1.75rem;
   }
+
+  .landing-travel-panel { min-height: 0; padding: 1rem; }
 
   .landing-copy h1 {
     max-width: 12ch;

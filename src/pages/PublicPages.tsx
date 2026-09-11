@@ -27,6 +27,15 @@ export function LandingPage({ language, onNavigate }: PublicPageProps) {
             <button className="secondary" onClick={() => onNavigate("itinerary")}>{gu ? "કાર્યક્રમ જુઓ" : "View itinerary"}</button>
           </div>
         </div>
+        <aside className="landing-travel-panel" aria-label={gu ? "ઇવેન્ટની ઝલક" : "Event overview"}>
+          <div className="travel-panel-top"><span>{gu ? "ઇવેન્ટની ઝલક" : "Event overview"}</span><b>2026</b></div>
+          <div className="travel-panel-place"><span className="travel-pin" aria-hidden="true">●</span><div><small>{gu ? "સ્થળ" : "Destination"}</small><strong>{gu ? "ભુજ, ગુજરાત" : "Bhuj, Gujarat"}</strong></div></div>
+          <div className="travel-panel-details">
+            <div><small>{gu ? "તારીખ" : "Dates"}</small><strong>13–20 Nov</strong></div>
+            <div><small>{gu ? "અવસર" : "Occasion"}</small><strong>{gu ? "સપ્તાહ" : "7 days"}</strong></div>
+          </div>
+          <div className="travel-panel-note">{gu ? "નોંધણી, રૂમની માહિતી અને કાર્યક્રમ એક જ જગ્યાએ." : "Registration, stay details and the full programme in one place."}</div>
+        </aside>
       </div>
 
       <div className="event-action-grid">
