@@ -5,6 +5,8 @@ type CancelInput = {
   familyId?: string;
   registrationCode?: string;
   headMobile?: string;
+  memberId?: string;
+  verificationToken?: string;
 };
 
 function normalizeMobile(value: string) {
@@ -50,6 +52,49 @@ Deno.serve(async (req) => {
 
     if (body.headMobile && normalizeMobile(family.head_mobile) !== normalizeMobile(body.headMobile)) {
       return json({ error: "Mobile number does not match this registration." }, 403);
+    }
+
+    if (body.memberId) {
+      if (!body.headMobile || !body.verificationToken) {
+        return json({ error: "Verified mobile and session token are required for member cancellation." }, 403);
+      }
+
+      const { data: verification, error: verificationError } = await supabase
+        .from("sms_otp_verifications")
+        .select("mobile, verified_at, verification_token")
+        .eq("mobile", normalizeMobile(body.headMobile))
+        .eq("verification_token", body.verificationToken)
+        .maybeSingle();
+      if (verificationError) throw verificationError;
+      if (!verification?.verified_at) return json({ error: "Your member session needs OTP verification again." }, 403);
+
+      const { data: member, error: memberError } = await supabase
+        .from("members")
+        .select("id, is_head")
+        .eq("id", body.memberId)
+        .eq("family_id", family.id)
+        .maybeSingle();
+
+      if (memberError) throw memberError;
+      if (!member) return json({ error: "Member is not part of this registration." }, 404);
+
+      const { data: remainingMembers, error: remainingError } = await supabase
+        .from("members")
+        .select("id")
+        .eq("family_id", family.id)
+        .neq("id", body.memberId);
+      if (remainingError) throw remainingError;
+
+      if (member.is_head && (remainingMembers?.length ?? 0) > 0) {
+        return json({ error: "The primary member cannot be cancelled individually. Cancel the full reservation instead." }, 409);
+      }
+
+      if (!member.is_head) {
+        const { error: memberDeleteError } = await supabase.from("members").delete().eq("id", body.memberId);
+        if (memberDeleteError) throw memberDeleteError;
+        return json({ success: true, memberId: body.memberId, remainingMembers: remainingMembers?.length ?? 0 });
+      }
+      // If the primary member is the only member, continue into full cancellation below.
     }
 
     const { data: linkedPothis, error: pothiError } = await supabase

@@ -1012,6 +1012,10 @@ h2 {
 .member-dashboard-section .registered-room-card strong { color: var(--navy); font-size: 1.2rem; }
 .member-dashboard-section .registered-room-card span:not(.room-card-label) { color: #4f6875; font-size: 0.82rem; }
 .member-dashboard-section .member-qr-list { margin-top: 0; padding-top: 0; border-top: 0; }
+.member-qr-item { display: grid; gap: 0.45rem; }
+.member-qr-item .member-qr-card { margin: 0; }
+.member-qr-actions { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding-inline: 0.25rem; color: var(--muted); font-size: 0.75rem; }
+.member-cancel-link { min-height: 30px; padding: 0.35rem 0.55rem; border-color: #e4b6a9; background: #fff6f2; color: #a83a29; font-size: 0.74rem; }
 .member-dashboard-actions { display: flex; align-items: center; gap: 1rem; }
 .member-text-action { border: 0; background: transparent; color: var(--muted); font-size: 0.82rem; }
 .empty-state { margin: 0; padding: 1rem; color: var(--muted); }
@@ -1033,6 +1037,8 @@ h2 {
   .dashboard-status, .member-section-heading .compact-button { width: fit-content; }
   .member-dashboard-actions { align-items: stretch; flex-direction: column; }
   .member-dashboard-actions button { width: 100%; }
+  .member-qr-actions { align-items: stretch; flex-direction: column; }
+  .member-cancel-link { width: fit-content; }
 }
 
 .date-range-grid {

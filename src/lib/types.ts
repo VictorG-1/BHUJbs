@@ -57,6 +57,7 @@ export type RegisteredMember = {
   mobile?: string | null;
   qr_token?: string;
   qr_revoked_at?: string | null;
+  is_head?: boolean;
 };
 
 export type RegistrationResult = {

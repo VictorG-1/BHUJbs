@@ -290,6 +290,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
   const [pothiId, setPothiId] = useState<number>();
   const [loading, setLoading] = useState(false);
   const [cancelling, setCancelling] = useState(false);
+  const [cancellingMemberId, setCancellingMemberId] = useState<string | null>(null);
   const [otpSending, setOtpSending] = useState(false);
   const [otpVerifying, setOtpVerifying] = useState(false);
   const [otpRequestId, setOtpRequestId] = useState("");
@@ -492,6 +493,14 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
     window.localStorage.removeItem(MEMBER_SESSION_KEY);
   }
 
+  function persistMemberSession(nextResult: RegistrationResult) {
+    if (!headMobile || !verificationToken) return;
+    window.localStorage.setItem(
+      MEMBER_SESSION_KEY,
+      JSON.stringify({ mobile: headMobile, verificationToken, result: nextResult })
+    );
+  }
+
   function resetAll(nextStage: RegisterStage = "home", nextTab: RegisterTab = "yajman") {
     clearMemberSession();
     setHeadName("");
@@ -602,6 +611,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
           const existing = await getMyRegistration({ mobile: headMobile, verificationToken: data.verificationToken });
           if (existing) {
             setResult(existing);
+            persistMemberSession(existing);
             return;
           }
         } catch {
@@ -620,7 +630,10 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
       setStage("guest-form");
       try {
         const existing = await getMyRegistration({ mobile: headMobile, verificationToken: data.verificationToken });
-        if (existing) setResult(existing);
+        if (existing) {
+          setResult(existing);
+          persistMemberSession(existing);
+        }
       } catch {
         // Room lookup is an enhancement after OTP verification; it must not block a new registration.
       }
@@ -713,6 +726,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
           members: [...yajmanPayload, ...privatePayload]
         });
         setResult(data);
+        persistMemberSession(data);
         return;
       }
 
@@ -754,6 +768,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
         members: guestPayload
       });
       setResult(data);
+      persistMemberSession(data);
     } catch (error) {
       const nextMessage = error instanceof Error ? error.message : "Registration failed.";
       if (/already done|already registered/i.test(nextMessage)) {
@@ -785,6 +800,34 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
     }
   }
 
+  async function handleMemberCancellation(memberId: string) {
+    if (!result) return;
+    const member = result.members.find((entry) => entry.id === memberId);
+    if (!member || member.is_head) {
+      setMessage("The primary member can only be removed by cancelling the full reservation.");
+      return;
+    }
+    if (!window.confirm(`Cancel registration for ${member.name}?`)) return;
+
+    setCancellingMemberId(memberId);
+    setMessage("");
+    try {
+      await cancelRegistration({ familyId: result.family.id, registrationCode: result.family.registration_code, headMobile, memberId, verificationToken });
+      const nextResult: RegistrationResult = {
+        ...result,
+        members: result.members.filter((entry) => entry.id !== memberId),
+        allocations: result.allocations.filter((entry) => entry.member_id !== memberId)
+      };
+      setResult(nextResult);
+      persistMemberSession(nextResult);
+      setMessage(`${member.name} has been removed from this registration.`);
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Member cancellation failed.");
+    } finally {
+      setCancellingMemberId(null);
+    }
+  }
+
   async function handleAddMember(event: React.FormEvent) {
     event.preventDefault();
     if (!result || !verificationToken || !newMember.name.trim()) return;
@@ -798,7 +841,10 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
         member: { ...newMember, isHead: false }
       });
       const refreshed = await getMyRegistration({ mobile: headMobile, verificationToken });
-      if (refreshed) setResult(refreshed);
+      if (refreshed) {
+        setResult(refreshed);
+        persistMemberSession(refreshed);
+      }
       setNewMember(createBlankMember());
       setAddMemberOpen(false);
       setAddMemberMessage(t.memberAdded);
@@ -1285,7 +1331,15 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
           <div className="member-qr-list">
             {result.members.map((member) => {
               const allocation = result.allocations.find((item) => item.member_id === member.id);
-              return <MemberQrCode key={member.id} member={member} details={{ family_code: result.family.registration_code, venue: allocation?.venue_name ?? "", room: allocation?.room_number ?? "" }} />;
+              return (
+                <div className="member-qr-item" key={member.id}>
+                  <MemberQrCode member={member} details={{ family_code: result.family.registration_code, venue: allocation?.venue_name ?? "", room: allocation?.room_number ?? "" }} />
+                  <div className="member-qr-actions">
+                    <span>{member.is_head ? "Primary member" : "Registered member"}</span>
+                    {!member.is_head ? <button type="button" className="member-cancel-link" onClick={() => void handleMemberCancellation(member.id)} disabled={Boolean(cancellingMemberId) || cancelling}>{cancellingMemberId === member.id ? <><span className="loading-spinner" aria-hidden="true" /> Cancelling</> : "Cancel this member"}</button> : null}
+                  </div>
+                </div>
+              );
             })}
           </div>
         </section>

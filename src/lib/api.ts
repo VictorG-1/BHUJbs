@@ -136,7 +136,7 @@ export async function verifySmsOtp(input: { mobile: string; requestId: string; o
   return data;
 }
 
-export async function cancelRegistration(input: { familyId?: string; registrationCode?: string; headMobile?: string }) {
+export async function cancelRegistration(input: { familyId?: string; registrationCode?: string; headMobile?: string; memberId?: string; verificationToken?: string }) {
   const endpoint = import.meta.env.DEV
     ? "/dev-api/cancel-registration"
     : `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/cancel-registration`;
