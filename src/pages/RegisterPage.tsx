@@ -20,6 +20,7 @@ const blankMember: FamilyMemberInput = {
 
 const EVENT_START_DATE = "2026-11-13";
 const EVENT_END_DATE = "2026-11-20";
+const MEMBER_SESSION_KEY = "bhuj-member-session-v2";
 
 const fallbackPothis = fallbackPothisData as Pothi[];
 const fallbackRooms = (fallbackRoomsData as RoomInventory[]).map(normalizeRoomInventory);
@@ -34,6 +35,18 @@ function createBlankMember(overrides: Partial<FamilyMemberInput> = {}): FamilyMe
     ...blankMember,
     ...overrides
   };
+}
+
+function readMemberSession(): { mobile: string; verificationToken: string; result: RegistrationResult } | null {
+  try {
+    const raw = window.localStorage.getItem(MEMBER_SESSION_KEY);
+    if (!raw) return null;
+    const saved = JSON.parse(raw) as { mobile?: string; verificationToken?: string; result?: RegistrationResult };
+    if (!saved.mobile || !saved.verificationToken || !saved.result?.family) return null;
+    return saved as { mobile: string; verificationToken: string; result: RegistrationResult };
+  } catch {
+    return null;
+  }
 }
 
 function normalizeRoomInventory(room: Partial<RoomInventory> & { capacity?: number | null }): RoomInventory {
@@ -257,10 +270,11 @@ type RegisterPageProps = {
 
 export function RegisterPage({ language = "en" }: RegisterPageProps) {
   const t = copy[language];
+  const savedMemberSession = useMemo(() => readMemberSession(), []);
   const [tab, setTab] = useState<RegisterTab>("yajman");
   const [stage, setStage] = useState<RegisterStage>("home");
   const [headName, setHeadName] = useState("");
-  const [headMobile, setHeadMobile] = useState("");
+  const [headMobile, setHeadMobile] = useState(savedMemberSession?.mobile ?? "");
   const [city, setCity] = useState("");
   const [stayFrom, setStayFrom] = useState(EVENT_START_DATE);
   const [stayTo, setStayTo] = useState(EVENT_END_DATE);
@@ -280,13 +294,14 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
   const [otpVerifying, setOtpVerifying] = useState(false);
   const [otpRequestId, setOtpRequestId] = useState("");
   const [otpCode, setOtpCode] = useState("");
-  const [verificationToken, setVerificationToken] = useState("");
+  const [verificationToken, setVerificationToken] = useState(savedMemberSession?.verificationToken ?? "");
   const [otpStatus, setOtpStatus] = useState("");
   const [otpError, setOtpError] = useState("");
   const [otpMappedPothi, setOtpMappedPothi] = useState<Pothi | null>(null);
   const [message, setMessage] = useState("");
   const [duplicateMessage, setDuplicateMessage] = useState("");
-  const [result, setResult] = useState<RegistrationResult | null>(null);
+  const [result, setResult] = useState<RegistrationResult | null>(savedMemberSession?.result ?? null);
+  const [sessionReady, setSessionReady] = useState(Boolean(savedMemberSession));
   const [addMemberOpen, setAddMemberOpen] = useState(false);
   const [addingMember, setAddingMember] = useState(false);
   const [addMemberMessage, setAddMemberMessage] = useState("");
@@ -306,6 +321,32 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
         }
       });
   }, []);
+
+  useEffect(() => {
+    const saved = savedMemberSession;
+    if (!saved) {
+      setSessionReady(true);
+      return;
+    }
+
+    setTab(saved.result.family.registration_type === "pothi_room" ? "yajman" : "guest");
+    getMyRegistration({ mobile: saved.mobile, verificationToken: saved.verificationToken })
+      .then((fresh) => {
+        if (fresh) setResult(fresh);
+      })
+      .catch(() => {
+        // Keep the saved dashboard visible while the connection is unavailable.
+      })
+      .finally(() => setSessionReady(true));
+  }, [savedMemberSession]);
+
+  useEffect(() => {
+    if (!sessionReady || !result || !verificationToken || !headMobile) return;
+    window.localStorage.setItem(
+      MEMBER_SESSION_KEY,
+      JSON.stringify({ mobile: headMobile, verificationToken, result })
+    );
+  }, [headMobile, result, sessionReady, verificationToken]);
 
   useEffect(() => {
     supabase
@@ -447,7 +488,12 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
     setOtpMappedPothi(null);
   }
 
+  function clearMemberSession() {
+    window.localStorage.removeItem(MEMBER_SESSION_KEY);
+  }
+
   function resetAll(nextStage: RegisterStage = "home", nextTab: RegisterTab = "yajman") {
+    clearMemberSession();
     setHeadName("");
     setHeadMobile("");
     setCity("");
@@ -766,6 +812,10 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
   function closeResult() {
     resetAll("home", "yajman");
     setMessage("Ready for the next registration.");
+  }
+
+  function signOutMember() {
+    resetAll("home", "yajman");
   }
 
   function renderHome() {
@@ -1181,6 +1231,84 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
           </button>
         </div>
       </form>
+    );
+  }
+
+  if (result && sessionReady) {
+    return (
+      <section className="page-section member-dashboard-page" aria-labelledby="member-dashboard-title">
+        <div className="member-dashboard-hero">
+          <div>
+            <p className="eyebrow">Member area</p>
+            <h1 id="member-dashboard-title">Welcome back</h1>
+            <p>Your event stay, room allocation and entry QR codes are in one place.</p>
+          </div>
+          <button type="button" className="member-signout" onClick={signOutMember}>Sign out</button>
+        </div>
+
+        <div className="member-dashboard-meta">
+          <div><span>Registration code</span><strong>{result.family.registration_code}</strong></div>
+          <div><span>Mobile</span><strong>{headMobile}</strong></div>
+          <div><span>Stay dates</span><strong>{result.family.stay_from || EVENT_START_DATE} to {result.family.stay_to || EVENT_END_DATE}</strong></div>
+        </div>
+
+        <div className="member-dashboard-stats">
+          <article><span className="dashboard-stat-icon">01</span><strong>{result.members.length}</strong><small>Registered members</small></article>
+          <article><span className="dashboard-stat-icon">02</span><strong>{allocationRoomSummary.length}</strong><small>Rooms assigned</small></article>
+          <article><span className="dashboard-stat-icon">03</span><strong>{result.family.registration_type === "pothi_room" ? "Pothi" : "Private"}</strong><small>Registration type</small></article>
+        </div>
+
+        <section className="member-dashboard-section">
+          <div className="member-section-heading"><div><p className="eyebrow">Stay details</p><h2>Your room allocation</h2></div><span className="dashboard-status">Confirmed</span></div>
+          <div className="dashboard-room-groups">
+            {dashboardRoomGroups.length ? dashboardRoomGroups.map((group) => (
+              <section className="dashboard-room-group" key={group.key}>
+                <div className="panel-header-inline"><div><h3>{group.title}</h3><p>{group.rooms.length} room(s) assigned</p></div></div>
+                <div className="registered-room-grid">
+                  {group.rooms.map((room) => (
+                    <article className="registered-room-card" key={room.room_number}>
+                      <strong>{room.room_number}</strong>
+                      <span>{room.venue_name || "Venue pending"}</span>
+                      <small>{room.members.join(", ")} · Capacity {room.capacity || room.members.length}</small>
+                    </article>
+                  ))}
+                </div>
+              </section>
+            )) : <p className="empty-state">Room allocation is being synced. Please refresh in a moment.</p>}
+          </div>
+        </section>
+
+        <section className="member-dashboard-section member-qr-section">
+          <div className="member-section-heading"><div><p className="eyebrow">Event entry</p><h2>Member QR codes</h2><p>Download one QR code for each registered member.</p></div></div>
+          <div className="member-qr-list">
+            {result.members.map((member) => {
+              const allocation = result.allocations.find((item) => item.member_id === member.id);
+              return <MemberQrCode key={member.id} member={member} details={{ family_code: result.family.registration_code, venue: allocation?.venue_name ?? "", room: allocation?.room_number ?? "" }} />;
+            })}
+          </div>
+        </section>
+
+        {expandableCapacity > 0 ? (
+          <section className="member-dashboard-section add-member-panel">
+            <div className="member-section-heading"><div><p className="eyebrow">Room capacity</p><h2>Add another member</h2><p>{expandableCapacity} seat(s) remain available in your linked room allocation.</p></div><button type="button" className="secondary compact-button" onClick={() => setAddMemberOpen((open) => !open)}>{addMemberOpen ? "Close" : "Add member"}</button></div>
+            {addMemberOpen ? (
+              <form className="add-member-form" onSubmit={handleAddMember}>
+                <label>{t.memberName(0)}<input value={newMember.name} onChange={(event) => setNewMember((current) => ({ ...current, name: event.target.value }))} required /></label>
+                <label>Age<input type="number" min="0" max="120" value={newMember.age} onChange={(event) => setNewMember((current) => ({ ...current, age: Number(event.target.value) }))} required /></label>
+                <label>Gender<select value={newMember.gender} onChange={(event) => setNewMember((current) => ({ ...current, gender: event.target.value as FamilyMemberInput["gender"] }))}><option value="male">Male</option><option value="female">Female</option><option value="other">Other</option></select></label>
+                <label>Mobile (optional)<input inputMode="numeric" value={newMember.mobile} onChange={(event) => setNewMember((current) => ({ ...current, mobile: event.target.value }))} /></label>
+                <button className="primary" type="submit" disabled={addingMember || !newMember.name.trim()}>{addingMember ? <><span className="loading-spinner" aria-hidden="true" /> Adding</> : "Add member"}</button>
+              </form>
+            ) : null}
+            {addMemberMessage ? <p className="form-message">{addMemberMessage}</p> : null}
+          </section>
+        ) : null}
+
+        <div className="member-dashboard-actions">
+          <button type="button" className="secondary" onClick={handleCancellation} disabled={cancelling}>{cancelling ? t.cancellingReservation : t.cancelReservation}</button>
+          <button type="button" className="member-text-action" onClick={signOutMember}>Sign out</button>
+        </div>
+      </section>
     );
   }
 
