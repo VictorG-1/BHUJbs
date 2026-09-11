@@ -10,9 +10,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 1,
-    "allotment_note": "હીરજી શિવજી ભુતડા",
-    "room_type": "pothi_room",
+    "linked_pothi_id": null,
+    "allotment_note": null,
+    "room_type": "general_room",
     "sort_order": 1
   },
   {
@@ -26,9 +26,9 @@
     "extra_count": 2,
     "total_capacity": 6,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 2,
-    "allotment_note": "ઝવેરબેન મંગલદાસ ભુતડા(જી.જ.)",
-    "room_type": "pothi_room",
+    "linked_pothi_id": null,
+    "allotment_note": null,
+    "room_type": "general_room",
     "sort_order": 2
   },
   {
@@ -42,9 +42,9 @@
     "extra_count": 2,
     "total_capacity": 6,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 3,
-    "allotment_note": "જગદીશ હીરજી ભૂતડા",
-    "room_type": "pothi_room",
+    "linked_pothi_id": null,
+    "allotment_note": null,
+    "room_type": "general_room",
     "sort_order": 3
   },
   {
@@ -58,9 +58,9 @@
     "extra_count": 2,
     "total_capacity": 6,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 4,
-    "allotment_note": "શાંતિલાલ તુલસીદાસ ભૂતડા",
-    "room_type": "pothi_room",
+    "linked_pothi_id": null,
+    "allotment_note": null,
+    "room_type": "general_room",
     "sort_order": 4
   },
   {
