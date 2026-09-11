@@ -1239,17 +1239,18 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
       <section className="page-section member-dashboard-page" aria-labelledby="member-dashboard-title">
         <div className="member-dashboard-hero">
           <div>
-            <p className="eyebrow">Member area</p>
-            <h1 id="member-dashboard-title">Welcome back</h1>
-            <p>Your event stay, room allocation and entry QR codes are in one place.</p>
+            <p className="eyebrow">Bhagwat Saptah · Member portal</p>
+            <h1 id="member-dashboard-title">Your stay, sorted.</h1>
+            <p>Everything you need for a smooth arrival in Bhuj, from your room allocation to your event entry passes.</p>
+            <div className="member-hero-location"><span aria-hidden="true">●</span> Bhuj, Gujarat <i>·</i> 13–20 November 2026</div>
           </div>
-          <button type="button" className="member-signout" onClick={signOutMember}>Sign out</button>
+          <div className="member-hero-actions"><span className="member-hero-ref">Booking reference<br /><strong>{result.family.registration_code}</strong></span><button type="button" className="member-signout" onClick={signOutMember}>Sign out</button></div>
         </div>
 
         <div className="member-dashboard-meta">
-          <div><span>Registration code</span><strong>{result.family.registration_code}</strong></div>
-          <div><span>Mobile</span><strong>{headMobile}</strong></div>
-          <div><span>Stay dates</span><strong>{result.family.stay_from || EVENT_START_DATE} to {result.family.stay_to || EVENT_END_DATE}</strong></div>
+          <div><span>Stay</span><strong>{result.family.stay_from || EVENT_START_DATE} – {result.family.stay_to || EVENT_END_DATE}</strong><small>Arrival to departure</small></div>
+          <div><span>Guests</span><strong>{result.members.length} registered</strong><small>All members on this booking</small></div>
+          <div><span>Contact mobile</span><strong>{headMobile}</strong><small>Verified for this booking</small></div>
         </div>
 
         <div className="member-dashboard-stats">
@@ -1267,9 +1268,10 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
                 <div className="registered-room-grid">
                   {group.rooms.map((room) => (
                     <article className="registered-room-card" key={room.room_number}>
+                      <div className="registered-room-card-top"><span className="room-card-label">{group.title}</span><span className="room-capacity">{room.members.length}/{room.capacity || room.members.length}</span></div>
                       <strong>{room.room_number}</strong>
                       <span>{room.venue_name || "Venue pending"}</span>
-                      <small>{room.members.join(", ")} · Capacity {room.capacity || room.members.length}</small>
+                      <small>{room.members.join(", ")}</small>
                     </article>
                   ))}
                 </div>
