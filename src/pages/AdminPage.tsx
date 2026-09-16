@@ -7,9 +7,9 @@ import fallbackRoomsData from "../data/rooms.json";
 import { PothiGrid } from "../components/PothiGrid";
 import { qrPayload } from "../components/MemberQrCode";
 import { StatusPill } from "../components/StatusPill";
-import { cancelRegistration, downloadAdminWorkbook, downloadExportData } from "../lib/api";
+import { cancelRegistration, downloadAdminWorkbook, downloadExportData, registerFamily } from "../lib/api";
 import { supabase } from "../lib/supabase";
-import type { AdminMemberRow, Pothi, RoomInventory } from "../lib/types";
+import type { AdminMemberRow, FamilyMemberInput, Pothi, RoomInventory } from "../lib/types";
 
 type Language = "en" | "gu";
 
@@ -62,6 +62,8 @@ const copy = {
     pothis: "Pothis",
     filtersTitle: "Master search",
     masterSearch: "Search guests, mobile, family, pothi, venue, room or type",
+    addedFrom: "Added from",
+    addedTo: "Added to",
     yajmanRoom: "Pothi Yajman room",
     privateRoomGuests: "Private room guests",
     generalRoomGuests: "General room guests",
@@ -77,6 +79,14 @@ const copy = {
     importedInventory: "Imported room inventory",
     registeredView: "Registered room view",
     generalInventory: "General inventory"
+    ,adminRegisterTitle: "Admin Pothi registration"
+    ,adminRegisterText: "Register a Pothi directly from the admin dashboard. OTP is not required for an authenticated admin.",
+    adminRegister: "Register Pothi",
+    selectPothi: "Select open Pothi",
+    addPerson: "Add member",
+    removePerson: "Remove",
+    saveRegistration: "Save Pothi registration",
+    savingRegistration: "Saving registration..."
   },
   gu: {
     eyebrow: "એડમિન ડેશબોર્ડ",
@@ -100,6 +110,8 @@ const copy = {
     pothis: "પોથીઓ",
     filtersTitle: "માસ્ટર સર્ચ",
     masterSearch: "મહેમાન, મોબાઇલ, પરિવાર, પોથી, વેન્યુ, રૂમ અથવા પ્રકાર શોધો",
+    addedFrom: "ઉમેર્યાની તારીખથી",
+    addedTo: "ઉમેર્યાની તારીખ સુધી",
     yajmanRoom: "પોથી યજમાન રૂમ",
     privateRoomGuests: "પ્રાઇવેટ રૂમ મહેમાન",
     generalRoomGuests: "જનરલ રૂમ મહેમાન",
@@ -115,6 +127,14 @@ const copy = {
     importedInventory: "આયાત કરેલ રૂમ સૂચિ",
     registeredView: "નોંધાયેલ રૂમ દૃશ્ય",
     generalInventory: "જનરલ સૂચિ"
+    ,adminRegisterTitle: "એડમિન પોથી નોંધણી"
+    ,adminRegisterText: "ઓથેન્ટિકેટેડ એડમિન ડેશબોર્ડથી સીધી પોથી નોંધણી કરો. OTP જરૂરી નથી.",
+    adminRegister: "પોથી નોંધણી",
+    selectPothi: "ખાલી પોથી પસંદ કરો",
+    addPerson: "સભ્ય ઉમેરો",
+    removePerson: "દૂર કરો",
+    saveRegistration: "પોથી નોંધણી સાચવો",
+    savingRegistration: "નોંધણી સાચવી રહ્યા છીએ..."
   }
 } as const;
 
@@ -135,14 +155,21 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
   const [searchVenue, setSearchVenue] = useState("all");
   const [searchType, setSearchType] = useState("all");
   const [searchPothi, setSearchPothi] = useState("all");
+  const [addedFrom, setAddedFrom] = useState("");
+  const [addedTo, setAddedTo] = useState("");
   const [selectedVenue, setSelectedVenue] = useState("all");
   const [status, setStatus] = useState("");
+  const [adminPothiId, setAdminPothiId] = useState("");
+  const [adminMembers, setAdminMembers] = useState<FamilyMemberInput[]>([{ name: "", age: 18, gender: "male", mobile: "", isHead: true }]);
+  const [adminStayFrom, setAdminStayFrom] = useState("2026-11-13");
+  const [adminStayTo, setAdminStayTo] = useState("2026-11-20");
+  const [adminSaving, setAdminSaving] = useState(false);
 
   async function load() {
     const [{ data: memberData, error: memberError }, { data: pothiData, error: pothiError }, { data: roomData, error: roomError }, { data: scanData, error: scanError }] = await Promise.all([
       supabase
         .from("members")
-        .select("id, name, age, gender, mobile, is_head, qr_token, qr_revoked_at, families(id, head_name, head_mobile, city, wants_stay, pothi_id, reference_pothi_id, registration_type, private_room_number), room_allocations(rooms(room_number, venue_name, section_name))")
+        .select("id, name, age, gender, mobile, is_head, created_at, qr_token, qr_revoked_at, families(id, head_name, head_mobile, city, wants_stay, pothi_id, reference_pothi_id, registration_type, private_room_number), room_allocations(rooms(room_number, venue_name, section_name))")
         .order("name"),
       supabase.from("pothis").select("id, family_id").order("id"),
       supabase
@@ -163,6 +190,42 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
     setRoomsInventory(((roomData ?? []) as Array<RoomInventory & { capacity?: number | null }>).map(normalizeRoom));
     setScanLogs((scanData ?? []) as typeof scanLogs);
     setStatus("");
+  }
+
+  async function handleAdminPothiRegistration(event: React.FormEvent) {
+    event.preventDefault();
+    const pothiId = Number(adminPothiId);
+    const filledMembers = adminMembers.filter((member) => member.name.trim());
+    const head = filledMembers[0];
+    if (!pothiId || !head || !head.mobile.trim()) {
+      setStatus(language === "gu" ? "પોથી, પ્રથમ સભ્યનું નામ અને મોબાઇલ જરૂરી છે." : "Pothi, first member name and mobile are required.");
+      return;
+    }
+    setAdminSaving(true);
+    setStatus("");
+    try {
+      await registerFamily({
+        headName: head.name.trim(),
+        headMobile: head.mobile.trim(),
+        city: "Admin entry",
+        address: "Admin dashboard registration",
+        registrationType: "pothi_room",
+        pothiId,
+        stayFrom: adminStayFrom,
+        stayTo: adminStayTo,
+        pothiRoomMemberCount: filledMembers.length,
+        members: filledMembers.map((member, index) => ({ ...member, name: member.name.trim(), age: Number(member.age) || 18, mobile: member.mobile.trim(), isHead: index === 0 })),
+        adminRequest: true
+      });
+      setStatus(language === "gu" ? `પોથી ${pothiId} ની નોંધણી સાચવાઈ ગઈ.` : `Pothi ${pothiId} registration saved.`);
+      setAdminPothiId("");
+      setAdminMembers([{ name: "", age: 18, gender: "male", mobile: "", isHead: true }]);
+      await load();
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : "Admin registration failed.");
+    } finally {
+      setAdminSaving(false);
+    }
   }
 
   useEffect(() => {
@@ -220,13 +283,16 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
       if (searchVenue !== "all" && memberVenue !== searchVenue) return false;
       if (searchType !== "all" && family?.registration_type !== searchType) return false;
       if (searchPothi !== "all" && String(pothi) !== searchPothi) return false;
+      const addedDate = member.created_at?.slice(0, 10) ?? "";
+      if (addedFrom && (!addedDate || addedDate < addedFrom)) return false;
+      if (addedTo && (!addedDate || addedDate > addedTo)) return false;
       const haystack = [member.name, member.mobile, family?.head_name, family?.head_mobile, family?.city, room, pothi, family?.registration_type]
         .filter(Boolean)
         .join(" ")
         .toLowerCase();
       return !query || haystack.includes(query);
     });
-  }, [masterSearch, members, searchPothi, searchType, searchVenue]);
+  }, [addedFrom, addedTo, masterSearch, members, searchPothi, searchType, searchVenue]);
 
   const occupiedRooms = useMemo(() => {
     const map = new Map<string, AdminMemberRow[]>();
@@ -557,8 +623,44 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
             <option value="all">{language === "gu" ? "બધી પોથી" : "All pothis"}</option>
             {pothis.map((pothi) => <option key={pothi.id} value={String(pothi.id)}>Pothi {pothi.id}</option>)}
           </select>
-          {masterSearch ? <button type="button" className="secondary" onClick={() => setMasterSearch("")}>{language === "gu" ? "સાફ કરો" : "Clear"}</button> : null}
+          <label className="date-filter-field"><span>{t.addedFrom}</span><input type="date" value={addedFrom} onChange={(event) => setAddedFrom(event.target.value)} /></label>
+          <label className="date-filter-field"><span>{t.addedTo}</span><input type="date" value={addedTo} onChange={(event) => setAddedTo(event.target.value)} /></label>
+          {masterSearch || addedFrom || addedTo || searchVenue !== "all" || searchType !== "all" || searchPothi !== "all" ? <button type="button" className="secondary" onClick={() => { setMasterSearch(""); setAddedFrom(""); setAddedTo(""); setSearchVenue("all"); setSearchType("all"); setSearchPothi("all"); }}>{language === "gu" ? "સાફ કરો" : "Clear"}</button> : null}
         </div>
+      </div>
+
+      <div className="dashboard-panel dashboard-panel-surface admin-registration-panel">
+        <div className="panel-header panel-header-inline">
+          <div>
+            <h2>{t.adminRegisterTitle}</h2>
+            <p>{t.adminRegisterText}</p>
+          </div>
+        </div>
+        <form className="admin-pothi-form" onSubmit={handleAdminPothiRegistration}>
+          <select value={adminPothiId} onChange={(event) => setAdminPothiId(event.target.value)} required>
+            <option value="">{t.selectPothi}</option>
+            {pothis.filter((pothi) => !pothi.family_id).map((pothi) => <option key={pothi.id} value={pothi.id}>Pothi {pothi.id}</option>)}
+          </select>
+          <label><span>{language === "gu" ? "થી" : "Stay from"}</span><input type="date" value={adminStayFrom} onChange={(event) => setAdminStayFrom(event.target.value)} required /></label>
+          <label><span>{language === "gu" ? "સુધી" : "Stay to"}</span><input type="date" value={adminStayTo} onChange={(event) => setAdminStayTo(event.target.value)} required /></label>
+          <div className="admin-member-editor">
+            {adminMembers.map((member, index) => (
+              <div className="admin-member-row" key={`${index}-${member.name}`}>
+                <input placeholder={`${language === "gu" ? "સભ્ય" : "Member"} ${index + 1} name`} value={member.name} onChange={(event) => setAdminMembers((current) => current.map((item, itemIndex) => itemIndex === index ? { ...item, name: event.target.value } : item))} required={index === 0} />
+                <input type="number" min="1" max="120" placeholder="Age" value={member.age || ""} onChange={(event) => setAdminMembers((current) => current.map((item, itemIndex) => itemIndex === index ? { ...item, age: Number(event.target.value) } : item))} />
+                <select value={member.gender} onChange={(event) => setAdminMembers((current) => current.map((item, itemIndex) => itemIndex === index ? { ...item, gender: event.target.value as FamilyMemberInput["gender"] } : item))}>
+                  <option value="male">{language === "gu" ? "પુરુષ" : "Male"}</option><option value="female">{language === "gu" ? "સ્ત્રી" : "Female"}</option><option value="other">{language === "gu" ? "અન્ય" : "Other"}</option>
+                </select>
+                <input inputMode="numeric" placeholder="Mobile" value={member.mobile} onChange={(event) => setAdminMembers((current) => current.map((item, itemIndex) => itemIndex === index ? { ...item, mobile: event.target.value } : item))} required={index === 0} />
+                {index > 0 ? <button type="button" className="table-action" onClick={() => setAdminMembers((current) => current.filter((_item, itemIndex) => itemIndex !== index))}>{t.removePerson}</button> : null}
+              </div>
+            ))}
+          </div>
+          <div className="button-row">
+            <button type="button" className="secondary" disabled={adminMembers.length >= 4} onClick={() => setAdminMembers((current) => [...current, { name: "", age: 18, gender: "male", mobile: "" }])}>{t.addPerson}</button>
+            <button type="submit" className="primary" disabled={adminSaving}>{adminSaving ? t.savingRegistration : t.saveRegistration}</button>
+          </div>
+        </form>
       </div>
 
       <div className="dashboard-panel dashboard-panel-surface">

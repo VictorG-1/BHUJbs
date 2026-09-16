@@ -15,6 +15,7 @@ export type RegisterFamilyInput = {
   city: string;
   address: string;
   verificationToken?: string;
+  adminRequest?: boolean;
   registrationType: RegistrationType;
   pothiId?: number;
   relatedPothiId?: number;
@@ -52,6 +53,7 @@ export type VerifyOtpResult = {
 export type RegisteredMember = {
   id: string;
   name: string;
+  created_at?: string;
   age?: number;
   gender?: Gender;
   mobile?: string | null;
@@ -113,6 +115,7 @@ export type RoomInventory = {
 export type AdminMemberRow = {
   id: string;
   name: string;
+  created_at?: string;
   qr_token?: string;
   qr_revoked_at?: string | null;
   age: number;

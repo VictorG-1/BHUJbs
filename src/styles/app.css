@@ -890,6 +890,40 @@ h2 {
   align-items: center;
 }
 
+.date-filter-field {
+  display: grid;
+  gap: 4px;
+  min-width: 145px;
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.date-filter-field input {
+  min-width: 0;
+}
+
+.member-date-filter {
+  display: flex;
+  align-items: end;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 16px 0;
+}
+
+.member-date-filter label {
+  display: grid;
+  gap: 5px;
+  min-width: 150px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.member-date-filter input {
+  min-width: 0;
+}
+
 .field-stack {
   display: grid;
   gap: 1rem;

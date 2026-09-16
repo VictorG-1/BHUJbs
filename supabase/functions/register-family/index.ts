@@ -16,6 +16,7 @@ type RegisterInput = {
   city?: string;
   address?: string;
   verificationToken?: string;
+  adminRequest?: boolean;
   registrationType: "pothi_room" | "private_room" | "general_room";
   pothiId?: number;
   relatedPothiId?: number;
@@ -286,38 +287,49 @@ Deno.serve(async (req) => {
 
     const supabase = serviceClient();
     const normalizedMobile = normalizeMobile(body.headMobile);
-
-    if (body.registrationType === "pothi_room" || body.registrationType === "general_room") {
-      if (!body.verificationToken) {
-        return json({ error: "Please verify your mobile number with OTP before registering." }, 403);
-      }
-
-      const { data: otpVerification, error: otpError } = await supabase
-        .from("sms_otp_verifications")
-        .select("id, mobile, verified_at, consumed_at, verification_token")
-        .eq("mobile", normalizedMobile)
-        .eq("verification_token", body.verificationToken)
-        .maybeSingle();
-
-      if (otpError) throw otpError;
-      if (!otpVerification || !otpVerification.verified_at || otpVerification.consumed_at) {
-        return json({ error: "Please verify your mobile number with OTP before registering." }, 403);
-      }
-    }
-
     const authHeader = req.headers.get("Authorization") ?? "";
     const token = authHeader.replace("Bearer ", "");
     let authUserId: string | null = null;
+    let isAdminRequest = false;
 
     if (token) {
       const { data: authData, error: authError } = await supabase.auth.getUser(token);
       if (!authError && authData.user) {
-        if (authData.user.phone && normalizeMobile(authData.user.phone) !== normalizedMobile) {
+        authUserId = authData.user.id;
+        const { data: adminProfile, error: adminProfileError } = await supabase
+          .from("admin_profiles")
+          .select("role")
+          .eq("user_id", authData.user.id)
+          .maybeSingle();
+        if (adminProfileError) throw adminProfileError;
+        isAdminRequest = body.adminRequest === true && adminProfile?.role === "admin";
+        if (!isAdminRequest && authData.user.phone && normalizeMobile(authData.user.phone) !== normalizedMobile) {
           return json({ error: "Verified mobile does not match the registration mobile." }, 403);
         }
+      }
+    }
 
-        authUserId = authData.user.id;
+    if (body.registrationType === "pothi_room" || body.registrationType === "general_room") {
+      if (!isAdminRequest && !body.verificationToken) {
+        return json({ error: "Please verify your mobile number with OTP before registering." }, 403);
+      }
 
+      if (!isAdminRequest) {
+        const { data: otpVerification, error: otpError } = await supabase
+          .from("sms_otp_verifications")
+          .select("id, mobile, verified_at, consumed_at, verification_token")
+          .eq("mobile", normalizedMobile)
+          .eq("verification_token", body.verificationToken)
+          .maybeSingle();
+
+        if (otpError) throw otpError;
+        if (!otpVerification || !otpVerification.verified_at || otpVerification.consumed_at) {
+          return json({ error: "Please verify your mobile number with OTP before registering." }, 403);
+        }
+      }
+    }
+
+    if (authUserId && !isAdminRequest) {
         const { data: existingFamily, error: existingError } = await supabase
           .from("families")
           .select("id, registration_code")
@@ -328,7 +340,6 @@ Deno.serve(async (req) => {
         if (existingFamily) {
           return json({ error: `This mobile number is already registered. Family code: ${existingFamily.registration_code}.` }, 409);
         }
-      }
     }
 
     const { data: mobileMatchedFamily, error: mobileMatchError } = await supabase
@@ -338,7 +349,7 @@ Deno.serve(async (req) => {
       .maybeSingle();
 
     if (mobileMatchError) throw mobileMatchError;
-    if (mobileMatchedFamily) {
+    if (mobileMatchedFamily && !isAdminRequest) {
       return json({ error: `This registration is already done. Family code: ${mobileMatchedFamily.registration_code}.` }, 409);
     }
 
@@ -361,7 +372,7 @@ Deno.serve(async (req) => {
 
       if (pothiError) throw pothiError;
       if (!pothi || pothi.family_id) return json({ error: "Selected pothi is no longer available." }, 409);
-      if (normalizeMobile(pothi.contact_mobile ?? "") !== normalizedMobile) {
+      if (!isAdminRequest && normalizeMobile(pothi.contact_mobile ?? "") !== normalizedMobile) {
         return json({ error: "This mobile number does not match the mapped Pothi Yajman contact." }, 403);
       }
 
@@ -573,7 +584,7 @@ Deno.serve(async (req) => {
     const { data: members, error: memberError } = await supabase
       .from("members")
       .insert(normalizedMembers)
-      .select("id, name, age, gender, mobile, qr_token");
+      .select("id, name, age, gender, mobile, is_head, created_at, qr_token");
 
     if (memberError) throw memberError;
 
