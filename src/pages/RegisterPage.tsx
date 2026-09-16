@@ -396,14 +396,16 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
     () => pothiOptions.filter((pothi) => !pothi.family_id).length,
     [pothiOptions]
   );
-  const allottedPothiRoom = useMemo(
+  const allottedPothiRooms = useMemo(
     () =>
-      roomInventory.find(
-        (room) =>
-          room.owner_type === "SAMAJ" &&
-          room.room_type === "pothi_room" &&
-          room.linked_pothi_id === pothiId
-      ),
+      roomInventory
+        .filter(
+          (room) =>
+            room.owner_type === "SAMAJ" &&
+            room.room_type === "pothi_room" &&
+            room.linked_pothi_id === pothiId
+        )
+        .sort((left, right) => (left.sort_order ?? 9999) - (right.sort_order ?? 9999)),
     [pothiId, roomInventory]
   );
   const linkedPrivateRooms = useMemo(
@@ -1049,13 +1051,15 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
           ) : null}
 
           <div className="room-portfolio">
-            {allottedPothiRoom ? (
-              <article className="room-info-card">
-                <strong>{t.allottedRoom}</strong>
-                <span>{allottedPothiRoom.room_number}</span>
-                <small>{[allottedPothiRoom.venue_name, allottedPothiRoom.section_name, allottedPothiRoom.floor].filter(Boolean).join(" | ")}</small>
-                <small>{t.exactFour}</small>
-              </article>
+            {allottedPothiRooms.length ? (
+              allottedPothiRooms.map((room) => (
+                <article className="room-info-card" key={room.room_number}>
+                  <strong>{t.allottedRoom}</strong>
+                  <span>{room.room_number}</span>
+                  <small>{[room.venue_name, room.section_name, room.floor].filter(Boolean).join(" | ")}</small>
+                  <small>{t.exactFour}</small>
+                </article>
+              ))
             ) : (
               <article className="room-info-card">
                 <strong>{t.allottedRoom}</strong>
