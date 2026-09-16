@@ -70,18 +70,31 @@ Deno.serve(async (req) => {
       return json({ error: "This mobile number is already registered in this family." }, 409);
     }
 
-    const roomQuery = supabase
+    const roomQuery = () => supabase
       .from("rooms")
-      .select("id, room_number, venue_name, section_name, floor, capacity, room_type, linked_pothi_id, owner_type, sort_order");
+      .select("id, room_number, source_room_number, venue_name, section_name, floor, capacity, room_type, linked_pothi_id, owner_type, sort_order");
     let candidateRooms;
     if (family.registration_type === "pothi_room" && family.pothi_id) {
-      const { data, error } = await roomQuery.eq("linked_pothi_id", family.pothi_id).order("sort_order", { ascending: true });
+      const { data, error } = await roomQuery().eq("linked_pothi_id", family.pothi_id).order("sort_order", { ascending: true });
       if (error) throw error;
       candidateRooms = data ?? [];
     } else if (family.registration_type === "private_room" && family.private_room_number) {
-      const { data, error } = await roomQuery.eq("room_number", family.private_room_number).limit(1);
-      if (error) throw error;
-      candidateRooms = data ?? [];
+      const exact = await roomQuery().eq("room_number", family.private_room_number).limit(1);
+      if (exact.error) throw exact.error;
+      let data = exact.data ?? [];
+      if (!data.length) {
+        const source = await roomQuery()
+          .eq("source_room_number", family.private_room_number)
+          .eq("owner_type", "PRIVATE")
+          .eq("linked_pothi_id", family.pothi_id)
+          .limit(2);
+        if (source.error) throw source.error;
+        if ((source.data ?? []).length > 1) {
+          return json({ error: "This private room number is shared by multiple venues. Please contact the administrator." }, 409);
+        }
+        data = source.data ?? [];
+      }
+      candidateRooms = data;
     } else {
       return json({ error: "No expandable room is linked to this registration." }, 409);
     }

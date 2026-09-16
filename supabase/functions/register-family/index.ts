@@ -29,6 +29,7 @@ type RegisterInput = {
 type RoomRow = {
   id: string;
   room_number: string;
+  source_room_number?: string | null;
   venue_name: string | null;
   section_name: string | null;
   floor: string | null;
@@ -463,13 +464,29 @@ Deno.serve(async (req) => {
         privateRoomNumber = body.privateRoomNumber.trim();
         primaryRoomNumber = privateRoomNumber;
 
-        const { data: bookedRoom, error: bookedRoomError } = await supabase
+        const { data: exactBookedRoom, error: bookedRoomError } = await supabase
           .from("rooms")
-          .select("id, room_number, venue_name, section_name, floor, capacity, linked_pothi_id, owner_type")
+          .select("id, room_number, source_room_number, venue_name, section_name, floor, capacity, linked_pothi_id, owner_type")
           .eq("room_number", primaryRoomNumber)
           .maybeSingle();
 
         if (bookedRoomError) throw bookedRoomError;
+
+        let bookedRoom = exactBookedRoom;
+        if (!bookedRoom) {
+          const { data: sourceMatches, error: sourceRoomError } = await supabase
+            .from("rooms")
+            .select("id, room_number, source_room_number, venue_name, section_name, floor, capacity, linked_pothi_id, owner_type")
+            .eq("source_room_number", primaryRoomNumber)
+            .eq("owner_type", "PRIVATE")
+            .eq("linked_pothi_id", body.relatedPothiId)
+            .limit(2);
+          if (sourceRoomError) throw sourceRoomError;
+          if ((sourceMatches ?? []).length > 1) {
+            return json({ error: `Room number ${primaryRoomNumber} exists in more than one linked venue. Please select the full venue and room number.` }, 409);
+          }
+          bookedRoom = sourceMatches?.[0] ?? null;
+        }
 
         if (bookedRoom) {
           if (bookedRoom.owner_type !== "PRIVATE" || bookedRoom.linked_pothi_id !== body.relatedPothiId) {

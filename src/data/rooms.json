@@ -1,5 +1,101 @@
 [
   {
+    "room_number": "YAX MANDIR / NAVNEET HALL / HALL / F.F.",
+    "venue_name": "YAX MANDIR",
+    "section_name": "NAVNEET HALL",
+    "source_room_number": "HALL",
+    "floor": "F.F.",
+    "ac_type": "A.C.",
+    "bed_count": 24,
+    "extra_count": 0,
+    "total_capacity": 24,
+    "owner_type": "SAMAJ",
+    "linked_pothi_id": null,
+    "allotment_note": "Pothis 8 TO 13. HANSARAJ NANAJI BHUTADA PARIVAR BITA",
+    "room_type": "general_room",
+    "sort_order": null
+  },
+  {
+    "room_number": "YAX MANDIR / NAVNEET HALL / HALL / G.F.",
+    "venue_name": "YAX MANDIR",
+    "section_name": "NAVNEET HALL",
+    "source_room_number": "HALL",
+    "floor": "G.F.",
+    "ac_type": "A.C.",
+    "bed_count": 30,
+    "extra_count": 0,
+    "total_capacity": 30,
+    "owner_type": "SAMAJ",
+    "linked_pothi_id": 68,
+    "allotment_note": "SHANTILALA BECHARDAS SHETH",
+    "room_type": "pothi_room",
+    "sort_order": null
+  },
+  {
+    "room_number": "YAX MANDIR / RATANBEN HALL / HALL / F.F.",
+    "venue_name": "YAX MANDIR",
+    "section_name": "RATANBEN HALL",
+    "source_room_number": "HALL",
+    "floor": "F.F.",
+    "ac_type": "A.C.",
+    "bed_count": 20,
+    "extra_count": 0,
+    "total_capacity": 20,
+    "owner_type": "SAMAJ",
+    "linked_pothi_id": null,
+    "allotment_note": "",
+    "room_type": "general_room",
+    "sort_order": null
+  },
+  {
+    "room_number": "YAX MANDIR / S.P.M.COMPLEX / HALL / F.F.",
+    "venue_name": "YAX MANDIR",
+    "section_name": "S.P.M.COMPLEX",
+    "source_room_number": "HALL",
+    "floor": "F.F.",
+    "ac_type": "A.C.",
+    "bed_count": 30,
+    "extra_count": 0,
+    "total_capacity": 30,
+    "owner_type": "SAMAJ",
+    "linked_pothi_id": null,
+    "allotment_note": "WITHOUT BED",
+    "room_type": "general_room",
+    "sort_order": null
+  },
+  {
+    "room_number": "YAX MANDIR / VALIBEN HALL / HALL / G.F.",
+    "venue_name": "YAX MANDIR",
+    "section_name": "VALIBEN HALL",
+    "source_room_number": "HALL",
+    "floor": "G.F.",
+    "ac_type": "A.C.",
+    "bed_count": 20,
+    "extra_count": 0,
+    "total_capacity": 20,
+    "owner_type": "SAMAJ",
+    "linked_pothi_id": null,
+    "allotment_note": "WITHOUT  BED",
+    "room_type": "general_room",
+    "sort_order": null
+  },
+  {
+    "room_number": "YAX MANDIR / ZAVERBEN HALL / HALL / G.F.",
+    "venue_name": "YAX MANDIR",
+    "section_name": "ZAVERBEN HALL",
+    "source_room_number": "HALL",
+    "floor": "G.F.",
+    "ac_type": "A.C.",
+    "bed_count": 35,
+    "extra_count": 0,
+    "total_capacity": 35,
+    "owner_type": "SAMAJ",
+    "linked_pothi_id": null,
+    "allotment_note": "BHUJ SAMAJ (LADIES)",
+    "room_type": "general_room",
+    "sort_order": null
+  },
+  {
     "room_number": "YAX MANDIR / MARU COMPLEX / 203",
     "venue_name": "YAX MANDIR",
     "section_name": "MARU COMPLEX",
@@ -11,7 +107,7 @@
     "total_capacity": 5,
     "owner_type": "SAMAJ",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "",
     "room_type": "general_room",
     "sort_order": 1
   },
@@ -27,7 +123,7 @@
     "total_capacity": 6,
     "owner_type": "SAMAJ",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "",
     "room_type": "general_room",
     "sort_order": 2
   },
@@ -43,7 +139,7 @@
     "total_capacity": 6,
     "owner_type": "SAMAJ",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "",
     "room_type": "general_room",
     "sort_order": 3
   },
@@ -59,7 +155,7 @@
     "total_capacity": 6,
     "owner_type": "SAMAJ",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "",
     "room_type": "general_room",
     "sort_order": 4
   },
@@ -90,9 +186,9 @@
     "extra_count": 1,
     "total_capacity": 3,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 6,
-    "allotment_note": "ચુનીલાલ હરિદાસ ભૂતડા(જી.જ.)",
-    "room_type": "pothi_room",
+    "linked_pothi_id": null,
+    "allotment_note": "",
+    "room_type": "general_room",
     "sort_order": 6
   },
   {
@@ -106,9 +202,9 @@
     "extra_count": 1,
     "total_capacity": 3,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 7,
-    "allotment_note": "દીપક હરિદાસ ભૂતડા(જી.જ.)",
-    "room_type": "pothi_room",
+    "linked_pothi_id": null,
+    "allotment_note": "",
+    "room_type": "general_room",
     "sort_order": 7
   },
   {
@@ -122,9 +218,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 14,
-    "allotment_note": "વાલજી તેજપાલ ભોપા",
-    "room_type": "pothi_room",
+    "linked_pothi_id": null,
+    "allotment_note": "",
+    "room_type": "general_room",
     "sort_order": 8
   },
   {
@@ -138,9 +234,9 @@
     "extra_count": 2,
     "total_capacity": 4,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 17,
-    "allotment_note": "રતનસી રણછોડ ચાંડક",
-    "room_type": "pothi_room",
+    "linked_pothi_id": null,
+    "allotment_note": "",
+    "room_type": "general_room",
     "sort_order": 9
   },
   {
@@ -154,9 +250,9 @@
     "extra_count": 2,
     "total_capacity": 4,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 19,
-    "allotment_note": "ભવાનજી ગોવિંદજી કરવા",
-    "room_type": "pothi_room",
+    "linked_pothi_id": null,
+    "allotment_note": "",
+    "room_type": "general_room",
     "sort_order": 10
   },
   {
@@ -170,9 +266,9 @@
     "extra_count": 2,
     "total_capacity": 4,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 20,
-    "allotment_note": "લાલજી ગોવિંદજી કરવા",
-    "room_type": "pothi_room",
+    "linked_pothi_id": null,
+    "allotment_note": "",
+    "room_type": "general_room",
     "sort_order": 11
   },
   {
@@ -186,9 +282,9 @@
     "extra_count": 2,
     "total_capacity": 4,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 25,
-    "allotment_note": "લીલાધર ગોવિંદજી મલ્લ",
-    "room_type": "pothi_room",
+    "linked_pothi_id": null,
+    "allotment_note": "",
+    "room_type": "general_room",
     "sort_order": 12
   },
   {
@@ -234,7 +330,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 26,
+    "linked_pothi_id": 21,
     "allotment_note": "MEGHJI MORARJI MALL",
     "room_type": "pothi_room",
     "sort_order": 15
@@ -506,7 +602,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 27,
+    "linked_pothi_id": 16,
     "allotment_note": "DEVJI UMRSHI BHEDKIYA",
     "room_type": "pothi_room",
     "sort_order": 32
@@ -522,7 +618,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 28,
+    "linked_pothi_id": 47,
     "allotment_note": "VISHANJI UMARSHI MUNDRA",
     "room_type": "pothi_room",
     "sort_order": 33
@@ -667,7 +763,7 @@
     "total_capacity": 5,
     "owner_type": "SAMAJ",
     "linked_pothi_id": 9,
-    "allotment_note": null,
+    "allotment_note": "",
     "room_type": "pothi_room",
     "sort_order": 42
   },
@@ -683,7 +779,7 @@
     "total_capacity": 5,
     "owner_type": "SAMAJ",
     "linked_pothi_id": 10,
-    "allotment_note": null,
+    "allotment_note": "",
     "room_type": "pothi_room",
     "sort_order": 43
   },
@@ -699,7 +795,7 @@
     "total_capacity": 5,
     "owner_type": "SAMAJ",
     "linked_pothi_id": 11,
-    "allotment_note": null,
+    "allotment_note": "",
     "room_type": "pothi_room",
     "sort_order": 44
   },
@@ -715,7 +811,7 @@
     "total_capacity": 5,
     "owner_type": "SAMAJ",
     "linked_pothi_id": 12,
-    "allotment_note": null,
+    "allotment_note": "",
     "room_type": "pothi_room",
     "sort_order": 45
   },
@@ -731,7 +827,7 @@
     "total_capacity": 5,
     "owner_type": "SAMAJ",
     "linked_pothi_id": 13,
-    "allotment_note": null,
+    "allotment_note": "",
     "room_type": "pothi_room",
     "sort_order": 46
   },
@@ -746,7 +842,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 1,
     "allotment_note": "HITESH MANGALDAS BHUTADA BHUJ",
     "room_type": "private_room",
     "sort_order": 47
@@ -762,7 +858,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 1,
     "allotment_note": "HITESH MANGALDAS BHUTADA BHUJ",
     "room_type": "private_room",
     "sort_order": 48
@@ -778,7 +874,7 @@
     "extra_count": 4,
     "total_capacity": 11,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 29,
+    "linked_pothi_id": 1,
     "allotment_note": "BHUJ SMAJ KAROBARI",
     "room_type": "pothi_room",
     "sort_order": 49
@@ -794,7 +890,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 1,
     "allotment_note": "HITESH MANGALDAS BHUTADA BHUJ",
     "room_type": "private_room",
     "sort_order": 50
@@ -810,7 +906,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 1,
     "allotment_note": "HITESH MANGALDAS BHUTADA BHUJ",
     "room_type": "private_room",
     "sort_order": 51
@@ -826,7 +922,7 @@
     "extra_count": 0,
     "total_capacity": 2,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 1,
     "allotment_note": "HITESH MANGALDAS BHUTADA BHUJ",
     "room_type": "private_room",
     "sort_order": 52
@@ -842,7 +938,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 27,
     "allotment_note": "KIRIT DAMODAR MALL MULUND",
     "room_type": "private_room",
     "sort_order": 53
@@ -858,8 +954,8 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": null,
-    "allotment_note": null,
+    "linked_pothi_id": 27,
+    "allotment_note": "",
     "room_type": "private_room",
     "sort_order": 54
   },
@@ -875,7 +971,7 @@
     "total_capacity": 5,
     "owner_type": "PRIVATE",
     "linked_pothi_id": null,
-    "allotment_note": "PADAMSHI MANJI RATHI PARIVAR MUMBAI",
+    "allotment_note": "Pothis 61-65. PADAMSHI MANJI RATHI PARIVAR MUMBAI",
     "room_type": "private_room",
     "sort_order": 55
   },
@@ -891,7 +987,7 @@
     "total_capacity": 5,
     "owner_type": "PRIVATE",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "Pothis 61-65.",
     "room_type": "private_room",
     "sort_order": 56
   },
@@ -907,7 +1003,7 @@
     "total_capacity": 5,
     "owner_type": "PRIVATE",
     "linked_pothi_id": null,
-    "allotment_note": "PADAMSHI MANJI RATHI PARIVAR MUMBAI",
+    "allotment_note": "Pothis 61-65. PADAMSHI MANJI RATHI PARIVAR MUMBAI",
     "room_type": "private_room",
     "sort_order": 57
   },
@@ -923,7 +1019,7 @@
     "total_capacity": 5,
     "owner_type": "PRIVATE",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "Pothis 61-65.",
     "room_type": "private_room",
     "sort_order": 58
   },
@@ -939,7 +1035,7 @@
     "total_capacity": 11,
     "owner_type": "PRIVATE",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "Pothis 61-65.",
     "room_type": "private_room",
     "sort_order": 59
   },
@@ -955,7 +1051,7 @@
     "total_capacity": 5,
     "owner_type": "PRIVATE",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "Pothis 61-65.",
     "room_type": "private_room",
     "sort_order": 60
   },
@@ -971,7 +1067,7 @@
     "total_capacity": 5,
     "owner_type": "PRIVATE",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "Pothis 61-65.",
     "room_type": "private_room",
     "sort_order": 61
   },
@@ -987,7 +1083,7 @@
     "total_capacity": 2,
     "owner_type": "PRIVATE",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "Pothis 61-65.",
     "room_type": "private_room",
     "sort_order": 62
   },
@@ -1003,7 +1099,7 @@
     "total_capacity": 5,
     "owner_type": "PRIVATE",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "Pothis 61-65.",
     "room_type": "private_room",
     "sort_order": 63
   },
@@ -1019,7 +1115,7 @@
     "total_capacity": 5,
     "owner_type": "PRIVATE",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "Pothis 61-65.",
     "room_type": "private_room",
     "sort_order": 64
   },
@@ -1035,7 +1131,7 @@
     "total_capacity": 5,
     "owner_type": "PRIVATE",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "Pothis 61-65.",
     "room_type": "private_room",
     "sort_order": 65
   },
@@ -1051,7 +1147,7 @@
     "total_capacity": 5,
     "owner_type": "PRIVATE",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "Pothis 61-65.",
     "room_type": "private_room",
     "sort_order": 66
   },
@@ -1066,7 +1162,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 31,
+    "linked_pothi_id": 49,
     "allotment_note": "TULSIDAS VIRJI NAVDHARE",
     "room_type": "pothi_room",
     "sort_order": 67
@@ -1082,7 +1178,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 35,
+    "linked_pothi_id": 50,
     "allotment_note": "JIVUBAI TULSIDAS NAVDHARE",
     "room_type": "pothi_room",
     "sort_order": 68
@@ -1098,7 +1194,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 36,
+    "linked_pothi_id": 51,
     "allotment_note": "HEMLATABEN MURJI NAVDHARE",
     "room_type": "pothi_room",
     "sort_order": 69
@@ -1114,7 +1210,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 37,
+    "linked_pothi_id": 52,
     "allotment_note": "NIKIBEN ROHIT NAVDHARE",
     "room_type": "pothi_room",
     "sort_order": 70
@@ -1130,7 +1226,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 38,
+    "linked_pothi_id": 36,
     "allotment_note": "CHANDRAKANT VELJI MANDAN",
     "room_type": "pothi_room",
     "sort_order": 71
@@ -1146,7 +1242,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 39,
+    "linked_pothi_id": 37,
     "allotment_note": "HIRABEN CHANDRKANT MANDAN",
     "room_type": "pothi_room",
     "sort_order": 72
@@ -1162,9 +1258,9 @@
     "extra_count": 0,
     "total_capacity": 7,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 40,
+    "linked_pothi_id": null,
     "allotment_note": "STORE ROOM FOR SAMAJ",
-    "room_type": "pothi_room",
+    "room_type": "general_room",
     "sort_order": 73
   },
   {
@@ -1178,7 +1274,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 41,
+    "linked_pothi_id": 39,
     "allotment_note": "BHACHIBEN MANJI MUNDRA(JAYANTIBHAI)",
     "room_type": "pothi_room",
     "sort_order": 74
@@ -1194,7 +1290,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 42,
+    "linked_pothi_id": 54,
     "allotment_note": "VALJI CHAMPSHI NAVDHARE",
     "room_type": "pothi_room",
     "sort_order": 75
@@ -1210,7 +1306,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 43,
+    "linked_pothi_id": 14,
     "allotment_note": "VALJI TEJPAL BHOPA",
     "room_type": "pothi_room",
     "sort_order": 76
@@ -1226,9 +1322,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 44,
-    "allotment_note": "VADILO NU GHAR",
-    "room_type": "pothi_room",
+    "linked_pothi_id": null,
+    "allotment_note": "Pothis 0. VADILO NU GHAR",
+    "room_type": "general_room",
     "sort_order": 77
   },
   {
@@ -1242,9 +1338,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 45,
-    "allotment_note": "VADLIO NU GHAR",
-    "room_type": "pothi_room",
+    "linked_pothi_id": null,
+    "allotment_note": "Pothis 0. VADLIO NU GHAR",
+    "room_type": "general_room",
     "sort_order": 78
   },
   {
@@ -1258,9 +1354,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 46,
-    "allotment_note": "BHUJ SAMAJ(GENTS)",
-    "room_type": "pothi_room",
+    "linked_pothi_id": null,
+    "allotment_note": "Pothis 0. BHUJ SAMAJ(GENTS)",
+    "room_type": "general_room",
     "sort_order": 79
   },
   {
@@ -1274,9 +1370,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 48,
-    "allotment_note": "હીરજી વેલજી નવધરે",
-    "room_type": "pothi_room",
+    "linked_pothi_id": null,
+    "allotment_note": "",
+    "room_type": "general_room",
     "sort_order": 80
   },
   {
@@ -1290,9 +1386,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 49,
-    "allotment_note": "તુલસીદાસ વીરજી નવધરે",
-    "room_type": "pothi_room",
+    "linked_pothi_id": null,
+    "allotment_note": "",
+    "room_type": "general_room",
     "sort_order": 81
   },
   {
@@ -1306,9 +1402,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 50,
-    "allotment_note": "જીવુબાઈ તુલસીદાસ નવધરે",
-    "room_type": "pothi_room",
+    "linked_pothi_id": null,
+    "allotment_note": "",
+    "room_type": "general_room",
     "sort_order": 82
   },
   {
@@ -1322,9 +1418,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 51,
-    "allotment_note": "હેમલતા બેન મુળજી નવધરે (જી.જ.)",
-    "room_type": "pothi_room",
+    "linked_pothi_id": null,
+    "allotment_note": "",
+    "room_type": "general_room",
     "sort_order": 83
   },
   {
@@ -1338,9 +1434,9 @@
     "extra_count": 0,
     "total_capacity": 2,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 52,
+    "linked_pothi_id": null,
     "allotment_note": "LOWER+UPPER",
-    "room_type": "pothi_room",
+    "room_type": "general_room",
     "sort_order": 84
   },
   {
@@ -1354,7 +1450,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 54,
+    "linked_pothi_id": 40,
     "allotment_note": "JAMNADAS MURJI MANDAN",
     "room_type": "pothi_room",
     "sort_order": 85
@@ -1370,7 +1466,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 58,
+    "linked_pothi_id": 40,
     "allotment_note": "JAMNADAS MURJI MANDAN",
     "room_type": "pothi_room",
     "sort_order": 86
@@ -1386,7 +1482,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 59,
+    "linked_pothi_id": 42,
     "allotment_note": "RAVILALANARSHI MANDAN",
     "room_type": "pothi_room",
     "sort_order": 87
@@ -1402,7 +1498,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 60,
+    "linked_pothi_id": 30,
     "allotment_note": "KALYANJI PADMSHI MALL",
     "room_type": "pothi_room",
     "sort_order": 88
@@ -1418,9 +1514,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 61,
-    "allotment_note": "લક્ષ્મીબેન મનજી રાઠી",
-    "room_type": "pothi_room",
+    "linked_pothi_id": null,
+    "allotment_note": "",
+    "room_type": "general_room",
     "sort_order": 89
   },
   {
@@ -1434,9 +1530,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 62,
-    "allotment_note": "જમનાદાસ મનજી રાઠી",
-    "room_type": "pothi_room",
+    "linked_pothi_id": null,
+    "allotment_note": "",
+    "room_type": "general_room",
     "sort_order": 90
   },
   {
@@ -1450,9 +1546,9 @@
     "extra_count": 7,
     "total_capacity": 14,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 63,
+    "linked_pothi_id": null,
     "allotment_note": "BHUJ SAMAJ (LADIES)",
-    "room_type": "pothi_room",
+    "room_type": "general_room",
     "sort_order": 91
   },
   {
@@ -1466,7 +1562,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 64,
+    "linked_pothi_id": 3,
     "allotment_note": "JAGDISH HIRJI BHUTDA",
     "room_type": "pothi_room",
     "sort_order": 92
@@ -1482,7 +1578,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 65,
+    "linked_pothi_id": 58,
     "allotment_note": "MAVJI KANJI NAVDHARE",
     "room_type": "pothi_room",
     "sort_order": 93
@@ -1498,7 +1594,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 66,
+    "linked_pothi_id": 58,
     "allotment_note": "MAVJI KANJI NAVDHARE",
     "room_type": "pothi_room",
     "sort_order": 94
@@ -1514,7 +1610,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 71,
+    "linked_pothi_id": 59,
     "allotment_note": "KALAVANTI MOHANLAL NAVDHARE",
     "room_type": "pothi_room",
     "sort_order": 95
@@ -1530,7 +1626,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 72,
+    "linked_pothi_id": 60,
     "allotment_note": "DAMODAR MAVJI NAVDHARE",
     "room_type": "pothi_room",
     "sort_order": 96
@@ -1546,7 +1642,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": 73,
+    "linked_pothi_id": 72,
     "allotment_note": "SAMJI NARANDAS SAVAR",
     "room_type": "pothi_room",
     "sort_order": 97
@@ -1562,9 +1658,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 73,
     "allotment_note": "TOPANDAS SAMJI SAVAR",
-    "room_type": "general_room",
+    "room_type": "pothi_room",
     "sort_order": 98
   },
   {
@@ -1578,9 +1674,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 71,
     "allotment_note": "CHAYABEN RAJEMDRA SHETH",
-    "room_type": "general_room",
+    "room_type": "pothi_room",
     "sort_order": 99
   },
   {
@@ -1595,7 +1691,7 @@
     "total_capacity": 5,
     "owner_type": "SAMAJ",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "",
     "room_type": "general_room",
     "sort_order": 100
   },
@@ -1611,7 +1707,7 @@
     "total_capacity": 5,
     "owner_type": "SAMAJ",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "",
     "room_type": "general_room",
     "sort_order": 101
   },
@@ -1643,7 +1739,7 @@
     "total_capacity": 5,
     "owner_type": "SAMAJ",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "",
     "room_type": "general_room",
     "sort_order": 103
   },
@@ -1659,7 +1755,7 @@
     "total_capacity": 5,
     "owner_type": "SAMAJ",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "",
     "room_type": "general_room",
     "sort_order": 104
   },
@@ -1675,7 +1771,7 @@
     "total_capacity": 5,
     "owner_type": "SAMAJ",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "",
     "room_type": "general_room",
     "sort_order": 105
   },
@@ -1691,7 +1787,7 @@
     "total_capacity": 5,
     "owner_type": "SAMAJ",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "",
     "room_type": "general_room",
     "sort_order": 106
   },
@@ -1707,7 +1803,7 @@
     "total_capacity": 5,
     "owner_type": "SAMAJ",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "",
     "room_type": "general_room",
     "sort_order": 107
   },
@@ -1723,7 +1819,7 @@
     "total_capacity": 5,
     "owner_type": "SAMAJ",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "",
     "room_type": "general_room",
     "sort_order": 108
   },
@@ -1755,7 +1851,7 @@
     "total_capacity": 5,
     "owner_type": "SAMAJ",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "",
     "room_type": "general_room",
     "sort_order": 110
   },
@@ -1771,7 +1867,7 @@
     "total_capacity": 5,
     "owner_type": "SAMAJ",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "",
     "room_type": "general_room",
     "sort_order": 111
   },
@@ -1787,7 +1883,7 @@
     "total_capacity": 5,
     "owner_type": "SAMAJ",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "",
     "room_type": "general_room",
     "sort_order": 112
   },
@@ -1803,7 +1899,7 @@
     "total_capacity": 5,
     "owner_type": "SAMAJ",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "",
     "room_type": "general_room",
     "sort_order": 113
   },
@@ -1819,7 +1915,7 @@
     "total_capacity": 5,
     "owner_type": "SAMAJ",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "",
     "room_type": "general_room",
     "sort_order": 114
   },
@@ -1835,7 +1931,7 @@
     "total_capacity": 5,
     "owner_type": "SAMAJ",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "",
     "room_type": "general_room",
     "sort_order": 115
   },
@@ -1851,7 +1947,7 @@
     "total_capacity": 5,
     "owner_type": "SAMAJ",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "",
     "room_type": "general_room",
     "sort_order": 116
   },
@@ -1867,7 +1963,7 @@
     "total_capacity": 5,
     "owner_type": "SAMAJ",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "",
     "room_type": "general_room",
     "sort_order": 117
   },
@@ -1883,7 +1979,7 @@
     "total_capacity": 5,
     "owner_type": "SAMAJ",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "",
     "room_type": "general_room",
     "sort_order": 118
   },
@@ -1899,7 +1995,7 @@
     "total_capacity": 5,
     "owner_type": "SAMAJ",
     "linked_pothi_id": null,
-    "allotment_note": null,
+    "allotment_note": "",
     "room_type": "general_room",
     "sort_order": 119
   },
@@ -1930,9 +2026,9 @@
     "extra_count": 2,
     "total_capacity": 8,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 46,
     "allotment_note": "MANJULABEN DAMODAR MUNDRA",
-    "room_type": "general_room",
+    "room_type": "pothi_room",
     "sort_order": 121
   },
   {
@@ -1946,7 +2042,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 6,
     "allotment_note": "CHUNILAL HARIDAS BHUTDA",
     "room_type": "private_room",
     "sort_order": 122
@@ -1962,7 +2058,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 6,
     "allotment_note": "CHUNILAL HARIDAS BHUTDA",
     "room_type": "private_room",
     "sort_order": 123
@@ -1978,7 +2074,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 6,
     "allotment_note": "CHUNILAL HARIDAS BHUTDA",
     "room_type": "private_room",
     "sort_order": 124
@@ -1994,9 +2090,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 6,
     "allotment_note": "CHUNILAL HARIDAS BHUTDA",
-    "room_type": "general_room",
+    "room_type": "pothi_room",
     "sort_order": 125
   },
   {
@@ -2010,9 +2106,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 7,
     "allotment_note": "DIPAK HARIDAS BHUTDA",
-    "room_type": "general_room",
+    "room_type": "pothi_room",
     "sort_order": 126
   },
   {
@@ -2026,7 +2122,7 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 1,
     "allotment_note": "HIRJI SHIVJI BHUTDA",
     "room_type": "private_room",
     "sort_order": 127
@@ -2042,9 +2138,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 4,
     "allotment_note": "SHANTILAL TULSIDAS BHUTDA",
-    "room_type": "general_room",
+    "room_type": "pothi_room",
     "sort_order": 128
   },
   {
@@ -2058,9 +2154,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 48,
     "allotment_note": "HIRJI VELJI NAVDHARE",
-    "room_type": "general_room",
+    "room_type": "pothi_room",
     "sort_order": 129
   },
   {
@@ -2074,9 +2170,9 @@
     "extra_count": 2,
     "total_capacity": 8,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 35,
     "allotment_note": "SAMJI JIVRAJ MANDAN",
-    "room_type": "general_room",
+    "room_type": "pothi_room",
     "sort_order": 130
   },
   {
@@ -2090,9 +2186,9 @@
     "extra_count": 2,
     "total_capacity": 8,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 17,
     "allotment_note": "RATNSHI RANCHOD CHANDAK",
-    "room_type": "general_room",
+    "room_type": "pothi_room",
     "sort_order": 131
   },
   {
@@ -2106,9 +2202,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 45,
     "allotment_note": "MAHENDRA HARIDAS MUNDRA",
-    "room_type": "general_room",
+    "room_type": "pothi_room",
     "sort_order": 132
   },
   {
@@ -2122,9 +2218,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 41,
     "allotment_note": "VIRJI UMRASHI MANDAN",
-    "room_type": "general_room",
+    "room_type": "pothi_room",
     "sort_order": 133
   },
   {
@@ -2138,9 +2234,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 35,
     "allotment_note": "SAMJI JIVARAJ MANDAN",
-    "room_type": "general_room",
+    "room_type": "pothi_room",
     "sort_order": 134
   },
   {
@@ -2154,9 +2250,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 66,
     "allotment_note": "JASWANTLALA H SHARDA",
-    "room_type": "general_room",
+    "room_type": "pothi_room",
     "sort_order": 135
   },
   {
@@ -2170,9 +2266,9 @@
     "extra_count": 2,
     "total_capacity": 8,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 18,
     "allotment_note": "KHIMJI GOVINDJI KARVA",
-    "room_type": "general_room",
+    "room_type": "pothi_room",
     "sort_order": 136
   },
   {
@@ -2186,9 +2282,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 31,
     "allotment_note": "MAHENDRA MEGHJI MALL",
-    "room_type": "general_room",
+    "room_type": "pothi_room",
     "sort_order": 137
   },
   {
@@ -2202,9 +2298,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 28,
     "allotment_note": "DEVJI SAMJI MALL",
-    "room_type": "general_room",
+    "room_type": "pothi_room",
     "sort_order": 138
   },
   {
@@ -2218,9 +2314,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 29,
     "allotment_note": "MAHESH DEVJI MALL",
-    "room_type": "general_room",
+    "room_type": "pothi_room",
     "sort_order": 139
   },
   {
@@ -2234,9 +2330,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 62,
     "allotment_note": "BHUPENDRA VALLABHDAS RATHI",
-    "room_type": "general_room",
+    "room_type": "pothi_room",
     "sort_order": 140
   },
   {
@@ -2250,9 +2346,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 63,
     "allotment_note": "KANBAI JIVRAJ RATHI",
-    "room_type": "general_room",
+    "room_type": "pothi_room",
     "sort_order": 141
   },
   {
@@ -2266,9 +2362,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 64,
     "allotment_note": "LAXMIBEN MANJI RATHI",
-    "room_type": "general_room",
+    "room_type": "pothi_room",
     "sort_order": 142
   },
   {
@@ -2282,9 +2378,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 65,
     "allotment_note": "JAMNADAS MANJI RATHI",
-    "room_type": "general_room",
+    "room_type": "pothi_room",
     "sort_order": 143
   },
   {
@@ -2298,9 +2394,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 66,
     "allotment_note": "VAGJI MANJI RATHI",
-    "room_type": "general_room",
+    "room_type": "pothi_room",
     "sort_order": 144
   },
   {
@@ -2314,9 +2410,9 @@
     "extra_count": 2,
     "total_capacity": 8,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 44,
     "allotment_note": "PITAMBAR DAMODAR MANIYAR",
-    "room_type": "general_room",
+    "room_type": "pothi_room",
     "sort_order": 145
   },
   {
@@ -2330,9 +2426,9 @@
     "extra_count": 2,
     "total_capacity": 8,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 43,
     "allotment_note": "SHYAMSUNDAR DAMODAR MANIYAR",
-    "room_type": "general_room",
+    "room_type": "pothi_room",
     "sort_order": 146
   },
   {
@@ -2346,9 +2442,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 19,
     "allotment_note": "BHAVNJI GOVINDJI KARVA",
-    "room_type": "general_room",
+    "room_type": "pothi_room",
     "sort_order": 147
   },
   {
@@ -2362,9 +2458,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 20,
     "allotment_note": "LALJI GOVINDJI KARVA",
-    "room_type": "general_room",
+    "room_type": "pothi_room",
     "sort_order": 148
   },
   {
@@ -2378,9 +2474,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 25,
     "allotment_note": "LILDHAR GOVINDJI MALL",
-    "room_type": "general_room",
+    "room_type": "pothi_room",
     "sort_order": 149
   },
   {
@@ -2394,9 +2490,9 @@
     "extra_count": 2,
     "total_capacity": 5,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 27,
     "allotment_note": "DAMODARODHVJI MALL",
-    "room_type": "general_room",
+    "room_type": "pothi_room",
     "sort_order": 150
   },
   {
@@ -2410,9 +2506,9 @@
     "extra_count": 2,
     "total_capacity": 8,
     "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 26,
     "allotment_note": "ODHVJI VIRJI MALL",
-    "room_type": "general_room",
+    "room_type": "pothi_room",
     "sort_order": 151
   },
   {

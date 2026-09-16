@@ -307,6 +307,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
   const [addingMember, setAddingMember] = useState(false);
   const [addMemberMessage, setAddMemberMessage] = useState("");
   const [newMember, setNewMember] = useState<FamilyMemberInput>(createBlankMember());
+  const [roomOccupancy, setRoomOccupancy] = useState<Record<string, number>>({});
 
   useEffect(() => {
     supabase
@@ -359,6 +360,19 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
           setRooms((data as Array<RoomInventory & { capacity?: number | null }>).map(normalizeRoomInventory));
         }
       });
+
+    supabase
+      .from("room_allocations")
+      .select("rooms(room_number)")
+      .then(({ data, error }) => {
+        if (error) return;
+        const counts: Record<string, number> = {};
+        for (const allocation of data ?? []) {
+          const room = Array.isArray(allocation.rooms) ? allocation.rooms[0] : allocation.rooms;
+          if (room?.room_number) counts[room.room_number] = (counts[room.room_number] ?? 0) + 1;
+        }
+        setRoomOccupancy(counts);
+      });
   }, []);
 
   const pothiOptions = useMemo(() => (pothis.length ? pothis : fallbackPothis), [pothis]);
@@ -401,8 +415,11 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
     [pothiId, roomInventory]
   );
   const totalPrivateCapacity = useMemo(
-    () => linkedPrivateRooms.reduce((sum, room) => sum + (room.total_capacity || 0), 0),
-    [linkedPrivateRooms]
+    () => linkedPrivateRooms.reduce(
+      (sum, room) => sum + Math.max(0, (room.total_capacity || 0) - (roomOccupancy[room.room_number] ?? 0)),
+      0
+    ),
+    [linkedPrivateRooms, roomOccupancy]
   );
   const generalRoomSummary = useMemo(() => {
     const generalRooms = roomInventory.filter((room) => room.room_type === "general_room");
@@ -1046,7 +1063,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
               {linkedPrivateRooms.map((room) => (
                 <article className="room-card" key={room.room_number}>
                   <strong>{room.room_number}</strong>
-                  <span>{room.total_capacity} seats</span>
+                  <span>{Math.max(0, room.total_capacity - (roomOccupancy[room.room_number] ?? 0))} of {room.total_capacity} seats available</span>
                   <small>{[room.venue_name, room.section_name, room.floor].filter(Boolean).join(" | ")}</small>
                 </article>
               ))}
@@ -1297,6 +1314,9 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
           <div><span>Stay</span><strong>{result.family.stay_from || EVENT_START_DATE} – {result.family.stay_to || EVENT_END_DATE}</strong><small>Arrival to departure</small></div>
           <div><span>Guests</span><strong>{result.members.length} registered</strong><small>All members on this booking</small></div>
           <div><span>Contact mobile</span><strong>{headMobile}</strong><small>Verified for this booking</small></div>
+          {result.family.registration_type === "pothi_room" && result.family.pothi_id ? (
+            <div><span>{language === "gu" ? "પોથી નંબર" : "Pothi number"}</span><strong>{result.family.pothi_id}</strong><small>{language === "gu" ? "આ બુકિંગ સાથે જોડાયેલ" : "Linked to this booking"}</small></div>
+          ) : null}
         </div>
 
         <div className="member-dashboard-stats">
@@ -1399,6 +1419,9 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
             <div><span>Members</span><strong>{result.members.length}</strong></div>
             <div><span>Rooms</span><strong>{allocationRoomSummary.length}</strong></div>
             <div><span>Registration</span><strong>{result.family.registration_type === "pothi_room" ? "Pothi" : "Private"}</strong></div>
+            {result.family.registration_type === "pothi_room" && result.family.pothi_id ? (
+              <div><span>{language === "gu" ? "પોથી નંબર" : "Pothi number"}</span><strong>{result.family.pothi_id}</strong></div>
+            ) : null}
           </div>
 
             <div className="dashboard-room-groups">

@@ -183,10 +183,24 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
 
     const family = member.families;
     const pothiId = family?.pothi_id ?? family?.reference_pothi_id;
-    const fallbackRoom = roomsInventory.find((room) =>
-      (family?.private_room_number && room.room_number === family.private_room_number) ||
-      (pothiId !== null && pothiId !== undefined && room.linked_pothi_id === pothiId)
-    );
+    const requestedPrivateRoom = family?.private_room_number?.trim();
+    const exactPrivateRoom = requestedPrivateRoom
+      ? roomsInventory.find((room) => room.room_number === requestedPrivateRoom)
+      : undefined;
+    const sourcePrivateRooms = requestedPrivateRoom
+      ? roomsInventory.filter((room) => room.source_room_number === requestedPrivateRoom && room.owner_type === "PRIVATE")
+      : [];
+    const privateRoom = exactPrivateRoom?.owner_type === "PRIVATE"
+      ? exactPrivateRoom
+      : sourcePrivateRooms.length === 1
+        ? sourcePrivateRooms[0]
+        : undefined;
+    const linkedRooms = pothiId === null || pothiId === undefined
+      ? []
+      : roomsInventory.filter((room) => room.linked_pothi_id === pothiId);
+    const fallbackRoom = family?.registration_type === "private_room"
+      ? privateRoom
+      : linkedRooms.find((room) => room.room_type === "pothi_room") ?? linkedRooms[0];
 
     return fallbackRoom
       ? { room_number: fallbackRoom.room_number, venue_name: venueTabName(fallbackRoom), section_name: fallbackRoom.section_name }
