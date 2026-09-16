@@ -14,8 +14,18 @@ $memberIds = @()
 $allocationIds = @()
 
 function Api($method, $uri, $body = $null) {
-  if ($null -eq $body) { return Invoke-RestMethod -Uri $uri -Headers $headers -Method $method -TimeoutSec 45 }
-  return Invoke-RestMethod -Uri $uri -Headers $headers -Method $method -Body ($body | ConvertTo-Json -Depth 8 -Compress) -TimeoutSec 45
+  try {
+    if ($null -eq $body) { return Invoke-RestMethod -Uri $uri -Headers $headers -Method $method -TimeoutSec 45 }
+    return Invoke-RestMethod -Uri $uri -Headers $headers -Method $method -Body ($body | ConvertTo-Json -Depth 8 -Compress) -TimeoutSec 45
+  } catch {
+    $response = $_.Exception.Response
+    if ($response) {
+      $reader = New-Object System.IO.StreamReader($response.GetResponseStream())
+      $detail = $reader.ReadToEnd()
+      throw "Supabase request failed ($method $uri): $detail"
+    }
+    throw
+  }
 }
 
 $guests = @(
@@ -35,11 +45,15 @@ try {
   if (!$pothi) { throw 'Pothi 7 was not found.' }
   if ($pothi.family_id) { throw 'Pothi 7 already has a registration; no data was changed.' }
 
-  $rooms = @(Api Get "$base/rooms?select=id%2Csource_room_number%2Croom_number%2Ccapacity%2Croom_type%2Clinked_pothi_id&linked_pothi_id=eq.7&order=room_type.desc%2Csource_room_number.asc")
-  $pothiRoom = $rooms | Where-Object { $_.source_room_number -eq '406' -and $_.room_type -eq 'pothi_room' } | Select-Object -First 1
-  $privateRooms = @($rooms | Where-Object { $_.room_type -eq 'private_room' } | Sort-Object source_room_number)
+  $pothiRoom = Api Get "$base/rooms?select=id%2Csource_room_number%2Croom_number%2Ccapacity%2Croom_type%2Clinked_pothi_id&linked_pothi_id=eq.7&source_room_number=eq.406&room_type=eq.pothi_room" | Select-Object -First 1
+  $privateRooms = @()
+  foreach ($source in @('102','103','104','107')) {
+    $candidate = Api Get "$base/rooms?select=id%2Csource_room_number%2Croom_number%2Ccapacity%2Croom_type%2Clinked_pothi_id&linked_pothi_id=eq.7&source_room_number=eq.$source&room_type=eq.private_room" | Select-Object -First 1
+    if ($candidate) { $privateRooms += $candidate }
+  }
   if (!$pothiRoom) { throw 'Pothi room 406 was not found for Pothi 7.' }
   if ($privateRooms.Count -eq 0) { throw 'No private rooms are linked to Pothi 7.' }
+  $pothiCapacity = [int]($pothiRoom.capacity | Select-Object -First 1)
 
   $headMobile = if ($pothi.contact_mobile) { $pothi.contact_mobile } else { '8000454549' }
   $family = Api Post "$base/families" @{ head_name='Deepak Haridas Bhutada'; head_mobile=$headMobile; city='Bhuj'; address='Imported Pothi 7 guest details'; wants_stay=$true; pothi_id=7; registration_type='pothi_room'; stay_from='2026-11-13'; stay_to='2026-11-20' } | Select-Object -First 1
@@ -56,20 +70,21 @@ try {
   $allocationPayload = @()
   $roomPlan = @()
   for ($i = 0; $i -lt $memberIds.Count; $i++) {
-    if ($i -lt [int]$pothiRoom.capacity) {
+    if ($i -lt $pothiCapacity) {
       $room = $pothiRoom
     } else {
-      $remainingIndex = $i - [int]$pothiRoom.capacity
+      $remainingIndex = $i - $pothiCapacity
       $running = 0
       $room = $null
       foreach ($candidate in $privateRooms) {
-        if ($remainingIndex -lt ($running + [int]$candidate.capacity)) { $room = $candidate; break }
-        $running += [int]$candidate.capacity
+        $candidateCapacity = [int]($candidate.capacity | Select-Object -First 1)
+        if ($remainingIndex -lt ($running + $candidateCapacity)) { $room = $candidate; break }
+        $running += $candidateCapacity
       }
       if (!$room) { throw 'Pothi 7 linked room capacity is not enough for all guests.' }
     }
     $roomPlan += $room.source_room_number
-    $allocationPayload += @{room_id=$room.id; member_id=$memberIds[$i]; family_id=$familyId}
+    $allocationPayload += @{room_id=([string]$room.id); member_id=$memberIds[$i]; family_id=$familyId}
   }
 
   $allocations = @(Api Post "$base/room_allocations" $allocationPayload)
