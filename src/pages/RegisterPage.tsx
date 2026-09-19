@@ -640,7 +640,10 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
         setVerificationToken(data.verificationToken);
         try {
           const existing = await getMyRegistration({ mobile: headMobile, verificationToken: data.verificationToken });
-          if (existing) {
+          // A Yajman contact can also appear on a guest record in another
+          // family. Only reuse an existing registration when it belongs to
+          // the Pothi identified by the verified Yajman contact.
+          if (existing && existing.family.pothi_id === matchedPothi.id) {
             setResult(existing);
             persistMemberSession(existing);
             return;
