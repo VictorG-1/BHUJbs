@@ -139,6 +139,7 @@ export type AdminMemberRow = {
     private_room_number: string | null;
   } | null;
   room_allocations: {
+    room_id?: string | null;
     rooms: { room_number: string; venue_name?: string | null; section_name?: string | null } | null;
   }[];
 };

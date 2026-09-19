@@ -36,6 +36,11 @@ function venueTabName(room: RoomInventory) {
   return room.venue_name.toUpperCase() === "HOTEL" && room.section_name ? room.section_name : room.venue_name;
 }
 
+function roomIdentity(room: { room_number: string; venue_name?: string | null; section_name?: string | null }) {
+  const venue = room.venue_name?.toUpperCase() === "HOTEL" && room.section_name ? room.section_name : room.venue_name ?? "";
+  return `${venue}::${room.room_number}`;
+}
+
 const fallbackPothis = fallbackPothisData as Pothi[];
 const fallbackRooms = (fallbackRoomsData as Array<RoomInventory & { capacity?: number | null }>).map(normalizeRoom);
 
@@ -166,12 +171,14 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
   const [adminStayFrom, setAdminStayFrom] = useState("2026-11-13");
   const [adminStayTo, setAdminStayTo] = useState("2026-11-20");
   const [adminSaving, setAdminSaving] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   async function load() {
+    setLoading(true);
     const [{ data: memberData, error: memberError }, { data: pothiData, error: pothiError }, { data: roomData, error: roomError }, { data: scanData, error: scanError }] = await Promise.all([
       supabase
         .from("members")
-        .select("id, name, age, gender, mobile, is_head, created_at, qr_token, qr_revoked_at, families(id, head_name, head_mobile, city, wants_stay, pothi_id, reference_pothi_id, registration_type, private_room_number), room_allocations(rooms(room_number, venue_name, section_name))")
+        .select("id, name, age, gender, mobile, is_head, created_at, qr_token, qr_revoked_at, families(id, head_name, head_mobile, city, wants_stay, pothi_id, reference_pothi_id, registration_type, private_room_number), room_allocations(room_id, rooms(room_number, venue_name, section_name))")
         .order("name"),
       supabase.from("pothis").select("id, family_id").order("id"),
       supabase
@@ -181,17 +188,13 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
       supabase.from("qr_scans").select("id, scan_type, scanned_at, members(name)").order("scanned_at", { ascending: false }).limit(100)
     ]);
 
-    const queryError = memberError ?? pothiError ?? roomError ?? scanError;
-    if (queryError) {
-      setStatus(queryError.message);
-      return;
-    }
-
-    setMembers((memberData ?? []) as unknown as AdminMemberRow[]);
-    setPothis((pothiData ?? []) as Pothi[]);
-    setRoomsInventory(((roomData ?? []) as Array<RoomInventory & { capacity?: number | null }>).map(normalizeRoom));
-    setScanLogs((scanData ?? []) as typeof scanLogs);
-    setStatus("");
+    if (!memberError) setMembers((memberData ?? []) as unknown as AdminMemberRow[]);
+    if (!pothiError) setPothis((pothiData ?? []) as Pothi[]);
+    if (!roomError) setRoomsInventory(((roomData ?? []) as Array<RoomInventory & { capacity?: number | null }>).map(normalizeRoom));
+    if (!scanError) setScanLogs((scanData ?? []) as typeof scanLogs);
+    const errors = [memberError, pothiError, roomError, scanError].filter(Boolean).map((error) => error!.message);
+    setStatus(errors.length ? `Dashboard loaded with warnings. ${errors.join(" ")}` : "");
+    setLoading(false);
   }
 
   async function handleAdminPothiRegistration(event: React.FormEvent) {
@@ -201,6 +204,14 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
     const head = filledMembers[0];
     if (!pothiId || !head || !head.mobile.trim()) {
       setStatus(language === "gu" ? "પોથી, પ્રથમ સભ્યનું નામ અને મોબાઇલ જરૂરી છે." : "Pothi, first member name and mobile are required.");
+      return;
+    }
+    if (filledMembers.length > 4) {
+      setStatus(language === "gu" ? "એક પોથી માટે વધુમાં વધુ 4 સભ્યો ઉમેરી શકાય છે." : "A Pothi registration can contain at most 4 members.");
+      return;
+    }
+    if (adminStayTo < adminStayFrom || adminStayFrom < "2026-11-13" || adminStayTo > "2026-11-20") {
+      setStatus(language === "gu" ? "રહેવાની તારીખ 13 થી 20 નવેમ્બર 2026 વચ્ચે રાખો." : "Stay dates must be between 13 and 20 November 2026, with departure on or after arrival.");
       return;
     }
     setAdminSaving(true);
@@ -243,11 +254,16 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
   }, [session]);
 
   function roomDetailsForMember(member: AdminMemberRow) {
-    const allocatedRoom = member.room_allocations?.[0]?.rooms;
-    if (allocatedRoom?.room_number) return allocatedRoom;
+    const allocatedRoom = member.room_allocations?.find((allocation) => allocation.rooms?.room_number)?.rooms;
+    if (allocatedRoom?.room_number) {
+      return {
+        room_number: allocatedRoom.room_number,
+        venue_name: allocatedRoom.venue_name ?? "",
+        section_name: allocatedRoom.section_name ?? ""
+      };
+    }
 
     const family = member.families;
-    const pothiId = family?.pothi_id ?? family?.reference_pothi_id;
     const requestedPrivateRoom = family?.private_room_number?.trim();
     const exactPrivateRoom = requestedPrivateRoom
       ? roomsInventory.find((room) => room.room_number === requestedPrivateRoom)
@@ -260,12 +276,9 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
       : sourcePrivateRooms.length === 1
         ? sourcePrivateRooms[0]
         : undefined;
-    const linkedRooms = pothiId === null || pothiId === undefined
-      ? []
-      : roomsInventory.filter((room) => room.linked_pothi_id === pothiId);
     const fallbackRoom = family?.registration_type === "private_room"
       ? privateRoom
-      : linkedRooms.find((room) => room.room_type === "pothi_room") ?? linkedRooms[0];
+      : undefined;
 
     return fallbackRoom
       ? { room_number: fallbackRoom.room_number, venue_name: venueTabName(fallbackRoom), section_name: fallbackRoom.section_name }
@@ -294,24 +307,26 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
         .toLowerCase();
       return !query || haystack.includes(query);
     });
-  }, [addedFrom, addedTo, masterSearch, members, searchPothi, searchType, searchVenue]);
+  }, [addedFrom, addedTo, masterSearch, members, roomsInventory, searchPothi, searchType, searchVenue]);
 
   const occupiedRooms = useMemo(() => {
     const map = new Map<string, AdminMemberRow[]>();
     for (const member of members) {
-      const room = roomDetailsForMember(member)?.room_number;
-      if (!room) continue;
-      map.set(room, [...(map.get(room) ?? []), member]);
+      const room = roomDetailsForMember(member);
+      if (!room?.room_number) continue;
+      const key = roomIdentity(room);
+      map.set(key, [...(map.get(key) ?? []), member]);
     }
     return [...map.entries()].sort(([a], [b]) => a.localeCompare(b));
-  }, [members]);
+  }, [members, roomsInventory]);
 
   const roomAllocationBoard = useMemo(() => {
     const occupancy = new Map<string, AdminMemberRow[]>();
     for (const member of members) {
-      const room = roomDetailsForMember(member)?.room_number;
-      if (!room) continue;
-      occupancy.set(room, [...(occupancy.get(room) ?? []), member]);
+      const room = roomDetailsForMember(member);
+      if (!room?.room_number) continue;
+      const key = roomIdentity(room);
+      occupancy.set(key, [...(occupancy.get(key) ?? []), member]);
     }
 
     return roomsInventory
@@ -322,7 +337,8 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
       .filter((room) => {
         const query = masterSearch.trim().toLowerCase();
         if (!query) return true;
-        return [room.room_number, room.venue_name, room.section_name, room.room_type, room.owner_type, room.linked_pothi_id]
+        const occupants = occupancy.get(roomIdentity(room)) ?? [];
+        return [room.room_number, room.venue_name, room.section_name, room.room_type, room.owner_type, room.linked_pothi_id, ...occupants.flatMap((member) => [member.name, member.mobile, member.families?.head_name, member.families?.head_mobile])]
           .filter(Boolean)
           .join(" ")
           .toLowerCase()
@@ -330,7 +346,7 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
       })
       .map((room) => ({
         room,
-        occupants: occupancy.get(room.room_number) ?? []
+        occupants: occupancy.get(roomIdentity(room)) ?? []
       }))
       .sort((left, right) => {
         const venueCompare = left.room.venue_name.localeCompare(right.room.venue_name);
@@ -378,7 +394,7 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
           room: roomDetails?.room_number ?? ""
         };
       }),
-    [members]
+    [members, roomsInventory]
   );
 
   const exportPothis = useMemo(
@@ -440,8 +456,9 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
     setStatus(language === "gu" ? "QR કોડ તૈયાર કરી રહ્યા છીએ..." : "Preparing QR codes...");
     try {
       const zip = new JSZip();
+      let exportedCount = 0;
       for (const member of members) {
-        if (!member.qr_token) continue;
+        if (!member.qr_token || member.qr_revoked_at) continue;
         const roomDetails = roomDetailsForMember(member);
         const dataUrl = await QRCode.toDataURL(qrPayload({
           ...member,
@@ -449,8 +466,10 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
           venue: roomDetails?.venue_name ?? "",
           room: roomDetails?.room_number ?? ""
         }), { width: 500, margin: 2 });
-        zip.file(`${member.name.replace(/[^a-z0-9]+/gi, "-") || member.id}-qr.png`, dataUrl.split(",")[1], { base64: true });
+        zip.file(`${member.name.replace(/[^a-z0-9]+/gi, "-") || "member"}-${member.id}-qr.png`, dataUrl.split(",")[1], { base64: true });
+        exportedCount += 1;
       }
+      if (!exportedCount) throw new Error("No active member QR codes are available to export.");
       const blob = await zip.generateAsync({ type: "blob" });
       const url = URL.createObjectURL(blob);
       const anchor = document.createElement("a"); anchor.href = url; anchor.download = "bhagwat-saptah-member-qr-codes.zip"; anchor.click(); URL.revokeObjectURL(url);
@@ -463,6 +482,7 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
     const csv = rows.map((row) => row.map((value) => `"${String(value).replace(/"/g, '""')}"`).join(",")).join("\n");
     const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
     const anchor = document.createElement("a"); anchor.href = url; anchor.download = "bhagwat-saptah-qr-scan-log.csv"; anchor.click(); URL.revokeObjectURL(url);
+    setStatus(language === "gu" ? "સ્કેન લોગ ડાઉનલોડ થયો." : "Scan log downloaded.");
   }
 
   async function cancelReservation(member: AdminMemberRow) {
@@ -571,7 +591,7 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
             </div>
             <div>
               <span>{language === "gu" ? "પોથી" : "Pothis"}</span>
-              <strong>{stats.occupiedPothis}/75</strong>
+              <strong>{stats.occupiedPothis}/{pothis.length}</strong>
             </div>
             <div>
               <span>{language === "gu" ? "રૂમ" : "Rooms"}</span>
@@ -579,6 +599,7 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
             </div>
           </div>
           <div className="admin-actions admin-actions-bar">
+            <button className="secondary" type="button" onClick={() => void load()} disabled={loading}>{loading ? (language === "gu" ? "લોડ થઈ રહ્યું છે..." : "Refreshing...") : (language === "gu" ? "રિફ્રેશ" : "Refresh data")}</button>
             <button className="secondary" onClick={handleWorkbookExport}>{language === "gu" ? "એક્સેલ વર્કબુક" : "Excel workbook"}</button>
             <button className="secondary" onClick={handleExport}>{t.exportCsv}</button>
             <button className="secondary" onClick={handleQrBulkDownload}>{language === "gu" ? "બધા QR ડાઉનલોડ" : "Download all QR codes"}</button>
@@ -606,7 +627,7 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
           <div><strong>{stats.pothiRooms}</strong><span>{t.pothiRooms}</span></div>
           <div><strong>{stats.privateRooms}</strong><span>{t.privateRooms}</span></div>
           <div><strong>{stats.generalRooms}</strong><span>{t.generalRooms}</span></div>
-          <div><strong>{stats.occupiedPothis}/75</strong><span>{t.pothis}</span></div>
+          <div><strong>{stats.occupiedPothis}/{pothis.length}</strong><span>{t.pothis}</span></div>
         </div>
       </div>
 
