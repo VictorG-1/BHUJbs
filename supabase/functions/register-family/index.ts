@@ -7,6 +7,7 @@ type MemberInput = {
   age: number;
   gender: "male" | "female" | "other";
   mobile?: string;
+  eventDate?: string;
   isHead?: boolean;
 };
 
@@ -276,9 +277,6 @@ Deno.serve(async (req) => {
     const filledMembers = body.members.filter((member) => member.name.trim());
     if (!filledMembers.length) {
       return json({ error: "Please add at least one member before submitting." }, 400);
-    }
-    if (body.registrationType === "general_room") {
-      return json({ error: "General guest registration is coming soon." }, 403);
     }
     if (body.registrationType === "pothi_room") {
       const pothiRoomMemberCount = body.pothiRoomMemberCount ?? Math.min(4, filledMembers.length);
@@ -550,9 +548,9 @@ Deno.serve(async (req) => {
           };
         }
       } else {
-        plannedAllocations = await planGeneralRoomAllocations(supabase, filledMembers);
-        const uniqueRooms = [...new Set(plannedAllocations.map((allocation) => allocation.roomNumber))];
-        primaryRoomNumber = uniqueRooms.length === 1 ? uniqueRooms[0] : `${uniqueRooms.length} rooms assigned`;
+        // General guests receive QR codes only. They must never consume room inventory.
+        plannedAllocations = [];
+        primaryRoomNumber = null;
       }
     }
 
@@ -583,13 +581,14 @@ Deno.serve(async (req) => {
       age: member.age,
       gender: member.gender,
       mobile: member.mobile?.trim() || (index === 0 ? body.headMobile.trim() : null),
+      event_date: member.eventDate || null,
       is_head: Boolean(member.isHead) || index === 0
     }));
 
     const { data: members, error: memberError } = await supabase
       .from("members")
       .insert(normalizedMembers)
-      .select("id, name, age, gender, mobile, is_head, created_at, qr_token");
+      .select("id, name, age, gender, mobile, is_head, created_at, qr_token, event_date");
 
     if (memberError) throw memberError;
 
@@ -623,19 +622,20 @@ Deno.serve(async (req) => {
       }));
     }
 
-    if (!plannedAllocations.length) {
+    if (!plannedAllocations.length && body.registrationType !== "general_room") {
       return json({ error: "Room allocation could not be prepared for this registration." }, 500);
     }
 
-    const { error: allocationError } = await supabase.from("room_allocations").insert(
-      plannedAllocations.map((allocation) => ({
-        room_id: allocation.roomId,
-        member_id: members[allocation.memberIndex].id,
-        family_id: family.id
-      }))
-    );
-
-    if (allocationError) throw allocationError;
+    if (plannedAllocations.length) {
+      const { error: allocationError } = await supabase.from("room_allocations").insert(
+        plannedAllocations.map((allocation) => ({
+          room_id: allocation.roomId,
+          member_id: members[allocation.memberIndex].id,
+          family_id: family.id
+        }))
+      );
+      if (allocationError) throw allocationError;
+    }
 
     if (
       body.verificationToken &&
@@ -660,8 +660,9 @@ Deno.serve(async (req) => {
     }));
 
     const uniqueRooms = [...new Set(responseAllocations.map((allocation) => allocation.room_number))];
-    const roomMessage =
-      uniqueRooms.length === 1 ? uniqueRooms[0] : `${uniqueRooms.length} rooms assigned`;
+    const roomMessage = body.registrationType === "general_room"
+      ? "No room allocation"
+      : uniqueRooms.length === 1 ? uniqueRooms[0] : `${uniqueRooms.length} rooms assigned`;
     const message = `Jai Shree Krishna. Registration confirmed for Bhagwat Saptah. Code: ${family.registration_code}. Room: ${roomMessage}.`;
     const notification = {
       family_id: family.id,

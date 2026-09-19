@@ -40,14 +40,18 @@ Deno.serve(async (req) => {
     const supabase = serviceClient();
     let mappedPothi: { id: number; primary_holder_name: string | null; city: string | null } | undefined;
 
+    const { data: pothis, error: pothiError } = await supabase
+      .from("pothis")
+      .select("id, primary_holder_name, city, contact_mobile")
+      .not("contact_mobile", "is", null);
+    if (pothiError) throw pothiError;
+
+    const matchingPothi = pothis?.find((entry) => normalizeMobile(entry.contact_mobile ?? "") === mobile);
+    if (body.purpose !== "yajman" && matchingPothi) {
+      return json({ error: "This mobile number is reserved for Pothi Yajman registration. Please use the Pothi Yajman login." }, 409);
+    }
+
     if (body.purpose === "yajman") {
-      const { data: pothis, error: pothiError } = await supabase
-        .from("pothis")
-        .select("id, primary_holder_name, city, contact_mobile")
-        .not("contact_mobile", "is", null);
-
-      if (pothiError) throw pothiError;
-
       const pothi = pothis?.find((entry) => normalizeMobile(entry.contact_mobile ?? "") === mobile);
       if (!pothi) {
         return json({ error: "This mobile number is not mapped to any Pothi Yajman contact." }, 404);

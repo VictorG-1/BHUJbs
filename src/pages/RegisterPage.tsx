@@ -80,8 +80,8 @@ const copy = {
     yajmanCard: "Pothi Yajman Login",
     yajmanCardText: "Login with the mapped yajman mobile number, verify OTP, then add room members and private-room guests.",
     guestCard: "General Guest Login",
-    guestCardText: "Enter your details, verify your mobile with OTP, then add family members for automatic room allotment. No Pothi linkage is needed for this path.",
-    guestComingSoon: "Coming soon",
+    guestCardText: "Verify your mobile with OTP, add each guest and their event date, then download a QR code for entry. General guests do not receive room allocation.",
+    guestComingSoon: "Start registration",
     addRoomMember: (count: number) => `Add room member (${count}/4)`,
     noticesTitle: "Important registration information",
     notices: [
@@ -89,7 +89,7 @@ const copy = {
       "OTP verification is required before continuing.",
       "A Pothi Yajman may register 1 to 4 members in the allotted Pothi room.",
       "Additional guests are placed only in linked private rooms, subject to available capacity.",
-      "Stay dates must be between 13 November 2026 and 20 November 2026.",
+      "General guests receive QR entry codes only; no room is allocated.",
       "Each mobile number can be used for only one registration. Existing registrations can be opened again with OTP.",
       "After registration, save the room details and downloadable QR codes for every member.",
       "Cancellation is available from the saved registration result before the event."
@@ -151,7 +151,7 @@ const copy = {
     reservationSaved: "Reservation saved",
     registrationCode: (code: string) => `Registration code ${code}`,
     yajmanSaved: "The Pothi Yajman portfolio has been saved with the allotted room and any linked private-room allocations.",
-    guestsSaved: "Guests have been allotted automatically.",
+    guestsSaved: "General guests are registered with QR entry codes. No room has been allocated.",
     roomSaved: "Room saved",
     cancelReservation: "Cancel reservation",
     cancellingReservation: "Cancelling reservation",
@@ -177,8 +177,8 @@ const copy = {
     yajmanCard: "પોથી યજમાન લોગિન",
     yajmanCardText: "પોથી સાથે જોડાયેલ મોબાઇલથી લોગિન કરો, OTP ચકાસો અને પછી રૂમ માટેના સભ્યો ઉમેરો.",
     guestCard: "સામાન્ય મહેમાન લોગિન",
-    guestCardText: "તમારી વિગતો દાખલ કરો, મોબાઇલ OTPથી ચકાસો અને પછી પરિવાર માટે ઓટો રૂમ ફાળવણીવાળા ફોર્મ પર આગળ વધો.",
-    guestComingSoon: "ટૂંક સમયમાં ઉપલબ્ધ",
+    guestCardText: "મોબાઇલ OTPથી ચકાસો, દરેક મહેમાન અને તેમની ઇવેન્ટ તારીખ ઉમેરો અને પ્રવેશ માટે QR કોડ મેળવો. સામાન્ય મહેમાનોને રૂમ ફાળવાશે નહીં.",
+    guestComingSoon: "નોંધણી શરૂ કરો",
     addRoomMember: (count: number) => `રૂમ સભ્ય ઉમેરો (${count}/4)`,
     noticesTitle: "નોંધણી માટે મહત્વપૂર્ણ સૂચનાઓ",
     notices: [
@@ -186,7 +186,7 @@ const copy = {
       "આગળ વધતા પહેલા OTP ચકાસણી જરૂરી છે.",
       "પોથી યજમાન ફાળવેલા પોથી રૂમમાં 1 થી 4 સભ્યો નોંધાવી શકે છે.",
       "વધારાના મહેમાનો ઉપલબ્ધ ક્ષમતા મુજબ જોડાયેલા પ્રાઇવેટ રૂમમાં ફાળવાશે.",
-      "રહેવાની તારીખ 14 નવેમ્બર 2026 થી 20 નવેમ્બર 2026 વચ્ચે હોવી જોઈએ.",
+      "સામાન્ય મહેમાનોને માત્ર QR પ્રવેશ કોડ મળશે; રૂમ ફાળવાશે નહીં.",
       "દરેક મોબાઇલ નંબરથી માત્ર એક નોંધણી થશે. અગાઉની નોંધણી OTPથી ફરી ખોલી શકાશે.",
       "નોંધણી પછી દરેક સભ્યની રૂમ માહિતી અને ડાઉનલોડ કરી શકાય તેવા QR કોડ સાચવો.",
       "ઇવેન્ટ પહેલા સેવ થયેલા નોંધણી પરિણામમાંથી રદ કરવાની સુવિધા ઉપલબ્ધ છે."
@@ -247,7 +247,7 @@ const copy = {
     reservationSaved: "રિઝર્વેશન સાચવાયું",
     registrationCode: (code: string) => `નોંધણી કોડ ${code}`,
     yajmanSaved: "પોથી યજમાનની નોંધણી ફાળવેલા રૂમ અને જોડાયેલા પ્રાઇવેટ રૂમ સાથે સાચવાઈ ગઈ છે.",
-    guestsSaved: "મહેમાનોને આપમેળે રૂમ ફાળવાયા છે.",
+    guestsSaved: "સામાન્ય મહેમાનોની નોંધણી QR કોડ સાથે થઈ છે. કોઈ રૂમ ફાળવાયો નથી.",
     roomSaved: "રૂમ સાચવાયો",
     cancelReservation: "રિઝર્વેશન રદ કરો",
     cancellingReservation: "રિઝર્વેશન રદ કરી રહ્યા છીએ",
@@ -768,8 +768,8 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
         return;
       }
 
-      if (!stayFrom || !stayTo) {
-        setMessage("Please select the stay start and end dates.");
+      if (guestPayload.some((member) => !member.eventDate || member.eventDate < EVENT_START_DATE || member.eventDate > EVENT_END_DATE)) {
+        setMessage("Select an event date between 13 November 2026 and 20 November 2026 for every guest.");
         setLoading(false);
         return;
       }
@@ -787,8 +787,8 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
         address: "",
         verificationToken,
         registrationType: "general_room",
-        stayFrom,
-        stayTo,
+        stayFrom: EVENT_START_DATE,
+        stayTo: EVENT_END_DATE,
         members: guestPayload
       });
       setResult(data);
@@ -906,7 +906,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
         <article className="entry-card">
           <h2>{t.guestCard}</h2>
           <p>{t.guestCardText}</p>
-          <button type="button" className="secondary" disabled>
+          <button type="button" className="secondary" onClick={goToGuestLogin}>
             {t.guestComingSoon}
           </button>
         </article>
@@ -1231,24 +1231,13 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
           <input value={city} onChange={(event) => setCity(event.target.value)} />
         </label>
 
-        <div className="wide-field date-range-grid">
-          <label>
-            Stay from
-            <input type="date" min={EVENT_START_DATE} max={EVENT_END_DATE} value={stayFrom} onChange={(event) => setStayFrom(event.target.value)} required />
-          </label>
-          <label>
-            Stay until
-            <input type="date" min={stayFrom || EVENT_START_DATE} max={EVENT_END_DATE} value={stayTo} onChange={(event) => setStayTo(event.target.value)} required />
-          </label>
-        </div>
-
         <div className="wide-field field-stack">
           <h2>{t.guestRegistration}</h2>
           <p className="inline-note">{t.guestRegistrationText}</p>
           <div className="room-info-card">
-            <strong>{t.autoGuestAllocation}</strong>
-            <small>{t.groundFirst(generalRoomSummary.ground, generalRoomSummary.first)}</small>
-            <small>{t.seniorGround}</small>
+            <strong>QR entry registration</strong>
+            <small>Event dates: 13 November 2026 to 20 November 2026.</small>
+            <small>No room allocation is made for general guests.</small>
           </div>
         </div>
 
@@ -1282,6 +1271,16 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
                 placeholder={t.mobile}
                 value={member.mobile}
                 onChange={(event) => updateGeneralGuest(index, { mobile: event.target.value })}
+                required
+              />
+              <input
+                type="date"
+                min={EVENT_START_DATE}
+                max={EVENT_END_DATE}
+                value={member.eventDate ?? ""}
+                onChange={(event) => updateGeneralGuest(index, { eventDate: event.target.value })}
+                aria-label="Event date"
+                required
               />
             </div>
           ))}
@@ -1320,7 +1319,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
         </div>
 
         <div className="member-dashboard-meta">
-          <div><span>Stay</span><strong>{result.family.stay_from || EVENT_START_DATE} – {result.family.stay_to || EVENT_END_DATE}</strong><small>Arrival to departure</small></div>
+          <div><span>{result.family.registration_type === "general_room" ? "Event" : "Stay"}</span><strong>{result.family.stay_from || EVENT_START_DATE} – {result.family.stay_to || EVENT_END_DATE}</strong><small>{result.family.registration_type === "general_room" ? "Individual dates are shown on each QR record" : "Arrival to departure"}</small></div>
           <div><span>Guests</span><strong>{result.members.length} registered</strong><small>All members on this booking</small></div>
           <div><span>Contact mobile</span><strong>{headMobile}</strong><small>Verified for this booking</small></div>
           {result.family.registration_type === "pothi_room" && result.family.pothi_id ? (
@@ -1331,10 +1330,10 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
         <div className="member-dashboard-stats">
           <article><span className="dashboard-stat-icon">01</span><strong>{result.members.length}</strong><small>Registered members</small></article>
           <article><span className="dashboard-stat-icon">02</span><strong>{allocationRoomSummary.length}</strong><small>Rooms assigned</small></article>
-          <article><span className="dashboard-stat-icon">03</span><strong>{result.family.registration_type === "pothi_room" ? "Pothi" : "Private"}</strong><small>Registration type</small></article>
+          <article><span className="dashboard-stat-icon">03</span><strong>{result.family.registration_type === "pothi_room" ? "Pothi" : result.family.registration_type === "general_room" ? "General" : "Private"}</strong><small>Registration type</small></article>
         </div>
 
-        <section className="member-dashboard-section">
+        {result.family.registration_type !== "general_room" ? <section className="member-dashboard-section">
           <div className="member-section-heading"><div><p className="eyebrow">Stay details</p><h2>Your room allocation</h2></div><span className="dashboard-status">Confirmed</span></div>
           <div className="dashboard-room-groups">
             {dashboardRoomGroups.length ? dashboardRoomGroups.map((group) => (
@@ -1353,7 +1352,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
               </section>
             )) : <p className="empty-state">Room allocation is being synced. Please refresh in a moment.</p>}
           </div>
-        </section>
+        </section> : null}
 
         <section className="member-dashboard-section member-qr-section">
           <div className="member-section-heading"><div><p className="eyebrow">Event entry</p><h2>Member QR codes</h2><p>Download one QR code for each registered member.</p></div></div>
@@ -1427,13 +1426,13 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
           <div className="dashboard-summary-grid">
             <div><span>Members</span><strong>{result.members.length}</strong></div>
             <div><span>Rooms</span><strong>{allocationRoomSummary.length}</strong></div>
-            <div><span>Registration</span><strong>{result.family.registration_type === "pothi_room" ? "Pothi" : "Private"}</strong></div>
+              <div><span>Registration</span><strong>{result.family.registration_type === "pothi_room" ? "Pothi" : result.family.registration_type === "general_room" ? "General" : "Private"}</strong></div>
             {result.family.registration_type === "pothi_room" && result.family.pothi_id ? (
               <div><span>{language === "gu" ? "પોથી નંબર" : "Pothi number"}</span><strong>{result.family.pothi_id}</strong></div>
             ) : null}
           </div>
 
-            <div className="dashboard-room-groups">
+            {result.family.registration_type !== "general_room" ? <div className="dashboard-room-groups">
               {dashboardRoomGroups.map((group) => (
                 <section className="dashboard-room-group" key={group.key}>
                   <div className="panel-header-inline"><div><h3>{group.title}</h3><p>{group.rooms.length} room(s) assigned</p></div></div>
@@ -1448,7 +1447,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
                   </div>
                 </section>
               ))}
-            </div>
+            </div> : null}
 
             <div className="member-qr-list">
               <div className="panel-header-inline"><div><h3>Member QR codes</h3><p>Download and keep each member code ready for event entry.</p></div></div>
