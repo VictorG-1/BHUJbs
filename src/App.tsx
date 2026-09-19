@@ -11,15 +11,16 @@ type Language = "en" | "gu";
 
 export default function App() {
   function pageFromPath(pathname: string): Page {
-    if (pathname === "/admin") return "admin";
-    if (pathname === "/scanner") return "scanner";
-    if (pathname === "/general-login") return "general-login";
-    if (pathname === "/pothi-login") return "pothi-login";
-    if (pathname === "/itinerary") return "itinerary";
-    if (pathname === "/live") return "broadcast";
-    if (pathname === "/sponsors") return "sponsors";
-    if (pathname === "/terms") return "terms";
-    if (pathname === "/register") return "register";
+    const path = pathname.replace(/\/+$/, "").toLowerCase() || "/";
+    if (path === "/admin") return "admin";
+    if (path === "/scanner") return "scanner";
+    if (path === "/general-login") return "general-login";
+    if (path === "/pothi-login") return "pothi-login";
+    if (path === "/itinerary") return "itinerary";
+    if (path === "/live") return "broadcast";
+    if (path === "/sponsors") return "sponsors";
+    if (path === "/terms") return "terms";
+    if (path === "/register") return "register";
     return "landing";
   }
 
