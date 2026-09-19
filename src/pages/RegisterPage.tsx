@@ -334,7 +334,9 @@ export function RegisterPage({ language = "en", startAt = "home" }: RegisterPage
       return;
     }
 
-    setTab(saved.result.family.registration_type === "pothi_room" ? "yajman" : "guest");
+    if (startAt === "home") {
+      setTab(saved.result.family.registration_type === "pothi_room" ? "yajman" : "guest");
+    }
     getMyRegistration({ mobile: saved.mobile, verificationToken: saved.verificationToken })
       .then((fresh) => {
         if (fresh) setResult(fresh);
@@ -685,7 +687,8 @@ export function RegisterPage({ language = "en", startAt = "home" }: RegisterPage
     setDuplicateMessage("");
 
     try {
-      if (tab === "yajman") {
+      const isGuestFlow = startAt === "guest-login" || tab === "guest";
+      if (!isGuestFlow) {
         if (!verificationToken) {
           setMessage("Please verify the Pothi Yajman mobile number with OTP before registering.");
           setLoading(false);
