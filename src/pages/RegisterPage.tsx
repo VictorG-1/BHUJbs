@@ -278,8 +278,6 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
   const [city, setCity] = useState("");
   const [stayFrom, setStayFrom] = useState(EVENT_START_DATE);
   const [stayTo, setStayTo] = useState(EVENT_END_DATE);
-  const [memberAddedFrom, setMemberAddedFrom] = useState("");
-  const [memberAddedTo, setMemberAddedTo] = useState("");
   const [yajmanRoomMembers, setYajmanRoomMembers] = useState<FamilyMemberInput[]>(
     [createBlankMember({ isHead: true })]
   );
@@ -492,15 +490,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
     })).filter((group) => group.rooms.length);
   }, [allocationRoomSummary, roomInventory]);
 
-  const visibleDashboardMembers = useMemo(() => {
-    if (!result) return [];
-    return result.members.filter((member) => {
-      const addedDate = member.created_at?.slice(0, 10) ?? "";
-      if (memberAddedFrom && (!addedDate || addedDate < memberAddedFrom)) return false;
-      if (memberAddedTo && (!addedDate || addedDate > memberAddedTo)) return false;
-      return true;
-    });
-  }, [memberAddedFrom, memberAddedTo, result]);
+  const visibleDashboardMembers = result?.members ?? [];
 
   useEffect(() => {
     if (!activePothi) return;
@@ -1367,11 +1357,6 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
 
         <section className="member-dashboard-section member-qr-section">
           <div className="member-section-heading"><div><p className="eyebrow">Event entry</p><h2>Member QR codes</h2><p>Download one QR code for each registered member.</p></div></div>
-          <div className="member-date-filter">
-            <label><span>Added from</span><input type="date" value={memberAddedFrom} onChange={(event) => setMemberAddedFrom(event.target.value)} /></label>
-            <label><span>Added to</span><input type="date" value={memberAddedTo} onChange={(event) => setMemberAddedTo(event.target.value)} /></label>
-            {memberAddedFrom || memberAddedTo ? <button type="button" className="secondary compact-button" onClick={() => { setMemberAddedFrom(""); setMemberAddedTo(""); }}>Clear dates</button> : null}
-          </div>
           <div className="member-qr-list">
             {visibleDashboardMembers.map((member) => {
               const allocation = result.allocations.find((item) => item.member_id === member.id);
@@ -1467,11 +1452,6 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
 
             <div className="member-qr-list">
               <div className="panel-header-inline"><div><h3>Member QR codes</h3><p>Download and keep each member code ready for event entry.</p></div></div>
-              <div className="member-date-filter">
-                <label><span>Added from</span><input type="date" value={memberAddedFrom} onChange={(event) => setMemberAddedFrom(event.target.value)} /></label>
-                <label><span>Added to</span><input type="date" value={memberAddedTo} onChange={(event) => setMemberAddedTo(event.target.value)} /></label>
-                {memberAddedFrom || memberAddedTo ? <button type="button" className="secondary compact-button" onClick={() => { setMemberAddedFrom(""); setMemberAddedTo(""); }}>Clear dates</button> : null}
-              </div>
               {visibleDashboardMembers.map((member) => {
                 const allocation = result.allocations.find((item) => item.member_id === member.id);
                 return <MemberQrCode key={member.id} member={member} details={{ family_code: result.family.registration_code, venue: allocation?.venue_name ?? "", room: allocation?.room_number ?? "" }} />;
