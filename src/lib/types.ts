@@ -6,7 +6,8 @@ export type FamilyMemberInput = {
   age: number;
   gender: Gender;
   mobile: string;
-  eventDate?: string;
+  arrivalDate?: string;
+  departureDate?: string;
   isHead?: boolean;
 };
 
@@ -59,6 +60,8 @@ export type RegisteredMember = {
   gender?: Gender;
   mobile?: string | null;
   event_date?: string | null;
+  arrival_date?: string | null;
+  departure_date?: string | null;
   qr_token?: string;
   qr_revoked_at?: string | null;
   is_head?: boolean;

@@ -80,7 +80,7 @@ const copy = {
     yajmanCard: "Pothi Yajman Login",
     yajmanCardText: "Login with the mapped yajman mobile number, verify OTP, then add room members and private-room guests.",
     guestCard: "General Guest Login",
-    guestCardText: "Verify your mobile with OTP, add each guest and their event date, then download a QR code for entry. General guests do not receive room allocation.",
+    guestCardText: "Verify your mobile with OTP, add each guest with arrival and departure dates, then download a QR code for entry. General guests do not receive room allocation.",
     guestComingSoon: "Start registration",
     addRoomMember: (count: number) => `Add room member (${count}/4)`,
     noticesTitle: "Important registration information",
@@ -177,7 +177,7 @@ const copy = {
     yajmanCard: "પોથી યજમાન લોગિન",
     yajmanCardText: "પોથી સાથે જોડાયેલ મોબાઇલથી લોગિન કરો, OTP ચકાસો અને પછી રૂમ માટેના સભ્યો ઉમેરો.",
     guestCard: "સામાન્ય મહેમાન લોગિન",
-    guestCardText: "મોબાઇલ OTPથી ચકાસો, દરેક મહેમાન અને તેમની ઇવેન્ટ તારીખ ઉમેરો અને પ્રવેશ માટે QR કોડ મેળવો. સામાન્ય મહેમાનોને રૂમ ફાળવાશે નહીં.",
+    guestCardText: "મોબાઇલ OTPથી ચકાસો, દરેક મહેમાનની આગમન અને વિદાય તારીખ ઉમેરો અને પ્રવેશ માટે QR કોડ મેળવો. સામાન્ય મહેમાનોને રૂમ ફાળવાશે નહીં.",
     guestComingSoon: "નોંધણી શરૂ કરો",
     addRoomMember: (count: number) => `રૂમ સભ્ય ઉમેરો (${count}/4)`,
     noticesTitle: "નોંધણી માટે મહત્વપૂર્ણ સૂચનાઓ",
@@ -768,8 +768,8 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
         return;
       }
 
-      if (guestPayload.some((member) => !member.eventDate || member.eventDate < EVENT_START_DATE || member.eventDate > EVENT_END_DATE)) {
-        setMessage("Select an event date between 13 November 2026 and 20 November 2026 for every guest.");
+      if (guestPayload.some((member) => !member.arrivalDate || !member.departureDate || member.arrivalDate < EVENT_START_DATE || member.departureDate > EVENT_END_DATE || member.departureDate < member.arrivalDate)) {
+        setMessage("Select valid arrival and departure dates between 13 November 2026 and 20 November 2026 for every guest.");
         setLoading(false);
         return;
       }
@@ -1277,9 +1277,20 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
                 type="date"
                 min={EVENT_START_DATE}
                 max={EVENT_END_DATE}
-                value={member.eventDate ?? ""}
-                onChange={(event) => updateGeneralGuest(index, { eventDate: event.target.value })}
-                aria-label="Event date"
+                value={member.arrivalDate ?? ""}
+                onChange={(event) => updateGeneralGuest(index, { arrivalDate: event.target.value })}
+                aria-label="Arrival date"
+                title="Arrival date"
+                required
+              />
+              <input
+                type="date"
+                min={member.arrivalDate || EVENT_START_DATE}
+                max={EVENT_END_DATE}
+                value={member.departureDate ?? ""}
+                onChange={(event) => updateGeneralGuest(index, { departureDate: event.target.value })}
+                aria-label="Departure date"
+                title="Departure date"
                 required
               />
             </div>

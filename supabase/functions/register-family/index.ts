@@ -7,7 +7,8 @@ type MemberInput = {
   age: number;
   gender: "male" | "female" | "other";
   mobile?: string;
-  eventDate?: string;
+  arrivalDate?: string;
+  departureDate?: string;
   isHead?: boolean;
 };
 
@@ -581,14 +582,16 @@ Deno.serve(async (req) => {
       age: member.age,
       gender: member.gender,
       mobile: member.mobile?.trim() || (index === 0 ? body.headMobile.trim() : null),
-      event_date: member.eventDate || null,
+      event_date: null,
+      arrival_date: member.arrivalDate || null,
+      departure_date: member.departureDate || null,
       is_head: Boolean(member.isHead) || index === 0
     }));
 
     const { data: members, error: memberError } = await supabase
       .from("members")
       .insert(normalizedMembers)
-      .select("id, name, age, gender, mobile, is_head, created_at, qr_token, event_date");
+      .select("id, name, age, gender, mobile, is_head, created_at, qr_token, event_date, arrival_date, departure_date");
 
     if (memberError) throw memberError;
 
