@@ -991,6 +991,13 @@ h2 {
   font-weight: 700;
 }
 
+.member-date-heading {
+  margin: -0.25rem 0 0.85rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
 .add-member-button { width: fit-content; }
 
 .member-qr-list {

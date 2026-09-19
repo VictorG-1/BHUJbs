@@ -1243,6 +1243,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
 
         <div className="wide-field">
           <h2>{t.guestDetails}</h2>
+          <p className="member-date-heading">Stay dates for each guest: date of arrival to date of departure</p>
           {generalGuests.map((member, index) => (
             <div className="member-row" key={index}>
               <input
@@ -1274,7 +1275,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
                 required
               />
               <label className="member-date-field">
-                <span>Arrival date</span>
+                <span>Date of arrival</span>
                 <input
                   type="date"
                   min={EVENT_START_DATE}
@@ -1285,7 +1286,7 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
                 />
               </label>
               <label className="member-date-field">
-                <span>Departure date</span>
+                <span>Date of departure</span>
                 <input
                   type="date"
                   min={member.arrivalDate || EVENT_START_DATE}
