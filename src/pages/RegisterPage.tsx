@@ -1408,8 +1408,12 @@ export function RegisterPage({ language = "en", startAt = "home" }: RegisterPage
       <div className="section-heading">
         <p className="eyebrow">{t.eyebrow}</p>
         <h1>{t.title}</h1>
-        <p>{t.subtitle}</p>
-        <p>{t.openPothis(availableCount)}</p>
+        {!(startAt === "guest-login" || tab === "guest") ? (
+          <>
+            <p>{t.subtitle}</p>
+            <p>{t.openPothis(availableCount)}</p>
+          </>
+        ) : null}
       </div>
 
       {stage === "home" ? renderHome() : null}

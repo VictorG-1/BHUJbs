@@ -307,7 +307,12 @@ Deno.serve(async (req) => {
           .maybeSingle();
         if (adminProfileError) throw adminProfileError;
         isAdminRequest = body.adminRequest === true && adminProfile?.role === "admin";
-        if (!isAdminRequest && authData.user.phone && normalizeMobile(authData.user.phone) !== normalizedMobile) {
+        if (
+          body.registrationType !== "general_room" &&
+          !isAdminRequest &&
+          authData.user.phone &&
+          normalizeMobile(authData.user.phone) !== normalizedMobile
+        ) {
           return json({ error: "Verified mobile does not match the registration mobile." }, 403);
         }
       }
@@ -333,7 +338,7 @@ Deno.serve(async (req) => {
       }
     }
 
-    if (authUserId && !isAdminRequest) {
+    if (authUserId && body.registrationType !== "general_room" && !isAdminRequest) {
         const { data: existingFamily, error: existingError } = await supabase
           .from("families")
           .select("id, registration_code")
@@ -558,7 +563,7 @@ Deno.serve(async (req) => {
     const { data: family, error: familyError } = await supabase
       .from("families")
       .insert({
-        auth_user_id: authUserId,
+        auth_user_id: body.registrationType === "general_room" ? null : authUserId,
         head_name: body.headName,
         head_mobile: body.headMobile,
         city: body.city ?? null,
