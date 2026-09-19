@@ -108,7 +108,7 @@ export async function registerFamily(input: RegisterFamilyInput) {
     "Content-Type": "application/json",
     ...getSupabasePublicHeaders()
   };
-  if (sessionData.session?.access_token) {
+  if (input.registrationType !== "general_room" && sessionData.session?.access_token) {
     headers.Authorization = `Bearer ${sessionData.session.access_token}`;
   }
 
