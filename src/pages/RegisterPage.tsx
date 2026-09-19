@@ -80,7 +80,7 @@ const copy = {
     yajmanCard: "Pothi Yajman Login",
     yajmanCardText: "Login with the mapped yajman mobile number, verify OTP, then add room members and private-room guests.",
     guestCard: "General Guest Login",
-    guestCardText: "Verify your mobile with OTP, add each guest with arrival and departure dates, then download a QR code for entry. General guests do not receive room allocation.",
+    guestCardText: "Verify any mobile number with OTP, add each guest with arrival and departure dates, then download a QR code for entry. We will notify you when rooms are allotted.",
     guestComingSoon: "Start registration",
     addRoomMember: (count: number) => `Add room member (${count}/4)`,
     noticesTitle: "Important registration information",
@@ -89,7 +89,7 @@ const copy = {
       "OTP verification is required before continuing.",
       "A Pothi Yajman may register 1 to 4 members in the allotted Pothi room.",
       "Additional guests are placed only in linked private rooms, subject to available capacity.",
-      "General guests receive QR entry codes only; no room is allocated.",
+      "General guests receive QR entry codes first; room-allotment updates will be shared when rooms are allotted.",
       "Each mobile number can be used for only one registration. Existing registrations can be opened again with OTP.",
       "After registration, save the room details and downloadable QR codes for every member.",
       "Cancellation is available from the saved registration result before the event."
@@ -109,7 +109,7 @@ const copy = {
       "Login with the same mobile number that is mapped to the Pothi Yajman contact. After OTP verification, we will show the yajman profile and room details automatically.",
     guestLoginTitle: "General Guest login",
     guestLoginText:
-      "Enter your details and verify your mobile number with OTP before continuing to the guest registration form. Any valid mobile number can be used here.",
+      "Enter your mobile number and verify it with OTP. You can add guest details after verification.",
     guestOtpSent: "OTP sent to your mobile number.",
     guestOtpVerified: "Mobile number verified. Continue to the guest form.",
     guestOtpRequired: "Verify your mobile number with OTP before continuing.",
@@ -138,7 +138,7 @@ const copy = {
     addPrivateGuest: "Add private-room guest",
     guestRegistration: "General guest registration",
     guestRegistrationText:
-      "Use this tab for self and family registration. The mobile number does not need to be linked to any Pothi or Pothi Yajman. If the same mobile number is already mapped to an existing family registration, we will show a popup instead of creating a duplicate entry.",
+      "Use this tab for self and family registration. Any mobile number can be used for general registration. If the number already has a family registration, we will show it instead of creating a duplicate entry.",
     autoGuestAllocation: "Automatic guest allocation",
     groundFirst: (ground: number, first: number) =>
       `General stock currently includes ${ground} ground-floor rooms and ${first} first-floor rooms before overflow.`,
@@ -151,7 +151,7 @@ const copy = {
     reservationSaved: "Reservation saved",
     registrationCode: (code: string) => `Registration code ${code}`,
     yajmanSaved: "The Pothi Yajman portfolio has been saved with the allotted room and any linked private-room allocations.",
-    guestsSaved: "General guests are registered with QR entry codes. No room has been allocated.",
+    guestsSaved: "General guests are registered with QR entry codes. We will notify you once rooms are allotted.",
     roomSaved: "Room saved",
     cancelReservation: "Cancel reservation",
     cancellingReservation: "Cancelling reservation",
@@ -177,7 +177,7 @@ const copy = {
     yajmanCard: "પોથી યજમાન લોગિન",
     yajmanCardText: "પોથી સાથે જોડાયેલ મોબાઇલથી લોગિન કરો, OTP ચકાસો અને પછી રૂમ માટેના સભ્યો ઉમેરો.",
     guestCard: "સામાન્ય મહેમાન લોગિન",
-    guestCardText: "મોબાઇલ OTPથી ચકાસો, દરેક મહેમાનની આગમન અને વિદાય તારીખ ઉમેરો અને પ્રવેશ માટે QR કોડ મેળવો. સામાન્ય મહેમાનોને રૂમ ફાળવાશે નહીં.",
+    guestCardText: "કોઈપણ મોબાઇલ નંબરથી OTP ચકાસો, દરેક મહેમાનની આગમન અને વિદાય તારીખ ઉમેરો અને પ્રવેશ માટે QR કોડ મેળવો. રૂમ ફાળવાયા પછી તમને જાણ કરવામાં આવશે.",
     guestComingSoon: "નોંધણી શરૂ કરો",
     addRoomMember: (count: number) => `રૂમ સભ્ય ઉમેરો (${count}/4)`,
     noticesTitle: "નોંધણી માટે મહત્વપૂર્ણ સૂચનાઓ",
@@ -186,7 +186,7 @@ const copy = {
       "આગળ વધતા પહેલા OTP ચકાસણી જરૂરી છે.",
       "પોથી યજમાન ફાળવેલા પોથી રૂમમાં 1 થી 4 સભ્યો નોંધાવી શકે છે.",
       "વધારાના મહેમાનો ઉપલબ્ધ ક્ષમતા મુજબ જોડાયેલા પ્રાઇવેટ રૂમમાં ફાળવાશે.",
-      "સામાન્ય મહેમાનોને માત્ર QR પ્રવેશ કોડ મળશે; રૂમ ફાળવાશે નહીં.",
+      "સામાન્ય મહેમાનોને પહેલા QR પ્રવેશ કોડ મળશે; રૂમ ફાળવાયા પછી તેની જાણ કરવામાં આવશે.",
       "દરેક મોબાઇલ નંબરથી માત્ર એક નોંધણી થશે. અગાઉની નોંધણી OTPથી ફરી ખોલી શકાશે.",
       "નોંધણી પછી દરેક સભ્યની રૂમ માહિતી અને ડાઉનલોડ કરી શકાય તેવા QR કોડ સાચવો.",
       "ઇવેન્ટ પહેલા સેવ થયેલા નોંધણી પરિણામમાંથી રદ કરવાની સુવિધા ઉપલબ્ધ છે."
@@ -206,7 +206,7 @@ const copy = {
       "પોથી યજમાનના નોંધાયેલા મોબાઇલ નંબરથી લોગિન કરો. OTP પછી યજમાન પ્રોફાઇલ અને રૂમની માહિતી આપમેળે દેખાશે.",
     guestLoginTitle: "સામાન્ય મહેમાન લોગિન",
     guestLoginText:
-      "તમારી વિગતો દાખલ કરો અને મહેમાન નોંધણી ફોર્મ પર આગળ વધતા પહેલા મોબાઇલ OTPથી ચકાસો.",
+      "તમારો મોબાઇલ નંબર દાખલ કરો અને OTPથી ચકાસો. ચકાસણી પછી મહેમાનની વિગતો ઉમેરી શકશો.",
     guestOtpSent: "OTP તમારા મોબાઇલ પર મોકલાયો.",
     guestOtpVerified: "મોબાઇલ ચકાસાયો. હવે મહેમાન ફોર્મ પર આગળ વધો.",
     guestOtpRequired: "આગળ વધતા પહેલા મોબાઇલ OTPથી ચકાસો.",
@@ -247,7 +247,7 @@ const copy = {
     reservationSaved: "રિઝર્વેશન સાચવાયું",
     registrationCode: (code: string) => `નોંધણી કોડ ${code}`,
     yajmanSaved: "પોથી યજમાનની નોંધણી ફાળવેલા રૂમ અને જોડાયેલા પ્રાઇવેટ રૂમ સાથે સાચવાઈ ગઈ છે.",
-    guestsSaved: "સામાન્ય મહેમાનોની નોંધણી QR કોડ સાથે થઈ છે. કોઈ રૂમ ફાળવાયો નથી.",
+    guestsSaved: "સામાન્ય મહેમાનોની નોંધણી QR કોડ સાથે થઈ છે. રૂમ ફાળવાયા પછી તમને જાણ કરવામાં આવશે.",
     roomSaved: "રૂમ સાચવાયો",
     cancelReservation: "રિઝર્વેશન રદ કરો",
     cancellingReservation: "રિઝર્વેશન રદ કરી રહ્યા છીએ",
@@ -566,11 +566,6 @@ export function RegisterPage({ language = "en", startAt = "home" }: RegisterPage
   async function handleSendOtp(purpose: "yajman" | "guest") {
     if (!headMobile.trim()) {
       setMessage(purpose === "yajman" ? "Enter the Pothi Yajman mobile number before requesting OTP." : t.guestMobileRequired);
-      return;
-    }
-
-    if (purpose === "guest" && !headName.trim()) {
-      setMessage(t.guestNameRequired);
       return;
     }
 
@@ -973,16 +968,8 @@ export function RegisterPage({ language = "en", startAt = "home" }: RegisterPage
         </div>
         <div className="auth-card auth-form">
           <label>
-            {t.yourName}
-            <input value={headName} onChange={(event) => setHeadName(event.target.value)} required />
-          </label>
-          <label>
             {t.mobile}
             <input value={headMobile} onChange={(event) => handleMobileChange(event.target.value)} required />
-          </label>
-          <label>
-            {t.city}
-            <input value={city} onChange={(event) => setCity(event.target.value)} />
           </label>
           <OtpPanel
             labels={{
@@ -1238,7 +1225,7 @@ export function RegisterPage({ language = "en", startAt = "home" }: RegisterPage
           <div className="room-info-card">
             <strong>QR entry registration</strong>
             <small>Event dates: 13 November 2026 to 20 November 2026.</small>
-            <small>No room allocation is made for general guests.</small>
+            <small>We will notify you once rooms are allotted to your registration.</small>
           </div>
         </div>
 

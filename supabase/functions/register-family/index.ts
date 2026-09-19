@@ -664,7 +664,7 @@ Deno.serve(async (req) => {
 
     const uniqueRooms = [...new Set(responseAllocations.map((allocation) => allocation.room_number))];
     const roomMessage = body.registrationType === "general_room"
-      ? "No room allocation"
+      ? "Room allotment pending"
       : uniqueRooms.length === 1 ? uniqueRooms[0] : `${uniqueRooms.length} rooms assigned`;
     const message = `Jai Shree Krishna. Registration confirmed for Bhagwat Saptah. Code: ${family.registration_code}. Room: ${roomMessage}.`;
     const notification = {

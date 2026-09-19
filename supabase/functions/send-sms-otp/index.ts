@@ -46,11 +46,6 @@ Deno.serve(async (req) => {
       .not("contact_mobile", "is", null);
     if (pothiError) throw pothiError;
 
-    const matchingPothi = pothis?.find((entry) => normalizeMobile(entry.contact_mobile ?? "") === mobile);
-    if (body.purpose !== "yajman" && matchingPothi) {
-      return json({ error: "This mobile number is reserved for Pothi Yajman registration. Please use the Pothi Yajman login." }, 409);
-    }
-
     if (body.purpose === "yajman") {
       const pothi = pothis?.find((entry) => normalizeMobile(entry.contact_mobile ?? "") === mobile);
       if (!pothi) {
