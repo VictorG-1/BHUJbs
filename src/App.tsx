@@ -6,22 +6,44 @@ import { BroadcastPage, ItineraryPage, LandingPage, SiteFooter, SponsorsPage, Te
 import { isSupabaseConfigured } from "./lib/supabase";
 import "./styles/app.css";
 
-type Page = "landing" | "register" | "admin" | "scanner" | "itinerary" | "broadcast" | "sponsors" | "terms";
+type Page = "landing" | "register" | "general-login" | "pothi-login" | "admin" | "scanner" | "itinerary" | "broadcast" | "sponsors" | "terms";
 type Language = "en" | "gu";
 
 export default function App() {
-  const [page, setPage] = useState<Page>(() => window.location.pathname === "/admin" ? "admin" : window.location.pathname === "/scanner" ? "scanner" : "landing");
+  function pageFromPath(pathname: string): Page {
+    if (pathname === "/admin") return "admin";
+    if (pathname === "/scanner") return "scanner";
+    if (pathname === "/general-login") return "general-login";
+    if (pathname === "/pothi-login") return "pothi-login";
+    if (pathname === "/itinerary") return "itinerary";
+    if (pathname === "/live") return "broadcast";
+    if (pathname === "/sponsors") return "sponsors";
+    if (pathname === "/terms") return "terms";
+    if (pathname === "/register") return "register";
+    return "landing";
+  }
+
+  const [page, setPage] = useState<Page>(() => pageFromPath(window.location.pathname));
   const [language, setLanguage] = useState<Language>("en");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handlePopState = () => setPage(window.location.pathname === "/admin" ? "admin" : window.location.pathname === "/scanner" ? "scanner" : "landing");
+    const handlePopState = () => setPage(pageFromPath(window.location.pathname));
     window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
   }, []);
 
   function navigate(nextPage: Page) {
-    const path = nextPage === "admin" ? "/admin" : nextPage === "scanner" ? "/scanner" : "/";
+    const path = nextPage === "admin" ? "/admin"
+      : nextPage === "scanner" ? "/scanner"
+      : nextPage === "general-login" ? "/general-login"
+      : nextPage === "pothi-login" ? "/pothi-login"
+      : nextPage === "register" ? "/register"
+      : nextPage === "itinerary" ? "/itinerary"
+      : nextPage === "broadcast" ? "/live"
+      : nextPage === "sponsors" ? "/sponsors"
+      : nextPage === "terms" ? "/terms"
+      : "/";
     window.history.pushState({}, "", path);
     setPage(nextPage);
     setMobileMenuOpen(false);
@@ -51,7 +73,7 @@ export default function App() {
           <span>{mobileMenuOpen ? "Close" : "Menu"}</span>
         </button>
         <nav id="main-navigation" className={mobileMenuOpen ? "is-open" : ""}>
-          <button className={page === "register" ? "active" : ""} onClick={() => navigate("register")}>
+          <button className={page === "register" || page === "general-login" || page === "pothi-login" ? "active" : ""} onClick={() => navigate("general-login")}>
             {language === "gu" ? "નોંધણી" : "Register"}
           </button>
           <button className={page === "itinerary" ? "active" : ""} onClick={() => navigate("itinerary")}>
@@ -91,6 +113,8 @@ export default function App() {
       <main>
         {page === "landing" ? <LandingPage language={language} onNavigate={navigate} /> : null}
         {page === "register" ? <RegisterPage language={language} /> : null}
+        {page === "general-login" ? <RegisterPage language={language} startAt="guest-login" /> : null}
+        {page === "pothi-login" ? <RegisterPage language={language} startAt="yajman-login" /> : null}
         {page === "admin" ? <AdminPage language={language} /> : null}
         {page === "scanner" ? <ScannerPage /> : null}
         {page === "itinerary" ? <ItineraryPage language={language} onNavigate={navigate} /> : null}

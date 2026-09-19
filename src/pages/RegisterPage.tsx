@@ -266,13 +266,14 @@ const copy = {
 
 type RegisterPageProps = {
   language?: Language;
+  startAt?: "home" | "guest-login" | "yajman-login";
 };
 
-export function RegisterPage({ language = "en" }: RegisterPageProps) {
+export function RegisterPage({ language = "en", startAt = "home" }: RegisterPageProps) {
   const t = copy[language];
   const savedMemberSession = useMemo(() => readMemberSession(), []);
   const [tab, setTab] = useState<RegisterTab>("yajman");
-  const [stage, setStage] = useState<RegisterStage>("home");
+  const [stage, setStage] = useState<RegisterStage>(startAt);
   const [headName, setHeadName] = useState("");
   const [headMobile, setHeadMobile] = useState(savedMemberSession?.mobile ?? "");
   const [city, setCity] = useState("");
