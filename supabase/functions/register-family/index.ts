@@ -264,7 +264,12 @@ Deno.serve(async (req) => {
     if (!body.headName || !body.headMobile || !body.registrationType || !body.members?.length || !body.stayFrom || !body.stayTo) {
       return json({ error: "Name, mobile, stay dates, registration type and members are required." }, 400);
     }
-    if (body.stayFrom < EVENT_START_DATE || body.stayTo > EVENT_END_DATE || body.stayTo < body.stayFrom) {
+    const startDate = new Date(`${body.stayFrom}T00:00:00Z`);
+    const endDate = new Date(`${body.stayTo}T00:00:00Z`);
+    const validDates = /^\d{4}-\d{2}-\d{2}$/.test(body.stayFrom) && /^\d{4}-\d{2}-\d{2}$/.test(body.stayTo)
+      && !Number.isNaN(startDate.getTime()) && !Number.isNaN(endDate.getTime())
+      && body.stayFrom >= EVENT_START_DATE && body.stayTo <= EVENT_END_DATE && body.stayTo >= body.stayFrom;
+    if (!validDates) {
       return json({ error: "Stay dates must be between 13 November 2026 and 20 November 2026." }, 400);
     }
 
@@ -577,7 +582,7 @@ Deno.serve(async (req) => {
       name: member.name,
       age: member.age,
       gender: member.gender,
-      mobile: member.mobile || (index === 0 ? normalizedMobile : null),
+      mobile: member.mobile?.trim() || (index === 0 ? body.headMobile.trim() : null),
       is_head: Boolean(member.isHead) || index === 0
     }));
 

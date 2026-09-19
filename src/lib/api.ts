@@ -140,13 +140,19 @@ export async function cancelRegistration(input: { familyId?: string; registratio
   const endpoint = import.meta.env.DEV
     ? "/dev-api/cancel-registration"
     : `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/cancel-registration`;
+  const { data: sessionData } = await supabase.auth.getSession();
   const response = await fetch(endpoint, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       ...(import.meta.env.DEV
         ? {}
-        : getSupabasePublicHeaders())
+        : {
+            ...getSupabasePublicHeaders(),
+            ...(sessionData.session?.access_token
+              ? { Authorization: `Bearer ${sessionData.session.access_token}` }
+              : {})
+          })
     },
     body: JSON.stringify(input)
   });

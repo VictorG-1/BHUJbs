@@ -36,6 +36,20 @@ Deno.serve(async (req) => {
     }
 
     const supabase = serviceClient();
+    const authToken = (req.headers.get("Authorization") ?? "").replace(/^Bearer\s+/i, "");
+    let isAdmin = false;
+    if (authToken) {
+      const { data: authData } = await supabase.auth.getUser(authToken);
+      if (authData.user) {
+        const { data: adminProfile, error: adminError } = await supabase
+          .from("admin_profiles")
+          .select("role")
+          .eq("user_id", authData.user.id)
+          .maybeSingle();
+        if (adminError) throw adminError;
+        isAdmin = adminProfile?.role === "admin";
+      }
+    }
     let query = supabase
       .from("families")
       .select("id, head_mobile, registration_code");
@@ -55,18 +69,20 @@ Deno.serve(async (req) => {
     }
 
     if (body.memberId) {
-      if (!body.headMobile || !body.verificationToken) {
+      if (!isAdmin && (!body.headMobile || !body.verificationToken)) {
         return json({ error: "Verified mobile and session token are required for member cancellation." }, 403);
       }
 
-      const { data: verification, error: verificationError } = await supabase
-        .from("sms_otp_verifications")
-        .select("mobile, verified_at, verification_token")
-        .eq("mobile", normalizeMobile(body.headMobile))
-        .eq("verification_token", body.verificationToken)
-        .maybeSingle();
-      if (verificationError) throw verificationError;
-      if (!verification?.verified_at) return json({ error: "Your member session needs OTP verification again." }, 403);
+      if (!isAdmin) {
+        const { data: verification, error: verificationError } = await supabase
+          .from("sms_otp_verifications")
+          .select("mobile, verified_at, verification_token")
+          .eq("mobile", normalizeMobile(body.headMobile ?? ""))
+          .eq("verification_token", body.verificationToken)
+          .maybeSingle();
+        if (verificationError) throw verificationError;
+        if (!verification?.verified_at) return json({ error: "Your member session needs OTP verification again." }, 403);
+      }
 
       const { data: member, error: memberError } = await supabase
         .from("members")

@@ -61,15 +61,6 @@ Deno.serve(async (req) => {
       return json({ error: "General guest registration is coming soon." }, 403);
     }
 
-    const { data: existingMembers, error: membersError } = await supabase
-      .from("members")
-      .select("id, mobile")
-      .eq("family_id", family.id);
-    if (membersError) throw membersError;
-    if ((existingMembers ?? []).some((entry) => normalizeMobile(entry.mobile ?? "") === normalizeMobile(member.mobile ?? ""))) {
-      return json({ error: "This mobile number is already registered in this family." }, 409);
-    }
-
     const roomQuery = () => supabase
       .from("rooms")
       .select("id, room_number, source_room_number, venue_name, section_name, floor, capacity, room_type, linked_pothi_id, owner_type, sort_order");
@@ -119,7 +110,7 @@ Deno.serve(async (req) => {
         name: member.name.trim(),
         age,
         gender,
-        mobile: member.mobile ? normalizeMobile(member.mobile) : null,
+        mobile: member.mobile?.trim() || null,
         is_head: false
       })
       .select("id, name, age, gender, mobile, is_head, qr_token")

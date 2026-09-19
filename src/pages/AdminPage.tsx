@@ -68,6 +68,7 @@ const copy = {
     privateRoomGuests: "Private room guests",
     generalRoomGuests: "General room guests",
     cancelReservation: "Cancel reservation",
+    cancelGuest: "Cancel guest",
     guestList: "Guest list",
     name: "Name",
     family: "Family",
@@ -116,6 +117,7 @@ const copy = {
     privateRoomGuests: "પ્રાઇવેટ રૂમ મહેમાન",
     generalRoomGuests: "જનરલ રૂમ મહેમાન",
     cancelReservation: "રિઝર્વેશન રદ કરો",
+    cancelGuest: "મહેમાન રદ કરો",
     guestList: "મહેમાન સૂચિ",
     name: "નામ",
     family: "પરિવાર",
@@ -465,14 +467,24 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
 
   async function cancelReservation(member: AdminMemberRow) {
     const familyId = member.families?.id;
-    if (!familyId || !window.confirm(`Cancel the complete reservation for ${member.families?.head_name ?? member.name}?`)) return;
+    if (!familyId) return;
+    const isIndividualGuest = !member.is_head;
+    const prompt = isIndividualGuest
+      ? `Cancel registration for ${member.name}? Other family members will remain registered.`
+      : `Cancel the complete reservation for ${member.families?.head_name ?? member.name}?`;
+    if (!window.confirm(prompt)) return;
 
-    setStatus(language === "gu" ? "રિઝર્વેશન રદ કરી રહ્યા છીએ..." : "Cancelling reservation...");
+    setStatus(language === "gu" ? (isIndividualGuest ? "મહેમાન રદ કરી રહ્યા છીએ..." : "રિઝર્વેશન રદ કરી રહ્યા છીએ...") : (isIndividualGuest ? "Cancelling guest..." : "Cancelling reservation..."));
     try {
-      await cancelRegistration({ familyId });
-      setMembers((current) => current.filter((item) => item.families?.id !== familyId));
-      setPothis((current) => current.map((pothi) => pothi.family_id === familyId ? { ...pothi, family_id: null } : pothi));
-      setStatus(language === "gu" ? "રિઝર્વેશન સફળતાપૂર્વક રદ થયું." : "Reservation cancelled successfully.");
+      await cancelRegistration({ familyId, memberId: isIndividualGuest ? member.id : undefined });
+      if (isIndividualGuest) {
+        setMembers((current) => current.filter((item) => item.id !== member.id));
+        setStatus(language === "gu" ? "મહેમાન સફળતાપૂર્વક રદ થયો." : "Guest cancelled successfully.");
+      } else {
+        setMembers((current) => current.filter((item) => item.families?.id !== familyId));
+        setPothis((current) => current.map((pothi) => pothi.family_id === familyId ? { ...pothi, family_id: null } : pothi));
+        setStatus(language === "gu" ? "રિઝર્વેશન સફળતાપૂર્વક રદ થયું." : "Reservation cancelled successfully.");
+      }
     } catch (error) {
       setStatus(error instanceof Error ? error.message : language === "gu" ? "રિઝર્વેશન રદ થઈ શક્યું નથી." : "Reservation could not be cancelled.");
     }
@@ -714,7 +726,7 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
                     </td>
                     <td>{roomDetailsForMember(member)?.venue_name ?? "-"}</td>
                     <td>{roomDetailsForMember(member)?.room_number ?? "-"}</td>
-                    <td><button type="button" className="table-action" disabled={!member.families?.id} onClick={() => void cancelReservation(member)}>{t.cancelReservation}</button></td>
+                    <td><button type="button" className="table-action" disabled={!member.families?.id} onClick={() => void cancelReservation(member)}>{member.is_head ? t.cancelReservation : t.cancelGuest}</button></td>
                   </tr>
                 ))}
                 {!filtered.length ? (
