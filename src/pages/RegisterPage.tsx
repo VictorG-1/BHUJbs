@@ -1273,26 +1273,28 @@ export function RegisterPage({ language = "en" }: RegisterPageProps) {
                 onChange={(event) => updateGeneralGuest(index, { mobile: event.target.value })}
                 required
               />
-              <input
-                type="date"
-                min={EVENT_START_DATE}
-                max={EVENT_END_DATE}
-                value={member.arrivalDate ?? ""}
-                onChange={(event) => updateGeneralGuest(index, { arrivalDate: event.target.value })}
-                aria-label="Arrival date"
-                title="Arrival date"
-                required
-              />
-              <input
-                type="date"
-                min={member.arrivalDate || EVENT_START_DATE}
-                max={EVENT_END_DATE}
-                value={member.departureDate ?? ""}
-                onChange={(event) => updateGeneralGuest(index, { departureDate: event.target.value })}
-                aria-label="Departure date"
-                title="Departure date"
-                required
-              />
+              <label className="member-date-field">
+                <span>Arrival date</span>
+                <input
+                  type="date"
+                  min={EVENT_START_DATE}
+                  max={EVENT_END_DATE}
+                  value={member.arrivalDate ?? ""}
+                  onChange={(event) => updateGeneralGuest(index, { arrivalDate: event.target.value })}
+                  required
+                />
+              </label>
+              <label className="member-date-field">
+                <span>Departure date</span>
+                <input
+                  type="date"
+                  min={member.arrivalDate || EVENT_START_DATE}
+                  max={EVENT_END_DATE}
+                  value={member.departureDate ?? ""}
+                  onChange={(event) => updateGeneralGuest(index, { departureDate: event.target.value })}
+                  required
+                />
+              </label>
             </div>
           ))}
           <button type="button" className="secondary" onClick={() => setGeneralGuests((current) => [...current, createBlankMember()])}>

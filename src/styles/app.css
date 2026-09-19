@@ -979,6 +979,18 @@ h2 {
   margin-bottom: 0.75rem;
 }
 
+.member-date-field {
+  display: grid;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.member-date-field span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
 .add-member-button { width: fit-content; }
 
 .member-qr-list {
@@ -1673,6 +1685,10 @@ th {
 
   .member-row {
     grid-template-columns: 1fr;
+  }
+
+  .member-date-field {
+    width: 100%;
   }
 
   .add-member-button { width: 100%; }
