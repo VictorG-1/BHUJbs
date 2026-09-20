@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { Component, type ErrorInfo, type ReactNode, useEffect, useMemo, useState } from "react";
 import JSZip from "jszip";
 import QRCode from "qrcode";
 import type { Session } from "@supabase/supabase-js";
@@ -149,7 +149,45 @@ type AdminPageProps = {
   language?: Language;
 };
 
+class AdminErrorBoundary extends Component<{ language: Language; children: ReactNode }, { error: Error | null }> {
+  state = { error: null as Error | null };
+
+  static getDerivedStateFromError(error: Error) {
+    return { error };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error("Admin dashboard render error", error, info.componentStack);
+  }
+
+  render() {
+    if (this.state.error) {
+      const isGujarati = this.props.language === "gu";
+      return (
+        <section className="page-section compact">
+          <div className="dashboard-hero">
+            <p className="eyebrow">{isGujarati ? "એડમિન ડેશબોર્ડ" : "Admin dashboard"}</p>
+            <h1>{isGujarati ? "ડેશબોર્ડ ફરી લોડ કરવાની જરૂર છે" : "The dashboard needs to reload"}</h1>
+            <p>{isGujarati ? "લાઇવ ડેટા લોડ કરતી વખતે અસ્થાયી સમસ્યા આવી. ફરી પ્રયાસ કરો." : "A temporary problem occurred while rendering live data. Try loading the dashboard again."}</p>
+          </div>
+          <div className="auth-card">
+            <p className="form-message">{this.state.error.message || (isGujarati ? "ડેટા લોડ થઈ શક્યો નથી." : "The live data could not be displayed.")}</p>
+            <div className="button-row">
+              <button className="primary" type="button" onClick={() => window.location.reload()}>{isGujarati ? "ફરી લોડ કરો" : "Reload dashboard"}</button>
+            </div>
+          </div>
+        </section>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 export function AdminPage({ language = "en" }: AdminPageProps) {
+  return <AdminErrorBoundary language={language}><AdminPageContent language={language} /></AdminErrorBoundary>;
+}
+
+function AdminPageContent({ language = "en" }: AdminPageProps) {
   const t = copy[language];
   const [session, setSession] = useState<Session | null>(null);
   const [email, setEmail] = useState("");
@@ -175,26 +213,32 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
 
   async function load() {
     setLoading(true);
-    const [{ data: memberData, error: memberError }, { data: pothiData, error: pothiError }, { data: roomData, error: roomError }, { data: scanData, error: scanError }] = await Promise.all([
-      supabase
-        .from("members")
-        .select("id, name, age, gender, mobile, is_head, created_at, qr_token, qr_revoked_at, families(id, head_name, head_mobile, city, wants_stay, pothi_id, reference_pothi_id, registration_type, private_room_number), room_allocations(room_id, rooms(room_number, venue_name, section_name))")
-        .order("name"),
-      supabase.from("pothis").select("id, family_id").order("id"),
-      supabase
-        .from("rooms")
-        .select("room_number, venue_name, section_name, source_room_number, floor, ac_type, bed_count, extra_count, capacity, owner_type, linked_pothi_id, allotment_note, room_type, sort_order")
-        .order("sort_order"),
-      supabase.from("qr_scans").select("id, scan_type, scanned_at, members(name)").order("scanned_at", { ascending: false }).limit(100)
-    ]);
+    try {
+      const results = await Promise.all([
+        supabase
+          .from("members")
+          .select("id, name, age, gender, mobile, is_head, created_at, qr_token, qr_revoked_at, families(id, head_name, head_mobile, city, wants_stay, pothi_id, reference_pothi_id, registration_type, private_room_number), room_allocations(room_id, rooms(room_number, venue_name, section_name))")
+          .order("name"),
+        supabase.from("pothis").select("id, family_id").order("id"),
+        supabase
+          .from("rooms")
+          .select("room_number, venue_name, section_name, source_room_number, floor, ac_type, bed_count, extra_count, capacity, owner_type, linked_pothi_id, allotment_note, room_type, sort_order")
+          .order("sort_order"),
+        supabase.from("qr_scans").select("id, scan_type, scanned_at, members(name)").order("scanned_at", { ascending: false }).limit(100)
+      ]);
+      const [{ data: memberData, error: memberError }, { data: pothiData, error: pothiError }, { data: roomData, error: roomError }, { data: scanData, error: scanError }] = results;
 
-    if (!memberError) setMembers((memberData ?? []) as unknown as AdminMemberRow[]);
-    if (!pothiError) setPothis((pothiData ?? []) as Pothi[]);
-    if (!roomError) setRoomsInventory(((roomData ?? []) as Array<RoomInventory & { capacity?: number | null }>).map(normalizeRoom));
-    if (!scanError) setScanLogs((scanData ?? []) as typeof scanLogs);
-    const errors = [memberError, pothiError, roomError, scanError].filter(Boolean).map((error) => error!.message);
-    setStatus(errors.length ? `Dashboard loaded with warnings. ${errors.join(" ")}` : "");
-    setLoading(false);
+      if (!memberError) setMembers((memberData ?? []) as unknown as AdminMemberRow[]);
+      if (!pothiError) setPothis((pothiData ?? []) as Pothi[]);
+      if (!roomError) setRoomsInventory(((roomData ?? []) as Array<RoomInventory & { capacity?: number | null }>).map(normalizeRoom));
+      if (!scanError) setScanLogs((scanData ?? []) as typeof scanLogs);
+      const errors = [memberError, pothiError, roomError, scanError].filter(Boolean).map((error) => error!.message);
+      setStatus(errors.length ? `Dashboard loaded with warnings. ${errors.join(" ")}` : "");
+    } catch (error) {
+      setStatus(error instanceof Error ? `Dashboard refresh failed: ${error.message}` : "Dashboard refresh failed. Existing data is still shown.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function handleAdminPothiRegistration(event: React.FormEvent) {
@@ -250,6 +294,10 @@ export function AdminPage({ language = "en" }: AdminPageProps) {
   useEffect(() => {
     if (session) {
       void load();
+      const refreshTimer = window.setInterval(() => {
+        if (document.visibilityState === "visible") void load();
+      }, 5 * 60 * 1000);
+      return () => window.clearInterval(refreshTimer);
     }
   }, [session]);
 
