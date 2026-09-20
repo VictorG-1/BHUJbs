@@ -53,6 +53,20 @@ Deno.serve(async (req) => {
       family = (families ?? []).find((entry) => entry.id === memberMatch?.family_id);
     }
 
+    // Imported Pothi records can have a contact mobile that differs from the
+    // family head mobile. Resolve the linked Pothi before treating the login
+    // as a new registration.
+    if (!family) {
+      const { data: pothiMatch, error: pothiError } = await supabase
+        .from("pothis")
+        .select("id")
+        .eq("contact_mobile", mobile)
+        .limit(1)
+        .maybeSingle();
+      if (pothiError) throw pothiError;
+      family = (families ?? []).find((entry) => entry.pothi_id === pothiMatch?.id);
+    }
+
     if (!family) return json({ found: false }, 404);
 
     const { data: members, error: membersError } = await supabase

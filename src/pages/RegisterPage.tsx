@@ -126,12 +126,12 @@ const copy = {
       "Add 1 to 4 members for the allotted pothi room. Any additional guests will be auto-placed into the linked private rooms shown below.",
     allottedRoom: "Allotted Pothi Room",
     roomNotSynced: "This pothi room has not been synced yet.",
-    exactFour: "Up to 4 members can stay here",
+    exactFour: "New Pothi-room registrations allow up to 4 members",
     linkedRooms: (count: number) => `${count} linked private room(s)`,
     privateSeats: (count: number) => `${count} additional private-room seat(s) available`,
     noLinkedRooms: "No private rooms linked to this pothi yet.",
     linkedRoomText: "Additional yajman guests will be auto-allotted across these rooms.",
-    fourMembers: "Pothi room members (1 to 4)",
+    fourMembers: "Add new Pothi-room members (up to 4)",
     additionalGuests: "Additional guests for linked private rooms",
     additionalGuestText: "These guests will be auto-allotted into the linked private rooms shown above.",
     noExtraGuests: "No extra private-room guests added yet.",
@@ -223,12 +223,12 @@ const copy = {
       "ફાળવેલા પોથી રૂમ માટે 1 થી 4 સભ્યો ઉમેરો. વધારાના મહેમાનો જોડાયેલા પ્રાઇવેટ રૂમમાં આપમેળે ફાળવાશે.",
     allottedRoom: "ફાળવેલ પોથી રૂમ",
     roomNotSynced: "આ પોથી રૂમ હજુ સિંક થયો નથી.",
-    exactFour: "અહીં વધુમાં વધુ 4 સભ્યો રહી શકે છે",
+    exactFour: "નવી પોથી રૂમ નોંધણીમાં વધુમાં વધુ 4 સભ્યો ઉમેરી શકાય છે",
     linkedRooms: (count: number) => `${count} જોડાયેલ પ્રાઇવેટ રૂમ`,
     privateSeats: (count: number) => `${count} વધારાની બેઠક ઉપલબ્ધ`,
     noLinkedRooms: "આ પોથી માટે હજી પ્રાઇવેટ રૂમ જોડાયેલા નથી.",
     linkedRoomText: "વધારાના યજમાન મહેમાનો આ રૂમોમાં આપમેળે ફાળવાશે.",
-    fourMembers: "પોથી રૂમના સભ્યો (1 થી 4)",
+    fourMembers: "નવા પોથી રૂમ સભ્યો ઉમેરો (વધુમાં વધુ 4)",
     additionalGuests: "જોડાયેલા પ્રાઇવેટ રૂમ માટે વધારાના મહેમાનો",
     additionalGuestText: "આ મહેમાનો ઉપર દર્શાવેલા પ્રાઇવેટ રૂમોમાં આપમેળે ફાળવાશે.",
     noExtraGuests: "હજુ વધારાના મહેમાનો ઉમેરાયેલા નથી.",
@@ -1043,6 +1043,11 @@ export function RegisterPage({ language = "en", startAt = "home" }: RegisterPage
                   <strong>{t.allottedRoom}</strong>
                   <span>{room.room_number}</span>
                   <small>{[room.venue_name, room.section_name, room.floor].filter(Boolean).join(" | ")}</small>
+                  <small>
+                    {language === "gu"
+                      ? `${roomOccupancy[room.room_number] ?? 0}/${room.total_capacity} સભ્યો હાલમાં આ રૂમમાં નોંધાયેલા છે`
+                      : `${roomOccupancy[room.room_number] ?? 0}/${room.total_capacity} currently registered in this room`}
+                  </small>
                   <small>{t.exactFour}</small>
                 </article>
               ))
