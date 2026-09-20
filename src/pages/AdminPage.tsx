@@ -41,6 +41,28 @@ function roomIdentity(room: { room_number: string; venue_name?: string | null; s
   return `${venue}::${room.room_number}`;
 }
 
+function normalizeAdminMembers(value: unknown): AdminMemberRow[] {
+  if (!Array.isArray(value)) return [];
+  return value.map((member) => {
+    const row = member as AdminMemberRow & { room_allocations?: unknown; families?: unknown };
+    const family = row.families && !Array.isArray(row.families) ? row.families : null;
+    const allocations = Array.isArray(row.room_allocations)
+      ? row.room_allocations
+      : row.room_allocations
+        ? [row.room_allocations]
+        : [];
+    return {
+      ...row,
+      families: family as AdminMemberRow["families"],
+      room_allocations: allocations.map((allocation) => {
+        const item = allocation as AdminMemberRow["room_allocations"][number] & { rooms?: unknown };
+        const room = item.rooms && !Array.isArray(item.rooms) ? item.rooms : null;
+        return { ...item, rooms: room as AdminMemberRow["room_allocations"][number]["rooms"] };
+      })
+    };
+  });
+}
+
 const fallbackPothis = fallbackPothisData as Pothi[];
 const fallbackRooms = (fallbackRoomsData as Array<RoomInventory & { capacity?: number | null }>).map(normalizeRoom);
 
@@ -228,7 +250,7 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
       ]);
       const [{ data: memberData, error: memberError }, { data: pothiData, error: pothiError }, { data: roomData, error: roomError }, { data: scanData, error: scanError }] = results;
 
-      if (!memberError) setMembers((memberData ?? []) as unknown as AdminMemberRow[]);
+      if (!memberError) setMembers(normalizeAdminMembers(memberData));
       if (!pothiError) setPothis((pothiData ?? []) as Pothi[]);
       if (!roomError) setRoomsInventory(((roomData ?? []) as Array<RoomInventory & { capacity?: number | null }>).map(normalizeRoom));
       if (!scanError) setScanLogs((scanData ?? []) as typeof scanLogs);
