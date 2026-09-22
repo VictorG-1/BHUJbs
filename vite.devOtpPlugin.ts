@@ -333,29 +333,42 @@ export function devOtpPlugin(env: Record<string, string>): Plugin {
               family = (families ?? []).find((entry) => entry.id === memberMatch?.family_id);
             }
             if (!family) {
+              const { data: pothiMatch, error: pothiError } = await supabase
+                .from("pothis")
+                .select("id, family_id")
+                .eq("contact_mobile", mobile)
+                .limit(1)
+                .maybeSingle();
+              if (pothiError) throw pothiError;
+              family = (families ?? []).find((entry) => entry.pothi_id === pothiMatch?.id || entry.id === pothiMatch?.family_id);
+            }
+            if (!family) {
               sendJson(res, 404, { found: false });
               return;
             }
             const { data: members, error: membersError } = await supabase.from("members").select("id, name").eq("family_id", family.id).order("created_at");
             if (membersError) throw membersError;
-            const memberIds = (members ?? []).map((member) => member.id);
             const { data: allocations, error: allocationError } = await supabase
               .from("room_allocations")
               .select("member_id, rooms(room_number, venue_name, section_name, floor)")
-              .in("member_id", memberIds.length ? memberIds : ["00000000-0000-0000-0000-000000000000"]);
+              .eq("family_id", family.id);
             if (allocationError) throw allocationError;
-            sendJson(res, 200, {
-              found: true,
-              family: { ...family, room_number: allocations?.[0]?.rooms?.room_number ?? null },
-              members,
-              allocations: (allocations ?? []).map((allocation) => ({
+            const normalizedAllocations = (allocations ?? []).map((allocation) => {
+              const room = Array.isArray(allocation.rooms) ? allocation.rooms[0] : allocation.rooms;
+              return {
                 member_id: allocation.member_id,
                 member_name: members?.find((member) => member.id === allocation.member_id)?.name ?? "Guest",
-                room_number: allocation.rooms?.room_number ?? "",
-                venue_name: allocation.rooms?.venue_name ?? null,
-                section_name: allocation.rooms?.section_name ?? null,
-                floor: allocation.rooms?.floor ?? null
-              }))
+                room_number: room?.room_number ?? "",
+                venue_name: room?.venue_name ?? null,
+                section_name: room?.section_name ?? null,
+                floor: room?.floor ?? null
+              };
+            });
+            sendJson(res, 200, {
+              found: true,
+              family: { ...family, room_number: normalizedAllocations[0]?.room_number || null },
+              members,
+              allocations: normalizedAllocations
             });
             return;
           }
