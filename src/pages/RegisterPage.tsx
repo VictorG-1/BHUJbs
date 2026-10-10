@@ -337,7 +337,13 @@ export function RegisterPage({ language = "en", startAt = "home" }: RegisterPage
     if (startAt === "home") {
       setTab(saved.result.family.registration_type === "pothi_room" ? "yajman" : "guest");
     }
-    getMyRegistration({ mobile: saved.mobile, verificationToken: saved.verificationToken })
+    getMyRegistration({
+      mobile: saved.mobile,
+      verificationToken: saved.verificationToken,
+      ...(saved.result.family.registration_type === "pothi_room" && saved.result.family.pothi_id
+        ? { pothiId: saved.result.family.pothi_id }
+        : {})
+    })
       .then((fresh) => {
         if (fresh) setResult(fresh);
       })
@@ -629,7 +635,7 @@ export function RegisterPage({ language = "en", startAt = "home" }: RegisterPage
         }
         setVerificationToken(data.verificationToken);
         try {
-          const existing = await getMyRegistration({ mobile: headMobile, verificationToken: data.verificationToken });
+          const existing = await getMyRegistration({ mobile: headMobile, verificationToken: data.verificationToken, pothiId: matchedPothi.id });
           // A Yajman contact can also appear on a guest record in another
           // family. Only reuse an existing registration when it belongs to
           // the Pothi identified by the verified Yajman contact.
@@ -865,7 +871,13 @@ export function RegisterPage({ language = "en", startAt = "home" }: RegisterPage
         verificationToken,
         member: { ...newMember, isHead: false }
       });
-      const refreshed = await getMyRegistration({ mobile: headMobile, verificationToken });
+      const refreshed = await getMyRegistration({
+        mobile: headMobile,
+        verificationToken,
+        ...(result.family.registration_type === "pothi_room" && result.family.pothi_id
+          ? { pothiId: result.family.pothi_id }
+          : {})
+      });
       if (refreshed) {
         setResult(refreshed);
         persistMemberSession(refreshed);

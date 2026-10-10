@@ -126,13 +126,18 @@ export type AdminMemberRow = {
   age: number;
   gender: Gender;
   mobile: string | null;
+  arrival_date?: string | null;
+  departure_date?: string | null;
   is_head: boolean;
   families: {
     id: string;
+    registration_code?: string;
     head_name: string;
     head_mobile: string;
     city: string | null;
     wants_stay: boolean;
+    stay_from?: string | null;
+    stay_to?: string | null;
     pothi_id: number | null;
     reference_pothi_id: number | null;
     registration_type: RegistrationType;

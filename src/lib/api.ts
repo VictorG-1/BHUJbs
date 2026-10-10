@@ -161,7 +161,7 @@ export async function cancelRegistration(input: { familyId?: string; registratio
   return payload;
 }
 
-export async function getMyRegistration(input: { mobile: string; verificationToken: string }) {
+export async function getMyRegistration(input: { mobile: string; verificationToken: string; pothiId?: number }) {
   const endpoint = import.meta.env.DEV
     ? "/dev-api/get-registration"
     : `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-registration`;
@@ -252,98 +252,43 @@ function uniqueSheetName(baseName: string, used: Set<string>) {
 
 export async function downloadAdminWorkbook({ members, pothis, rooms, language = "en" }: WorkbookExportInput) {
   const workbook = XLSX.utils.book_new();
-  const usedNames = new Set<string>();
+  const categorySheets = [
+    { type: "pothi_room", name: "Pothi" },
+    { type: "private_room", name: "Private" },
+    { type: "general_room", name: "General" }
+  ] as const;
+  const headers = [
+    "Member name", "Age", "Gender", "Member mobile", "Family / yajman", "Family mobile", "City",
+    "Registration code", "Pothi number", "Arrival date", "Departure date", "Venue", "Room number", "Registration date"
+  ];
+  const distinct = (values: unknown[]) => new Set(values.filter((value) => value !== null && value !== undefined && value !== "")).size;
 
-  const summarySheet = XLSX.utils.json_to_sheet([
-    {
-      metric: language === "gu" ? "કુલ સભ્યો" : "Total members",
-      value: members.length
-    },
-    {
-      metric: language === "gu" ? "કુલ પરિવારો" : "Total families",
-      value: new Set(members.map((member) => member.family_id).filter(Boolean)).size
-    },
-    {
-      metric: language === "gu" ? "કુલ પોથી" : "Total pothis",
-      value: pothis.length
-    },
-    {
-      metric: language === "gu" ? "ભરાયેલ પોથી" : "Occupied pothis",
-      value: pothis.filter((pothi) => pothi.family_id).length
-    },
-    {
-      metric: language === "gu" ? "કુલ રૂમ" : "Total rooms",
-      value: rooms.length
-    }
-  ]);
-  XLSX.utils.book_append_sheet(workbook, summarySheet, uniqueSheetName(language === "gu" ? "સારાંશ" : "Summary", usedNames));
-
-  const memberSheet = XLSX.utils.json_to_sheet(
-    members.map((member) => ({
-      member_name: member.name,
-      age: member.age,
-      gender: member.gender,
-      mobile: member.mobile ?? "",
-      family_id: member.family_id ?? "",
-      family_name: member.family_name ?? "",
-      family_mobile: member.family_mobile ?? "",
-      registration_type: member.registration_type ?? "",
-      pothi: member.pothi ?? "",
-      venue: member.venue ?? "",
-      room: member.room ?? ""
-    }))
-  );
-  XLSX.utils.book_append_sheet(workbook, memberSheet, uniqueSheetName(language === "gu" ? "સભ્યો" : "Members", usedNames));
-
-  const guestListSheet = XLSX.utils.json_to_sheet(
-    members.map((member) => ({
-      name: member.name,
-      family: member.family_name ?? "",
-      mobile: member.mobile ?? "",
-      pothi: member.pothi ?? "",
-      venue: member.venue ?? "",
-      room: member.room ?? "",
-      registration_type: member.registration_type ?? ""
-    }))
-  );
-  XLSX.utils.book_append_sheet(
-    workbook,
-    guestListSheet,
-    uniqueSheetName(language === "gu" ? "મહેમાન યાદી" : "Guest List", usedNames)
-  );
-
-  const pothiSheet = XLSX.utils.json_to_sheet(
-    pothis.map((pothi) => ({
-      pothi_number: pothi.id,
-      primary_holder_name: pothi.primary_holder_name ?? "",
-      city: pothi.city ?? "",
-      contact_name: pothi.contact_name ?? "",
-      contact_mobile: pothi.contact_mobile ?? "",
-      status: pothi.family_id ? (language === "gu" ? "ભરાયેલ" : "Occupied") : language === "gu" ? "ખાલી" : "Open"
-    }))
-  );
-  XLSX.utils.book_append_sheet(workbook, pothiSheet, uniqueSheetName(language === "gu" ? "પોથી" : "Pothis", usedNames));
-
-  const venueGroups = new Map<string, Array<Record<string, unknown>>>();
-  for (const room of rooms) {
-    const venue = String(room.venue_name || (language === "gu" ? "અન્ય વેન્યુ" : "Other venue"));
-    const list = venueGroups.get(venue) ?? [];
-    list.push({
-      room_number: room.room_number,
-      section_name: room.section_name ?? "",
-      floor: room.floor ?? "",
-      room_type: room.room_type ?? "",
-      total_capacity: room.total_capacity ?? "",
-      owner_type: room.owner_type ?? "",
-      linked_pothi_id: room.linked_pothi_id ?? "",
-      allotment_note: room.allotment_note ?? ""
-    });
-    venueGroups.set(venue, list);
-  }
-
-  for (const [venue, rows] of venueGroups.entries()) {
-    const sheet = XLSX.utils.json_to_sheet(rows);
-    XLSX.utils.book_append_sheet(workbook, sheet, uniqueSheetName(venue, usedNames));
+  for (const category of categorySheets) {
+    const rows = members.filter((member) => member.registration_type === category.type);
+    const familyCount = distinct(rows.map((member) => member.family_id));
+    const cityCount = distinct(rows.map((member) => member.city));
+    const allocatedRooms = new Set(rows.map((member) => `${member.venue ?? ""}::${member.room ?? ""}`).filter((room) => !room.endsWith("::")));
+    const roomCapacity = rooms
+      .filter((room) => allocatedRooms.has(`${room.venue_name ?? ""}::${room.room_number ?? ""}`))
+      .reduce((total, room) => total + Number(room.total_capacity ?? 0), 0);
+    const sheetRows = rows.map((member) => [
+      member.name ?? "", member.age ?? "", member.gender ?? "", member.mobile ?? "", member.family_name ?? "",
+      member.family_mobile ?? "", member.city ?? "", member.registration_code ?? "", member.pothi ?? "",
+      member.arrival_date ?? "", member.departure_date ?? "", member.venue ?? "", member.room ?? "", member.created_at ?? ""
+    ]);
+    const sheet = XLSX.utils.aoa_to_sheet([
+      [category.name + (language === "gu" ? " નોંધણી" : " registrations")],
+      ["Total guests", rows.length],
+      ["Total registrations", familyCount],
+      ["Cities represented", cityCount],
+      ["Rooms assigned", allocatedRooms.size],
+      ["Assigned room capacity", roomCapacity],
+      [],
+      headers,
+      ...sheetRows
+    ]);
+    sheet["!cols"] = [22, 8, 12, 17, 28, 17, 20, 18, 14, 16, 16, 28, 14, 22].map((wch) => ({ wch }));
+    XLSX.utils.book_append_sheet(workbook, sheet, category.name);
   }
 
   const buffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });

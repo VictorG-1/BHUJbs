@@ -239,7 +239,7 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
       const results = await Promise.all([
         supabase
           .from("members")
-          .select("id, name, age, gender, mobile, is_head, created_at, qr_token, qr_revoked_at, families(id, head_name, head_mobile, city, wants_stay, pothi_id, reference_pothi_id, registration_type, private_room_number), room_allocations(room_id, rooms(room_number, venue_name, section_name))")
+          .select("id, name, age, gender, mobile, arrival_date, departure_date, is_head, created_at, qr_token, qr_revoked_at, families(id, registration_code, head_name, head_mobile, city, wants_stay, stay_from, stay_to, pothi_id, reference_pothi_id, registration_type, private_room_number), room_allocations(room_id, rooms(room_number, venue_name, section_name))")
           .order("name"),
         supabase.from("pothis").select("id, family_id").order("id"),
         supabase
@@ -452,7 +452,10 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
           age: member.age,
           gender: member.gender,
           mobile: member.mobile ?? "",
+          arrival_date: member.arrival_date ?? family?.stay_from ?? "",
+          departure_date: member.departure_date ?? family?.stay_to ?? "",
           family_id: family?.id ?? "",
+          registration_code: family?.registration_code ?? "",
           family_name: family?.head_name ?? "",
           family_mobile: family?.head_mobile ?? "",
           city: family?.city ?? "",

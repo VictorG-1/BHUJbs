@@ -1,7 +1,7 @@
 import { handleOptions, json } from "../_shared/cors.ts";
 import { serviceClient } from "../_shared/supabase.ts";
 
-type LookupInput = { mobile?: string; verificationToken?: string };
+type LookupInput = { mobile?: string; verificationToken?: string; pothiId?: number };
 
 function normalizeMobile(value: string) {
   const digits = value.replace(/\D/g, "");
@@ -45,9 +45,24 @@ Deno.serve(async (req) => {
       .order("created_at", { ascending: false });
     if (familyError) throw familyError;
 
-    const candidate = (families ?? []).find((family) => normalizeMobile(family.head_mobile ?? "") === mobile);
-    let family = candidate;
-    if (!family) {
+    let family;
+    if (body.pothiId) {
+      const { data: pothi, error: pothiError } = await supabase
+        .from("pothis")
+        .select("id, family_id, contact_mobile")
+        .eq("id", body.pothiId)
+        .maybeSingle();
+      if (pothiError) throw pothiError;
+      if (!pothi || normalizeMobile(pothi.contact_mobile ?? "") !== mobile) {
+        return json({ error: "This verified mobile is not mapped to the selected Pothi." }, 403);
+      }
+      family = (families ?? []).find((entry) =>
+        entry.pothi_id === pothi.id || entry.id === pothi.family_id
+      );
+    } else {
+      family = (families ?? []).find((entry) => normalizeMobile(entry.head_mobile ?? "") === mobile);
+    }
+    if (!family && !body.pothiId) {
       const { data: memberMatch, error: memberError } = await supabase
         .from("members")
         .select("family_id")
@@ -61,7 +76,7 @@ Deno.serve(async (req) => {
     // Imported Pothi records can have a contact mobile that differs from the
     // family head mobile. Resolve the linked Pothi before treating the login
     // as a new registration.
-    if (!family) {
+    if (!family && !body.pothiId) {
       const { data: pothiMatch, error: pothiError } = await supabase
         .from("pothis")
         .select("id, family_id")

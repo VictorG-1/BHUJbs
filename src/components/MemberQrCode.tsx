@@ -34,6 +34,7 @@ export function MemberQrCode({ member, details }: { member: { id: string; name: 
       <div>
         <strong>{member.name}</strong>
         <small>{member.arrival_date || member.departure_date ? `Arrival: ${member.arrival_date ?? "-"} · Departure: ${member.departure_date ?? "-"}` : "Entry and event validation"}</small>
+        {details?.room ? <small>Room: {details.room}{details.venue ? ` · ${details.venue}` : ""}</small> : null}
         <button type="button" className="secondary" disabled={!dataUrl} onClick={() => downloadQr(dataUrl, member.name)}>
           Download QR
         </button>

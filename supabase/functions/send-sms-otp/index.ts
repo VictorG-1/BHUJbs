@@ -42,15 +42,23 @@ Deno.serve(async (req) => {
 
     const { data: pothis, error: pothiError } = await supabase
       .from("pothis")
-      .select("id, primary_holder_name, city, contact_mobile")
+      .select("id, primary_holder_name, city, contact_mobile, family_id")
       .not("contact_mobile", "is", null);
     if (pothiError) throw pothiError;
 
     if (body.purpose === "yajman") {
-      const pothi = pothis?.find((entry) => normalizeMobile(entry.contact_mobile ?? "") === mobile);
-      if (!pothi) {
+      const matchingPothis = (pothis ?? []).filter((entry) => normalizeMobile(entry.contact_mobile ?? "") === mobile);
+      if (!matchingPothis.length) {
         return json({ error: "This mobile number is not mapped to any Pothi Yajman contact." }, 404);
       }
+      const matchingIds = matchingPothis.map((entry) => entry.id);
+      const { data: registeredPothis, error: registeredPothiError } = await supabase
+        .from("families")
+        .select("pothi_id")
+        .in("pothi_id", matchingIds);
+      if (registeredPothiError) throw registeredPothiError;
+      const registeredPothiIds = new Set((registeredPothis ?? []).map((entry) => entry.pothi_id));
+      const pothi = matchingPothis.find((entry) => entry.family_id || registeredPothiIds.has(entry.id)) ?? matchingPothis[0];
       mappedPothi = {
         id: pothi.id,
         primary_holder_name: pothi.primary_holder_name,
