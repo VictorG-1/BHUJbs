@@ -228,29 +228,11 @@ export async function downloadExportData() {
 
 type WorkbookExportInput = {
   members: Array<Record<string, unknown>>;
-  pothis: Array<Record<string, unknown>>;
   rooms: Array<Record<string, unknown>>;
   language?: "en" | "gu";
 };
 
-function sanitizeSheetName(name: string) {
-  const cleaned = name.replace(/[\[\]\*\/\\\?\:]/g, " ").replace(/\s+/g, " ").trim();
-  return (cleaned || "Sheet").slice(0, 31);
-}
-
-function uniqueSheetName(baseName: string, used: Set<string>) {
-  let candidate = sanitizeSheetName(baseName);
-  let suffix = 2;
-  while (used.has(candidate)) {
-    const root = sanitizeSheetName(baseName).slice(0, Math.max(1, 31 - String(suffix).length - 1));
-    candidate = `${root}-${suffix}`.slice(0, 31);
-    suffix += 1;
-  }
-  used.add(candidate);
-  return candidate;
-}
-
-export async function downloadAdminWorkbook({ members, pothis, rooms, language = "en" }: WorkbookExportInput) {
+export async function downloadAdminWorkbook({ members, rooms, language = "en" }: WorkbookExportInput) {
   const workbook = XLSX.utils.book_new();
   const categorySheets = [
     { type: "pothi_room", name: "Pothi" },
@@ -269,7 +251,12 @@ export async function downloadAdminWorkbook({ members, pothis, rooms, language =
     const cityCount = distinct(rows.map((member) => member.city));
     const allocatedRooms = new Set(rows.map((member) => `${member.venue ?? ""}::${member.room ?? ""}`).filter((room) => !room.endsWith("::")));
     const roomCapacity = rooms
-      .filter((room) => allocatedRooms.has(`${room.venue_name ?? ""}::${room.room_number ?? ""}`))
+      .filter((room) => {
+        const venue = String(room.venue_name ?? "").toUpperCase() === "HOTEL" && room.section_name
+          ? room.section_name
+          : room.venue_name ?? "";
+        return allocatedRooms.has(`${venue}::${room.room_number ?? ""}`);
+      })
       .reduce((total, room) => total + Number(room.total_capacity ?? 0), 0);
     const sheetRows = rows.map((member) => [
       member.name ?? "", member.age ?? "", member.gender ?? "", member.mobile ?? "", member.family_name ?? "",

@@ -452,6 +452,7 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
           age: member.age,
           gender: member.gender,
           mobile: member.mobile ?? "",
+          created_at: member.created_at ?? "",
           arrival_date: member.arrival_date ?? family?.stay_from ?? "",
           departure_date: member.departure_date ?? family?.stay_to ?? "",
           family_id: family?.id ?? "",
@@ -463,32 +464,20 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
           pothi: registrationType === "general_room"
             ? "General"
             : family?.pothi_id ?? family?.reference_pothi_id ?? "",
-          venue: roomDetails?.venue_name ?? "",
+          venue: roomDetails?.venue_name?.toUpperCase() === "HOTEL" && roomDetails.section_name
+            ? roomDetails.section_name
+            : roomDetails?.venue_name ?? "",
           room: roomDetails?.room_number ?? ""
         };
       }),
     [members, roomsInventory]
   );
 
-  const exportPothis = useMemo(
-    () =>
-      pothis.map((pothi) => ({
-        id: pothi.id,
-        primary_holder_name: pothi.primary_holder_name ?? "",
-        city: pothi.city ?? "",
-        contact_name: pothi.contact_name ?? "",
-        contact_mobile: pothi.contact_mobile ?? "",
-        family_id: pothi.family_id ?? "",
-        status: pothi.family_id ? (language === "gu" ? "ભરાયેલ" : "Occupied") : language === "gu" ? "ખાલી" : "Open"
-      })),
-    [language, pothis]
-  );
-
   const exportRooms = useMemo(
     () =>
       roomsInventory.map((room) => ({
         room_number: room.room_number,
-        venue_name: room.venue_name,
+        venue_name: venueTabName(room),
         section_name: room.section_name,
         floor: room.floor ?? "",
         room_type: room.room_type,
@@ -515,7 +504,6 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
     try {
       await downloadAdminWorkbook({
         members: exportMembers,
-        pothis: exportPothis,
         rooms: exportRooms,
         language
       });
