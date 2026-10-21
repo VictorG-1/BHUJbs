@@ -280,11 +280,7 @@ Deno.serve(async (req) => {
       return json({ error: "Please add at least one member before submitting." }, 400);
     }
     if (body.registrationType === "pothi_room") {
-      const pothiRoomMemberCount = body.pothiRoomMemberCount ?? Math.min(4, filledMembers.length);
-      if (!Number.isInteger(pothiRoomMemberCount) || pothiRoomMemberCount < 1 || pothiRoomMemberCount > 4) {
-        return json({ error: "Pothi Yajman registration can include 1 to 4 allotted-room members." }, 400);
-      }
-      if (pothiRoomMemberCount > filledMembers.length) {
+      if (body.pothiRoomMemberCount !== undefined && (!Number.isInteger(body.pothiRoomMemberCount) || body.pothiRoomMemberCount < 1 || body.pothiRoomMemberCount > filledMembers.length)) {
         return json({ error: "The pothi-room member count does not match the submitted members." }, 400);
       }
     }
@@ -398,7 +394,11 @@ Deno.serve(async (req) => {
       if (seededRoomError) throw seededRoomError;
 
       const seededRoom = seededRooms?.[0];
-      const pothiRoomMemberCount = body.pothiRoomMemberCount ?? Math.min(4, filledMembers.length);
+      const pothiRoomCapacity = seededRoom?.capacity ?? 4;
+      const pothiRoomMemberCount = body.pothiRoomMemberCount ?? Math.min(pothiRoomCapacity, filledMembers.length);
+      if (pothiRoomMemberCount < 1 || pothiRoomMemberCount > pothiRoomCapacity || pothiRoomMemberCount > filledMembers.length) {
+        return json({ error: `This Pothi room has capacity for ${pothiRoomCapacity} members.` }, 400);
+      }
       const pothiRoomMembers = filledMembers.slice(0, pothiRoomMemberCount);
       const extraPrivateMembers = filledMembers.slice(pothiRoomMemberCount);
 

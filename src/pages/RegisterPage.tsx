@@ -82,12 +82,12 @@ const copy = {
     guestCard: "General Guest Login",
     guestCardText: "Verify any mobile number with OTP, add each guest with arrival and departure dates, then download a QR code for entry. We will notify you when rooms are allotted.",
     guestComingSoon: "Start registration",
-    addRoomMember: (count: number) => `Add room member (${count}/4)`,
+    addRoomMember: (count: number, max: number) => `Add room member (${count}/${max})`,
     noticesTitle: "Important registration information",
     notices: [
       "Use the mobile number registered with the Pothi Yajman for Pothi room registration.",
       "OTP verification is required before continuing.",
-      "A Pothi Yajman may register 1 to 4 members in the allotted Pothi room.",
+      "The number of members registered in the Pothi room cannot exceed its listed capacity.",
       "Additional guests are placed only in linked private rooms, subject to available capacity.",
       "General guests receive QR entry codes first; room-allotment updates will be shared when rooms are allotted.",
       "Each mobile number can be used for only one registration. Existing registrations can be opened again with OTP.",
@@ -123,15 +123,15 @@ const copy = {
     yajmanProfile: "Yajman profile",
     roomPortfolio: "Pothi Yajman room portfolio",
     roomPortfolioText:
-      "Add 1 to 4 members for the allotted pothi room. Any additional guests will be auto-placed into the linked private rooms shown below.",
+      "Add members up to the allotted Pothi room capacity. Any additional guests will be auto-placed into linked private rooms.",
     allottedRoom: "Allotted Pothi Room",
     roomNotSynced: "This pothi room has not been synced yet.",
-    exactFour: "New Pothi-room registrations allow up to 4 members",
+    exactFour: "The room's listed capacity is the registration limit.",
     linkedRooms: (count: number) => `${count} linked private room(s)`,
     privateSeats: (count: number) => `${count} additional private-room seat(s) available`,
     noLinkedRooms: "No private rooms linked to this pothi yet.",
     linkedRoomText: "Additional yajman guests will be auto-allotted across these rooms.",
-    fourMembers: "Add new Pothi-room members (up to 4)",
+    fourMembers: "Pothi room members",
     additionalGuests: "Additional guests for linked private rooms",
     additionalGuestText: "These guests will be auto-allotted into the linked private rooms shown above.",
     noExtraGuests: "No extra private-room guests added yet.",
@@ -179,12 +179,12 @@ const copy = {
     guestCard: "સામાન્ય મહેમાન લોગિન",
     guestCardText: "કોઈપણ મોબાઇલ નંબરથી OTP ચકાસો, દરેક મહેમાનની આગમન અને વિદાય તારીખ ઉમેરો અને પ્રવેશ માટે QR કોડ મેળવો. રૂમ ફાળવાયા પછી તમને જાણ કરવામાં આવશે.",
     guestComingSoon: "નોંધણી શરૂ કરો",
-    addRoomMember: (count: number) => `રૂમ સભ્ય ઉમેરો (${count}/4)`,
+    addRoomMember: (count: number, max: number) => `રૂમ સભ્ય ઉમેરો (${count}/${max})`,
     noticesTitle: "નોંધણી માટે મહત્વપૂર્ણ સૂચનાઓ",
     notices: [
       "પોથી રૂમ માટે પોથી યજમાન સાથે નોંધાયેલ મોબાઇલ નંબરનો ઉપયોગ કરો.",
       "આગળ વધતા પહેલા OTP ચકાસણી જરૂરી છે.",
-      "પોથી યજમાન ફાળવેલા પોથી રૂમમાં 1 થી 4 સભ્યો નોંધાવી શકે છે.",
+      "પોથી રૂમમાં સભ્યોની નોંધણી રૂમની દર્શાવેલી ક્ષમતા સુધી જ થઈ શકે છે.",
       "વધારાના મહેમાનો ઉપલબ્ધ ક્ષમતા મુજબ જોડાયેલા પ્રાઇવેટ રૂમમાં ફાળવાશે.",
       "સામાન્ય મહેમાનોને પહેલા QR પ્રવેશ કોડ મળશે; રૂમ ફાળવાયા પછી તેની જાણ કરવામાં આવશે.",
       "દરેક મોબાઇલ નંબરથી માત્ર એક નોંધણી થશે. અગાઉની નોંધણી OTPથી ફરી ખોલી શકાશે.",
@@ -220,15 +220,15 @@ const copy = {
     yajmanProfile: "યજમાન પ્રોફાઇલ",
     roomPortfolio: "પોથી યજમાન રૂમ વિગતો",
     roomPortfolioText:
-      "ફાળવેલા પોથી રૂમ માટે 1 થી 4 સભ્યો ઉમેરો. વધારાના મહેમાનો જોડાયેલા પ્રાઇવેટ રૂમમાં આપમેળે ફાળવાશે.",
+      "ફાળવેલા પોથી રૂમની ક્ષમતા મુજબ સભ્યો ઉમેરો. વધારાના મહેમાનો જોડાયેલા પ્રાઇવેટ રૂમમાં આપમેળે ફાળવાશે.",
     allottedRoom: "ફાળવેલ પોથી રૂમ",
     roomNotSynced: "આ પોથી રૂમ હજુ સિંક થયો નથી.",
-    exactFour: "નવી પોથી રૂમ નોંધણીમાં વધુમાં વધુ 4 સભ્યો ઉમેરી શકાય છે",
+    exactFour: "રૂમની દર્શાવેલી ક્ષમતા જ નોંધણીની મર્યાદા છે.",
     linkedRooms: (count: number) => `${count} જોડાયેલ પ્રાઇવેટ રૂમ`,
     privateSeats: (count: number) => `${count} વધારાની બેઠક ઉપલબ્ધ`,
     noLinkedRooms: "આ પોથી માટે હજી પ્રાઇવેટ રૂમ જોડાયેલા નથી.",
     linkedRoomText: "વધારાના યજમાન મહેમાનો આ રૂમોમાં આપમેળે ફાળવાશે.",
-    fourMembers: "નવા પોથી રૂમ સભ્યો ઉમેરો (વધુમાં વધુ 4)",
+    fourMembers: "પોથી રૂમના સભ્યો",
     additionalGuests: "જોડાયેલા પ્રાઇવેટ રૂમ માટે વધારાના મહેમાનો",
     additionalGuestText: "આ મહેમાનો ઉપર દર્શાવેલા પ્રાઇવેટ રૂમોમાં આપમેળે ફાળવાશે.",
     noExtraGuests: "હજુ વધારાના મહેમાનો ઉમેરાયેલા નથી.",
@@ -417,6 +417,7 @@ export function RegisterPage({ language = "en", startAt = "home" }: RegisterPage
         .sort((left, right) => (left.sort_order ?? 9999) - (right.sort_order ?? 9999)),
     [pothiId, roomInventory]
   );
+  const pothiRoomMemberLimit = allottedPothiRooms[0]?.total_capacity ?? 4;
   const linkedPrivateRooms = useMemo(
     () =>
       roomInventory.filter(
@@ -725,8 +726,8 @@ export function RegisterPage({ language = "en", startAt = "home" }: RegisterPage
           .filter((member) => member.name.trim())
           .map((member) => ({ ...member, mobile: member.mobile || "" }));
 
-        if (!yajmanPayload.length || yajmanPayload.length > 4) {
-          setMessage("Please enter between 1 and 4 members for the allotted pothi room.");
+        if (!yajmanPayload.length || yajmanPayload.length > pothiRoomMemberLimit) {
+          setMessage(`Please enter between 1 and ${pothiRoomMemberLimit} members for the allotted pothi room.`);
           setLoading(false);
           return;
         }
@@ -1137,10 +1138,10 @@ export function RegisterPage({ language = "en", startAt = "home" }: RegisterPage
           <button
             type="button"
             className="secondary add-member-button"
-            onClick={() => setYajmanRoomMembers((current) => current.length < 4 ? [...current, createBlankMember()] : current)}
-            disabled={yajmanRoomMembers.length >= 4}
+            onClick={() => setYajmanRoomMembers((current) => current.length < pothiRoomMemberLimit ? [...current, createBlankMember()] : current)}
+            disabled={yajmanRoomMembers.length >= pothiRoomMemberLimit}
           >
-            {t.addRoomMember(yajmanRoomMembers.length)}
+            {t.addRoomMember(yajmanRoomMembers.length, pothiRoomMemberLimit)}
           </button>
         </div>
 

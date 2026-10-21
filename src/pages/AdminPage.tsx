@@ -13,6 +13,22 @@ import type { AdminMemberRow, FamilyMemberInput, Pothi, RoomInventory } from "..
 
 type Language = "en" | "gu";
 
+const ADMIN_PAGE_SIZE = 500;
+
+async function fetchAllPages<T>(
+  fetchPage: (from: number, to: number) => PromiseLike<{ data: T[] | null; error: { message: string } | null }>
+) {
+  const rows: T[] = [];
+  for (let from = 0; ; from += ADMIN_PAGE_SIZE) {
+    const { data, error } = await fetchPage(from, from + ADMIN_PAGE_SIZE - 1);
+    if (error) return { data: null, error };
+    const page = data ?? [];
+    rows.push(...page);
+    if (page.length < ADMIN_PAGE_SIZE) break;
+  }
+  return { data: rows, error: null };
+}
+
 function normalizeRoom(room: Partial<RoomInventory> & { capacity?: number | null }): RoomInventory {
   return {
     room_number: room.room_number ?? "",
@@ -237,15 +253,23 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
     setLoading(true);
     try {
       const results = await Promise.all([
-        supabase
-          .from("members")
-          .select("id, name, age, gender, mobile, arrival_date, departure_date, is_head, created_at, qr_token, qr_revoked_at, families(id, registration_code, head_name, head_mobile, city, wants_stay, stay_from, stay_to, pothi_id, reference_pothi_id, registration_type, private_room_number), room_allocations(room_id, rooms(room_number, venue_name, section_name))")
-          .order("name"),
+        fetchAllPages((from, to) =>
+          supabase
+            .from("members")
+            .select("id, name, age, gender, mobile, arrival_date, departure_date, is_head, created_at, qr_token, qr_revoked_at, families(id, registration_code, head_name, head_mobile, city, wants_stay, stay_from, stay_to, pothi_id, reference_pothi_id, registration_type, private_room_number), room_allocations(room_id, rooms(room_number, venue_name, section_name))")
+            .order("name")
+            .order("id")
+            .range(from, to)
+        ),
         supabase.from("pothis").select("id, family_id").order("id"),
-        supabase
-          .from("rooms")
-          .select("room_number, venue_name, section_name, source_room_number, floor, ac_type, bed_count, extra_count, capacity, owner_type, linked_pothi_id, allotment_note, room_type, sort_order")
-          .order("sort_order"),
+        fetchAllPages((from, to) =>
+          supabase
+            .from("rooms")
+            .select("room_number, venue_name, section_name, source_room_number, floor, ac_type, bed_count, extra_count, capacity, owner_type, linked_pothi_id, allotment_note, room_type, sort_order")
+            .order("sort_order")
+            .order("room_number")
+            .range(from, to)
+        ),
         supabase.from("qr_scans").select("id, scan_type, scanned_at, members(name)").order("scanned_at", { ascending: false }).limit(100)
       ]);
       const [{ data: memberData, error: memberError }, { data: pothiData, error: pothiError }, { data: roomData, error: roomError }, { data: scanData, error: scanError }] = results;
@@ -272,8 +296,9 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
       setStatus(language === "gu" ? "પોથી, પ્રથમ સભ્યનું નામ અને મોબાઇલ જરૂરી છે." : "Pothi, first member name and mobile are required.");
       return;
     }
-    if (filledMembers.length > 4) {
-      setStatus(language === "gu" ? "એક પોથી માટે વધુમાં વધુ 4 સભ્યો ઉમેરી શકાય છે." : "A Pothi registration can contain at most 4 members.");
+    const roomCapacity = roomsInventory.find((room) => room.linked_pothi_id === pothiId && room.owner_type === "SAMAJ" && room.room_type === "pothi_room")?.total_capacity ?? 4;
+    if (filledMembers.length > roomCapacity) {
+      setStatus(language === "gu" ? `આ પોથી રૂમની ક્ષમતા ${roomCapacity} સભ્યોની છે.` : `This Pothi room has capacity for ${roomCapacity} members.`);
       return;
     }
     if (adminStayTo < adminStayFrom || adminStayFrom < "2026-11-13" || adminStayTo > "2026-11-20") {
@@ -751,7 +776,7 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
             ))}
           </div>
           <div className="button-row">
-            <button type="button" className="secondary" disabled={adminMembers.length >= 4} onClick={() => setAdminMembers((current) => [...current, { name: "", age: 18, gender: "male", mobile: "" }])}>{t.addPerson}</button>
+            <button type="button" className="secondary" disabled={adminMembers.length >= (roomsInventory.find((room) => room.linked_pothi_id === Number(adminPothiId) && room.owner_type === "SAMAJ" && room.room_type === "pothi_room")?.total_capacity ?? 4)} onClick={() => setAdminMembers((current) => [...current, { name: "", age: 18, gender: "male", mobile: "" }])}>{t.addPerson}</button>
             <button type="submit" className="primary" disabled={adminSaving}>{adminSaving ? t.savingRegistration : t.saveRegistration}</button>
           </div>
         </form>
