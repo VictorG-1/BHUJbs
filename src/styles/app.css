@@ -980,32 +980,24 @@ h2 {
 }
 
 .room-preference-field {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.75rem 1.25rem;
+  display: grid;
+  gap: 0.75rem;
   min-width: 0;
   margin: 0;
-  padding: 0;
-  border: 0;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
 }
 
-.room-preference-field legend {
-  width: 100%;
-  margin-bottom: 0.25rem;
-  font-weight: 700;
+.room-preference-field h2 {
+  margin: 0;
 }
 
-.room-preference-field label {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.room-preference-field input[type="radio"] {
-  width: auto;
-  min-height: 0;
-  accent-color: var(--accent);
+.room-preference-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 
 .member-date-field {

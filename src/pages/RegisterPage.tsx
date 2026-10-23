@@ -1303,17 +1303,17 @@ export function RegisterPage({ language = "en", startAt = "home" }: RegisterPage
           </div>
         </div>
 
-        <fieldset className="wide-field room-preference-field">
-          <legend>{t.wantsRoom}</legend>
-          <label>
-            <input type="radio" name="general-room-preference" checked={generalWantsRoom} onChange={() => setGeneralWantsRoom(true)} />
-            {t.wantsRoomYes}
-          </label>
-          <label>
-            <input type="radio" name="general-room-preference" checked={!generalWantsRoom} onChange={() => setGeneralWantsRoom(false)} />
-            {t.wantsRoomNo}
-          </label>
-        </fieldset>
+        <section className="wide-field room-preference-field" aria-labelledby="room-preference-title">
+          <h2 id="room-preference-title">{t.wantsRoom}</h2>
+          <div className="room-preference-options">
+            <button type="button" className={generalWantsRoom ? "primary" : "secondary"} aria-pressed={generalWantsRoom} onClick={() => setGeneralWantsRoom(true)}>
+              {t.wantsRoomYes}
+            </button>
+            <button type="button" className={!generalWantsRoom ? "primary" : "secondary"} aria-pressed={!generalWantsRoom} onClick={() => setGeneralWantsRoom(false)}>
+              {t.wantsRoomNo}
+            </button>
+          </div>
+        </section>
 
         <div className="wide-field">
           <h2>{t.guestDetails}</h2>
