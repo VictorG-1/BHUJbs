@@ -25,6 +25,7 @@ type RegisterInput = {
   privateRoomNumber?: string;
   stayFrom: string;
   stayTo: string;
+  wantsStay?: boolean;
   pothiRoomMemberCount?: number;
   members: MemberInput[];
 };
@@ -278,6 +279,15 @@ Deno.serve(async (req) => {
     const filledMembers = body.members.filter((member) => member.name.trim());
     if (!filledMembers.length) {
       return json({ error: "Please add at least one member before submitting." }, 400);
+    }
+    const invalidMemberDates = filledMembers.some((member) => {
+      const arrival = member.arrivalDate || body.stayFrom;
+      const departure = member.departureDate || body.stayTo;
+      return !/^\d{4}-\d{2}-\d{2}$/.test(arrival) || !/^\d{4}-\d{2}-\d{2}$/.test(departure)
+        || arrival < EVENT_START_DATE || departure > EVENT_END_DATE || departure < arrival;
+    });
+    if (invalidMemberDates) {
+      return json({ error: "Each member needs valid arrival and departure dates between 13 and 20 November 2026." }, 400);
     }
     if (body.registrationType === "pothi_room") {
       if (body.pothiRoomMemberCount !== undefined && (!Number.isInteger(body.pothiRoomMemberCount) || body.pothiRoomMemberCount < 1 || body.pothiRoomMemberCount > filledMembers.length)) {
@@ -568,7 +578,7 @@ Deno.serve(async (req) => {
         head_mobile: body.headMobile,
         city: body.city ?? null,
         address: body.address ?? null,
-        wants_stay: true,
+        wants_stay: body.registrationType === "general_room" ? body.wantsStay !== false : true,
         pothi_id: pothiId,
         reference_pothi_id: referencePothiId,
         private_room_number: privateRoomNumber,
@@ -588,8 +598,8 @@ Deno.serve(async (req) => {
       gender: member.gender,
       mobile: member.mobile?.trim() || (index === 0 ? body.headMobile.trim() : null),
       event_date: null,
-      arrival_date: member.arrivalDate || null,
-      departure_date: member.departureDate || null,
+      arrival_date: member.arrivalDate || body.stayFrom,
+      departure_date: member.departureDate || body.stayTo,
       is_head: Boolean(member.isHead) || index === 0
     }));
 

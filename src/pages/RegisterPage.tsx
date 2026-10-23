@@ -145,6 +145,11 @@ const copy = {
     seniorGround: "Senior citizens above 70 are prioritized on the ground floor.",
     guestDetails: "Guest details",
     addGuest: "Add guest",
+    wantsRoom: "Would you like room accommodation?",
+    wantsRoomYes: "Yes, I need a room",
+    wantsRoomNo: "No room needed",
+    memberArrival: "Date of arrival",
+    memberDeparture: "Date of departure",
     complete: "Complete registration",
     saving: "Saving registration",
     clear: "Clear form",
@@ -241,6 +246,11 @@ const copy = {
     seniorGround: "70 વર્ષથી વધુ વયના વરિષ્ઠ નાગરિકોને ગ્રાઉન્ડ ફ્લોર પ્રાથમિકતા મળે છે.",
     guestDetails: "મહેમાનની વિગતો",
     addGuest: "મહેમાન ઉમેરો",
+    wantsRoom: "શું તમને રહેવા માટે રૂમ જોઈએ છે?",
+    wantsRoomYes: "હા, રૂમ જોઈએ છે",
+    wantsRoomNo: "ના, રૂમની જરૂર નથી",
+    memberArrival: "આગમનની તારીખ",
+    memberDeparture: "વિદાયની તારીખ",
     complete: "નોંધણી પૂર્ણ કરો",
     saving: "નોંધણી સાચવી રહ્યા છીએ",
     clear: "ફોર્મ સાફ કરો",
@@ -281,6 +291,7 @@ export function RegisterPage({ language = "en", startAt = "home" }: RegisterPage
   const [city, setCity] = useState("");
   const [stayFrom, setStayFrom] = useState(EVENT_START_DATE);
   const [stayTo, setStayTo] = useState(EVENT_END_DATE);
+  const [generalWantsRoom, setGeneralWantsRoom] = useState(true);
   const [yajmanRoomMembers, setYajmanRoomMembers] = useState<FamilyMemberInput[]>(
     [createBlankMember({ isHead: true })]
   );
@@ -541,6 +552,7 @@ export function RegisterPage({ language = "en", startAt = "home" }: RegisterPage
     setCity("");
     setStayFrom(EVENT_START_DATE);
     setStayTo(EVENT_END_DATE);
+    setGeneralWantsRoom(true);
     setPothiId(undefined);
     setYajmanRoomMembers([createBlankMember({ isHead: true })]);
     setPrivateRoomGuests([]);
@@ -572,6 +584,12 @@ export function RegisterPage({ language = "en", startAt = "home" }: RegisterPage
 
   function updateGeneralGuest(index: number, patch: Partial<FamilyMemberInput>) {
     setGeneralGuests((current) => current.map((member, i) => (i === index ? { ...member, ...patch } : member)));
+    if (index === 0 && typeof patch.name === "string") setHeadName(patch.name);
+  }
+
+  function updateGeneralContactName(value: string) {
+    setHeadName(value);
+    setGeneralGuests((current) => current.map((member, index) => index === 0 ? { ...member, name: value } : member));
   }
 
   async function handleSendOtp(purpose: "yajman" | "guest") {
@@ -719,12 +737,27 @@ export function RegisterPage({ language = "en", startAt = "home" }: RegisterPage
           .filter((member) => member.name.trim())
           .map((member, index) => ({
             ...member,
+            arrivalDate: member.arrivalDate || stayFrom,
+            departureDate: member.departureDate || stayTo,
             mobile: member.mobile || (index === 0 ? headMobile : ""),
             isHead: index === 0
           }));
         const privatePayload = privateRoomGuests
           .filter((member) => member.name.trim())
-          .map((member) => ({ ...member, mobile: member.mobile || "" }));
+          .map((member) => ({
+            ...member,
+            arrivalDate: member.arrivalDate || stayFrom,
+            departureDate: member.departureDate || stayTo,
+            mobile: member.mobile || ""
+          }));
+
+        if ([...yajmanPayload, ...privatePayload].some((member) =>
+          member.arrivalDate < EVENT_START_DATE || member.departureDate > EVENT_END_DATE || member.departureDate < member.arrivalDate
+        )) {
+          setMessage("Select valid arrival and departure dates between 13 November 2026 and 20 November 2026 for every member.");
+          setLoading(false);
+          return;
+        }
 
         if (!yajmanPayload.length || yajmanPayload.length > pothiRoomMemberLimit) {
           setMessage(`Please enter between 1 and ${pothiRoomMemberLimit} members for the allotted pothi room.`);
@@ -763,12 +796,13 @@ export function RegisterPage({ language = "en", startAt = "home" }: RegisterPage
       }
 
       const guestPayload = generalGuests
-        .filter((member) => member.name.trim())
         .map((member, index) => ({
           ...member,
+          name: member.name.trim() || (index === 0 ? headName.trim() : ""),
           mobile: member.mobile || (index === 0 ? headMobile : ""),
           isHead: index === 0
-        }));
+        }))
+        .filter((member) => member.name.trim());
 
       if (!guestPayload.length) {
         setMessage("Please add at least one guest.");
@@ -797,6 +831,7 @@ export function RegisterPage({ language = "en", startAt = "home" }: RegisterPage
         registrationType: "general_room",
         stayFrom: EVENT_START_DATE,
         stayTo: EVENT_END_DATE,
+        wantsStay: generalWantsRoom,
         members: guestPayload
       });
       setResult(data);
@@ -1133,6 +1168,14 @@ export function RegisterPage({ language = "en", startAt = "home" }: RegisterPage
                 value={member.mobile}
                 onChange={(event) => updateYajmanRoomMember(index, { mobile: event.target.value })}
               />
+              <label className="member-date-field">
+                <span>{t.memberArrival}</span>
+                <input type="date" min={EVENT_START_DATE} max={EVENT_END_DATE} value={member.arrivalDate || stayFrom} onChange={(event) => updateYajmanRoomMember(index, { arrivalDate: event.target.value })} required />
+              </label>
+              <label className="member-date-field">
+                <span>{t.memberDeparture}</span>
+                <input type="date" min={member.arrivalDate || stayFrom || EVENT_START_DATE} max={EVENT_END_DATE} value={member.departureDate || stayTo} onChange={(event) => updateYajmanRoomMember(index, { departureDate: event.target.value })} required />
+              </label>
             </div>
           ))}
           <button
@@ -1176,6 +1219,14 @@ export function RegisterPage({ language = "en", startAt = "home" }: RegisterPage
                   value={member.mobile}
                   onChange={(event) => updatePrivateRoomGuest(index, { mobile: event.target.value })}
                 />
+                <label className="member-date-field">
+                  <span>{t.memberArrival}</span>
+                  <input type="date" min={EVENT_START_DATE} max={EVENT_END_DATE} value={member.arrivalDate || stayFrom} onChange={(event) => updatePrivateRoomGuest(index, { arrivalDate: event.target.value })} required />
+                </label>
+                <label className="member-date-field">
+                  <span>{t.memberDeparture}</span>
+                  <input type="date" min={member.arrivalDate || stayFrom || EVENT_START_DATE} max={EVENT_END_DATE} value={member.departureDate || stayTo} onChange={(event) => updatePrivateRoomGuest(index, { departureDate: event.target.value })} required />
+                </label>
               </div>
             ))
           ) : (
@@ -1231,7 +1282,7 @@ export function RegisterPage({ language = "en", startAt = "home" }: RegisterPage
       <form className="form-grid" onSubmit={submit}>
         <label>
           {t.yourName}
-          <input value={headName} onChange={(event) => setHeadName(event.target.value)} required />
+          <input value={headName} onChange={(event) => updateGeneralContactName(event.target.value)} required />
         </label>
         <label>
           {t.mobile}
@@ -1248,9 +1299,21 @@ export function RegisterPage({ language = "en", startAt = "home" }: RegisterPage
           <div className="room-info-card">
             <strong>QR entry registration</strong>
             <small>Event dates: 13 November 2026 to 20 November 2026.</small>
-            <small>We will notify you once rooms are allotted to your registration.</small>
+            <small>{generalWantsRoom ? "We will notify you once rooms are allotted to your registration." : "No room accommodation requested."}</small>
           </div>
         </div>
+
+        <fieldset className="wide-field room-preference-field">
+          <legend>{t.wantsRoom}</legend>
+          <label>
+            <input type="radio" name="general-room-preference" checked={generalWantsRoom} onChange={() => setGeneralWantsRoom(true)} />
+            {t.wantsRoomYes}
+          </label>
+          <label>
+            <input type="radio" name="general-room-preference" checked={!generalWantsRoom} onChange={() => setGeneralWantsRoom(false)} />
+            {t.wantsRoomNo}
+          </label>
+        </fieldset>
 
         <div className="wide-field">
           <h2>{t.guestDetails}</h2>
@@ -1259,7 +1322,7 @@ export function RegisterPage({ language = "en", startAt = "home" }: RegisterPage
             <div className="member-row" key={index}>
               <input
                 placeholder={t.guestName}
-                value={member.name}
+                value={member.name || (index === 0 ? headName : "")}
                 onChange={(event) => updateGeneralGuest(index, { name: event.target.value })}
                 required
               />

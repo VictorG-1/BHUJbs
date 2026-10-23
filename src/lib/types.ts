@@ -24,6 +24,7 @@ export type RegisterFamilyInput = {
   privateRoomNumber?: string;
   stayFrom: string;
   stayTo: string;
+  wantsStay?: boolean;
   pothiRoomMemberCount?: number;
   members: FamilyMemberInput[];
 };
