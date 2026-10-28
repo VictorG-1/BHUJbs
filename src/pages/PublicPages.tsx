@@ -23,8 +23,6 @@ export function LandingPage({ language, onNavigate }: PublicPageProps) {
           </p>
           <p className="event-date-badge">{eventDates}</p>
           <div className="button-row">
-            <button className="primary" onClick={() => onNavigate("general-login")}>{gu ? "સામાન્ય નોંધણી" : "General guest registration"}</button>
-            <button className="secondary" onClick={() => onNavigate("pothi-login")}>{gu ? "પોથી યજમાન લોગિન" : "Pothi Yajman login"}</button>
             <button className="secondary" onClick={() => onNavigate("itinerary")}>{gu ? "કાર્યક્રમ જુઓ" : "View itinerary"}</button>
           </div>
         </div>
@@ -203,8 +201,6 @@ export function SiteFooter({ language, onNavigate }: PublicPageProps) {
         <span>{gu ? "શ્રી કચ્છી મહેશ્વરી સમાજ ભુજ" : "Shree Kutchi Maheshwari Samaj Bhuj"}</span>
       </div>
       <div className="footer-links">
-        <button onClick={() => onNavigate("general-login")}>{gu ? "સામાન્ય નોંધણી" : "General registration"}</button>
-        <button onClick={() => onNavigate("pothi-login")}>{gu ? "પોથી લોગિન" : "Pothi login"}</button>
         <button onClick={() => onNavigate("itinerary")}>{gu ? "કાર્યક્રમ" : "Itinerary"}</button>
         <button onClick={() => onNavigate("broadcast")}>{gu ? "લાઇવ" : "Live"}</button>
         <button onClick={() => onNavigate("sponsors")}>{gu ? "પ્રાયોજકો" : "Sponsors"}</button>

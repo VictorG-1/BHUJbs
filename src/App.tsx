@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { AdminPage } from "./pages/AdminPage";
 import { ScannerPage } from "./pages/ScannerPage";
-import { RegisterPage } from "./pages/RegisterPage";
 import { BroadcastPage, ItineraryPage, LandingPage, SiteFooter, SponsorsPage, TermsPage } from "./pages/PublicPages";
 import { isSupabaseConfigured } from "./lib/supabase";
 import "./styles/app.css";
@@ -14,13 +13,11 @@ export default function App() {
     const path = pathname.replace(/\/+$/, "").toLowerCase() || "/";
     if (path === "/admin") return "admin";
     if (path === "/scanner") return "scanner";
-    if (path === "/general-login") return "general-login";
-    if (path === "/pothi-login") return "pothi-login";
+    if (path === "/general-login" || path === "/pothi-login" || path === "/register") return "landing";
     if (path === "/itinerary") return "itinerary";
     if (path === "/live") return "broadcast";
     if (path === "/sponsors") return "sponsors";
     if (path === "/terms") return "terms";
-    if (path === "/register") return "register";
     return "landing";
   }
 
@@ -74,9 +71,6 @@ export default function App() {
           <span>{mobileMenuOpen ? "Close" : "Menu"}</span>
         </button>
         <nav id="main-navigation" className={mobileMenuOpen ? "is-open" : ""}>
-          <button className={page === "register" || page === "general-login" || page === "pothi-login" ? "active" : ""} onClick={() => navigate("general-login")}>
-            {language === "gu" ? "નોંધણી" : "Register"}
-          </button>
           <button className={page === "itinerary" ? "active" : ""} onClick={() => navigate("itinerary")}>
             {language === "gu" ? "કાર્યક્રમ" : "Itinerary"}
           </button>
@@ -113,9 +107,6 @@ export default function App() {
 
       <main>
         {page === "landing" ? <LandingPage language={language} onNavigate={navigate} /> : null}
-        {page === "register" ? <RegisterPage language={language} /> : null}
-        {page === "general-login" ? <RegisterPage language={language} startAt="guest-login" /> : null}
-        {page === "pothi-login" ? <RegisterPage language={language} startAt="yajman-login" /> : null}
         {page === "admin" ? <AdminPage language={language} /> : null}
         {page === "scanner" ? <ScannerPage /> : null}
         {page === "itinerary" ? <ItineraryPage language={language} onNavigate={navigate} /> : null}
