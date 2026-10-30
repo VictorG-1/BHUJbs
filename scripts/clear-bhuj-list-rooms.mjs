@@ -22,8 +22,20 @@ function normalizeName(value) {
     .trim();
 }
 
+function resolveWorkbook(fallback) {
+  const args = process.argv.slice(2).filter((arg) => arg !== "--apply");
+  const fileFlag = args.indexOf("--file");
+  const fromFlag = fileFlag >= 0 ? args[fileFlag + 1] : null;
+  const fromPositional = args.find((arg) => !arg.startsWith("-") && /\.xlsx$/i.test(arg));
+  const candidate = fromFlag || fromPositional || process.env.WORKBOOK_PATH || fallback;
+  if (!candidate || !fs.existsSync(candidate)) {
+    throw new Error(`Workbook not found${candidate ? `: ${candidate}` : ""}. Pass --file <path> to an .xlsx file.`);
+  }
+  return candidate;
+}
+
 const apply = process.argv.includes("--apply");
-const workbook = XLSX.readFile("C:/Users/DELL/Downloads/BHUJ GENERAL 30-10-2026.xlsx");
+const workbook = XLSX.readFile(resolveWorkbook("C:/Users/DELL/Downloads/BHUJ GENERAL 30-10-2026.xlsx"));
 const rows = XLSX.utils.sheet_to_json(workbook.Sheets.BHUJ, { header: 1, defval: null }).slice(1);
 const list = rows
   .filter((row) => row.some((cell) => cell != null && String(cell).trim() !== ""))

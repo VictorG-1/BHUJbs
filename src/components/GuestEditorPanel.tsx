@@ -243,25 +243,33 @@ export function GuestEditorPanel({ language, members, rooms, onSaved, onStatus, 
         .select("id, room_id")
         .eq("member_id", memberId);
       if (allocationLoadError) throw allocationLoadError;
-      const existing = existingAllocations?.[0];
+      const allocations = existingAllocations ?? [];
 
       if (!draft.roomId) {
-        if (existing) {
-          const { error } = await supabase.from("room_allocations").delete().eq("id", existing.id);
-          if (error) throw error;
-        }
-      } else if (existing) {
-        if (existing.room_id !== draft.roomId) {
-          const { error } = await supabase.from("room_allocations").update({ room_id: draft.roomId, family_id: familyId }).eq("id", existing.id);
+        if (allocations.length) {
+          const { error } = await supabase.from("room_allocations").delete().eq("member_id", memberId);
           if (error) throw error;
         }
       } else {
-        const { error } = await supabase.from("room_allocations").insert({
-          room_id: draft.roomId,
-          member_id: memberId,
-          family_id: familyId
-        });
-        if (error) throw error;
+        const keep = allocations.find((row) => row.room_id === draft.roomId) ?? allocations[0];
+        if (keep) {
+          if (keep.room_id !== draft.roomId) {
+            const { error } = await supabase.from("room_allocations").update({ room_id: draft.roomId, family_id: familyId }).eq("id", keep.id);
+            if (error) throw error;
+          }
+          const extraIds = allocations.filter((row) => row.id !== keep.id).map((row) => row.id);
+          if (extraIds.length) {
+            const { error } = await supabase.from("room_allocations").delete().in("id", extraIds);
+            if (error) throw error;
+          }
+        } else {
+          const { error } = await supabase.from("room_allocations").insert({
+            room_id: draft.roomId,
+            member_id: memberId,
+            family_id: familyId
+          });
+          if (error) throw error;
+        }
       }
 
       setSelectedId(memberId);

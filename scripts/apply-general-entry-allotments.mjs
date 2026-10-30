@@ -3,7 +3,19 @@ import XLSX from "xlsx";
 import { createClient } from "@supabase/supabase-js";
 
 const APPLY = process.argv.includes("--apply");
-const WORKBOOK = "C:/Users/DELL/Desktop/BHAGWAT/GENERAL ENTRY.xlsx";
+const WORKBOOK = resolveWorkbook("C:/Users/DELL/Desktop/BHAGWAT/GENERAL ENTRY.xlsx");
+
+function resolveWorkbook(fallback) {
+  const args = process.argv.slice(2).filter((arg) => arg !== "--apply");
+  const fileFlag = args.indexOf("--file");
+  const fromFlag = fileFlag >= 0 ? args[fileFlag + 1] : null;
+  const fromPositional = args.find((arg) => !arg.startsWith("-") && /\.xlsx$/i.test(arg));
+  const candidate = fromFlag || fromPositional || process.env.WORKBOOK_PATH || fallback;
+  if (!candidate || !fs.existsSync(candidate)) {
+    throw new Error(`Workbook not found${candidate ? `: ${candidate}` : ""}. Pass --file <path> to an .xlsx file.`);
+  }
+  return candidate;
+}
 
 function env(key) {
   const line = fs
@@ -310,7 +322,7 @@ for (const item of planned) {
       continue;
     }
     updates.push(item);
-    occupancy.set(item.existing.room_id, Math.max(0, (occupancy.get(item.existing.room_id) ?? 1) - 1));
+    occupancy.set(item.existing.room_id, Math.max(0, (occupancy.get(item.existing.room_id) ?? 0) - 1));
     occupancy.set(item.room.id, (occupancy.get(item.room.id) ?? 0) + 1);
     continue;
   }

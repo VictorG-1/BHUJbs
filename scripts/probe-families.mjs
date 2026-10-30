@@ -6,6 +6,7 @@ function env(key) {
     .readFileSync(".env.local", "utf8")
     .split(/\r?\n/)
     .find((entry) => entry.startsWith(`${key}=`));
+  if (!line) throw new Error(`Missing ${key}`);
   return line.slice(key.length + 1).trim().replace(/^['"]|['"]$/g, "");
 }
 

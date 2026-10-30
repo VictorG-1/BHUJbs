@@ -114,8 +114,20 @@ function matchDbRoom(excelRoom, dbRooms) {
   return scored[0]?.room ?? null;
 }
 
+function resolveWorkbook(fallback) {
+  const args = process.argv.slice(2).filter((arg) => arg !== "--apply");
+  const fileFlag = args.indexOf("--file");
+  const fromFlag = fileFlag >= 0 ? args[fileFlag + 1] : null;
+  const fromPositional = args.find((arg) => !arg.startsWith("-") && /\.xlsx$/i.test(arg));
+  const candidate = fromFlag || fromPositional || process.env.WORKBOOK_PATH || fallback;
+  if (!candidate || !fs.existsSync(candidate)) {
+    throw new Error(`Workbook not found${candidate ? `: ${candidate}` : ""}. Pass --file <path> to an .xlsx file.`);
+  }
+  return candidate;
+}
+
 const APPLY = process.argv.includes("--apply");
-const workbookPath = "C:/Users/DELL/Desktop/BHAGWAT/ALLOTMENT FOR APP.xlsx";
+const workbookPath = resolveWorkbook("C:/Users/DELL/Desktop/BHAGWAT/ALLOTMENT FOR APP.xlsx");
 const excelRooms = parseAllotment(workbookPath);
 const db = createClient(env("SUPABASE_URL"), env("SUPABASE_SERVICE_ROLE_KEY"), { auth: { persistSession: false } });
 const { data: dbRooms, error } = await db

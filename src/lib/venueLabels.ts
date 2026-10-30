@@ -14,7 +14,7 @@ function compact(value: string | null | undefined) {
 export function sourceRoomNumber(room: RoomLabelSource) {
   if (room.source_room_number) return String(room.source_room_number).trim();
   const parts = String(room.room_number ?? "").split("/").map((part) => part.trim()).filter(Boolean);
-  return parts.at(-1) ?? "";
+  return parts[parts.length - 1] ?? "";
 }
 
 export function shortVenue(room: RoomLabelSource) {
