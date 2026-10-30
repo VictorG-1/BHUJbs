@@ -13,7 +13,7 @@
     "linked_pothi_id": null,
     "allotment_note": "Pothis 8 TO 13. HANSARAJ NANAJI BHUTADA PARIVAR BITA",
     "room_type": "general_room",
-    "sort_order": null
+    "sort_order": 1
   },
   {
     "room_number": "YAX MANDIR / NAVNEET HALL / HALL / G.F.",
@@ -29,7 +29,7 @@
     "linked_pothi_id": 68,
     "allotment_note": "SHANTILALA BECHARDAS SHETH",
     "room_type": "pothi_room",
-    "sort_order": null
+    "sort_order": 2
   },
   {
     "room_number": "YAX MANDIR / RATANBEN HALL / HALL / F.F.",
@@ -45,7 +45,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": null
+    "sort_order": 3
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / HALL / F.F.",
@@ -61,7 +61,7 @@
     "linked_pothi_id": null,
     "allotment_note": "WITHOUT BED",
     "room_type": "general_room",
-    "sort_order": null
+    "sort_order": 4
   },
   {
     "room_number": "YAX MANDIR / VALIBEN HALL / HALL / G.F.",
@@ -77,7 +77,7 @@
     "linked_pothi_id": null,
     "allotment_note": "WITHOUT  BED",
     "room_type": "general_room",
-    "sort_order": null
+    "sort_order": 5
   },
   {
     "room_number": "YAX MANDIR / ZAVERBEN HALL / HALL / G.F.",
@@ -93,7 +93,7 @@
     "linked_pothi_id": null,
     "allotment_note": "BHUJ SAMAJ (LADIES)",
     "room_type": "general_room",
-    "sort_order": null
+    "sort_order": 6
   },
   {
     "room_number": "YAX MANDIR / MARU COMPLEX / 203",
@@ -109,7 +109,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 1
+    "sort_order": 7
   },
   {
     "room_number": "YAX MANDIR / MARU COMPLEX / 204",
@@ -125,7 +125,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 2
+    "sort_order": 8
   },
   {
     "room_number": "YAX MANDIR / MARU COMPLEX / 205",
@@ -141,7 +141,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 3
+    "sort_order": 9
   },
   {
     "room_number": "YAX MANDIR / MARU COMPLEX / 206",
@@ -157,7 +157,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 4
+    "sort_order": 10
   },
   {
     "room_number": "YAX MANDIR / MARU COMPLEX / 207",
@@ -173,7 +173,7 @@
     "linked_pothi_id": 74,
     "allotment_note": "SATYVAN SAMJI SOMANI",
     "room_type": "pothi_room",
-    "sort_order": 5
+    "sort_order": 11
   },
   {
     "room_number": "YAX MANDIR / MARU COMPLEX / 208",
@@ -189,7 +189,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 6
+    "sort_order": 12
   },
   {
     "room_number": "YAX MANDIR / MARU COMPLEX / 209",
@@ -205,7 +205,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 7
+    "sort_order": 13
   },
   {
     "room_number": "YAX MANDIR / MARU COMPLEX / 210",
@@ -221,7 +221,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 8
+    "sort_order": 14
   },
   {
     "room_number": "YAX MANDIR / MARU COMPLEX / 211",
@@ -237,7 +237,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 9
+    "sort_order": 15
   },
   {
     "room_number": "YAX MANDIR / MARU COMPLEX / 212",
@@ -253,7 +253,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 10
+    "sort_order": 16
   },
   {
     "room_number": "YAX MANDIR / MARU COMPLEX / 213",
@@ -269,7 +269,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 11
+    "sort_order": 17
   },
   {
     "room_number": "YAX MANDIR / MARU COMPLEX / 214",
@@ -285,7 +285,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 12
+    "sort_order": 18
   },
   {
     "room_number": "YAX MANDIR / MARU COMPLEX / 215",
@@ -301,7 +301,7 @@
     "linked_pothi_id": 68,
     "allotment_note": "SHANTILALA BECHARDAS SHETH",
     "room_type": "pothi_room",
-    "sort_order": 13
+    "sort_order": 19
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 1",
@@ -317,7 +317,7 @@
     "linked_pothi_id": 21,
     "allotment_note": "MEGHJI MORARJI MALL",
     "room_type": "pothi_room",
-    "sort_order": 14
+    "sort_order": 20
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 2",
@@ -333,7 +333,7 @@
     "linked_pothi_id": 21,
     "allotment_note": "MEGHJI MORARJI MALL",
     "room_type": "pothi_room",
-    "sort_order": 15
+    "sort_order": 21
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 3",
@@ -349,7 +349,7 @@
     "linked_pothi_id": 22,
     "allotment_note": "MEGHJI MORARJI MALL",
     "room_type": "pothi_room",
-    "sort_order": 16
+    "sort_order": 22
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 4",
@@ -365,7 +365,7 @@
     "linked_pothi_id": 23,
     "allotment_note": "BHAVNABEN MALL",
     "room_type": "pothi_room",
-    "sort_order": 17
+    "sort_order": 23
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 5",
@@ -381,7 +381,7 @@
     "linked_pothi_id": 24,
     "allotment_note": "NARSHI MORARAJI MALL",
     "room_type": "pothi_room",
-    "sort_order": 18
+    "sort_order": 24
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 6",
@@ -397,7 +397,7 @@
     "linked_pothi_id": 24,
     "allotment_note": "NARSHI MORARAJI MALL",
     "room_type": "private_room",
-    "sort_order": 19
+    "sort_order": 25
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 7",
@@ -413,7 +413,7 @@
     "linked_pothi_id": 53,
     "allotment_note": "SARBAI GOVINDJI NAVDHARE",
     "room_type": "private_room",
-    "sort_order": 20
+    "sort_order": 26
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 8",
@@ -429,7 +429,7 @@
     "linked_pothi_id": 53,
     "allotment_note": "SARBAI GOVINDJI NAVDHARE",
     "room_type": "private_room",
-    "sort_order": 21
+    "sort_order": 27
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 9",
@@ -445,7 +445,7 @@
     "linked_pothi_id": 53,
     "allotment_note": "SARBAI GOVINDJI NAVDHARE",
     "room_type": "private_room",
-    "sort_order": 22
+    "sort_order": 28
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 10",
@@ -461,7 +461,7 @@
     "linked_pothi_id": 53,
     "allotment_note": "SARBAI GOVINDJI NAVDHARE",
     "room_type": "pothi_room",
-    "sort_order": 23
+    "sort_order": 29
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 11",
@@ -477,7 +477,7 @@
     "linked_pothi_id": 47,
     "allotment_note": "VISHANJI UMARSHI MUNDRA",
     "room_type": "pothi_room",
-    "sort_order": 24
+    "sort_order": 30
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 12",
@@ -493,7 +493,7 @@
     "linked_pothi_id": 32,
     "allotment_note": "GOMTIBEN MURJI MANDAN",
     "room_type": "private_room",
-    "sort_order": 25
+    "sort_order": 31
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 15",
@@ -509,7 +509,7 @@
     "linked_pothi_id": 33,
     "allotment_note": "LALJI MURJI MANDAN",
     "room_type": "private_room",
-    "sort_order": 26
+    "sort_order": 32
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 16",
@@ -525,7 +525,7 @@
     "linked_pothi_id": 32,
     "allotment_note": "GOMTIBEN MURJI MANDAN",
     "room_type": "pothi_room",
-    "sort_order": 27
+    "sort_order": 33
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 17",
@@ -541,7 +541,7 @@
     "linked_pothi_id": 33,
     "allotment_note": "LALJI MURJI MANDAN",
     "room_type": "pothi_room",
-    "sort_order": 28
+    "sort_order": 34
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 18",
@@ -557,7 +557,7 @@
     "linked_pothi_id": 34,
     "allotment_note": "KIRAN LALJI MANDAN",
     "room_type": "pothi_room",
-    "sort_order": 29
+    "sort_order": 35
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 101",
@@ -573,7 +573,7 @@
     "linked_pothi_id": 5,
     "allotment_note": "LAXMIDAS  DEVJI BHUTDA",
     "room_type": "pothi_room",
-    "sort_order": 30
+    "sort_order": 36
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 102",
@@ -589,7 +589,7 @@
     "linked_pothi_id": 16,
     "allotment_note": "DEVJI UMRSHI BHEDKIYA",
     "room_type": "pothi_room",
-    "sort_order": 31
+    "sort_order": 37
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 103",
@@ -605,7 +605,7 @@
     "linked_pothi_id": 16,
     "allotment_note": "DEVJI UMRSHI BHEDKIYA",
     "room_type": "pothi_room",
-    "sort_order": 32
+    "sort_order": 38
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 104",
@@ -621,7 +621,7 @@
     "linked_pothi_id": 47,
     "allotment_note": "VISHANJI UMARSHI MUNDRA",
     "room_type": "pothi_room",
-    "sort_order": 33
+    "sort_order": 39
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 105",
@@ -637,7 +637,7 @@
     "linked_pothi_id": 69,
     "allotment_note": "JAWAHARLAL SHETH",
     "room_type": "pothi_room",
-    "sort_order": 34
+    "sort_order": 40
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 106",
@@ -653,7 +653,7 @@
     "linked_pothi_id": 70,
     "allotment_note": "MAHESH MORARJI SHETH",
     "room_type": "pothi_room",
-    "sort_order": 35
+    "sort_order": 41
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 107",
@@ -669,7 +669,7 @@
     "linked_pothi_id": 67,
     "allotment_note": "PARSHOTAM  BHAGVANJI  SHETH",
     "room_type": "pothi_room",
-    "sort_order": 36
+    "sort_order": 42
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 108",
@@ -685,7 +685,7 @@
     "linked_pothi_id": 55,
     "allotment_note": "DEVJI CHAMPSHI NAVDHARE",
     "room_type": "pothi_room",
-    "sort_order": 37
+    "sort_order": 43
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 109",
@@ -701,7 +701,7 @@
     "linked_pothi_id": 56,
     "allotment_note": "VASANTLAL DEVJI NAVDHARE",
     "room_type": "pothi_room",
-    "sort_order": 38
+    "sort_order": 44
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 110",
@@ -717,7 +717,7 @@
     "linked_pothi_id": 57,
     "allotment_note": "VINOD DEVJI NAVDHARE",
     "room_type": "pothi_room",
-    "sort_order": 39
+    "sort_order": 45
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 111",
@@ -733,7 +733,7 @@
     "linked_pothi_id": 15,
     "allotment_note": "SAMJI GOPALJI BHEDAKIYA",
     "room_type": "pothi_room",
-    "sort_order": 40
+    "sort_order": 46
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 112",
@@ -749,7 +749,7 @@
     "linked_pothi_id": 8,
     "allotment_note": "HANSARAJ NANAJI BHUTADA PARIVAR BITA",
     "room_type": "pothi_room",
-    "sort_order": 41
+    "sort_order": 47
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 113",
@@ -765,7 +765,7 @@
     "linked_pothi_id": 9,
     "allotment_note": "",
     "room_type": "pothi_room",
-    "sort_order": 42
+    "sort_order": 48
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 114",
@@ -781,7 +781,7 @@
     "linked_pothi_id": 10,
     "allotment_note": "",
     "room_type": "pothi_room",
-    "sort_order": 43
+    "sort_order": 49
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 115",
@@ -797,7 +797,7 @@
     "linked_pothi_id": 11,
     "allotment_note": "",
     "room_type": "pothi_room",
-    "sort_order": 44
+    "sort_order": 50
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 116",
@@ -813,7 +813,7 @@
     "linked_pothi_id": 12,
     "allotment_note": "",
     "room_type": "pothi_room",
-    "sort_order": 45
+    "sort_order": 51
   },
   {
     "room_number": "YAX MANDIR / NAVNEET COMPLEX / 117",
@@ -829,7 +829,7 @@
     "linked_pothi_id": 13,
     "allotment_note": "",
     "room_type": "pothi_room",
-    "sort_order": 46
+    "sort_order": 52
   },
   {
     "room_number": "YAX MANDIR / PAN VALLABH COMPLEX / 601",
@@ -845,7 +845,7 @@
     "linked_pothi_id": 1,
     "allotment_note": "HITESH MANGALDAS BHUTADA BHUJ",
     "room_type": "private_room",
-    "sort_order": 47
+    "sort_order": 53
   },
   {
     "room_number": "YAX MANDIR / PAN VALLABH COMPLEX / 602",
@@ -861,7 +861,7 @@
     "linked_pothi_id": 1,
     "allotment_note": "HITESH MANGALDAS BHUTADA BHUJ",
     "room_type": "private_room",
-    "sort_order": 48
+    "sort_order": 54
   },
   {
     "room_number": "YAX MANDIR / PAN VALLABH COMPLEX / 603",
@@ -877,7 +877,7 @@
     "linked_pothi_id": 1,
     "allotment_note": "BHUJ SMAJ KAROBARI",
     "room_type": "pothi_room",
-    "sort_order": 49
+    "sort_order": 55
   },
   {
     "room_number": "YAX MANDIR / PAN VALLABH COMPLEX / 604",
@@ -893,7 +893,7 @@
     "linked_pothi_id": 1,
     "allotment_note": "HITESH MANGALDAS BHUTADA BHUJ",
     "room_type": "private_room",
-    "sort_order": 50
+    "sort_order": 56
   },
   {
     "room_number": "YAX MANDIR / PAN VALLABH COMPLEX / 605",
@@ -909,7 +909,7 @@
     "linked_pothi_id": 1,
     "allotment_note": "HITESH MANGALDAS BHUTADA BHUJ",
     "room_type": "private_room",
-    "sort_order": 51
+    "sort_order": 57
   },
   {
     "room_number": "YAX MANDIR / PAN VALLABH COMPLEX / 606",
@@ -925,7 +925,7 @@
     "linked_pothi_id": 1,
     "allotment_note": "HITESH MANGALDAS BHUTADA BHUJ",
     "room_type": "private_room",
-    "sort_order": 52
+    "sort_order": 58
   },
   {
     "room_number": "YAX MANDIR / PAN VALLABH COMPLEX / 607",
@@ -941,7 +941,7 @@
     "linked_pothi_id": 27,
     "allotment_note": "KIRIT DAMODAR MALL MULUND",
     "room_type": "private_room",
-    "sort_order": 53
+    "sort_order": 59
   },
   {
     "room_number": "YAX MANDIR / PAN VALLABH COMPLEX / 608",
@@ -957,7 +957,7 @@
     "linked_pothi_id": 27,
     "allotment_note": "",
     "room_type": "private_room",
-    "sort_order": 54
+    "sort_order": 60
   },
   {
     "room_number": "YAX MANDIR / PAN VALLABH COMPLEX / 609",
@@ -973,7 +973,7 @@
     "linked_pothi_id": null,
     "allotment_note": "Pothis 61-65. PADAMSHI MANJI RATHI PARIVAR MUMBAI",
     "room_type": "private_room",
-    "sort_order": 55
+    "sort_order": 61
   },
   {
     "room_number": "YAX MANDIR / PAN VALLABH COMPLEX / 610",
@@ -989,7 +989,7 @@
     "linked_pothi_id": null,
     "allotment_note": "Pothis 61-65.",
     "room_type": "private_room",
-    "sort_order": 56
+    "sort_order": 62
   },
   {
     "room_number": "YAX MANDIR / PAN VALLABH COMPLEX / 701",
@@ -1005,7 +1005,7 @@
     "linked_pothi_id": null,
     "allotment_note": "Pothis 61-65. PADAMSHI MANJI RATHI PARIVAR MUMBAI",
     "room_type": "private_room",
-    "sort_order": 57
+    "sort_order": 63
   },
   {
     "room_number": "YAX MANDIR / PAN VALLABH COMPLEX / 702",
@@ -1021,7 +1021,7 @@
     "linked_pothi_id": null,
     "allotment_note": "Pothis 61-65.",
     "room_type": "private_room",
-    "sort_order": 58
+    "sort_order": 64
   },
   {
     "room_number": "YAX MANDIR / PAN VALLABH COMPLEX / 703",
@@ -1037,7 +1037,7 @@
     "linked_pothi_id": null,
     "allotment_note": "Pothis 61-65.",
     "room_type": "private_room",
-    "sort_order": 59
+    "sort_order": 65
   },
   {
     "room_number": "YAX MANDIR / PAN VALLABH COMPLEX / 704",
@@ -1053,7 +1053,7 @@
     "linked_pothi_id": null,
     "allotment_note": "Pothis 61-65.",
     "room_type": "private_room",
-    "sort_order": 60
+    "sort_order": 66
   },
   {
     "room_number": "YAX MANDIR / PAN VALLABH COMPLEX / 705",
@@ -1069,7 +1069,7 @@
     "linked_pothi_id": null,
     "allotment_note": "Pothis 61-65.",
     "room_type": "private_room",
-    "sort_order": 61
+    "sort_order": 67
   },
   {
     "room_number": "YAX MANDIR / PAN VALLABH COMPLEX / 706",
@@ -1085,7 +1085,7 @@
     "linked_pothi_id": null,
     "allotment_note": "Pothis 61-65.",
     "room_type": "private_room",
-    "sort_order": 62
+    "sort_order": 68
   },
   {
     "room_number": "YAX MANDIR / PAN VALLABH COMPLEX / 707",
@@ -1101,7 +1101,7 @@
     "linked_pothi_id": null,
     "allotment_note": "Pothis 61-65.",
     "room_type": "private_room",
-    "sort_order": 63
+    "sort_order": 69
   },
   {
     "room_number": "YAX MANDIR / PAN VALLABH COMPLEX / 708",
@@ -1117,7 +1117,7 @@
     "linked_pothi_id": null,
     "allotment_note": "Pothis 61-65.",
     "room_type": "private_room",
-    "sort_order": 64
+    "sort_order": 70
   },
   {
     "room_number": "YAX MANDIR / PAN VALLABH COMPLEX / 709",
@@ -1133,7 +1133,7 @@
     "linked_pothi_id": null,
     "allotment_note": "Pothis 61-65.",
     "room_type": "private_room",
-    "sort_order": 65
+    "sort_order": 71
   },
   {
     "room_number": "YAX MANDIR / PAN VALLABH COMPLEX / 710",
@@ -1149,7 +1149,7 @@
     "linked_pothi_id": null,
     "allotment_note": "Pothis 61-65.",
     "room_type": "private_room",
-    "sort_order": 66
+    "sort_order": 72
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 901",
@@ -1165,7 +1165,7 @@
     "linked_pothi_id": 49,
     "allotment_note": "TULSIDAS VIRJI NAVDHARE",
     "room_type": "pothi_room",
-    "sort_order": 67
+    "sort_order": 73
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 902",
@@ -1181,7 +1181,7 @@
     "linked_pothi_id": 50,
     "allotment_note": "JIVUBAI TULSIDAS NAVDHARE",
     "room_type": "pothi_room",
-    "sort_order": 68
+    "sort_order": 74
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 903",
@@ -1197,7 +1197,7 @@
     "linked_pothi_id": 51,
     "allotment_note": "HEMLATABEN MURJI NAVDHARE",
     "room_type": "pothi_room",
-    "sort_order": 69
+    "sort_order": 75
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 904",
@@ -1213,7 +1213,7 @@
     "linked_pothi_id": 52,
     "allotment_note": "NIKIBEN ROHIT NAVDHARE",
     "room_type": "pothi_room",
-    "sort_order": 70
+    "sort_order": 76
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 905",
@@ -1229,7 +1229,7 @@
     "linked_pothi_id": 36,
     "allotment_note": "CHANDRAKANT VELJI MANDAN",
     "room_type": "pothi_room",
-    "sort_order": 71
+    "sort_order": 77
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 906",
@@ -1245,7 +1245,7 @@
     "linked_pothi_id": 37,
     "allotment_note": "HIRABEN CHANDRKANT MANDAN",
     "room_type": "pothi_room",
-    "sort_order": 72
+    "sort_order": 78
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 907",
@@ -1261,7 +1261,7 @@
     "linked_pothi_id": null,
     "allotment_note": "STORE ROOM FOR SAMAJ",
     "room_type": "general_room",
-    "sort_order": 73
+    "sort_order": 79
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 908",
@@ -1277,7 +1277,7 @@
     "linked_pothi_id": 39,
     "allotment_note": "BHACHIBEN MANJI MUNDRA(JAYANTIBHAI)",
     "room_type": "pothi_room",
-    "sort_order": 74
+    "sort_order": 80
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 909",
@@ -1293,7 +1293,7 @@
     "linked_pothi_id": 54,
     "allotment_note": "VALJI CHAMPSHI NAVDHARE",
     "room_type": "pothi_room",
-    "sort_order": 75
+    "sort_order": 81
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 910",
@@ -1309,7 +1309,7 @@
     "linked_pothi_id": 14,
     "allotment_note": "VALJI TEJPAL BHOPA",
     "room_type": "pothi_room",
-    "sort_order": 76
+    "sort_order": 82
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 911",
@@ -1325,7 +1325,7 @@
     "linked_pothi_id": null,
     "allotment_note": "Pothis 0. VADILO NU GHAR",
     "room_type": "general_room",
-    "sort_order": 77
+    "sort_order": 83
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 912",
@@ -1341,7 +1341,7 @@
     "linked_pothi_id": null,
     "allotment_note": "Pothis 0. VADLIO NU GHAR",
     "room_type": "general_room",
-    "sort_order": 78
+    "sort_order": 84
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 913",
@@ -1357,7 +1357,7 @@
     "linked_pothi_id": null,
     "allotment_note": "Pothis 0. BHUJ SAMAJ(GENTS)",
     "room_type": "general_room",
-    "sort_order": 79
+    "sort_order": 85
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 914",
@@ -1373,7 +1373,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 80
+    "sort_order": 86
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 915",
@@ -1389,7 +1389,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 81
+    "sort_order": 87
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 916",
@@ -1405,7 +1405,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 82
+    "sort_order": 88
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 917",
@@ -1421,7 +1421,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 83
+    "sort_order": 89
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 918",
@@ -1437,7 +1437,7 @@
     "linked_pothi_id": null,
     "allotment_note": "LOWER+UPPER",
     "room_type": "general_room",
-    "sort_order": 84
+    "sort_order": 90
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1001",
@@ -1453,7 +1453,7 @@
     "linked_pothi_id": 40,
     "allotment_note": "JAMNADAS MURJI MANDAN",
     "room_type": "pothi_room",
-    "sort_order": 85
+    "sort_order": 91
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1002",
@@ -1469,7 +1469,7 @@
     "linked_pothi_id": 40,
     "allotment_note": "JAMNADAS MURJI MANDAN",
     "room_type": "pothi_room",
-    "sort_order": 86
+    "sort_order": 92
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1003",
@@ -1485,7 +1485,7 @@
     "linked_pothi_id": 42,
     "allotment_note": "RAVILALANARSHI MANDAN",
     "room_type": "pothi_room",
-    "sort_order": 87
+    "sort_order": 93
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1004",
@@ -1501,7 +1501,7 @@
     "linked_pothi_id": 30,
     "allotment_note": "KALYANJI PADMSHI MALL",
     "room_type": "pothi_room",
-    "sort_order": 88
+    "sort_order": 94
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1005",
@@ -1517,7 +1517,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 89
+    "sort_order": 95
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1006",
@@ -1533,7 +1533,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 90
+    "sort_order": 96
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1007",
@@ -1549,7 +1549,7 @@
     "linked_pothi_id": null,
     "allotment_note": "BHUJ SAMAJ (LADIES)",
     "room_type": "general_room",
-    "sort_order": 91
+    "sort_order": 97
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1008",
@@ -1565,7 +1565,7 @@
     "linked_pothi_id": 3,
     "allotment_note": "JAGDISH HIRJI BHUTDA",
     "room_type": "pothi_room",
-    "sort_order": 92
+    "sort_order": 98
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1009",
@@ -1581,7 +1581,7 @@
     "linked_pothi_id": 58,
     "allotment_note": "MAVJI KANJI NAVDHARE",
     "room_type": "pothi_room",
-    "sort_order": 93
+    "sort_order": 99
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1010",
@@ -1597,7 +1597,7 @@
     "linked_pothi_id": 58,
     "allotment_note": "MAVJI KANJI NAVDHARE",
     "room_type": "pothi_room",
-    "sort_order": 94
+    "sort_order": 100
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1011",
@@ -1613,7 +1613,7 @@
     "linked_pothi_id": 59,
     "allotment_note": "KALAVANTI MOHANLAL NAVDHARE",
     "room_type": "pothi_room",
-    "sort_order": 95
+    "sort_order": 101
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1012",
@@ -1629,7 +1629,7 @@
     "linked_pothi_id": 60,
     "allotment_note": "DAMODAR MAVJI NAVDHARE",
     "room_type": "pothi_room",
-    "sort_order": 96
+    "sort_order": 102
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1013",
@@ -1645,7 +1645,7 @@
     "linked_pothi_id": 72,
     "allotment_note": "SAMJI NARANDAS SAVAR",
     "room_type": "pothi_room",
-    "sort_order": 97
+    "sort_order": 103
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1014",
@@ -1661,7 +1661,7 @@
     "linked_pothi_id": 73,
     "allotment_note": "TOPANDAS SAMJI SAVAR",
     "room_type": "pothi_room",
-    "sort_order": 98
+    "sort_order": 104
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1015",
@@ -1677,7 +1677,7 @@
     "linked_pothi_id": 71,
     "allotment_note": "CHAYABEN RAJEMDRA SHETH",
     "room_type": "pothi_room",
-    "sort_order": 99
+    "sort_order": 105
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1016",
@@ -1693,7 +1693,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 100
+    "sort_order": 106
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1017",
@@ -1709,7 +1709,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 101
+    "sort_order": 107
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1018",
@@ -1725,7 +1725,7 @@
     "linked_pothi_id": null,
     "allotment_note": "LOWER+UPPER",
     "room_type": "general_room",
-    "sort_order": 102
+    "sort_order": 108
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1101",
@@ -1741,7 +1741,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 103
+    "sort_order": 109
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1102",
@@ -1757,7 +1757,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 104
+    "sort_order": 110
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1103",
@@ -1773,7 +1773,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 105
+    "sort_order": 111
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1104",
@@ -1789,7 +1789,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 106
+    "sort_order": 112
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1105",
@@ -1805,7 +1805,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 107
+    "sort_order": 113
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1106",
@@ -1821,7 +1821,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 108
+    "sort_order": 114
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1107",
@@ -1837,7 +1837,7 @@
     "linked_pothi_id": null,
     "allotment_note": "BHUJ SAMAJ (GENTS)",
     "room_type": "general_room",
-    "sort_order": 109
+    "sort_order": 115
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1108",
@@ -1853,7 +1853,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 110
+    "sort_order": 116
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1109",
@@ -1869,7 +1869,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 111
+    "sort_order": 117
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1110",
@@ -1885,7 +1885,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 112
+    "sort_order": 118
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1111",
@@ -1901,7 +1901,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 113
+    "sort_order": 119
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1112",
@@ -1917,7 +1917,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 114
+    "sort_order": 120
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1113",
@@ -1933,7 +1933,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 115
+    "sort_order": 121
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1114",
@@ -1949,7 +1949,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 116
+    "sort_order": 122
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1115",
@@ -1965,7 +1965,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 117
+    "sort_order": 123
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1116",
@@ -1981,7 +1981,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 118
+    "sort_order": 124
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1117",
@@ -1997,7 +1997,7 @@
     "linked_pothi_id": null,
     "allotment_note": "",
     "room_type": "general_room",
-    "sort_order": 119
+    "sort_order": 125
   },
   {
     "room_number": "YAX MANDIR / JAKHIBAI COMPLEX / 1118",
@@ -2013,7 +2013,7 @@
     "linked_pothi_id": null,
     "allotment_note": "LOWER+UPPER",
     "room_type": "general_room",
-    "sort_order": 120
+    "sort_order": 126
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 401",
@@ -2029,7 +2029,7 @@
     "linked_pothi_id": 46,
     "allotment_note": "MANJULABEN DAMODAR MUNDRA",
     "room_type": "pothi_room",
-    "sort_order": 121
+    "sort_order": 127
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 402",
@@ -2045,7 +2045,7 @@
     "linked_pothi_id": 6,
     "allotment_note": "CHUNILAL HARIDAS BHUTDA",
     "room_type": "private_room",
-    "sort_order": 122
+    "sort_order": 128
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 403",
@@ -2061,7 +2061,7 @@
     "linked_pothi_id": 6,
     "allotment_note": "CHUNILAL HARIDAS BHUTDA",
     "room_type": "private_room",
-    "sort_order": 123
+    "sort_order": 129
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 404",
@@ -2077,7 +2077,7 @@
     "linked_pothi_id": 6,
     "allotment_note": "CHUNILAL HARIDAS BHUTDA",
     "room_type": "private_room",
-    "sort_order": 124
+    "sort_order": 130
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 405",
@@ -2093,7 +2093,7 @@
     "linked_pothi_id": 6,
     "allotment_note": "CHUNILAL HARIDAS BHUTDA",
     "room_type": "pothi_room",
-    "sort_order": 125
+    "sort_order": 131
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 406",
@@ -2109,7 +2109,7 @@
     "linked_pothi_id": 7,
     "allotment_note": "DIPAK HARIDAS BHUTDA",
     "room_type": "pothi_room",
-    "sort_order": 126
+    "sort_order": 132
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 407",
@@ -2125,7 +2125,7 @@
     "linked_pothi_id": 1,
     "allotment_note": "HIRJI SHIVJI BHUTDA",
     "room_type": "private_room",
-    "sort_order": 127
+    "sort_order": 133
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 408",
@@ -2141,7 +2141,7 @@
     "linked_pothi_id": 4,
     "allotment_note": "SHANTILAL TULSIDAS BHUTDA",
     "room_type": "pothi_room",
-    "sort_order": 128
+    "sort_order": 134
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 409",
@@ -2157,7 +2157,7 @@
     "linked_pothi_id": 48,
     "allotment_note": "HIRJI VELJI NAVDHARE",
     "room_type": "pothi_room",
-    "sort_order": 129
+    "sort_order": 135
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 410",
@@ -2173,7 +2173,7 @@
     "linked_pothi_id": 35,
     "allotment_note": "SAMJI JIVRAJ MANDAN",
     "room_type": "pothi_room",
-    "sort_order": 130
+    "sort_order": 136
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 411",
@@ -2189,7 +2189,7 @@
     "linked_pothi_id": 17,
     "allotment_note": "RATNSHI RANCHOD CHANDAK",
     "room_type": "pothi_room",
-    "sort_order": 131
+    "sort_order": 137
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 412",
@@ -2205,7 +2205,7 @@
     "linked_pothi_id": 45,
     "allotment_note": "MAHENDRA HARIDAS MUNDRA",
     "room_type": "pothi_room",
-    "sort_order": 132
+    "sort_order": 138
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 413",
@@ -2221,7 +2221,7 @@
     "linked_pothi_id": 41,
     "allotment_note": "VIRJI UMRASHI MANDAN",
     "room_type": "pothi_room",
-    "sort_order": 133
+    "sort_order": 139
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 414",
@@ -2237,7 +2237,7 @@
     "linked_pothi_id": 35,
     "allotment_note": "SAMJI JIVARAJ MANDAN",
     "room_type": "pothi_room",
-    "sort_order": 134
+    "sort_order": 140
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 415",
@@ -2253,7 +2253,7 @@
     "linked_pothi_id": 66,
     "allotment_note": "JASWANTLALA H SHARDA",
     "room_type": "pothi_room",
-    "sort_order": 135
+    "sort_order": 141
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 416",
@@ -2269,7 +2269,7 @@
     "linked_pothi_id": 18,
     "allotment_note": "KHIMJI GOVINDJI KARVA",
     "room_type": "pothi_room",
-    "sort_order": 136
+    "sort_order": 142
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 501",
@@ -2285,7 +2285,7 @@
     "linked_pothi_id": 31,
     "allotment_note": "MAHENDRA MEGHJI MALL",
     "room_type": "pothi_room",
-    "sort_order": 137
+    "sort_order": 143
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 502",
@@ -2301,7 +2301,7 @@
     "linked_pothi_id": 28,
     "allotment_note": "DEVJI SAMJI MALL",
     "room_type": "pothi_room",
-    "sort_order": 138
+    "sort_order": 144
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 503",
@@ -2317,7 +2317,7 @@
     "linked_pothi_id": 29,
     "allotment_note": "MAHESH DEVJI MALL",
     "room_type": "pothi_room",
-    "sort_order": 139
+    "sort_order": 145
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 504",
@@ -2333,7 +2333,7 @@
     "linked_pothi_id": 62,
     "allotment_note": "BHUPENDRA VALLABHDAS RATHI",
     "room_type": "pothi_room",
-    "sort_order": 140
+    "sort_order": 146
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 505",
@@ -2349,7 +2349,7 @@
     "linked_pothi_id": 63,
     "allotment_note": "KANBAI JIVRAJ RATHI",
     "room_type": "pothi_room",
-    "sort_order": 141
+    "sort_order": 147
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 506",
@@ -2365,7 +2365,7 @@
     "linked_pothi_id": 64,
     "allotment_note": "LAXMIBEN MANJI RATHI",
     "room_type": "pothi_room",
-    "sort_order": 142
+    "sort_order": 148
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 507",
@@ -2381,7 +2381,7 @@
     "linked_pothi_id": 65,
     "allotment_note": "JAMNADAS MANJI RATHI",
     "room_type": "pothi_room",
-    "sort_order": 143
+    "sort_order": 149
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 508",
@@ -2397,7 +2397,7 @@
     "linked_pothi_id": 66,
     "allotment_note": "VAGJI MANJI RATHI",
     "room_type": "pothi_room",
-    "sort_order": 144
+    "sort_order": 150
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 509",
@@ -2413,7 +2413,7 @@
     "linked_pothi_id": 44,
     "allotment_note": "PITAMBAR DAMODAR MANIYAR",
     "room_type": "pothi_room",
-    "sort_order": 145
+    "sort_order": 151
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 510",
@@ -2429,7 +2429,7 @@
     "linked_pothi_id": 43,
     "allotment_note": "SHYAMSUNDAR DAMODAR MANIYAR",
     "room_type": "pothi_room",
-    "sort_order": 146
+    "sort_order": 152
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 511",
@@ -2445,7 +2445,7 @@
     "linked_pothi_id": 19,
     "allotment_note": "BHAVNJI GOVINDJI KARVA",
     "room_type": "pothi_room",
-    "sort_order": 147
+    "sort_order": 153
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 512",
@@ -2461,7 +2461,7 @@
     "linked_pothi_id": 20,
     "allotment_note": "LALJI GOVINDJI KARVA",
     "room_type": "pothi_room",
-    "sort_order": 148
+    "sort_order": 154
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 513",
@@ -2477,7 +2477,7 @@
     "linked_pothi_id": 25,
     "allotment_note": "LILDHAR GOVINDJI MALL",
     "room_type": "pothi_room",
-    "sort_order": 149
+    "sort_order": 155
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 514",
@@ -2493,7 +2493,7 @@
     "linked_pothi_id": 27,
     "allotment_note": "DAMODARODHVJI MALL",
     "room_type": "pothi_room",
-    "sort_order": 150
+    "sort_order": 156
   },
   {
     "room_number": "YAX MANDIR / S.P.M.COMPLEX / 515",
@@ -2509,7 +2509,7 @@
     "linked_pothi_id": 26,
     "allotment_note": "ODHVJI VIRJI MALL",
     "room_type": "pothi_room",
-    "sort_order": 151
+    "sort_order": 157
   },
   {
     "room_number": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 101",
@@ -2525,7 +2525,7 @@
     "linked_pothi_id": null,
     "allotment_note": "CHHAYABEN RAJENDRA SHETH",
     "room_type": "private_room",
-    "sort_order": 152
+    "sort_order": 158
   },
   {
     "room_number": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 102",
@@ -2541,7 +2541,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "private_room",
-    "sort_order": 153
+    "sort_order": 159
   },
   {
     "room_number": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 103",
@@ -2557,7 +2557,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "private_room",
-    "sort_order": 154
+    "sort_order": 160
   },
   {
     "room_number": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 104",
@@ -2573,7 +2573,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "private_room",
-    "sort_order": 155
+    "sort_order": 161
   },
   {
     "room_number": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 105",
@@ -2589,7 +2589,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 156
+    "sort_order": 162
   },
   {
     "room_number": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 106",
@@ -2605,7 +2605,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "private_room",
-    "sort_order": 157
+    "sort_order": 163
   },
   {
     "room_number": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 107",
@@ -2621,7 +2621,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 158
+    "sort_order": 164
   },
   {
     "room_number": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 108",
@@ -2637,7 +2637,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 159
+    "sort_order": 165
   },
   {
     "room_number": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 201",
@@ -2653,7 +2653,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 160
+    "sort_order": 166
   },
   {
     "room_number": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 202",
@@ -2669,7 +2669,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 161
+    "sort_order": 167
   },
   {
     "room_number": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 203",
@@ -2685,7 +2685,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 162
+    "sort_order": 168
   },
   {
     "room_number": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 204",
@@ -2701,7 +2701,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 163
+    "sort_order": 169
   },
   {
     "room_number": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 205",
@@ -2717,7 +2717,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 164
+    "sort_order": 170
   },
   {
     "room_number": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 206",
@@ -2733,7 +2733,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 165
+    "sort_order": 171
   },
   {
     "room_number": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 207",
@@ -2749,7 +2749,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 166
+    "sort_order": 172
   },
   {
     "room_number": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 208",
@@ -2765,7 +2765,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 167
+    "sort_order": 173
   },
   {
     "room_number": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 209",
@@ -2781,7 +2781,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 168
+    "sort_order": 174
   },
   {
     "room_number": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 210",
@@ -2797,7 +2797,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 169
+    "sort_order": 175
   },
   {
     "room_number": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 211",
@@ -2813,7 +2813,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 170
+    "sort_order": 176
   },
   {
     "room_number": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 212",
@@ -2829,7 +2829,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 171
+    "sort_order": 177
   },
   {
     "room_number": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 213",
@@ -2845,7 +2845,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 172
+    "sort_order": 178
   },
   {
     "room_number": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 214",
@@ -2861,7 +2861,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 173
+    "sort_order": 179
   },
   {
     "room_number": "V.B.C. / VAGAD BE CHOVISI (V.B.C.)R.T.O. / 101",
@@ -2877,7 +2877,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 174
+    "sort_order": 180
   },
   {
     "room_number": "V.B.C. / VAGAD BE CHOVISI (V.B.C.)R.T.O. / 102",
@@ -2893,7 +2893,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 175
+    "sort_order": 181
   },
   {
     "room_number": "V.B.C. / VAGAD BE CHOVISI (V.B.C.)R.T.O. / 103",
@@ -2909,7 +2909,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 176
+    "sort_order": 182
   },
   {
     "room_number": "V.B.C. / VAGAD BE CHOVISI (V.B.C.)R.T.O. / 104",
@@ -2925,7 +2925,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 177
+    "sort_order": 183
   },
   {
     "room_number": "V.B.C. / VAGAD BE CHOVISI (V.B.C.)R.T.O. / 201",
@@ -2941,7 +2941,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 178
+    "sort_order": 184
   },
   {
     "room_number": "V.B.C. / VAGAD BE CHOVISI (V.B.C.)R.T.O. / 202",
@@ -2957,7 +2957,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 179
+    "sort_order": 185
   },
   {
     "room_number": "V.B.C. / VAGAD BE CHOVISI (V.B.C.)R.T.O. / 203",
@@ -2973,7 +2973,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 180
+    "sort_order": 186
   },
   {
     "room_number": "V.B.C. / VAGAD BE CHOVISI (V.B.C.)R.T.O. / 204",
@@ -2989,7 +2989,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 181
+    "sort_order": 187
   },
   {
     "room_number": "V.B.C. / VAGAD BE CHOVISI (V.B.C.)R.T.O. / 301",
@@ -3005,7 +3005,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 182
+    "sort_order": 188
   },
   {
     "room_number": "V.B.C. / VAGAD BE CHOVISI (V.B.C.)R.T.O. / 302",
@@ -3021,7 +3021,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 183
+    "sort_order": 189
   },
   {
     "room_number": "V.B.C. / VAGAD BE CHOVISI (V.B.C.)R.T.O. / 303",
@@ -3037,7 +3037,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 184
+    "sort_order": 190
   },
   {
     "room_number": "V.B.C. / VAGAD BE CHOVISI (V.B.C.)R.T.O. / 304",
@@ -3053,7 +3053,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 185
+    "sort_order": 191
   },
   {
     "room_number": "V.B.C. / VAGAD BE CHOVISI (V.B.C.)R.T.O. / 305",
@@ -3069,7 +3069,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 186
+    "sort_order": 192
   },
   {
     "room_number": "V.B.C. / VAGAD BE CHOVISI (V.B.C.)R.T.O. / 306",
@@ -3085,7 +3085,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 187
+    "sort_order": 193
   },
   {
     "room_number": "V.B.C. / VAGAD BE CHOVISI (V.B.C.)R.T.O. / 307",
@@ -3101,7 +3101,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 188
+    "sort_order": 194
   },
   {
     "room_number": "V.B.C. / VAGAD BE CHOVISI (V.B.C.)R.T.O. / 308",
@@ -3117,7 +3117,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 189
+    "sort_order": 195
   },
   {
     "room_number": "V.B.C. / VAGAD BE CHOVISI (V.B.C.)R.T.O. / 309",
@@ -3133,7 +3133,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 190
+    "sort_order": 196
   },
   {
     "room_number": "V.B.C. / VAGAD BE CHOVISI (V.B.C.)R.T.O. / 310",
@@ -3149,7 +3149,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 191
+    "sort_order": 197
   },
   {
     "room_number": "V.B.C. / VAGAD BE CHOVISI (V.B.C.)R.T.O. / 311",
@@ -3165,7 +3165,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 192
+    "sort_order": 198
   },
   {
     "room_number": "V.B.C. / VAGAD BE CHOVISI (V.B.C.)R.T.O. / 312",
@@ -3181,7 +3181,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 193
+    "sort_order": 199
   },
   {
     "room_number": "V.B.C. / VAGAD BE CHOVISI (V.B.C.)R.T.O. / 221",
@@ -3197,7 +3197,7 @@
     "linked_pothi_id": null,
     "allotment_note": "HITESH MANGALDAS BHUTDA",
     "room_type": "private_room",
-    "sort_order": 194
+    "sort_order": 200
   },
   {
     "room_number": "V.B.C. / VAGAD BE CHOVISI (V.B.C.)R.T.O. / 222",
@@ -3213,7 +3213,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 195
+    "sort_order": 201
   },
   {
     "room_number": "V.B.C. / VAGAD BE CHOVISI (V.B.C.)R.T.O. / 223",
@@ -3229,7 +3229,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 196
+    "sort_order": 202
   },
   {
     "room_number": "V.B.C. / VAGAD BE CHOVISI (V.B.C.)R.T.O. / 224",
@@ -3245,7 +3245,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 197
+    "sort_order": 203
   },
   {
     "room_number": "V.B.C. / VAGAD BE CHOVISI (V.B.C.)R.T.O. / 321",
@@ -3261,7 +3261,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 198
+    "sort_order": 204
   },
   {
     "room_number": "V.B.C. / VAGAD BE CHOVISI (V.B.C.)R.T.O. / 322",
@@ -3277,7 +3277,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 199
+    "sort_order": 205
   },
   {
     "room_number": "V.B.C. / VAGAD BE CHOVISI (V.B.C.)R.T.O. / 323",
@@ -3293,7 +3293,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 200
+    "sort_order": 206
   },
   {
     "room_number": "V.B.C. / VAGAD BE CHOVISI (V.B.C.)R.T.O. / 324",
@@ -3309,7 +3309,7 @@
     "linked_pothi_id": null,
     "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 201
+    "sort_order": 207
   },
   {
     "room_number": "HOTEL / BHUJ VIEW HOTEL / 101",
@@ -3323,9 +3323,9 @@
     "total_capacity": 2,
     "owner_type": "SAMAJ",
     "linked_pothi_id": null,
-    "allotment_note": "MANOJBHAI KOTHARI",
+    "allotment_note": null,
     "room_type": "general_room",
-    "sort_order": 202
+    "sort_order": 208
   },
   {
     "room_number": "HOTEL / BHUJ VIEW HOTEL / 102",
@@ -3338,10 +3338,10 @@
     "extra_count": 3,
     "total_capacity": 5,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": 7,
+    "linked_pothi_id": 5,
     "allotment_note": "DIPAK LAXMIDAS BHUTADA",
     "room_type": "private_room",
-    "sort_order": 203
+    "sort_order": 209
   },
   {
     "room_number": "HOTEL / BHUJ VIEW HOTEL / 103",
@@ -3354,10 +3354,10 @@
     "extra_count": 1,
     "total_capacity": 3,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": 7,
+    "linked_pothi_id": 5,
     "allotment_note": "DIPAK LAXMIDAS BHUTADA",
     "room_type": "private_room",
-    "sort_order": 204
+    "sort_order": 210
   },
   {
     "room_number": "HOTEL / BHUJ VIEW HOTEL / 104",
@@ -3370,10 +3370,10 @@
     "extra_count": 1,
     "total_capacity": 3,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": 7,
+    "linked_pothi_id": 5,
     "allotment_note": "DIPAK LAXMIDAS BHUTADA",
     "room_type": "private_room",
-    "sort_order": 205
+    "sort_order": 211
   },
   {
     "room_number": "HOTEL / BHUJ VIEW HOTEL / 105",
@@ -3386,10 +3386,10 @@
     "extra_count": 3,
     "total_capacity": 5,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": 49,
-    "allotment_note": "HARESH HIRJI NAVDHARE",
+    "linked_pothi_id": 48,
+    "allotment_note": "HIRJI VELJI NAVDHARE",
     "room_type": "private_room",
-    "sort_order": 206
+    "sort_order": 212
   },
   {
     "room_number": "HOTEL / BHUJ VIEW HOTEL / 106",
@@ -3402,10 +3402,10 @@
     "extra_count": 3,
     "total_capacity": 5,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": 49,
-    "allotment_note": "HARESH HIRJI NAVDHARE",
+    "linked_pothi_id": 48,
+    "allotment_note": "HIRJI VELJI NAVDHARE",
     "room_type": "private_room",
-    "sort_order": 207
+    "sort_order": 213
   },
   {
     "room_number": "HOTEL / BHUJ VIEW HOTEL / 107",
@@ -3418,10 +3418,10 @@
     "extra_count": 1,
     "total_capacity": 3,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": 7,
+    "linked_pothi_id": 5,
     "allotment_note": "DIPAK LAXMIDAS BHUTADA",
     "room_type": "private_room",
-    "sort_order": 208
+    "sort_order": 214
   },
   {
     "room_number": "HOTEL / BHUJ VIEW HOTEL / 108",
@@ -3437,7 +3437,7 @@
     "linked_pothi_id": 16,
     "allotment_note": "ASHOK GOKALDAS BHEDAKIYA",
     "room_type": "private_room",
-    "sort_order": 209
+    "sort_order": 215
   },
   {
     "room_number": "HOTEL / BHUJ VIEW HOTEL / 109",
@@ -3453,7 +3453,7 @@
     "linked_pothi_id": 16,
     "allotment_note": "ASHOK GOKALDAS BHEDAKIYA",
     "room_type": "private_room",
-    "sort_order": 210
+    "sort_order": 216
   },
   {
     "room_number": "HOTEL / BHUJ VIEW HOTEL / 201",
@@ -3465,11 +3465,11 @@
     "bed_count": 2,
     "extra_count": 0,
     "total_capacity": 2,
-    "owner_type": "PRIVATE",
+    "owner_type": "SAMAJ",
     "linked_pothi_id": null,
-    "allotment_note": "BLANK",
-    "room_type": "private_room",
-    "sort_order": 211
+    "allotment_note": "KANTABEN CHAMPSI",
+    "room_type": "general_room",
+    "sort_order": 217
   },
   {
     "room_number": "HOTEL / BHUJ VIEW HOTEL / 202",
@@ -3483,9 +3483,9 @@
     "total_capacity": 5,
     "owner_type": "PRIVATE",
     "linked_pothi_id": 47,
-    "allotment_note": "TARACHAND VISHANJI MUNDADA",
+    "allotment_note": "VISHANJI UMARASHI MUNDADA",
     "room_type": "private_room",
-    "sort_order": 212
+    "sort_order": 218
   },
   {
     "room_number": "HOTEL / BHUJ VIEW HOTEL / 203",
@@ -3499,9 +3499,9 @@
     "total_capacity": 3,
     "owner_type": "PRIVATE",
     "linked_pothi_id": 47,
-    "allotment_note": "TARACHAND VISHANJI MUNDADA",
+    "allotment_note": "VISHANJI UMARASHI MUNDADA",
     "room_type": "private_room",
-    "sort_order": 213
+    "sort_order": 219
   },
   {
     "room_number": "HOTEL / BHUJ VIEW HOTEL / 204",
@@ -3513,11 +3513,11 @@
     "bed_count": 2,
     "extra_count": 1,
     "total_capacity": 3,
-    "owner_type": "PRIVATE",
-    "linked_pothi_id": 31,
-    "allotment_note": "MAHENDRA MEGHAJI GANDHI",
-    "room_type": "private_room",
-    "sort_order": 214
+    "owner_type": "SAMAJ",
+    "linked_pothi_id": null,
+    "allotment_note": "KHETSI BHAI MALL NASHIK",
+    "room_type": "general_room",
+    "sort_order": 220
   },
   {
     "room_number": "HOTEL / BHUJ VIEW HOTEL / 205",
@@ -3531,9 +3531,9 @@
     "total_capacity": 5,
     "owner_type": "PRIVATE",
     "linked_pothi_id": 47,
-    "allotment_note": "TARACHAND VISHANJI MUNDADA",
+    "allotment_note": "VISHANJI UMARASHI MUNDADA",
     "room_type": "private_room",
-    "sort_order": 215
+    "sort_order": 221
   },
   {
     "room_number": "HOTEL / BHUJ VIEW HOTEL / 206",
@@ -3547,9 +3547,9 @@
     "total_capacity": 5,
     "owner_type": "PRIVATE",
     "linked_pothi_id": 47,
-    "allotment_note": "TARACHAND VISHANJI MUNDADA",
+    "allotment_note": "VISHANJI UMARASHI MUNDADA",
     "room_type": "private_room",
-    "sort_order": 216
+    "sort_order": 222
   },
   {
     "room_number": "HOTEL / BHUJ VIEW HOTEL / 207",
@@ -3565,7 +3565,7 @@
     "linked_pothi_id": 20,
     "allotment_note": "LALJI GOVINDJI KARVA",
     "room_type": "private_room",
-    "sort_order": 217
+    "sort_order": 223
   },
   {
     "room_number": "HOTEL / BHUJ VIEW HOTEL / 208",
@@ -3578,10 +3578,10 @@
     "extra_count": 1,
     "total_capacity": 3,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": null,
-    "allotment_note": "KIRIT DAMODAR MALL",
+    "linked_pothi_id": 26,
+    "allotment_note": "ODHAVJI VIRJI MALL",
     "room_type": "private_room",
-    "sort_order": 218
+    "sort_order": 224
   },
   {
     "room_number": "HOTEL / BHUJ VIEW HOTEL / 209",
@@ -3594,10 +3594,10 @@
     "extra_count": 3,
     "total_capacity": 5,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": null,
-    "allotment_note": "KIRIT DAMODAR MALL",
+    "linked_pothi_id": 27,
+    "allotment_note": "DAMODAR ODHAVJI MALL",
     "room_type": "private_room",
-    "sort_order": 219
+    "sort_order": 225
   },
   {
     "room_number": "HOTEL / SMRUTI HILLS HOTEL / 101",
@@ -3609,11 +3609,11 @@
     "bed_count": 2,
     "extra_count": 2,
     "total_capacity": 4,
-    "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
-    "allotment_note": "DAMODAR RAMDAS MUNDRA",
-    "room_type": "general_room",
-    "sort_order": 220
+    "owner_type": "PRIVATE",
+    "linked_pothi_id": 46,
+    "allotment_note": "MANJULABEN DAMODAR MUNDRA",
+    "room_type": "private_room",
+    "sort_order": 226
   },
   {
     "room_number": "HOTEL / SMRUTI HILLS HOTEL / 102",
@@ -3625,11 +3625,11 @@
     "bed_count": 2,
     "extra_count": 2,
     "total_capacity": 4,
-    "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "owner_type": "PRIVATE",
+    "linked_pothi_id": 46,
     "allotment_note": "DAMODAR RAMDAS MUNDRA",
-    "room_type": "general_room",
-    "sort_order": 221
+    "room_type": "private_room",
+    "sort_order": 227
   },
   {
     "room_number": "HOTEL / SMRUTI HILLS HOTEL / 103",
@@ -3641,11 +3641,11 @@
     "bed_count": 2,
     "extra_count": 0,
     "total_capacity": 2,
-    "owner_type": "SAMAJ",
+    "owner_type": "PRIVATE",
     "linked_pothi_id": null,
-    "allotment_note": "BLANK",
-    "room_type": "general_room",
-    "sort_order": 222
+    "allotment_note": null,
+    "room_type": "private_room",
+    "sort_order": 228
   },
   {
     "room_number": "HOTEL / SMRUTI HILLS HOTEL / 104",
@@ -3657,11 +3657,11 @@
     "bed_count": 2,
     "extra_count": 2,
     "total_capacity": 4,
-    "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "owner_type": "PRIVATE",
+    "linked_pothi_id": 46,
     "allotment_note": "DAMODAR RAMDAS MUNDRA",
-    "room_type": "general_room",
-    "sort_order": 223
+    "room_type": "private_room",
+    "sort_order": 229
   },
   {
     "room_number": "HOTEL / SMRUTI HILLS HOTEL / 105",
@@ -3673,11 +3673,11 @@
     "bed_count": 2,
     "extra_count": 2,
     "total_capacity": 4,
-    "owner_type": "SAMAJ",
+    "owner_type": "PRIVATE",
     "linked_pothi_id": 30,
     "allotment_note": "NARESH JAMANADAS MALL DOMBIVALI",
-    "room_type": "pothi_room",
-    "sort_order": 224
+    "room_type": "private_room",
+    "sort_order": 230
   },
   {
     "room_number": "HOTEL / SMRUTI HILLS HOTEL / 106",
@@ -3689,11 +3689,11 @@
     "bed_count": 2,
     "extra_count": 2,
     "total_capacity": 4,
-    "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "owner_type": "PRIVATE",
+    "linked_pothi_id": 30,
     "allotment_note": "NARESH JAMANADAS MALL DOMBIVALI",
-    "room_type": "general_room",
-    "sort_order": 225
+    "room_type": "private_room",
+    "sort_order": 231
   },
   {
     "room_number": "HOTEL / SMRUTI HILLS HOTEL / 107",
@@ -3705,11 +3705,11 @@
     "bed_count": 2,
     "extra_count": 2,
     "total_capacity": 4,
-    "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "owner_type": "PRIVATE",
+    "linked_pothi_id": 30,
     "allotment_note": "NARESH JAMANADAS MALL DOMBIVALI",
-    "room_type": "general_room",
-    "sort_order": 226
+    "room_type": "private_room",
+    "sort_order": 232
   },
   {
     "room_number": "HOTEL / SMRUTI HILLS HOTEL / 108",
@@ -3721,11 +3721,11 @@
     "bed_count": 2,
     "extra_count": 2,
     "total_capacity": 4,
-    "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
-    "allotment_note": "BLANK",
-    "room_type": "general_room",
-    "sort_order": 227
+    "owner_type": "PRIVATE",
+    "linked_pothi_id": 5,
+    "allotment_note": "LAXMIDAS DEVJI BHUTADA",
+    "room_type": "private_room",
+    "sort_order": 233
   },
   {
     "room_number": "HOTEL / SMRUTI HILLS HOTEL / 201",
@@ -3737,11 +3737,11 @@
     "bed_count": 2,
     "extra_count": 2,
     "total_capacity": 4,
-    "owner_type": "SAMAJ",
+    "owner_type": "PRIVATE",
     "linked_pothi_id": null,
     "allotment_note": "MATHARADAS PADAMSHI MALL KHAPOLI",
-    "room_type": "general_room",
-    "sort_order": 228
+    "room_type": "private_room",
+    "sort_order": 234
   },
   {
     "room_number": "HOTEL / SMRUTI HILLS HOTEL / 202",
@@ -3753,11 +3753,11 @@
     "bed_count": 2,
     "extra_count": 2,
     "total_capacity": 4,
-    "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
-    "allotment_note": "MANISH JASWANTRAY SHARDA",
-    "room_type": "general_room",
-    "sort_order": 229
+    "owner_type": "PRIVATE",
+    "linked_pothi_id": 66,
+    "allotment_note": "JASAVANTLAL HARAKHALAL SHARDA",
+    "room_type": "private_room",
+    "sort_order": 235
   },
   {
     "room_number": "HOTEL / SMRUTI HILLS HOTEL / 203",
@@ -3769,11 +3769,11 @@
     "bed_count": 2,
     "extra_count": 2,
     "total_capacity": 4,
-    "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
-    "allotment_note": "MANISH JASWANTRAY SHARDA",
-    "room_type": "general_room",
-    "sort_order": 230
+    "owner_type": "PRIVATE",
+    "linked_pothi_id": 66,
+    "allotment_note": "JASAVANTLAL HARAKHALAL SHARDA",
+    "room_type": "private_room",
+    "sort_order": 236
   },
   {
     "room_number": "HOTEL / SMRUTI HILLS HOTEL / 204",
@@ -3785,11 +3785,11 @@
     "bed_count": 2,
     "extra_count": 2,
     "total_capacity": 4,
-    "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
-    "allotment_note": "MANISH JASWANTRAY SHARDA",
-    "room_type": "general_room",
-    "sort_order": 231
+    "owner_type": "PRIVATE",
+    "linked_pothi_id": 66,
+    "allotment_note": "JASAVANTLAL HARAKHALAL SHARDA",
+    "room_type": "private_room",
+    "sort_order": 237
   },
   {
     "room_number": "HOTEL / SMRUTI HILLS HOTEL / 205",
@@ -3801,11 +3801,11 @@
     "bed_count": 2,
     "extra_count": 2,
     "total_capacity": 4,
-    "owner_type": "SAMAJ",
+    "owner_type": "PRIVATE",
     "linked_pothi_id": 18,
     "allotment_note": "RAJESH KHIMJI KARVA",
-    "room_type": "pothi_room",
-    "sort_order": 232
+    "room_type": "private_room",
+    "sort_order": 238
   },
   {
     "room_number": "HOTEL / SMRUTI HILLS HOTEL / 206",
@@ -3817,11 +3817,11 @@
     "bed_count": 2,
     "extra_count": 2,
     "total_capacity": 4,
-    "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
+    "owner_type": "PRIVATE",
+    "linked_pothi_id": 18,
     "allotment_note": "RAJESH KHIMJI KARVA",
-    "room_type": "general_room",
-    "sort_order": 233
+    "room_type": "private_room",
+    "sort_order": 239
   },
   {
     "room_number": "HOTEL / SMRUTI HILLS HOTEL / 207",
@@ -3833,11 +3833,11 @@
     "bed_count": 2,
     "extra_count": 2,
     "total_capacity": 4,
-    "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
-    "allotment_note": "NATVARLALA SHETH",
-    "room_type": "general_room",
-    "sort_order": 234
+    "owner_type": "PRIVATE",
+    "linked_pothi_id": 68,
+    "allotment_note": "SHANTILAL BECHARDAS SHETH",
+    "room_type": "private_room",
+    "sort_order": 240
   },
   {
     "room_number": "HOTEL / SMRUTI HILLS HOTEL / 208",
@@ -3849,11 +3849,11 @@
     "bed_count": 2,
     "extra_count": 2,
     "total_capacity": 4,
-    "owner_type": "SAMAJ",
-    "linked_pothi_id": null,
-    "allotment_note": "NATVARLALA SHETH",
-    "room_type": "general_room",
-    "sort_order": 235
+    "owner_type": "PRIVATE",
+    "linked_pothi_id": 68,
+    "allotment_note": "SHANTILAL BECHARDAS SHETH",
+    "room_type": "private_room",
+    "sort_order": 241
   },
   {
     "room_number": "HOTEL / ATITHI HOTEL / 101",
@@ -3866,10 +3866,10 @@
     "extra_count": 2,
     "total_capacity": 4,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 55,
     "allotment_note": "DEVJI CHAMPSHI NAVDHARE",
     "room_type": "private_room",
-    "sort_order": 236
+    "sort_order": 242
   },
   {
     "room_number": "HOTEL / ATITHI HOTEL / 102",
@@ -3882,10 +3882,10 @@
     "extra_count": 2,
     "total_capacity": 4,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 56,
     "allotment_note": "DEVJI CHAMPSHI NAVDHARE",
     "room_type": "private_room",
-    "sort_order": 237
+    "sort_order": 243
   },
   {
     "room_number": "HOTEL / ATITHI HOTEL / 103",
@@ -3895,13 +3895,13 @@
     "floor": "F.F.",
     "ac_type": "A.C.",
     "bed_count": 2,
-    "extra_count": 2,
-    "total_capacity": 4,
+    "extra_count": 3,
+    "total_capacity": 5,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 55,
     "allotment_note": "DEVJI CHAMPSHI NAVDHARE",
     "room_type": "private_room",
-    "sort_order": 238
+    "sort_order": 244
   },
   {
     "room_number": "HOTEL / ATITHI HOTEL / 104",
@@ -3914,10 +3914,10 @@
     "extra_count": 2,
     "total_capacity": 4,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 56,
     "allotment_note": "DEVJI CHAMPSHI NAVDHARE",
     "room_type": "private_room",
-    "sort_order": 239
+    "sort_order": 245
   },
   {
     "room_number": "HOTEL / ATITHI HOTEL / 105",
@@ -3930,10 +3930,10 @@
     "extra_count": 2,
     "total_capacity": 4,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 55,
     "allotment_note": "DEVJI CHAMPSHI NAVDHARE",
     "room_type": "private_room",
-    "sort_order": 240
+    "sort_order": 246
   },
   {
     "room_number": "HOTEL / ATITHI HOTEL / 106",
@@ -3946,10 +3946,10 @@
     "extra_count": 2,
     "total_capacity": 4,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 56,
     "allotment_note": "DEVJI CHAMPSHI NAVDHARE",
     "room_type": "private_room",
-    "sort_order": 241
+    "sort_order": 247
   },
   {
     "room_number": "HOTEL / ATITHI HOTEL / 107",
@@ -3962,10 +3962,10 @@
     "extra_count": 2,
     "total_capacity": 4,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 55,
     "allotment_note": "DEVJI CHAMPSHI NAVDHARE",
     "room_type": "private_room",
-    "sort_order": 242
+    "sort_order": 248
   },
   {
     "room_number": "HOTEL / ATITHI HOTEL / 108",
@@ -3975,13 +3975,45 @@
     "floor": "F.F.",
     "ac_type": "A.C.",
     "bed_count": 2,
-    "extra_count": 2,
-    "total_capacity": 4,
+    "extra_count": 1,
+    "total_capacity": 3,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 56,
     "allotment_note": "DEVJI CHAMPSHI NAVDHARE",
     "room_type": "private_room",
-    "sort_order": 243
+    "sort_order": 249
+  },
+  {
+    "room_number": "HOTEL / ATITHI HOTEL / 109",
+    "venue_name": "HOTEL",
+    "section_name": "ATITHI HOTEL",
+    "source_room_number": "109",
+    "floor": "F.F.",
+    "ac_type": "A.C.",
+    "bed_count": 2,
+    "extra_count": 1,
+    "total_capacity": 3,
+    "owner_type": "PRIVATE",
+    "linked_pothi_id": 55,
+    "allotment_note": "DEVJI CHAMPSHI NAVDHARE",
+    "room_type": "private_room",
+    "sort_order": 250
+  },
+  {
+    "room_number": "HOTEL / ATITHI HOTEL / 110",
+    "venue_name": "HOTEL",
+    "section_name": "ATITHI HOTEL",
+    "source_room_number": "110",
+    "floor": "F.F.",
+    "ac_type": "A.C.",
+    "bed_count": 2,
+    "extra_count": 1,
+    "total_capacity": 3,
+    "owner_type": "PRIVATE",
+    "linked_pothi_id": 56,
+    "allotment_note": "DEVJI CHAMPSHI NAVDHARE",
+    "room_type": "private_room",
+    "sort_order": 251
   },
   {
     "room_number": "HOTEL / ATITHI HOTEL / 201",
@@ -3994,10 +4026,10 @@
     "extra_count": 2,
     "total_capacity": 4,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 55,
     "allotment_note": "DEVJI CHAMPSHI NAVDHARE",
     "room_type": "private_room",
-    "sort_order": 244
+    "sort_order": 252
   },
   {
     "room_number": "HOTEL / ATITHI HOTEL / 202",
@@ -4010,10 +4042,10 @@
     "extra_count": 2,
     "total_capacity": 4,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 56,
     "allotment_note": "DEVJI CHAMPSHI NAVDHARE",
     "room_type": "private_room",
-    "sort_order": 245
+    "sort_order": 253
   },
   {
     "room_number": "HOTEL / ATITHI HOTEL / 203",
@@ -4023,13 +4055,13 @@
     "floor": "S.F.",
     "ac_type": "A.C.",
     "bed_count": 2,
-    "extra_count": 2,
-    "total_capacity": 4,
+    "extra_count": 3,
+    "total_capacity": 5,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 55,
     "allotment_note": "DEVJI CHAMPSHI NAVDHARE",
     "room_type": "private_room",
-    "sort_order": 246
+    "sort_order": 254
   },
   {
     "room_number": "HOTEL / ATITHI HOTEL / 204",
@@ -4042,10 +4074,10 @@
     "extra_count": 2,
     "total_capacity": 4,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 56,
     "allotment_note": "DEVJI CHAMPSHI NAVDHARE",
     "room_type": "private_room",
-    "sort_order": 247
+    "sort_order": 255
   },
   {
     "room_number": "HOTEL / ATITHI HOTEL / 205",
@@ -4058,10 +4090,10 @@
     "extra_count": 2,
     "total_capacity": 4,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 55,
     "allotment_note": "DEVJI CHAMPSHI NAVDHARE",
     "room_type": "private_room",
-    "sort_order": 248
+    "sort_order": 256
   },
   {
     "room_number": "HOTEL / ATITHI HOTEL / 206",
@@ -4071,44 +4103,12 @@
     "floor": "S.F.",
     "ac_type": "A.C.",
     "bed_count": 2,
-    "extra_count": 2,
-    "total_capacity": 4,
+    "extra_count": 1,
+    "total_capacity": 3,
     "owner_type": "PRIVATE",
-    "linked_pothi_id": null,
+    "linked_pothi_id": 56,
     "allotment_note": "DEVJI CHAMPSHI NAVDHARE",
     "room_type": "private_room",
-    "sort_order": 249
-  },
-  {
-    "room_number": "HOTEL / ATITHI HOTEL / 207",
-    "venue_name": "HOTEL",
-    "section_name": "ATITHI HOTEL",
-    "source_room_number": "207",
-    "floor": "S.F.",
-    "ac_type": "A.C.",
-    "bed_count": 2,
-    "extra_count": 2,
-    "total_capacity": 4,
-    "owner_type": "PRIVATE",
-    "linked_pothi_id": null,
-    "allotment_note": "DEVJI CHAMPSHI NAVDHARE",
-    "room_type": "private_room",
-    "sort_order": 250
-  },
-  {
-    "room_number": "HOTEL / ATITHI HOTEL / 208",
-    "venue_name": "HOTEL",
-    "section_name": "ATITHI HOTEL",
-    "source_room_number": "208",
-    "floor": "S.F.",
-    "ac_type": "A.C.",
-    "bed_count": 2,
-    "extra_count": 2,
-    "total_capacity": 4,
-    "owner_type": "PRIVATE",
-    "linked_pothi_id": null,
-    "allotment_note": "DEVJI CHAMPSHI NAVDHARE",
-    "room_type": "private_room",
-    "sort_order": 251
+    "sort_order": 257
   }
 ]

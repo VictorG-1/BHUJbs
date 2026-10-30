@@ -102,6 +102,7 @@ export type Pothi = {
 };
 
 export type RoomInventory = {
+  id?: string;
   room_number: string;
   venue_name: string;
   section_name: string;
@@ -145,7 +146,8 @@ export type AdminMemberRow = {
     private_room_number: string | null;
   } | null;
   room_allocations: {
+    id?: string | null;
     room_id?: string | null;
-    rooms: { room_number: string; venue_name?: string | null; section_name?: string | null } | null;
+    rooms: { room_number: string; venue_name?: string | null; section_name?: string | null; source_room_number?: string | null } | null;
   }[];
 };

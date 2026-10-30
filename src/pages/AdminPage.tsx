@@ -4,12 +4,14 @@ import QRCode from "qrcode";
 import type { Session } from "@supabase/supabase-js";
 import fallbackPothisData from "../data/pothis.json";
 import fallbackRoomsData from "../data/rooms.json";
+import { GuestEditorPanel } from "../components/GuestEditorPanel";
 import { PothiGrid } from "../components/PothiGrid";
 import { qrPayload } from "../components/MemberQrCode";
 import { StatusPill } from "../components/StatusPill";
 import { cancelRegistration, downloadAdminWorkbook, downloadExportData, registerFamily } from "../lib/api";
 import { supabase } from "../lib/supabase";
 import type { AdminMemberRow, FamilyMemberInput, Pothi, RoomInventory } from "../lib/types";
+import { shortRoom, shortVenue } from "../lib/venueLabels";
 
 type Language = "en" | "gu";
 
@@ -31,6 +33,7 @@ async function fetchAllPages<T>(
 
 function normalizeRoom(room: Partial<RoomInventory> & { capacity?: number | null }): RoomInventory {
   return {
+    id: room.id,
     room_number: room.room_number ?? "",
     venue_name: room.venue_name ?? "",
     section_name: room.section_name ?? "",
@@ -49,12 +52,11 @@ function normalizeRoom(room: Partial<RoomInventory> & { capacity?: number | null
 }
 
 function venueTabName(room: RoomInventory) {
-  return room.venue_name.toUpperCase() === "HOTEL" && room.section_name ? room.section_name : room.venue_name;
+  return shortVenue(room);
 }
 
-function roomIdentity(room: { room_number: string; venue_name?: string | null; section_name?: string | null }) {
-  const venue = room.venue_name?.toUpperCase() === "HOTEL" && room.section_name ? room.section_name : room.venue_name ?? "";
-  return `${venue}::${room.room_number}`;
+function roomIdentity(room: { room_number: string; venue_name?: string | null; section_name?: string | null; source_room_number?: string | null }) {
+  return `${shortVenue(room)}::${room.source_room_number || room.room_number}`;
 }
 
 function normalizeAdminMembers(value: unknown): AdminMemberRow[] {
@@ -256,7 +258,7 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
         fetchAllPages((from, to) =>
           supabase
             .from("members")
-            .select("id, name, age, gender, mobile, arrival_date, departure_date, is_head, created_at, qr_token, qr_revoked_at, families(id, registration_code, head_name, head_mobile, city, wants_stay, stay_from, stay_to, pothi_id, reference_pothi_id, registration_type, private_room_number), room_allocations(room_id, rooms(room_number, venue_name, section_name))")
+            .select("id, name, age, gender, mobile, arrival_date, departure_date, is_head, created_at, qr_token, qr_revoked_at, families(id, registration_code, head_name, head_mobile, city, wants_stay, stay_from, stay_to, pothi_id, reference_pothi_id, registration_type, private_room_number), room_allocations(id, room_id, rooms(room_number, venue_name, section_name, source_room_number))")
             .order("name")
             .order("id")
             .range(from, to)
@@ -265,7 +267,7 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
         fetchAllPages((from, to) =>
           supabase
             .from("rooms")
-            .select("room_number, venue_name, section_name, source_room_number, floor, ac_type, bed_count, extra_count, capacity, owner_type, linked_pothi_id, allotment_note, room_type, sort_order")
+            .select("id, room_number, venue_name, section_name, source_room_number, floor, ac_type, bed_count, extra_count, capacity, owner_type, linked_pothi_id, allotment_note, room_type, sort_order")
             .order("sort_order")
             .order("room_number")
             .range(from, to)
@@ -354,7 +356,8 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
       return {
         room_number: allocatedRoom.room_number,
         venue_name: allocatedRoom.venue_name ?? "",
-        section_name: allocatedRoom.section_name ?? ""
+        section_name: allocatedRoom.section_name ?? "",
+        source_room_number: allocatedRoom.source_room_number ?? ""
       };
     }
 
@@ -376,7 +379,12 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
       : undefined;
 
     return fallbackRoom
-      ? { room_number: fallbackRoom.room_number, venue_name: venueTabName(fallbackRoom), section_name: fallbackRoom.section_name }
+      ? {
+        room_number: fallbackRoom.room_number,
+        venue_name: fallbackRoom.venue_name,
+        section_name: fallbackRoom.section_name,
+        source_room_number: fallbackRoom.source_room_number
+      }
       : null;
   }
 
@@ -387,33 +395,20 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
       const roomDetails = roomDetailsForMember(member);
       const room = roomDetails?.room_number ?? "";
       const pothi = family?.pothi_id ?? family?.reference_pothi_id ?? "";
-      const memberVenue = roomDetails?.venue_name?.toUpperCase() === "HOTEL" && roomDetails?.section_name
-        ? roomDetails.section_name
-        : roomDetails?.venue_name ?? "";
+      const memberVenue = roomDetails ? shortVenue(roomDetails) : "";
       if (searchVenue !== "all" && memberVenue !== searchVenue) return false;
       if (searchType !== "all" && family?.registration_type !== searchType) return false;
       if (searchPothi !== "all" && String(pothi) !== searchPothi) return false;
       const addedDate = member.created_at?.slice(0, 10) ?? "";
       if (addedFrom && (!addedDate || addedDate < addedFrom)) return false;
       if (addedTo && (!addedDate || addedDate > addedTo)) return false;
-      const haystack = [member.name, member.mobile, family?.head_name, family?.head_mobile, family?.city, room, pothi, family?.registration_type]
+      const haystack = [member.name, member.mobile, family?.head_name, family?.head_mobile, family?.city, room, roomDetails ? shortRoom(roomDetails) : "", roomDetails ? shortVenue(roomDetails) : "", pothi, family?.registration_type]
         .filter(Boolean)
         .join(" ")
         .toLowerCase();
       return !query || haystack.includes(query);
     });
   }, [addedFrom, addedTo, masterSearch, members, roomsInventory, searchPothi, searchType, searchVenue]);
-
-  const occupiedRooms = useMemo(() => {
-    const map = new Map<string, AdminMemberRow[]>();
-    for (const member of members) {
-      const room = roomDetailsForMember(member);
-      if (!room?.room_number) continue;
-      const key = roomIdentity(room);
-      map.set(key, [...(map.get(key) ?? []), member]);
-    }
-    return [...map.entries()].sort(([a], [b]) => a.localeCompare(b));
-  }, [members, roomsInventory]);
 
   const roomAllocationBoard = useMemo(() => {
     const occupancy = new Map<string, AdminMemberRow[]>();
@@ -433,7 +428,7 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
         const query = masterSearch.trim().toLowerCase();
         if (!query) return true;
         const occupants = occupancy.get(roomIdentity(room)) ?? [];
-        return [room.room_number, room.venue_name, room.section_name, room.room_type, room.owner_type, room.linked_pothi_id, ...occupants.flatMap((member) => [member.name, member.mobile, member.families?.head_name, member.families?.head_mobile])]
+        return [shortRoom(room), shortVenue(room), room.room_number, room.venue_name, room.section_name, room.room_type, room.owner_type, room.linked_pothi_id, ...occupants.flatMap((member) => [member.name, member.mobile, member.families?.head_name, member.families?.head_mobile])]
           .filter(Boolean)
           .join(" ")
           .toLowerCase()
@@ -489,10 +484,8 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
           pothi: registrationType === "general_room"
             ? "General"
             : family?.pothi_id ?? family?.reference_pothi_id ?? "",
-          venue: roomDetails?.venue_name?.toUpperCase() === "HOTEL" && roomDetails.section_name
-            ? roomDetails.section_name
-            : roomDetails?.venue_name ?? "",
-          room: roomDetails?.room_number ?? ""
+          venue: roomDetails ? shortVenue(roomDetails) : "",
+          room: roomDetails ? shortRoom(roomDetails) : ""
         };
       }),
     [members, roomsInventory]
@@ -662,56 +655,22 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
   }
 
   return (
-    <section className="page-section">
-      <div className="admin-shell">
-        <div className="admin-hero">
-          <div className="dashboard-hero dashboard-hero-wide">
+    <section className="page-section admin-simple">
+      <div className="dashboard-panel dashboard-panel-surface">
+        <div className="panel-header panel-header-inline">
+          <div>
             <p className="eyebrow">{t.eyebrow}</p>
-            <h1>{t.title}</h1>
-            <p>{t.subtitle}</p>
-          </div>
-          <div className="admin-hero-meta">
-            <div>
-              <span>{language === "gu" ? "મોડ" : "Mode"}</span>
-              <strong>{language === "gu" ? "લાઇવ" : "Live"}</strong>
-            </div>
-            <div>
-              <span>{language === "gu" ? "પોથી" : "Pothis"}</span>
-              <strong>{stats.occupiedPothis}/{pothis.length}</strong>
-            </div>
-            <div>
-              <span>{language === "gu" ? "રૂમ" : "Rooms"}</span>
-              <strong>{roomsInventory.length}</strong>
-            </div>
+            <h1>{language === "gu" ? "મહેમાન અને રૂમ" : "Guests and rooms"}</h1>
           </div>
           <div className="admin-actions admin-actions-bar">
-            <button className="secondary" type="button" onClick={() => void load()} disabled={loading}>{loading ? (language === "gu" ? "લોડ થઈ રહ્યું છે..." : "Refreshing...") : (language === "gu" ? "રિફ્રેશ" : "Refresh data")}</button>
-            <button className="secondary" onClick={handleWorkbookExport}>{language === "gu" ? "એક્સેલ વર્કબુક" : "Excel workbook"}</button>
-            <button className="secondary" onClick={handleExport}>{t.exportCsv}</button>
-            <button className="secondary" onClick={handleQrBulkDownload}>{language === "gu" ? "બધા QR ડાઉનલોડ" : "Download all QR codes"}</button>
-            <button className="secondary" onClick={downloadScanLog}>{language === "gu" ? "સ્કેન લોગ" : "Export scan log"}</button>
-            <a className="secondary button-link" href="/scanner">QR scanner</a>
+            <button className="secondary" type="button" onClick={() => void load()} disabled={loading}>{loading ? (language === "gu" ? "લોડ..." : "Loading...") : (language === "gu" ? "રિફ્રેશ" : "Refresh")}</button>
+            <button className="secondary" onClick={handleWorkbookExport}>{language === "gu" ? "એક્સેલ" : "Excel"}</button>
             <button className="secondary" onClick={() => supabase.auth.signOut()}>{t.signOut}</button>
           </div>
         </div>
-      </div>
-
-      <div className="dashboard-panel dashboard-panel-hero">
-        <div className="panel-header panel-header-inline">
-          <div>
-            <h2>{language === "gu" ? "ઝાંખી" : "Overview"}</h2>
-            <p>{language === "gu" ? "એક નજરમાં નોંધણી, રૂમ અને પોથી સ્થિતિ." : "A quick read on registrations, rooms and pothis."}</p>
-          </div>
-          <div className="summary-note">
-            <span>{language === "gu" ? "તૈયાર" : "Ready"}</span>
-            <strong>{language === "gu" ? "લાઇવ ડેશબોર્ડ" : "Live dashboard"}</strong>
-          </div>
-        </div>
         <div className="metric-row admin-metric-row">
-          <div><strong>{stats.families}</strong><span>{t.families}</span></div>
           <div><strong>{stats.members}</strong><span>{t.members}</span></div>
-          <div><strong>{stats.pothiRooms}</strong><span>{t.pothiRooms}</span></div>
-          <div><strong>{stats.privateRooms}</strong><span>{t.privateRooms}</span></div>
+          <div><strong>{stats.families}</strong><span>{t.families}</span></div>
           <div><strong>{stats.generalRooms}</strong><span>{t.generalRooms}</span></div>
           <div><strong>{stats.occupiedPothis}/{pothis.length}</strong><span>{t.pothis}</span></div>
         </div>
@@ -748,13 +707,54 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
         </div>
       </div>
 
-      <div className="dashboard-panel dashboard-panel-surface admin-registration-panel">
+      <GuestEditorPanel
+        language={language}
+        members={filtered}
+        rooms={roomsInventory}
+        onSaved={load}
+        onStatus={setStatus}
+        onCancelGuest={cancelReservation}
+      />
+
+      <div className="dashboard-panel dashboard-panel-surface">
         <div className="panel-header panel-header-inline">
           <div>
-            <h2>{t.adminRegisterTitle}</h2>
-            <p>{t.adminRegisterText}</p>
+            <h2>{language === "gu" ? "રૂમ" : "Rooms"}</h2>
+            <p>{language === "gu" ? "ટૂંકા વેન્યુ નામ સાથે ઓક્યુપન્સી." : "Occupancy with short venue names."}</p>
           </div>
         </div>
+        <div className="venue-tabs" role="tablist" aria-label={language === "gu" ? "વેન્યુ પસંદ કરો" : "Select venue"}>
+          <button type="button" className={selectedVenue === "all" ? "active" : "secondary"} onClick={() => setSelectedVenue("all")}>
+            {language === "gu" ? "ભરાયેલા" : "Occupied"}
+          </button>
+          {venueNames.map((venue) => (
+            <button type="button" key={venue} className={selectedVenue === venue ? "active" : "secondary"} onClick={() => setSelectedVenue(venue)}>
+              {venue}
+            </button>
+          ))}
+        </div>
+        <div className="room-allocation-board">
+          {(selectedVenue === "all" ? roomAllocationBoard.filter((item) => item.occupants.length) : roomAllocationBoard).map(({ room, occupants }) => (
+            <article className="room-allocation-card" key={room.room_number}>
+              <div className="room-allocation-head">
+                <div>
+                  <strong>{shortRoom(room)}</strong>
+                  <small>{shortVenue(room)} · {room.total_capacity}</small>
+                </div>
+                <StatusPill tone={occupants.length >= room.total_capacity ? "red" : occupants.length > 0 ? "amber" : "gray"}>
+                  {occupants.length}/{room.total_capacity}
+                </StatusPill>
+              </div>
+              <div className="allocation-occupants">
+                {occupants.length ? occupants.map((member) => <span key={member.id}>{member.name}</span>) : <span>{language === "gu" ? "ખાલી" : "Vacant"}</span>}
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+
+      <details className="dashboard-panel dashboard-panel-surface">
+        <summary>{language === "gu" ? "વધુ ટૂલ્સ" : "More tools"}</summary>
         <form className="admin-pothi-form" onSubmit={handleAdminPothiRegistration}>
           <select value={adminPothiId} onChange={(event) => setAdminPothiId(event.target.value)} required>
             <option value="">{t.selectPothi}</option>
@@ -776,123 +776,15 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
             ))}
           </div>
           <div className="button-row">
-            <button type="button" className="secondary" disabled={adminMembers.length >= (roomsInventory.find((room) => room.linked_pothi_id === Number(adminPothiId) && room.owner_type === "SAMAJ" && room.room_type === "pothi_room")?.total_capacity ?? 4)} onClick={() => setAdminMembers((current) => [...current, { name: "", age: 18, gender: "male", mobile: "" }])}>{t.addPerson}</button>
+            <button type="button" className="secondary" onClick={() => setAdminMembers((current) => [...current, { name: "", age: 18, gender: "male", mobile: "" }])}>{t.addPerson}</button>
             <button type="submit" className="primary" disabled={adminSaving}>{adminSaving ? t.savingRegistration : t.saveRegistration}</button>
+            <button className="secondary" type="button" onClick={handleExport}>{t.exportCsv}</button>
+            <button className="secondary" type="button" onClick={handleQrBulkDownload}>{language === "gu" ? "QR" : "QR codes"}</button>
+            <button className="secondary" type="button" onClick={downloadScanLog}>{language === "gu" ? "સ્કેન લોગ" : "Scan log"}</button>
           </div>
         </form>
-      </div>
-
-      <div className="dashboard-panel dashboard-panel-surface">
-        <div className="panel-header panel-header-inline">
-          <div><h2>{language === "gu" ? "QR સ્કેન રેકોર્ડ" : "QR scan record"}</h2><p>{language === "gu" ? "તાજેતરના માન્ય પ્રવેશ સ્કેન." : "Recent QR validations recorded during the event."}</p></div>
-        </div>
-        <div className="table-wrap">
-          <table><thead><tr><th>{t.name}</th><th>{language === "gu" ? "પ્રકાર" : "Scan type"}</th><th>{language === "gu" ? "સમય" : "Scanned at"}</th></tr></thead>
-            <tbody>{scanLogs.map((scan) => <tr key={scan.id}><td>{scan.members?.name ?? "-"}</td><td>{scan.scan_type}</td><td>{new Date(scan.scanned_at).toLocaleString()}</td></tr>)}{!scanLogs.length ? <tr><td colSpan={3}>{language === "gu" ? "હજી કોઈ સ્કેન નથી." : "No QR scans recorded yet."}</td></tr> : null}</tbody>
-          </table>
-        </div>
-      </div>
-
-      <div className="admin-grid">
-        <div className="dashboard-panel dashboard-panel-surface">
-          <div className="panel-header panel-header-inline">
-            <div>
-              <h2>{t.guestList}</h2>
-              <p>{language === "gu" ? "તમામ મહેમાનો અને તેમના રૂમ સ્ટેટસ." : "All guests and their room status."}</p>
-            </div>
-          </div>
-          <div className="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>{t.name}</th>
-                  <th>{t.family}</th>
-                  <th>{t.pothis}</th>
-                  <th>{t.type}</th>
-                  <th>{language === "gu" ? "વેન્યુ" : "Venue"}</th>
-                  <th>{t.room}</th>
-                  <th>{language === "gu" ? "રિઝર્વેશન" : "Reservation"}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filtered.map((member) => (
-                  <tr key={member.id}>
-                    <td>{member.name}</td>
-                    <td>{member.families?.head_name}</td>
-                    <td>{member.families?.registration_type === "general_room"
-                      ? "General"
-                      : member.families?.pothi_id ?? member.families?.reference_pothi_id ?? "-"}</td>
-                    <td>
-                      {member.families?.registration_type === "pothi_room" ? (
-                        <StatusPill tone="amber">{t.yajmanRoom}</StatusPill>
-                      ) : member.families?.registration_type === "general_room" ? (
-                        <StatusPill tone="green">{t.generalRoomGuests}</StatusPill>
-                      ) : (
-                        <StatusPill tone="blue">{t.privateRoomGuests}</StatusPill>
-                      )}
-                    </td>
-                    <td>{roomDetailsForMember(member)?.venue_name ?? "-"}</td>
-                    <td>{roomDetailsForMember(member)?.room_number ?? "-"}</td>
-                    <td><button type="button" className="table-action" disabled={!member.families?.id} onClick={() => void cancelReservation(member)}>{member.is_head ? t.cancelReservation : t.cancelGuest}</button></td>
-                  </tr>
-                ))}
-                {!filtered.length ? (
-                  <tr>
-                    <td colSpan={7}>{t.noRows}</td>
-                  </tr>
-                ) : null}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <aside className="dashboard-panel sticky-panel dashboard-panel-surface">
-          <div className="panel-header panel-header-inline">
-            <div>
-              <h2>{t.pothiOccupancy}</h2>
-              <p>{language === "gu" ? "ખાલી અને ભરાયેલ પોથીઓનું દૃશ્ય." : "Open and occupied pothis at a glance."}</p>
-            </div>
-          </div>
-          <PothiGrid pothis={pothis} />
-        </aside>
-      </div>
-
-      <div className="dashboard-panel dashboard-panel-surface">
-        <div className="panel-header panel-header-inline">
-          <div>
-            <h2>{t.registeredView}</h2>
-            <p>{language === "gu" ? "વેન્યુ પ્રમાણે જુદું પાડેલ રૂમ અને ઓક્યુપન્સી વિહંગાવલોકન." : "Venue-segregated room and occupancy view."}</p>
-          </div>
-        </div>
-        <div className="venue-tabs" role="tablist" aria-label={language === "gu" ? "વેન્યુ પસંદ કરો" : "Select venue"}>
-          <button type="button" className={selectedVenue === "all" ? "active" : "secondary"} onClick={() => setSelectedVenue("all")}>
-            {language === "gu" ? "બધા વેન્યુ" : "All venues"}
-          </button>
-          {venueNames.map((venue) => (
-            <button type="button" key={venue} className={selectedVenue === venue ? "active" : "secondary"} onClick={() => setSelectedVenue(venue)}>
-              {venue}
-            </button>
-          ))}
-        </div>
-        <div className="room-allocation-board">
-          {roomAllocationBoard.map(({ room, occupants }) => (
-            <article className="room-allocation-card" key={room.room_number}>
-              <div className="room-allocation-head">
-                <div>
-                  <strong>{room.room_number}</strong>
-                  <small>{room.total_capacity} {language === "gu" ? "ક્ષમતા" : "capacity"}</small>
-                </div>
-                <StatusPill tone={occupants.length >= room.total_capacity ? "red" : occupants.length > 0 ? "amber" : "gray"}>
-                  {occupants.length}/{room.total_capacity}
-                </StatusPill>
-              </div>
-              <div className="allocation-occupants">
-                {occupants.length ? occupants.map((member) => <span key={member.id}>{member.name}</span>) : <span>{language === "gu" ? "ખાલી" : "Vacant"}</span>}
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
+        <PothiGrid pothis={pothis} />
+      </details>
     </section>
   );
 }
