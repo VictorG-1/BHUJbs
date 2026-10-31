@@ -664,7 +664,10 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
           </div>
           <div className="admin-actions admin-actions-bar">
             <button className="secondary" type="button" onClick={() => void load()} disabled={loading}>{loading ? (language === "gu" ? "લોડ..." : "Loading...") : (language === "gu" ? "રિફ્રેશ" : "Refresh")}</button>
-            <button className="secondary" onClick={handleWorkbookExport}>{language === "gu" ? "એક્સેલ" : "Excel"}</button>
+            <button className="secondary" type="button" onClick={handleWorkbookExport}>{language === "gu" ? "એક્સેલ" : "Excel"}</button>
+            <button className="secondary" type="button" onClick={() => void handleExport()}>{t.exportCsv}</button>
+            <button className="secondary" type="button" onClick={() => void handleQrBulkDownload()}>{language === "gu" ? "QR" : "QR codes"}</button>
+            <button className="secondary" type="button" onClick={downloadScanLog}>{language === "gu" ? "સ્કેન લોગ" : "Scan log"}</button>
             <button className="secondary" onClick={() => supabase.auth.signOut()}>{t.signOut}</button>
           </div>
         </div>
@@ -799,9 +802,6 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
           <div className="button-row">
             <button type="button" className="secondary" onClick={() => setAdminMembers((current) => [...current, { name: "", age: 18, gender: "male", mobile: "" }])}>{t.addPerson}</button>
             <button type="submit" className="primary" disabled={adminSaving}>{adminSaving ? t.savingRegistration : t.saveRegistration}</button>
-            <button className="secondary" type="button" onClick={handleExport}>{t.exportCsv}</button>
-            <button className="secondary" type="button" onClick={handleQrBulkDownload}>{language === "gu" ? "QR" : "QR codes"}</button>
-            <button className="secondary" type="button" onClick={downloadScanLog}>{language === "gu" ? "સ્કેન લોગ" : "Scan log"}</button>
           </div>
         </form>
         <PothiGrid

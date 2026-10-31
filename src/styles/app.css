@@ -788,7 +788,8 @@ h2 {
 }
 
 .admin-actions-bar {
-  justify-content: space-between;
+  justify-content: flex-end;
+  flex-wrap: wrap;
 }
 
 .sticky-panel {
@@ -1938,7 +1939,7 @@ th {
   .admin-actions-bar {
     justify-content: flex-start;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0.55rem;
   }
 
