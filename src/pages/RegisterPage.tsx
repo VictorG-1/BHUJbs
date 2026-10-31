@@ -331,9 +331,7 @@ export function RegisterPage({ language = "en", startAt = "home" }: RegisterPage
       .then(({ data, error }) => {
         if (!error && data?.length) {
           const liveById = new Map((data as Pothi[]).map((pothi) => [pothi.id, pothi]));
-          const merged = fallbackPothis.map((fallback) => ({ ...fallback, ...liveById.get(fallback.id) }));
-          const extraLivePothis = (data as Pothi[]).filter((pothi) => !fallbackPothis.some((fallback) => fallback.id === pothi.id));
-          setPothis([...merged, ...extraLivePothis]);
+          setPothis(fallbackPothis.map((fallback) => ({ ...fallback, ...liveById.get(fallback.id) })));
         }
       });
   }, []);

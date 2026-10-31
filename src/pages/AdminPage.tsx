@@ -277,7 +277,7 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
       const [{ data: memberData, error: memberError }, { data: pothiData, error: pothiError }, { data: roomData, error: roomError }, { data: scanData, error: scanError }] = results;
 
       if (!memberError) setMembers(normalizeAdminMembers(memberData));
-      if (!pothiError) setPothis((pothiData ?? []) as Pothi[]);
+      if (!pothiError) setPothis(((pothiData ?? []) as Pothi[]).filter((pothi) => pothi.id >= 1 && pothi.id <= 74));
       if (!roomError) setRoomsInventory(((roomData ?? []) as Array<RoomInventory & { capacity?: number | null }>).map(normalizeRoom));
       if (!scanError) setScanLogs((scanData ?? []) as typeof scanLogs);
       const errors = [memberError, pothiError, roomError, scanError].filter(Boolean).map((error) => error!.message);
@@ -678,6 +678,25 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
 
       {status ? <p className="form-message">{status}</p> : null}
 
+      <div className="dashboard-panel dashboard-panel-surface pothi-occupancy-panel">
+        <div className="panel-header panel-header-inline">
+          <div>
+            <h2>{t.pothiOccupancy}</h2>
+            <p>{language === "gu" ? "ચેકબોક્સ ટિક થયેલ હોય તો પોથી ભરાયેલી છે. ક્લિક કરીને ફિલ્ટર કરો." : "Checked boxes are occupied pothis. Click a number to filter the dashboard."}</p>
+          </div>
+          <div className="pothi-occupancy-legend">
+            <span className="pothi-legend-item occupied"><input type="checkbox" checked readOnly tabIndex={-1} aria-hidden="true" /> {language === "gu" ? "ભરાયેલી" : "Occupied"}</span>
+            <span className="pothi-legend-item"><input type="checkbox" readOnly tabIndex={-1} aria-hidden="true" /> {language === "gu" ? "ખાલી" : "Open"}</span>
+            <strong>{stats.occupiedPothis}/{pothis.length}</strong>
+          </div>
+        </div>
+        <PothiGrid
+          pothis={pothis}
+          selected={searchPothi === "all" ? undefined : Number(searchPothi)}
+          onSelect={(id) => setSearchPothi((current) => current === String(id) ? "all" : String(id))}
+        />
+      </div>
+
       <div className="dashboard-panel dashboard-panel-surface">
         <div className="panel-header panel-header-inline">
           <div>
@@ -756,12 +775,14 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
       <details className="dashboard-panel dashboard-panel-surface">
         <summary>{language === "gu" ? "વધુ ટૂલ્સ" : "More tools"}</summary>
         <form className="admin-pothi-form" onSubmit={handleAdminPothiRegistration}>
-          <select value={adminPothiId} onChange={(event) => setAdminPothiId(event.target.value)} required>
-            <option value="">{t.selectPothi}</option>
-            {pothis.filter((pothi) => !pothi.family_id).map((pothi) => <option key={pothi.id} value={pothi.id}>Pothi {pothi.id}</option>)}
-          </select>
-          <label><span>{language === "gu" ? "થી" : "Stay from"}</span><input type="date" value={adminStayFrom} onChange={(event) => setAdminStayFrom(event.target.value)} required /></label>
-          <label><span>{language === "gu" ? "સુધી" : "Stay to"}</span><input type="date" value={adminStayTo} onChange={(event) => setAdminStayTo(event.target.value)} required /></label>
+          <div className="admin-pothi-form-top">
+            <select value={adminPothiId} onChange={(event) => setAdminPothiId(event.target.value)} required>
+              <option value="">{t.selectPothi}</option>
+              {pothis.filter((pothi) => !pothi.family_id).map((pothi) => <option key={pothi.id} value={pothi.id}>Pothi {pothi.id}</option>)}
+            </select>
+            <label><span>{language === "gu" ? "થી" : "Stay from"}</span><input type="date" value={adminStayFrom} onChange={(event) => setAdminStayFrom(event.target.value)} required /></label>
+            <label><span>{language === "gu" ? "સુધી" : "Stay to"}</span><input type="date" value={adminStayTo} onChange={(event) => setAdminStayTo(event.target.value)} required /></label>
+          </div>
           <div className="admin-member-editor">
             {adminMembers.map((member, index) => (
               <div className="admin-member-row" key={`${index}-${member.name}`}>
@@ -771,7 +792,7 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
                   <option value="male">{language === "gu" ? "પુરુષ" : "Male"}</option><option value="female">{language === "gu" ? "સ્ત્રી" : "Female"}</option><option value="other">{language === "gu" ? "અન્ય" : "Other"}</option>
                 </select>
                 <input inputMode="numeric" placeholder="Mobile" value={member.mobile} onChange={(event) => setAdminMembers((current) => current.map((item, itemIndex) => itemIndex === index ? { ...item, mobile: event.target.value } : item))} required={index === 0} />
-                {index > 0 ? <button type="button" className="table-action" onClick={() => setAdminMembers((current) => current.filter((_item, itemIndex) => itemIndex !== index))}>{t.removePerson}</button> : null}
+                {index > 0 ? <button type="button" className="table-action" onClick={() => setAdminMembers((current) => current.filter((_item, itemIndex) => itemIndex !== index))}>{t.removePerson}</button> : <span className="admin-member-spacer" />}
               </div>
             ))}
           </div>
@@ -783,7 +804,14 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
             <button className="secondary" type="button" onClick={downloadScanLog}>{language === "gu" ? "સ્કેન લોગ" : "Scan log"}</button>
           </div>
         </form>
-        <PothiGrid pothis={pothis} />
+        <PothiGrid
+          pothis={pothis}
+          selected={adminPothiId ? Number(adminPothiId) : undefined}
+          onSelect={(id) => {
+            const pothi = pothis.find((item) => item.id === id);
+            if (!pothi?.family_id) setAdminPothiId(String(id));
+          }}
+        />
       </details>
     </section>
   );

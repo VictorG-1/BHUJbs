@@ -303,6 +303,7 @@ export function GuestEditorPanel({ language, members, rooms, onSaved, onStatus, 
               <tr>
                 <th>{isGu ? "નામ" : "Name"}</th>
                 <th>{isGu ? "શહેર" : "City"}</th>
+                <th>{isGu ? "પોથી" : "Pothi"}</th>
                 <th>{isGu ? "કોડ" : "Code"}</th>
                 <th>{isGu ? "વેન્યુ" : "Venue"}</th>
                 <th>{isGu ? "રૂમ" : "Room"}</th>
@@ -311,10 +312,12 @@ export function GuestEditorPanel({ language, members, rooms, onSaved, onStatus, 
             <tbody>
               {members.map((member) => {
                 const room = member.room_allocations?.find((row) => row.rooms?.room_number)?.rooms;
+                const pothi = member.families?.pothi_id ?? member.families?.reference_pothi_id;
                 return (
                   <tr key={member.id} className={member.id === selectedId ? "is-selected" : undefined} onClick={() => selectMember(member)}>
                     <td>{member.name}</td>
                     <td>{member.families?.city || "-"}</td>
+                    <td>{pothi || "-"}</td>
                     <td>{member.families?.registration_code || "-"}</td>
                     <td>{room ? shortVenue(room) : "-"}</td>
                     <td>{room ? shortRoom(room) : "-"}</td>
@@ -322,7 +325,7 @@ export function GuestEditorPanel({ language, members, rooms, onSaved, onStatus, 
                 );
               })}
               {!members.length ? (
-                <tr><td colSpan={5}>{isGu ? "કોઈ મહેમાન મળ્યા નથી." : "No guests match the current filters."}</td></tr>
+                <tr><td colSpan={6}>{isGu ? "કોઈ મહેમાન મળ્યા નથી." : "No guests match the current filters."}</td></tr>
               ) : null}
             </tbody>
           </table>
