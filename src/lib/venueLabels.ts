@@ -3,6 +3,7 @@ export type RoomLabelSource = {
   venue_name?: string | null;
   section_name?: string | null;
   source_room_number?: string | null;
+  floor?: string | null;
 };
 
 function compact(value: string | null | undefined) {
@@ -14,7 +15,21 @@ function compact(value: string | null | undefined) {
 export function sourceRoomNumber(room: RoomLabelSource) {
   if (room.source_room_number) return String(room.source_room_number).trim();
   const parts = String(room.room_number ?? "").split("/").map((part) => part.trim()).filter(Boolean);
-  return parts[parts.length - 1] ?? "";
+  const last = parts[parts.length - 1] ?? "";
+  if (/^(G\.?F\.?|F\.?F\.?|S\.?F\.?|T\.?F\.?)$/i.test(last)) return parts[parts.length - 2] ?? last;
+  return last;
+}
+
+export function shortFloor(room: RoomLabelSource) {
+  const fromField = compact(room.floor);
+  const parts = String(room.room_number ?? "").split("/").map((part) => part.trim()).filter(Boolean);
+  const fromNumber = compact(parts[parts.length - 1]);
+  const value = fromField || fromNumber;
+  if (value === "GF") return "GF";
+  if (value === "FF") return "FF";
+  if (value === "SF") return "SF";
+  if (value === "TF") return "TF";
+  return "";
 }
 
 export function shortVenue(room: RoomLabelSource) {
@@ -45,7 +60,10 @@ export function shortVenue(room: RoomLabelSource) {
 export function shortRoom(room: RoomLabelSource) {
   const venue = shortVenue(room);
   const source = sourceRoomNumber(room);
-  if (!source || source.toUpperCase() === "HALL") return venue;
+  const floor = shortFloor(room);
+  if (!source || source.toUpperCase() === "HALL" || source.toUpperCase() === "PRIVATE") {
+    return floor ? `${venue} ${floor}` : venue;
+  }
   if (["JAKHIBAI", "NAVNEET", "BHUJVIEW", "SMRUTI"].includes(venue)) return `${source}/${venue}`;
   return `${venue}/${source}`;
 }

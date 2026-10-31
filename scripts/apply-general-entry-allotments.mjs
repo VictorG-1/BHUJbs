@@ -106,6 +106,7 @@ function sectionHint(label) {
   const text = compact(label);
   if (text.includes("JAKH")) return "JAKHIBAI";
   if (text.includes("MARU")) return "MARU COMPLEX";
+  if (text.includes("NAVNEETHALL") || (text.includes("NAVNEET") && text.includes("HALL"))) return "NAVNEET HALL";
   if (text.includes("NAVNEET")) return "NAVNEET COMPLEX";
   if (text.includes("BHUJVIEW") || text.includes("BHUJVIEWHOTEL")) return "BHUJ VIEW HOTEL";
   if (text.includes("SMRUTI")) return "SMRUTI HILLS HOTEL";
@@ -126,6 +127,10 @@ function resolveRoom(label, rooms) {
 
   let source = null;
   let hint = sectionHint(upper);
+  let floor = null;
+  if (/\bG\.?F\.?\b|GROUND/.test(upper)) floor = "GF";
+  else if (/\bF\.?F\.?\b|FIRST/.test(upper)) floor = "FF";
+  else if (/\bS\.?F\.?\b|SECOND/.test(upper)) floor = "SF";
   const numberedA = upper.match(/^(\d+)\s*\/\s*(.+)$/);
   const numberedB = upper.match(/^([A-Z. ]+)\s*\/\s*(\d+)$/);
   if (numberedA) {
@@ -145,7 +150,8 @@ function resolveRoom(label, rooms) {
     const roomNo = compact(room.room_number);
     const matchesHint = !hint || section.includes(compact(hint)) || venue.includes(compact(hint)) || roomNo.includes(compact(hint));
     const matchesSource = !source || String(room.source_room_number) === String(source);
-    return matchesHint && matchesSource;
+    const matchesFloor = !floor || compact(room.floor) === floor || roomNo.endsWith(floor);
+    return matchesHint && matchesSource && matchesFloor;
   });
 
   if (candidates.length === 1) return { status: "ok", room: candidates[0] };

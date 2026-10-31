@@ -55,8 +55,8 @@ function venueTabName(room: RoomInventory) {
   return shortVenue(room);
 }
 
-function roomIdentity(room: { room_number: string; venue_name?: string | null; section_name?: string | null; source_room_number?: string | null }) {
-  return `${shortVenue(room)}::${room.source_room_number || room.room_number}`;
+function roomIdentity(room: { room_number: string; venue_name?: string | null; section_name?: string | null; source_room_number?: string | null; floor?: string | null }) {
+  return room.room_number || `${shortVenue(room)}::${room.source_room_number || ""}::${room.floor ?? ""}`;
 }
 
 function normalizeAdminMembers(value: unknown): AdminMemberRow[] {
@@ -258,7 +258,7 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
         fetchAllPages((from, to) =>
           supabase
             .from("members")
-            .select("id, name, age, gender, mobile, arrival_date, departure_date, is_head, created_at, qr_token, qr_revoked_at, families(id, registration_code, head_name, head_mobile, city, wants_stay, stay_from, stay_to, pothi_id, reference_pothi_id, registration_type, private_room_number), room_allocations(id, room_id, rooms(room_number, venue_name, section_name, source_room_number))")
+            .select("id, name, age, gender, mobile, arrival_date, departure_date, is_head, created_at, qr_token, qr_revoked_at, families(id, registration_code, head_name, head_mobile, city, wants_stay, stay_from, stay_to, pothi_id, reference_pothi_id, registration_type, private_room_number), room_allocations(id, room_id, rooms(room_number, venue_name, section_name, source_room_number, floor))")
             .order("name")
             .order("id")
             .range(from, to)
@@ -357,7 +357,8 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
         room_number: allocatedRoom.room_number,
         venue_name: allocatedRoom.venue_name ?? "",
         section_name: allocatedRoom.section_name ?? "",
-        source_room_number: allocatedRoom.source_room_number ?? ""
+        source_room_number: allocatedRoom.source_room_number ?? "",
+        floor: allocatedRoom.floor ?? ""
       };
     }
 
@@ -383,7 +384,8 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
         room_number: fallbackRoom.room_number,
         venue_name: fallbackRoom.venue_name,
         section_name: fallbackRoom.section_name,
-        source_room_number: fallbackRoom.source_room_number
+        source_room_number: fallbackRoom.source_room_number,
+        floor: fallbackRoom.floor ?? ""
       }
       : null;
   }
@@ -761,7 +763,7 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
               <div className="room-allocation-head">
                 <div>
                   <strong>{shortRoom(room)}</strong>
-                  <small>{shortVenue(room)} · {room.total_capacity}</small>
+                  <small>{shortVenue(room)}{room.floor ? ` ${room.floor}` : ""} · {room.total_capacity}</small>
                 </div>
                 <StatusPill tone={occupants.length >= room.total_capacity ? "red" : occupants.length > 0 ? "amber" : "gray"}>
                   {occupants.length}/{room.total_capacity}
