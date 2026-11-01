@@ -114,6 +114,7 @@ h2 {
 
 .app-shell {
   min-height: 100vh;
+  overflow-x: clip;
 }
 
 .topbar {
@@ -1192,11 +1193,15 @@ h2 {
   align-items: center;
   justify-content: flex-start;
   gap: 0.35rem;
-  min-height: 40px;
+  min-height: 36px;
   width: 100%;
-  padding: 0.3rem 0.45rem;
+  padding: 0.25rem 0.4rem;
   font-weight: 800;
   text-align: left;
+}
+
+.pothi-cell:hover:not(:disabled) {
+  transform: none;
 }
 
 .pothi-cell input {
@@ -1270,6 +1275,14 @@ h2 {
 
 .admin-simple {
   min-width: 0;
+  width: min(100%, 1400px);
+  margin-inline: auto;
+  gap: 1rem;
+  padding: 1.15rem clamp(0.85rem, 3vw, 1.75rem);
+}
+
+.admin-simple .dashboard-panel + .dashboard-panel {
+  margin-top: 0;
 }
 
 .admin-simple .dashboard-panel,
@@ -1278,7 +1291,8 @@ h2 {
 }
 
 .guest-editor-list table {
-  min-width: 560px;
+  min-width: 720px;
+  width: 100%;
 }
 
 .form-message {
@@ -1351,7 +1365,7 @@ h2 {
 
 .guest-editor-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.85fr);
+  grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.7fr);
   gap: 1rem;
   align-items: start;
 }
@@ -1359,6 +1373,13 @@ h2 {
 .guest-editor-list {
   max-height: 70vh;
   overflow: auto;
+}
+
+.guest-editor-list th,
+.guest-editor-list td {
+  padding: 0.45rem 0.5rem;
+  font-size: 0.88rem;
+  white-space: nowrap;
 }
 
 .guest-editor-list tr {
@@ -1420,7 +1441,10 @@ details.dashboard-panel summary {
 table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 720px;
+}
+
+.table-wrap table {
+  min-width: 640px;
 }
 
 th,
@@ -1578,15 +1602,24 @@ th {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
+  max-height: 9.5rem;
+  overflow: auto;
 }
 
 .allocation-occupants span {
   display: inline-flex;
+  max-width: 100%;
   padding: 0.25rem 0.5rem;
   border-radius: 999px;
   background: #fff2de;
   color: var(--navy);
   font-size: 0.82rem;
+  overflow-wrap: anywhere;
+}
+
+.empty-note {
+  margin: 0.75rem 0 0;
+  color: var(--muted);
 }
 
 .venue-inventory-list {
@@ -1829,12 +1862,15 @@ th {
 
   .form-grid,
   .admin-grid,
-  .metric-row,
   .login-grid,
   .auth-stage-grid,
   .admin-pothi-form-top,
   .admin-member-row {
     grid-template-columns: 1fr;
+  }
+
+  .metric-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .landing-hero,
@@ -1986,6 +2022,10 @@ th {
 }
 
 @media (max-width: 520px) {
+  .metric-row {
+    grid-template-columns: 1fr;
+  }
+
   .brand {
     gap: 0.55rem;
     max-width: 100%;

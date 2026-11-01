@@ -4110,5 +4110,21 @@
     "allotment_note": "DEVJI CHAMPSHI NAVDHARE",
     "room_type": "private_room",
     "sort_order": 257
+  },
+  {
+    "room_number": "V.S.C. / V.S.C. / 05",
+    "venue_name": "V.S.C.",
+    "section_name": "V.S.C.",
+    "source_room_number": "05",
+    "floor": "G.F.",
+    "ac_type": "A.C.",
+    "bed_count": 2,
+    "extra_count": 2,
+    "total_capacity": 4,
+    "owner_type": "SAMAJ",
+    "linked_pothi_id": null,
+    "allotment_note": "General Entry V.S.C/05",
+    "room_type": "general_room",
+    "sort_order": 258
   }
 ]

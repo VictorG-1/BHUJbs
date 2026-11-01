@@ -1,0 +1,982 @@
+{
+  "generated": "2026-11-01T05:55:13.904Z",
+  "totalRooms": 260,
+  "occupied": 148,
+  "wronglyListedAsEmpty": 18,
+  "empty": 93,
+  "emptyBeds": 466,
+  "venues": {
+    "BHUJVIEW": {
+      "rooms": 1,
+      "beds": 2
+    },
+    "JAKHIBAI": {
+      "rooms": 22,
+      "beds": 119
+    },
+    "MARU": {
+      "rooms": 2,
+      "beds": 10
+    },
+    "NAVNEET": {
+      "rooms": 1,
+      "beds": 5
+    },
+    "PANVALLABH": {
+      "rooms": 15,
+      "beds": 75
+    },
+    "RAJGOR": {
+      "rooms": 21,
+      "beds": 65
+    },
+    "SMRUTI": {
+      "rooms": 4,
+      "beds": 16
+    },
+    "SPM": {
+      "rooms": 4,
+      "beds": 26
+    },
+    "VBC": {
+      "rooms": 22,
+      "beds": 113
+    },
+    "ZAVERBEN": {
+      "rooms": 1,
+      "beds": 35
+    }
+  },
+  "rows": [
+    {
+      "venue": "BHUJVIEW",
+      "room": "201/BHUJVIEW",
+      "floor": "S.F.",
+      "cap": 2,
+      "type": "General",
+      "pothi": null,
+      "note": "KANTABEN CHAMPSI",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "JAKHIBAI",
+      "room": "911/JAKHIBAI",
+      "floor": "G.F.",
+      "cap": 5,
+      "type": "General",
+      "pothi": null,
+      "note": "VADILO NU GHAR",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "JAKHIBAI",
+      "room": "912/JAKHIBAI",
+      "floor": "G.F.",
+      "cap": 5,
+      "type": "General",
+      "pothi": null,
+      "note": "VADLIO NU GHAR",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "JAKHIBAI",
+      "room": "913/JAKHIBAI",
+      "floor": "G.F.",
+      "cap": 5,
+      "type": "General",
+      "pothi": null,
+      "note": "BHUJ SAMAJ(GENTS)",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "JAKHIBAI",
+      "room": "916/JAKHIBAI",
+      "floor": "G.F.",
+      "cap": 5,
+      "type": "General",
+      "pothi": null,
+      "note": "",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "JAKHIBAI",
+      "room": "917/JAKHIBAI",
+      "floor": "G.F.",
+      "cap": 5,
+      "type": "General",
+      "pothi": null,
+      "note": "",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "JAKHIBAI",
+      "room": "918/JAKHIBAI",
+      "floor": "G.F.",
+      "cap": 2,
+      "type": "General",
+      "pothi": null,
+      "note": "LOWER+UPPER",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "JAKHIBAI",
+      "room": "1002/JAKHIBAI",
+      "floor": "F.F.",
+      "cap": 5,
+      "type": "General",
+      "pothi": null,
+      "note": "JAMNADAS MURJI MANDAN",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "JAKHIBAI",
+      "room": "1003/JAKHIBAI",
+      "floor": "F.F.",
+      "cap": 5,
+      "type": "General",
+      "pothi": null,
+      "note": "RAVILAL NARSHI MANDAN",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "JAKHIBAI",
+      "room": "1007/JAKHIBAI",
+      "floor": "F.F.",
+      "cap": 14,
+      "type": "General",
+      "pothi": null,
+      "note": "BHUJ SAMAJ (LADIES)",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "JAKHIBAI",
+      "room": "1008/JAKHIBAI",
+      "floor": "F.F.",
+      "cap": 5,
+      "type": "General",
+      "pothi": null,
+      "note": "",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "JAKHIBAI",
+      "room": "1012/JAKHIBAI",
+      "floor": "F.F.",
+      "cap": 5,
+      "type": "General",
+      "pothi": null,
+      "note": "DAMODAR MAVJI NAVDHARE",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "JAKHIBAI",
+      "room": "1015/JAKHIBAI",
+      "floor": "F.F.",
+      "cap": 5,
+      "type": "General",
+      "pothi": null,
+      "note": "CHAYABEN RAJENDRA SHETH",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "JAKHIBAI",
+      "room": "1018/JAKHIBAI",
+      "floor": "F.F.",
+      "cap": 2,
+      "type": "General",
+      "pothi": null,
+      "note": "LOWER+UPPER",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "JAKHIBAI",
+      "room": "1101/JAKHIBAI",
+      "floor": "S.F.",
+      "cap": 5,
+      "type": "General",
+      "pothi": null,
+      "note": "",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "JAKHIBAI",
+      "room": "1102/JAKHIBAI",
+      "floor": "S.F.",
+      "cap": 5,
+      "type": "General",
+      "pothi": null,
+      "note": "",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "JAKHIBAI",
+      "room": "1103/JAKHIBAI",
+      "floor": "S.F.",
+      "cap": 5,
+      "type": "General",
+      "pothi": null,
+      "note": "",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "JAKHIBAI",
+      "room": "1104/JAKHIBAI",
+      "floor": "S.F.",
+      "cap": 5,
+      "type": "General",
+      "pothi": null,
+      "note": "",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "JAKHIBAI",
+      "room": "1105/JAKHIBAI",
+      "floor": "S.F.",
+      "cap": 5,
+      "type": "General",
+      "pothi": null,
+      "note": "",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "JAKHIBAI",
+      "room": "1107/JAKHIBAI",
+      "floor": "S.F.",
+      "cap": 14,
+      "type": "General",
+      "pothi": null,
+      "note": "BHUJ SAMAJ (GENTS)",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "JAKHIBAI",
+      "room": "1115/JAKHIBAI",
+      "floor": "S.F.",
+      "cap": 5,
+      "type": "General",
+      "pothi": null,
+      "note": "",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "JAKHIBAI",
+      "room": "1116/JAKHIBAI",
+      "floor": "S.F.",
+      "cap": 5,
+      "type": "General",
+      "pothi": null,
+      "note": "",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "JAKHIBAI",
+      "room": "1118/JAKHIBAI",
+      "floor": "S.F.",
+      "cap": 2,
+      "type": "General",
+      "pothi": null,
+      "note": "LOWER+UPPER",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "MARU",
+      "room": "MARU/203",
+      "floor": "G.F.",
+      "cap": 5,
+      "type": "Pothi",
+      "pothi": 19,
+      "note": "BHAVANJI GOVINDJI KARWA",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "MARU",
+      "room": "MARU/210",
+      "floor": "F.F.",
+      "cap": 5,
+      "type": "General",
+      "pothi": null,
+      "note": "HANSABEN",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "NAVNEET",
+      "room": "111/NAVNEET",
+      "floor": "F.F.",
+      "cap": 5,
+      "type": "General",
+      "pothi": null,
+      "note": "",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "PANVALLABH",
+      "room": "PANVALLABH/602",
+      "floor": "G.F.",
+      "cap": 5,
+      "type": "Private",
+      "pothi": null,
+      "note": "HIRJI SHIVJI BHUTADA BHUJ",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "PANVALLABH",
+      "room": "PANVALLABH/604",
+      "floor": "G.F.",
+      "cap": 5,
+      "type": "Private",
+      "pothi": null,
+      "note": "HIRJI SHIVJI BHUTADA BHUJ",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "PANVALLABH",
+      "room": "PANVALLABH/606",
+      "floor": "G.F.",
+      "cap": 2,
+      "type": "Private",
+      "pothi": null,
+      "note": "HIRJI SHIVJI BHUTADA BHUJ",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "PANVALLABH",
+      "room": "PANVALLABH/609",
+      "floor": "G.F.",
+      "cap": 5,
+      "type": "Private",
+      "pothi": null,
+      "note": "PADAMSHI MANJI RATHI PARIVAR MUMBAI",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "PANVALLABH",
+      "room": "PANVALLABH/610",
+      "floor": "G.F.",
+      "cap": 5,
+      "type": "Private",
+      "pothi": null,
+      "note": "",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "PANVALLABH",
+      "room": "PANVALLABH/701",
+      "floor": "F.F.",
+      "cap": 5,
+      "type": "Private",
+      "pothi": null,
+      "note": "PADAMSHI MANJI RATHI PARIVAR MUMBAI",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "PANVALLABH",
+      "room": "PANVALLABH/702",
+      "floor": "F.F.",
+      "cap": 5,
+      "type": "Private",
+      "pothi": null,
+      "note": "",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "PANVALLABH",
+      "room": "PANVALLABH/703",
+      "floor": "F.F.",
+      "cap": 11,
+      "type": "Private",
+      "pothi": null,
+      "note": "",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "PANVALLABH",
+      "room": "PANVALLABH/704",
+      "floor": "F.F.",
+      "cap": 5,
+      "type": "Private",
+      "pothi": null,
+      "note": "",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "PANVALLABH",
+      "room": "PANVALLABH/705",
+      "floor": "F.F.",
+      "cap": 5,
+      "type": "Private",
+      "pothi": null,
+      "note": "",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "PANVALLABH",
+      "room": "PANVALLABH/706",
+      "floor": "F.F.",
+      "cap": 2,
+      "type": "Private",
+      "pothi": null,
+      "note": "",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "PANVALLABH",
+      "room": "PANVALLABH/707",
+      "floor": "F.F.",
+      "cap": 5,
+      "type": "Private",
+      "pothi": null,
+      "note": "",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "PANVALLABH",
+      "room": "PANVALLABH/708",
+      "floor": "F.F.",
+      "cap": 5,
+      "type": "Private",
+      "pothi": null,
+      "note": "",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "PANVALLABH",
+      "room": "PANVALLABH/709",
+      "floor": "F.F.",
+      "cap": 5,
+      "type": "Private",
+      "pothi": null,
+      "note": "",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "PANVALLABH",
+      "room": "PANVALLABH/710",
+      "floor": "F.F.",
+      "cap": 5,
+      "type": "Private",
+      "pothi": null,
+      "note": "",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "RAJGOR",
+      "room": "RAJGOR/101",
+      "floor": "F.F.",
+      "cap": 5,
+      "type": "Private",
+      "pothi": null,
+      "note": "CHHAYABEN RAJENDRA SHETH",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "RAJGOR",
+      "room": "RAJGOR/103",
+      "floor": "F.F.",
+      "cap": 5,
+      "type": "Private",
+      "pothi": null,
+      "note": "",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "RAJGOR",
+      "room": "RAJGOR/104",
+      "floor": "F.F.",
+      "cap": 2,
+      "type": "Private",
+      "pothi": null,
+      "note": "",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "RAJGOR",
+      "room": "RAJGOR/105",
+      "floor": "F.F.",
+      "cap": 5,
+      "type": "General",
+      "pothi": null,
+      "note": "",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "RAJGOR",
+      "room": "RAJGOR/106",
+      "floor": "F.F.",
+      "cap": 3,
+      "type": "Private",
+      "pothi": null,
+      "note": "",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "RAJGOR",
+      "room": "RAJGOR/107",
+      "floor": "F.F.",
+      "cap": 3,
+      "type": "General",
+      "pothi": null,
+      "note": "",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "RAJGOR",
+      "room": "RAJGOR/108",
+      "floor": "F.F.",
+      "cap": 3,
+      "type": "General",
+      "pothi": null,
+      "note": "",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "RAJGOR",
+      "room": "RAJGOR/201",
+      "floor": "S.F.",
+      "cap": 6,
+      "type": "General",
+      "pothi": null,
+      "note": "",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "RAJGOR",
+      "room": "RAJGOR/202",
+      "floor": "S.F.",
+      "cap": 4,
+      "type": "General",
+      "pothi": null,
+      "note": "",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "RAJGOR",
+      "room": "RAJGOR/203",
+      "floor": "S.F.",
+      "cap": 3,
+      "type": "General",
+      "pothi": null,
+      "note": "",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "RAJGOR",
+      "room": "RAJGOR/204",
+      "floor": "S.F.",
+      "cap": 3,
+      "type": "General",
+      "pothi": null,
+      "note": "",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "RAJGOR",
+      "room": "RAJGOR/205",
+      "floor": "S.F.",
+      "cap": 3,
+      "type": "General",
+      "pothi": null,
+      "note": "",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "RAJGOR",
+      "room": "RAJGOR/206",
+      "floor": "S.F.",
+      "cap": 2,
+      "type": "General",
+      "pothi": null,
+      "note": "",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "RAJGOR",
+      "room": "RAJGOR/207",
+      "floor": "S.F.",
+      "cap": 2,
+      "type": "General",
+      "pothi": null,
+      "note": "",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "RAJGOR",
+      "room": "RAJGOR/208",
+      "floor": "S.F.",
+      "cap": 3,
+      "type": "General",
+      "pothi": null,
+      "note": "",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "RAJGOR",
+      "room": "RAJGOR/209",
+      "floor": "S.F.",
+      "cap": 2,
+      "type": "General",
+      "pothi": null,
+      "note": "",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "RAJGOR",
+      "room": "RAJGOR/210",
+      "floor": "S.F.",
+      "cap": 2,
+      "type": "General",
+      "pothi": null,
+      "note": "",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "RAJGOR",
+      "room": "RAJGOR/211",
+      "floor": "S.F.",
+      "cap": 2,
+      "type": "General",
+      "pothi": null,
+      "note": "",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "RAJGOR",
+      "room": "RAJGOR/212",
+      "floor": "S.F.",
+      "cap": 2,
+      "type": "General",
+      "pothi": null,
+      "note": "",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "RAJGOR",
+      "room": "RAJGOR/213",
+      "floor": "S.F.",
+      "cap": 2,
+      "type": "General",
+      "pothi": null,
+      "note": "",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "RAJGOR",
+      "room": "RAJGOR/214",
+      "floor": "S.F.",
+      "cap": 3,
+      "type": "General",
+      "pothi": null,
+      "note": "",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "SMRUTI",
+      "room": "101/SMRUTI",
+      "floor": "F.F.",
+      "cap": 4,
+      "type": "Pothi",
+      "pothi": 46,
+      "note": "MANJULABEN DAMODAR MUNDRA",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "SMRUTI",
+      "room": "102/SMRUTI",
+      "floor": "F.F.",
+      "cap": 4,
+      "type": "Pothi",
+      "pothi": 46,
+      "note": "DAMODAR RAMDAS MUNDRA",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "SMRUTI",
+      "room": "104/SMRUTI",
+      "floor": "F.F.",
+      "cap": 4,
+      "type": "Pothi",
+      "pothi": 46,
+      "note": "DAMODAR RAMDAS MUNDRA",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "SMRUTI",
+      "room": "201/SMRUTI",
+      "floor": "S.F.",
+      "cap": 4,
+      "type": "General",
+      "pothi": null,
+      "note": "MATHARADAS PADAMSHI MALL KHAPOLI",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "SPM",
+      "room": "SPM/401",
+      "floor": "G.F.",
+      "cap": 8,
+      "type": "General",
+      "pothi": null,
+      "note": "MANJULABEN DAMODAR MUNDRA",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "SPM",
+      "room": "SPM/407",
+      "floor": "G.F.",
+      "cap": 5,
+      "type": "Private",
+      "pothi": null,
+      "note": "MANJULABEN DAMODAR MUNDRA",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "SPM",
+      "room": "SPM/509",
+      "floor": "F.F.",
+      "cap": 8,
+      "type": "General",
+      "pothi": null,
+      "note": "PITAMBAR DAMODAR MANIYAR",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "SPM",
+      "room": "SPM/513",
+      "floor": "F.F.",
+      "cap": 5,
+      "type": "General",
+      "pothi": null,
+      "note": "CHANDRIKABEN PRAVIN MALL",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "VBC",
+      "room": "VBC/201",
+      "floor": "F.F.",
+      "cap": 4,
+      "type": "Private",
+      "pothi": null,
+      "note": "PRIVATE",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "VBC",
+      "room": "VBC/202",
+      "floor": "F.F.",
+      "cap": 4,
+      "type": "Private",
+      "pothi": null,
+      "note": "PRIVATE",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "VBC",
+      "room": "VBC/203",
+      "floor": "F.F.",
+      "cap": 4,
+      "type": "Private",
+      "pothi": null,
+      "note": "PRIVATE",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "VBC",
+      "room": "VBC/222",
+      "floor": "F.F.",
+      "cap": 8,
+      "type": "Private",
+      "pothi": null,
+      "note": "PRIVATE",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "VBC",
+      "room": "VBC/223",
+      "floor": "F.F.",
+      "cap": 8,
+      "type": "Private",
+      "pothi": null,
+      "note": "PRIVATE",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "VBC",
+      "room": "VBC/224",
+      "floor": "F.F.",
+      "cap": 7,
+      "type": "Private",
+      "pothi": null,
+      "note": "PRIVATE",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "VBC",
+      "room": "VBC/301",
+      "floor": "S.F.",
+      "cap": 4,
+      "type": "Private",
+      "pothi": null,
+      "note": "PRIVATE",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "VBC",
+      "room": "VBC/302",
+      "floor": "S.F.",
+      "cap": 4,
+      "type": "Private",
+      "pothi": null,
+      "note": "PRIVATE",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "VBC",
+      "room": "VBC/303",
+      "floor": "S.F.",
+      "cap": 4,
+      "type": "Private",
+      "pothi": null,
+      "note": "PRIVATE",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "VBC",
+      "room": "VBC/304",
+      "floor": "S.F.",
+      "cap": 4,
+      "type": "Private",
+      "pothi": null,
+      "note": "PRIVATE",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "VBC",
+      "room": "VBC/305",
+      "floor": "S.F.",
+      "cap": 4,
+      "type": "General",
+      "pothi": null,
+      "note": "SAMAJ",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "VBC",
+      "room": "VBC/306",
+      "floor": "S.F.",
+      "cap": 4,
+      "type": "General",
+      "pothi": null,
+      "note": "SAMAJ",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "VBC",
+      "room": "VBC/307",
+      "floor": "S.F.",
+      "cap": 4,
+      "type": "General",
+      "pothi": null,
+      "note": "SAMAJ",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "VBC",
+      "room": "VBC/308",
+      "floor": "S.F.",
+      "cap": 4,
+      "type": "General",
+      "pothi": null,
+      "note": "SAMAJ",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "VBC",
+      "room": "VBC/309",
+      "floor": "S.F.",
+      "cap": 4,
+      "type": "General",
+      "pothi": null,
+      "note": "SAMAJ",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "VBC",
+      "room": "VBC/310",
+      "floor": "S.F.",
+      "cap": 4,
+      "type": "General",
+      "pothi": null,
+      "note": "SAMAJ",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "VBC",
+      "room": "VBC/311",
+      "floor": "S.F.",
+      "cap": 4,
+      "type": "General",
+      "pothi": null,
+      "note": "SAMAJ",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "VBC",
+      "room": "VBC/312",
+      "floor": "S.F.",
+      "cap": 4,
+      "type": "General",
+      "pothi": null,
+      "note": "SAMAJ",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "VBC",
+      "room": "VBC/321",
+      "floor": "F.F.",
+      "cap": 9,
+      "type": "General",
+      "pothi": null,
+      "note": "SAMAJ",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "VBC",
+      "room": "VBC/322",
+      "floor": "F.F.",
+      "cap": 7,
+      "type": "General",
+      "pothi": null,
+      "note": "SAMAJ",
+      "owner": "SAMAJ"
+    },
+    {
+      "venue": "VBC",
+      "room": "VBC/323",
+      "floor": "F.F.",
+      "cap": 7,
+      "type": "Private",
+      "pothi": null,
+      "note": "PRIVATE",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "VBC",
+      "room": "VBC/324",
+      "floor": "F.F.",
+      "cap": 7,
+      "type": "Private",
+      "pothi": null,
+      "note": "PRIVATE",
+      "owner": "PRIVATE"
+    },
+    {
+      "venue": "ZAVERBEN",
+      "room": "ZAVERBEN GF",
+      "floor": "G.F.",
+      "cap": 35,
+      "type": "General",
+      "pothi": null,
+      "note": "BHUJ SAMAJ (LADIES)",
+      "owner": "SAMAJ"
+    }
+  ]
+}

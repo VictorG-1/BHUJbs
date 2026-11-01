@@ -1,4 +1,4 @@
-import { Component, type ErrorInfo, type ReactNode, useEffect, useMemo, useState } from "react";
+import { Component, type ErrorInfo, type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import JSZip from "jszip";
 import QRCode from "qrcode";
 import type { Session } from "@supabase/supabase-js";
@@ -15,16 +15,20 @@ import { shortRoom, shortVenue } from "../lib/venueLabels";
 
 type Language = "en" | "gu";
 
-const ADMIN_PAGE_SIZE = 500;
+const ADMIN_PAGE_SIZE = 400;
 
 async function fetchAllPages<T>(
   fetchPage: (from: number, to: number) => PromiseLike<{ data: T[] | null; error: { message: string } | null }>
 ) {
   const rows: T[] = [];
-  for (let from = 0; ; from += ADMIN_PAGE_SIZE) {
+  for (let from = 0; from < 20000; from += ADMIN_PAGE_SIZE) {
     const { data, error } = await fetchPage(from, from + ADMIN_PAGE_SIZE - 1);
     if (error) return { data: null, error };
     const page = data ?? [];
+    if (!page.length) break;
+    const first = page[0] as { id?: string | number };
+    const already = first?.id != null && rows.some((row) => (row as { id?: string | number }).id === first.id);
+    if (already) break;
     rows.push(...page);
     if (page.length < ADMIN_PAGE_SIZE) break;
   }
@@ -55,15 +59,50 @@ function venueTabName(room: RoomInventory) {
   return shortVenue(room);
 }
 
-function roomIdentity(room: { room_number: string; venue_name?: string | null; section_name?: string | null; source_room_number?: string | null; floor?: string | null }) {
-  return room.room_number || `${shortVenue(room)}::${room.source_room_number || ""}::${room.floor ?? ""}`;
+function unwrapRecord<T>(value: T | T[] | null | undefined): T | null {
+  if (Array.isArray(value)) return value[0] ?? null;
+  return value ?? null;
+}
+
+function roomIdentity(room: { id?: string | null; room_number?: string | null; venue_name?: string | null; section_name?: string | null; source_room_number?: string | null; floor?: string | null }) {
+  if (room.id) return `id:${room.id}`;
+  const number = String(room.room_number ?? "").trim();
+  if (number) return `no:${number}`;
+  return `${shortVenue(room)}::${room.source_room_number || ""}::${room.floor ?? ""}`;
+}
+
+function attachRoomsToMembers(members: AdminMemberRow[], rooms: RoomInventory[]): AdminMemberRow[] {
+  const roomById = new Map(rooms.filter((room) => room.id).map((room) => [room.id as string, room]));
+  const roomByNumber = new Map(rooms.map((room) => [room.room_number.trim(), room]));
+  return members.map((member) => ({
+    ...member,
+    room_allocations: (member.room_allocations ?? []).map((allocation) => {
+      const fromEmbed = unwrapRecord(allocation.rooms);
+      const fromInventory = (allocation.room_id && roomById.get(allocation.room_id))
+        || (fromEmbed?.room_number ? roomByNumber.get(fromEmbed.room_number.trim()) : undefined);
+      const room = fromInventory || fromEmbed;
+      return {
+        ...allocation,
+        rooms: room
+          ? {
+              id: "id" in room ? room.id : undefined,
+              room_number: room.room_number,
+              venue_name: room.venue_name,
+              section_name: room.section_name,
+              source_room_number: room.source_room_number,
+              floor: room.floor
+            }
+          : null
+      };
+    })
+  }));
 }
 
 function normalizeAdminMembers(value: unknown): AdminMemberRow[] {
   if (!Array.isArray(value)) return [];
   return value.map((member) => {
     const row = member as AdminMemberRow & { room_allocations?: unknown; families?: unknown };
-    const family = row.families && !Array.isArray(row.families) ? row.families : null;
+    const family = unwrapRecord(row.families as AdminMemberRow["families"] | AdminMemberRow["families"][] | null);
     const allocations = Array.isArray(row.room_allocations)
       ? row.room_allocations
       : row.room_allocations
@@ -71,11 +110,10 @@ function normalizeAdminMembers(value: unknown): AdminMemberRow[] {
         : [];
     return {
       ...row,
-      families: family as AdminMemberRow["families"],
+      families: family,
       room_allocations: allocations.map((allocation) => {
         const item = allocation as AdminMemberRow["room_allocations"][number] & { rooms?: unknown };
-        const room = item.rooms && !Array.isArray(item.rooms) ? item.rooms : null;
-        return { ...item, rooms: room as AdminMemberRow["room_allocations"][number]["rooms"] };
+        return { ...item, rooms: unwrapRecord(item.rooms as AdminMemberRow["room_allocations"][number]["rooms"] | AdminMemberRow["room_allocations"][number]["rooms"][] | null) };
       })
     };
   });
@@ -242,7 +280,7 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
   const [searchPothi, setSearchPothi] = useState("all");
   const [addedFrom, setAddedFrom] = useState("");
   const [addedTo, setAddedTo] = useState("");
-  const [selectedVenue, setSelectedVenue] = useState("all");
+  const [selectedVenue, setSelectedVenue] = useState("occupied");
   const [status, setStatus] = useState("");
   const [adminPothiId, setAdminPothiId] = useState("");
   const [adminMembers, setAdminMembers] = useState<FamilyMemberInput[]>([{ name: "", age: 18, gender: "male", mobile: "", isHead: true }]);
@@ -250,15 +288,18 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
   const [adminStayTo, setAdminStayTo] = useState("2026-11-20");
   const [adminSaving, setAdminSaving] = useState(false);
   const [loading, setLoading] = useState(false);
+  const loadRequestId = useRef(0);
 
   async function load() {
+    const requestId = ++loadRequestId.current;
     setLoading(true);
     try {
-      const results = await Promise.all([
+      const results = await Promise.race([
+        Promise.all([
         fetchAllPages((from, to) =>
           supabase
             .from("members")
-            .select("id, name, age, gender, mobile, arrival_date, departure_date, is_head, created_at, qr_token, qr_revoked_at, families(id, registration_code, head_name, head_mobile, city, wants_stay, stay_from, stay_to, pothi_id, reference_pothi_id, registration_type, private_room_number), room_allocations(id, room_id, rooms(room_number, venue_name, section_name, source_room_number, floor))")
+            .select("id, name, age, gender, mobile, arrival_date, departure_date, is_head, created_at, qr_token, qr_revoked_at, families(id, registration_code, head_name, head_mobile, city, wants_stay, stay_from, stay_to, pothi_id, reference_pothi_id, registration_type, private_room_number), room_allocations(id, room_id)")
             .order("name")
             .order("id")
             .range(from, to)
@@ -273,19 +314,28 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
             .range(from, to)
         ),
         supabase.from("qr_scans").select("id, scan_type, scanned_at, members(name)").order("scanned_at", { ascending: false }).limit(100)
+        ]),
+        new Promise<never>((_, reject) => {
+          window.setTimeout(() => reject(new Error("Dashboard load timed out. Refresh to try again.")), 25000);
+        })
       ]);
       const [{ data: memberData, error: memberError }, { data: pothiData, error: pothiError }, { data: roomData, error: roomError }, { data: scanData, error: scanError }] = results;
 
-      if (!memberError) setMembers(normalizeAdminMembers(memberData));
+      const liveRooms = !roomError
+        ? ((roomData ?? []) as Array<RoomInventory & { capacity?: number | null }>).map(normalizeRoom)
+        : fallbackRooms;
+      if (loadRequestId.current !== requestId) return;
+      setRoomsInventory(liveRooms);
       if (!pothiError) setPothis(((pothiData ?? []) as Pothi[]).filter((pothi) => pothi.id >= 1 && pothi.id <= 74));
-      if (!roomError) setRoomsInventory(((roomData ?? []) as Array<RoomInventory & { capacity?: number | null }>).map(normalizeRoom));
+      if (!memberError) setMembers(attachRoomsToMembers(normalizeAdminMembers(memberData), liveRooms));
       if (!scanError) setScanLogs((scanData ?? []) as typeof scanLogs);
       const errors = [memberError, pothiError, roomError, scanError].filter(Boolean).map((error) => error!.message);
       setStatus(errors.length ? `Dashboard loaded with warnings. ${errors.join(" ")}` : "");
     } catch (error) {
+      if (loadRequestId.current !== requestId) return;
       setStatus(error instanceof Error ? `Dashboard refresh failed: ${error.message}` : "Dashboard refresh failed. Existing data is still shown.");
     } finally {
-      setLoading(false);
+      if (loadRequestId.current === requestId) setLoading(false);
     }
   }
 
@@ -351,14 +401,20 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
   }, [session]);
 
   function roomDetailsForMember(member: AdminMemberRow) {
-    const allocatedRoom = member.room_allocations?.find((allocation) => allocation.rooms?.room_number)?.rooms;
-    if (allocatedRoom?.room_number) {
+    const allocated = member.room_allocations?.find((allocation) => allocation.room_id || allocation.rooms?.room_number);
+    const allocatedRoom = allocated?.rooms;
+    const inventoryRoom = allocated?.room_id
+      ? roomsInventory.find((room) => room.id === allocated.room_id)
+      : roomsInventory.find((room) => room.room_number === allocatedRoom?.room_number);
+    const resolved = inventoryRoom || allocatedRoom;
+    if (resolved?.room_number) {
       return {
-        room_number: allocatedRoom.room_number,
-        venue_name: allocatedRoom.venue_name ?? "",
-        section_name: allocatedRoom.section_name ?? "",
-        source_room_number: allocatedRoom.source_room_number ?? "",
-        floor: allocatedRoom.floor ?? ""
+        id: inventoryRoom?.id ?? ("id" in resolved ? resolved.id : undefined),
+        room_number: resolved.room_number,
+        venue_name: resolved.venue_name ?? "",
+        section_name: resolved.section_name ?? "",
+        source_room_number: resolved.source_room_number ?? "",
+        floor: resolved.floor ?? ""
       };
     }
 
@@ -381,6 +437,7 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
 
     return fallbackRoom
       ? {
+        id: fallbackRoom.id,
         room_number: fallbackRoom.room_number,
         venue_name: fallbackRoom.venue_name,
         section_name: fallbackRoom.section_name,
@@ -418,18 +475,23 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
       const room = roomDetailsForMember(member);
       if (!room?.room_number) continue;
       const key = roomIdentity(room);
-      occupancy.set(key, [...(occupancy.get(key) ?? []), member]);
+      const numberKey = `no:${room.room_number.trim()}`;
+      const list = [...(occupancy.get(key) ?? occupancy.get(numberKey) ?? []), member];
+      occupancy.set(key, list);
+      occupancy.set(numberKey, list);
     }
 
+    const pothiHasFamily = new Set(pothis.filter((pothi) => pothi.family_id).map((pothi) => pothi.id));
+
     return roomsInventory
-      .filter((room) => selectedVenue === "all" || venueTabName(room) === selectedVenue)
+      .filter((room) => selectedVenue === "all" || selectedVenue === "occupied" || selectedVenue === "vacant" || venueTabName(room) === selectedVenue)
       .filter((room) => searchVenue === "all" || venueTabName(room) === searchVenue)
       .filter((room) => searchType === "all" || room.room_type === searchType)
       .filter((room) => searchPothi === "all" || String(room.linked_pothi_id ?? "") === searchPothi)
       .filter((room) => {
         const query = masterSearch.trim().toLowerCase();
         if (!query) return true;
-        const occupants = occupancy.get(roomIdentity(room)) ?? [];
+        const occupants = occupancy.get(roomIdentity(room)) ?? occupancy.get(`no:${room.room_number.trim()}`) ?? [];
         return [shortRoom(room), shortVenue(room), room.room_number, room.venue_name, room.section_name, room.room_type, room.owner_type, room.linked_pothi_id, ...occupants.flatMap((member) => [member.name, member.mobile, member.families?.head_name, member.families?.head_mobile])]
           .filter(Boolean)
           .join(" ")
@@ -438,7 +500,8 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
       })
       .map((room) => ({
         room,
-        occupants: occupancy.get(roomIdentity(room)) ?? []
+        occupants: occupancy.get(roomIdentity(room)) ?? occupancy.get(`no:${room.room_number.trim()}`) ?? [],
+        pothiHeld: Boolean(room.linked_pothi_id && pothiHasFamily.has(room.linked_pothi_id))
       }))
       .sort((left, right) => {
         const venueCompare = left.room.venue_name.localeCompare(right.room.venue_name);
@@ -447,7 +510,17 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
         if (orderCompare !== 0) return orderCompare;
         return left.room.room_number.localeCompare(right.room.room_number);
       });
-  }, [masterSearch, members, roomsInventory, searchPothi, searchType, searchVenue, selectedVenue]);
+  }, [masterSearch, members, pothis, roomsInventory, searchPothi, searchType, searchVenue, selectedVenue]);
+
+  const visibleRoomCards = useMemo(
+    () =>
+      roomAllocationBoard.filter((item) => {
+        if (selectedVenue === "occupied") return item.occupants.length > 0;
+        if (selectedVenue === "vacant") return item.occupants.length === 0 && !item.pothiHeld && !/store room/i.test(item.room.allotment_note ?? "");
+        return true;
+      }),
+    [roomAllocationBoard, selectedVenue]
+  );
 
   const venueNames = useMemo(
     () => [...new Set(roomsInventory.map(venueTabName).filter(Boolean))].sort(),
@@ -748,8 +821,14 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
           </div>
         </div>
         <div className="venue-tabs" role="tablist" aria-label={language === "gu" ? "વેન્યુ પસંદ કરો" : "Select venue"}>
-          <button type="button" className={selectedVenue === "all" ? "active" : "secondary"} onClick={() => setSelectedVenue("all")}>
+          <button type="button" className={selectedVenue === "occupied" ? "active" : "secondary"} onClick={() => setSelectedVenue("occupied")}>
             {language === "gu" ? "ભરાયેલા" : "Occupied"}
+          </button>
+          <button type="button" className={selectedVenue === "vacant" ? "active" : "secondary"} onClick={() => setSelectedVenue("vacant")}>
+            {language === "gu" ? "ખાલી" : "Vacant"}
+          </button>
+          <button type="button" className={selectedVenue === "all" ? "active" : "secondary"} onClick={() => setSelectedVenue("all")}>
+            {language === "gu" ? "બધા" : "All"}
           </button>
           {venueNames.map((venue) => (
             <button type="button" key={venue} className={selectedVenue === venue ? "active" : "secondary"} onClick={() => setSelectedVenue(venue)}>
@@ -758,8 +837,8 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
           ))}
         </div>
         <div className="room-allocation-board">
-          {(selectedVenue === "all" ? roomAllocationBoard.filter((item) => item.occupants.length) : roomAllocationBoard).map(({ room, occupants }) => (
-            <article className="room-allocation-card" key={room.room_number}>
+          {visibleRoomCards.map(({ room, occupants }) => (
+            <article className="room-allocation-card" key={room.id || room.room_number}>
               <div className="room-allocation-head">
                 <div>
                   <strong>{shortRoom(room)}</strong>
@@ -775,6 +854,7 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
             </article>
           ))}
         </div>
+        {!visibleRoomCards.length ? <p className="empty-note">{language === "gu" ? "આ વેન્યુમાં કોઈ રૂમ મળ્યા નથી." : "No rooms match this view."}</p> : null}
       </div>
 
       <details className="dashboard-panel dashboard-panel-surface">

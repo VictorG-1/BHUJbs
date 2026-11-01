@@ -311,7 +311,10 @@ export function GuestEditorPanel({ language, members, rooms, onSaved, onStatus, 
             </thead>
             <tbody>
               {members.map((member) => {
-                const room = member.room_allocations?.find((row) => row.rooms?.room_number)?.rooms;
+                const allocation = member.room_allocations?.find((row) => row.room_id || row.rooms?.room_number);
+                const room = (allocation?.room_id ? rooms.find((item) => item.id === allocation.room_id) : undefined)
+                  ?? allocation?.rooms
+                  ?? rooms.find((item) => item.room_number === allocation?.rooms?.room_number);
                 const pothi = member.families?.pothi_id ?? member.families?.reference_pothi_id;
                 return (
                   <tr key={member.id} className={member.id === selectedId ? "is-selected" : undefined} onClick={() => selectMember(member)}>
