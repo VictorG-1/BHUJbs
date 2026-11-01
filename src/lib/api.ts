@@ -246,7 +246,13 @@ export async function downloadAdminWorkbook({ members, rooms, language = "en" }:
   const distinct = (values: unknown[]) => new Set(values.filter((value) => value !== null && value !== undefined && value !== "")).size;
 
   for (const category of categorySheets) {
-    const rows = members.filter((member) => member.registration_type === category.type);
+    const rows = members
+      .filter((member) => member.registration_type === category.type)
+      .sort((left, right) => {
+        const pothiDelta = Number(left.pothi ?? 0) - Number(right.pothi ?? 0);
+        if (pothiDelta) return pothiDelta;
+        return String(left.name ?? "").localeCompare(String(right.name ?? ""), "en", { sensitivity: "base" });
+      });
     const familyCount = distinct(rows.map((member) => member.family_id));
     const cityCount = distinct(rows.map((member) => member.city));
     const allocatedRooms = new Set(rows.map((member) => `${member.venue ?? ""}::${member.room ?? ""}`).filter((room) => !room.endsWith("::")));

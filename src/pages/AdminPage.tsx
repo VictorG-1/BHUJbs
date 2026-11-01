@@ -542,6 +542,9 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
         const family = member.families;
         const roomDetails = roomDetailsForMember(member);
         const registrationType = family?.registration_type ?? "";
+        const pothiId = family?.pothi_id ?? family?.reference_pothi_id ?? null;
+        const pothiNumber = Number(pothiId);
+        const hasPothi = Number.isInteger(pothiNumber) && pothiNumber >= 1 && pothiNumber <= 74;
         return {
           name: member.name,
           age: member.age,
@@ -555,10 +558,8 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
           family_name: family?.head_name ?? "",
           family_mobile: family?.head_mobile ?? "",
           city: family?.city ?? "",
-          registration_type: registrationType,
-          pothi: registrationType === "general_room"
-            ? "General"
-            : family?.pothi_id ?? family?.reference_pothi_id ?? "",
+          registration_type: hasPothi ? "pothi_room" : registrationType,
+          pothi: hasPothi ? pothiNumber : registrationType === "general_room" ? "General" : pothiId ?? "",
           venue: roomDetails ? shortVenue(roomDetails) : "",
           room: roomDetails ? shortRoom(roomDetails) : ""
         };
