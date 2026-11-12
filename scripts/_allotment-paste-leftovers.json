@@ -1,0 +1,1140 @@
+{
+  "applied": {
+    "inserted": 50,
+    "moved": 86,
+    "alreadyOk": 193
+  },
+  "issueCounts": {
+    "family_not_found": 114,
+    "same_member_two_rooms": 19
+  },
+  "notInDb": [
+    {
+      "name": "Savita Bhupendra Gagdani",
+      "mobile": "9820502199",
+      "room": "1112/JAKHIBAI",
+      "source": "paste"
+    },
+    {
+      "name": "DEEPAK KALYANJI BHUTADA",
+      "mobile": "7228884291",
+      "room": "SPM/513",
+      "source": "paste"
+    },
+    {
+      "name": "DEVKABEN BADAMIYA",
+      "mobile": "7043456185",
+      "room": "SPM/513",
+      "source": "paste"
+    },
+    {
+      "name": "HASTABEN BHOGILAL GAUR",
+      "mobile": "9591387099",
+      "room": "SPM/513",
+      "source": "paste"
+    },
+    {
+      "name": "UMABEN NITINBHAI MANIYAR",
+      "mobile": "9327863527",
+      "room": "SPM/513",
+      "source": "paste"
+    },
+    {
+      "name": "RANJANBEN PRABHU JULJULE",
+      "mobile": "9986699626",
+      "room": "SPM/513",
+      "source": "paste"
+    },
+    {
+      "name": "Dhirendra Gagdani",
+      "mobile": "9619162199",
+      "room": "1012/JAKHIBAI",
+      "source": "paste"
+    },
+    {
+      "name": "BHARTI SHANTILAL BHUTADA",
+      "mobile": "",
+      "room": "RATANBEN HALL",
+      "source": "paste"
+    },
+    {
+      "name": "MANJULA P NAVDHARE",
+      "mobile": "",
+      "room": "RATANBEN HALL",
+      "source": "paste"
+    },
+    {
+      "name": "HARSHA G NAVDHARE",
+      "mobile": "",
+      "room": "RATANBEN HALL",
+      "source": "paste"
+    },
+    {
+      "name": "GURVANTI J SHETH",
+      "mobile": "",
+      "room": "RATANBEN HALL",
+      "source": "paste"
+    },
+    {
+      "name": "SHARMILA J SHETH",
+      "mobile": "",
+      "room": "RATANBEN HALL",
+      "source": "paste"
+    },
+    {
+      "name": "USHABEN SHAH",
+      "mobile": "",
+      "room": "RATANBEN HALL",
+      "source": "paste"
+    },
+    {
+      "name": "KHUSH NAVDHARE",
+      "mobile": "",
+      "room": "1117/JAKHIBAI",
+      "source": "paste"
+    },
+    {
+      "name": "MANISH RATHI",
+      "mobile": "",
+      "room": "1117/JAKHIBAI",
+      "source": "paste"
+    },
+    {
+      "name": "REKHABEN ANIL BHUTADA",
+      "mobile": "",
+      "room": "1113/JAKHIBAI",
+      "source": "paste"
+    },
+    {
+      "name": "BHAVNA NITIN MALL",
+      "mobile": "",
+      "room": "SMRUTI/104",
+      "source": "paste"
+    },
+    {
+      "name": "Jyoti Ashwin SHARDA",
+      "mobile": "",
+      "room": "SMRUTI/104",
+      "source": "paste"
+    },
+    {
+      "name": "SHILPABEN PANKAJBHAI NAVDHARE",
+      "mobile": "",
+      "room": "SMRUTI/106",
+      "source": "paste"
+    },
+    {
+      "name": "Prabhaben Ashwin Gingal",
+      "mobile": "9664567521",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "Ashwinbhai Manilal Gingal",
+      "mobile": "9284796673",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "Sonalben Devang Maniyar",
+      "mobile": "9820115982",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "Ashokbhai Surjibhai Karwa",
+      "mobile": "9820337150",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "Mayuriben Milanbhai Sheth",
+      "mobile": "9824704789",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "Rinkuben Tejasbhai Sheth",
+      "mobile": "7383300646",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "Tejasbhai Navinchandra Sheth",
+      "mobile": "7016081741",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "Manali Hardik Gandhi",
+      "mobile": "9619783399",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "Hardik Rajeshbhai Gandhi",
+      "mobile": "9624066968",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "Ivaan Rohan Rathi",
+      "mobile": "8889991896",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "Jayaben Ghanshyambhai Gingal",
+      "mobile": "8369582812",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "Shardaben Jagdishchandra Mandan",
+      "mobile": "7069871900",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "Anitaben Vijay Rathi",
+      "mobile": "9892929244",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "Neel Devangbhai Maniyar",
+      "mobile": "9768340479",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "Dharmesh Devangbhai Maniyar",
+      "mobile": "9819086033",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "Nareshbhai Damodar Mandan",
+      "mobile": "9930916515",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "Maheshbhai Kantilal Mandan",
+      "mobile": "9825149442",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "Nirmalaben Rameshbhai Bhedakiya",
+      "mobile": "8780847677",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "Rekhaben Rasikbhai Karwa",
+      "mobile": "9930126658",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "Navinchandra Harilal Sheth",
+      "mobile": "7383600435",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "Amrutben Nareshbhai Mandan",
+      "mobile": "9321148641",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "Ashaben Mukesh Mandan",
+      "mobile": "9374633277",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "Sarayuben Suresh Bhutada",
+      "mobile": "9773922449",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "Beenaben Mundada",
+      "mobile": "9853752921",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "Ram Ashok Karva",
+      "mobile": "7507329000",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "Aditya Ashok Karva",
+      "mobile": "9820337157",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "Rameshbhai Amrutlal Bhedakiya",
+      "mobile": "9428033501",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "Malti Ben Navin Navdhare",
+      "mobile": "9979991322",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "Vinod Maneklal Mall",
+      "mobile": "9820002233",
+      "room": "VBC/307",
+      "source": "paste"
+    },
+    {
+      "name": "MEHUL P RATHI",
+      "mobile": "9422727318",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "VANITA M RATHI",
+      "mobile": "9423787328",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "BRIJAL P RATHI",
+      "mobile": "9819028028",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "NAMITA B RATHI",
+      "mobile": "9867689990",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "KRUNAL M RATHI",
+      "mobile": "9422727319",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "VISHAKHA K RATHI",
+      "mobile": "9167357354",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "GAURAV V RATHI",
+      "mobile": "9819044890",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "ANKITA G RATHI",
+      "mobile": "9819064890",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "MILIND V RATHI",
+      "mobile": "8879069064",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "ANIKET S RATHI",
+      "mobile": "9773776611",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "TWINKLE A RATHI",
+      "mobile": "9688886611",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "RONIT S RATHI",
+      "mobile": "9967841212",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "SAPNA R RATHI",
+      "mobile": "8080209093",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "MILAN D RATHI",
+      "mobile": "7977179065",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "RITWIK B RATHI",
+      "mobile": "9821238321",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "SAGAR S PATEL",
+      "mobile": "9975699975",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "HEMANGHI S PATEL",
+      "mobile": "9657104789",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "ASHOK K GILDA",
+      "mobile": "9820125897",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "RANJAN K LADHAD",
+      "mobile": "8291375660",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "JYOTI N MALL",
+      "mobile": "9699097302",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "MANGALA M GILDA",
+      "mobile": "8624963253",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "MUKESH L RATHI",
+      "mobile": "9833123691",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "URMILA N BHUTADA",
+      "mobile": "9712088253",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "SANGITA J SHETH",
+      "mobile": "8511557957",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "SHOBHA K SOMANI",
+      "mobile": "8429481594",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "SATISH D PATEL",
+      "mobile": "9049593753",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "ANIL P BHUTADA",
+      "mobile": "9426717072",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "ALKESH C BHUTADA",
+      "mobile": "9426955176",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "DILIP J MANDAN",
+      "mobile": "9820886720",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "BHARTI P MANDAN",
+      "mobile": "9833572441",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "RATAN P MALL",
+      "mobile": "9726031015",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "MALTI D SHARDA",
+      "mobile": "8689889909",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "JAGDISH S LADHAD",
+      "mobile": "9342135699",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "BHUPENDRA N GAGDANI",
+      "mobile": "9820103539",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "ANIL GUJRATI",
+      "mobile": "9424708215",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "ROHIT J SHETH",
+      "mobile": "9925846878",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "BHAGWATI V TANK",
+      "mobile": "9029871879",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "NAYANA N MALL",
+      "mobile": "9987587294",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "NEETA S BHUTADA",
+      "mobile": "8108600793",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "MANISHA K SAVAR",
+      "mobile": "9987888801",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "DIMPLE",
+      "mobile": "9969984224",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "VIMLA H BHUTADA",
+      "mobile": "9920769989",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "PRAGATI S LADHAD",
+      "mobile": "9342907032",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "JYOSNA ASHISH",
+      "mobile": "8308228040",
+      "room": "PRIVATE HOTEL",
+      "source": "paste"
+    },
+    {
+      "name": "AKSHITABEN JAMNADAS SAVAR",
+      "mobile": "",
+      "room": "VBC/101",
+      "source": "excel_done"
+    },
+    {
+      "name": "RASHMI BRIJESH MALL",
+      "mobile": "",
+      "room": "VBC/101",
+      "source": "excel_done"
+    },
+    {
+      "name": "RINKU CHIRAG LADHAD",
+      "mobile": "",
+      "room": "VBC/102",
+      "source": "excel_done"
+    },
+    {
+      "name": "JAYSHREE NILESH MUNDADA",
+      "mobile": "",
+      "room": "VBC/103",
+      "source": "excel_done"
+    },
+    {
+      "name": "NEELAM RAHUL MALL",
+      "mobile": "",
+      "room": "VBC/104",
+      "source": "excel_done"
+    },
+    {
+      "name": "SHANTILAL DEVJI MALL",
+      "mobile": "",
+      "room": "VBC/301",
+      "source": "paste"
+    },
+    {
+      "name": "SHARDA SHANTILAL MALL",
+      "mobile": "",
+      "room": "VBC/301",
+      "source": "paste"
+    },
+    {
+      "name": "MURLIKRISHNA SHANTILAL MALL",
+      "mobile": "",
+      "room": "VBC/301",
+      "source": "paste"
+    },
+    {
+      "name": "ASHWIN VALLABHDAS BHEDAKIYA",
+      "mobile": "",
+      "room": "VBC/201",
+      "source": "paste"
+    },
+    {
+      "name": "DHANANJAY RAJNIKANT CHANDAK",
+      "mobile": "",
+      "room": "VBC/202",
+      "source": "paste"
+    },
+    {
+      "name": "PREETI DHANANJAY CHANDAK",
+      "mobile": "",
+      "room": "VBC/202",
+      "source": "paste"
+    },
+    {
+      "name": "Akash G Kruplani",
+      "mobile": "",
+      "room": "SMRUTI/204",
+      "source": "paste"
+    },
+    {
+      "name": "GEETA M SHARDA",
+      "mobile": "",
+      "room": "SMRUTI/204",
+      "source": "paste"
+    },
+    {
+      "name": "JENISHA M SHARDA",
+      "mobile": "",
+      "room": "SMRUTI/204",
+      "source": "paste"
+    },
+    {
+      "name": "VISHWA SHAH",
+      "mobile": "",
+      "room": "HOTEL FERN MADHAPAR",
+      "source": "paste"
+    },
+    {
+      "name": "FORAM SUMEET GHUSAI",
+      "mobile": "",
+      "room": "HOME",
+      "source": "excel_pending"
+    },
+    {
+      "name": "SUMEET J GHUSAI",
+      "mobile": "",
+      "room": "HOME",
+      "source": "excel_pending"
+    },
+    {
+      "name": "NITYA BIMAL JOSHI",
+      "mobile": "",
+      "room": "HOME",
+      "source": "excel_pending"
+    },
+    {
+      "name": "NAITIK HEMAL SHARDA",
+      "mobile": "",
+      "room": "HOME",
+      "source": "excel_pending"
+    },
+    {
+      "name": "Sumit Jayantilal Mandan",
+      "mobile": "9712912538",
+      "room": "VBC/305",
+      "source": "excel_sheet1"
+    },
+    {
+      "name": "JITEN JENTILAL MANDAN",
+      "mobile": "",
+      "room": "VBC/305",
+      "source": "excel_sheet1"
+    },
+    {
+      "name": "JANVI JITEN MANDAN",
+      "mobile": "",
+      "room": "VBC/305",
+      "source": "excel_sheet1"
+    }
+  ],
+  "duplicateRoomClaims": [
+    {
+      "name": "Daksha A Shah",
+      "mobile": "9773450260",
+      "room": "RATANBEN HALL"
+    },
+    {
+      "name": "VASANTABEN MOHANLAL MALL",
+      "mobile": "",
+      "room": "SMRUTI/106"
+    },
+    {
+      "name": "Hitesh Laljibhai Navdhare",
+      "mobile": "7666669030",
+      "room": "PRIVATE HOTEL"
+    },
+    {
+      "name": "HANSA H BHUTADA",
+      "mobile": "9823057284",
+      "room": "PRIVATE HOTEL"
+    },
+    {
+      "name": "JAYMIN R MALL",
+      "mobile": "9422222943",
+      "room": "PRIVATE HOTEL"
+    },
+    {
+      "name": "HARISH P BHUTADA",
+      "mobile": "9426204319",
+      "room": "PRIVATE HOTEL"
+    },
+    {
+      "name": "BHAUMIK BHARAT MANDAN",
+      "mobile": "",
+      "room": "VBC/101"
+    },
+    {
+      "name": "HEMLATA ASHOK GINGAL",
+      "mobile": "",
+      "room": "VBC/103"
+    },
+    {
+      "name": "GEETA MOHAN MALL",
+      "mobile": "",
+      "room": "VBC/104"
+    },
+    {
+      "name": "Pratham Anil Bhutada",
+      "mobile": "8141019024",
+      "room": "RAJGOR/106"
+    },
+    {
+      "name": "ALPA BHUTADA",
+      "mobile": "",
+      "room": "VBC/204"
+    },
+    {
+      "name": "Vimalaben Dinesh Mandan",
+      "mobile": "",
+      "room": "VSC/06"
+    },
+    {
+      "name": "JINAL BIMAL JOSHI",
+      "mobile": "",
+      "room": "HOME"
+    },
+    {
+      "name": "SWARA BIMAL JOSHI",
+      "mobile": "",
+      "room": "HOME"
+    },
+    {
+      "name": "HEMAL ASHOK SHARDA",
+      "mobile": "",
+      "room": "HOME"
+    },
+    {
+      "name": "MADHU ASHOK SHARDA",
+      "mobile": "",
+      "room": "HOME"
+    },
+    {
+      "name": "JYOTSNA SETH",
+      "mobile": "1113000000",
+      "room": "RAJGOR/101"
+    },
+    {
+      "name": "Khush Harikrishna Maheshwari",
+      "mobile": "",
+      "room": "VSC/01"
+    },
+    {
+      "name": "Alpa Bhutada",
+      "mobile": "8980793109",
+      "room": "SMRUTI/205"
+    }
+  ],
+  "pastePendingNoRoomUnique": [
+    "Aarti Deepak Navdhare",
+    "Aasnani rupal ben",
+    "Aayushi Gitesh laddhad",
+    "Alka Sharda",
+    "Alkesh jethalal somani",
+    "Alpa gandhi",
+    "Alpha K Bachani",
+    "Amaira Nitesh",
+    "AMIT GAGDANI",
+    "Amit Ramniklal Gingal",
+    "Amita Bharat savar",
+    "andnad surji ladhad",
+    "Ankita Hiren Sharda",
+    "Arun P Sheth",
+    "Arunbhai Ajitbhai Sarda",
+    "Arushi vipul mundada",
+    "ARVIND MANGALDAS SHARDA",
+    "Arvindbhai amrutlal bhedakiya",
+    "Aryan Deepak Navdhare",
+    "Ashok Puroshattam Mandan",
+    "Avniben vipul mundada",
+    "Badamiya ritaben",
+    "BEENA HARISHKUMAR ASNANI",
+    "beena shah",
+    "Bhagya amit sharda",
+    "Bhailal L Mall",
+    "BHAKTI PARESH LADHAD",
+    "Bharat Devkaran Savar",
+    "BHARTI SHANTILAL BHUTADA",
+    "Bhartiben Bharat mandan",
+    "Bhaven Haresh Navdhare",
+    "Bhavesh K Bhutada",
+    "Bhavesh Shah",
+    "Bhavya Amit Sharda",
+    "BINA BEN MUKESHBHAI PARIKH",
+    "Bipin Morarji Maniyar",
+    "Biral Chetan Mall",
+    "BRIJESH ARVINDBHAI SHARDA",
+    "Chamanlal devji mundada",
+    "CHAMPA D SHAH",
+    "Champaben Damodar Bhedakiya",
+    "Chandrakant Valji Bhutda",
+    "Chandrikaben arvindbhai bhedakiya",
+    "Charmi sandeep Mandan",
+    "Chetan Vinodbhai Mall",
+    "Daksha A Shah",
+    "Damyantiben",
+    "Damyantiben RASIKBHAI GANDHI",
+    "Darshika",
+    "Deep Bharat savar",
+    "Deepa Bipin Maniyar",
+    "DEEPAK Ramjibhai Bhutada",
+    "devanshi punit mall",
+    "Dhirendra Gagdani",
+    "Dilip R GANDHI",
+    "Dimple Narendra Sharda",
+    "DIPAK LADHARAM SHARDA",
+    "Dipti Sameer Maheshwari",
+    "Ditya Nishant Gandhi",
+    "Divya Tapan Bhutada",
+    "Falguni Hiren Mall",
+    "Geeta praful somani",
+    "Girishbhai Damodar sharda",
+    "Gitesh Manshukhlal Navdhare",
+    "Gopi Bhavesh Bhutada",
+    "Gourav paresh mall",
+    "GURVANTI J SHETH",
+    "Hansaben M Laddhad",
+    "Harishkumar Asnani",
+    "HARSHA G NAVDHARE",
+    "Harshdabhai Maniyar",
+    "Heena GAGDANI",
+    "Heena Karwa",
+    "Heena Sharda",
+    "Hemali sandeep shah",
+    "Hemlata Chandrakant Mundra",
+    "Heral Paresh mall",
+    "Himmatlal mangaldas somani",
+    "Hira anandji ladhad",
+    "Hiral Arunbhai Sarda",
+    "Hiren Rameshchandra Sharda",
+    "Hiten Mall",
+    "Hitendra mavji shah",
+    "JAGDISH KESHAVJI LADDHAD",
+    "JANVI JITEN MANDAN",
+    "JAYESH JAGDISH LADDHAD",
+    "JAYESH JAMNADAS MANIYAR",
+    "JAYSHREE KHUSHAL SHARDA",
+    "Jayshree Ramesh Mall",
+    "Jayshreeben dipakbhai seth",
+    "Jayshreeben H Maniyar",
+    "JAYSHREEBEN PRAMITKUMAR",
+    "jignaben pareshkumar LADHAD",
+    "Jignaben S Gandhi",
+    "Jiten Jayantilal Mandan",
+    "JITENDRA RASIKCHANDRA MALL",
+    "Jyoti hitendra Mundada",
+    "Jyotshna Deepak Bhutada",
+    "Kajal nishant mall",
+    "kalpna paresh mall",
+    "KAMLA J SHARDA",
+    "KARAN JITENDRA GANDHI",
+    "Keyur Chetan Navdhare",
+    "Kiara Gilda",
+    "Kokilaben Ravibhai Mal",
+    "Krishna suresh mall",
+    "Kyati Sagar Navdhare",
+    "LADHARAM HARIDAS SHARDA",
+    "Laxmi Ramaniklal GINGAL",
+    "LAXMI SHAH",
+    "Leena Bhadresh Maniyar",
+    "Lilavanti shivji mundada",
+    "Madhavi Mehul Bhutada",
+    "Madhavi Nishant Mall",
+    "Madhur bhavesh bhutada",
+    "Mahendra Laddhad",
+    "MAHESH KESHAVJI LADDHAD",
+    "Mahesh kuvrji ladhad",
+    "Manali Raj Navdhare",
+    "Manish Pragji Gagdani",
+    "Manisha Alkesh somani",
+    "Manishben javeri",
+    "Manjula Bharat Savar",
+    "Manjula Maheshwari",
+    "MANJULA P NAVDHARE",
+    "Manjula Purshottam Navdhare",
+    "manjula shah",
+    "Mansukhlal samji shah",
+    "Meena Nagori",
+    "Meenaben himmatlal somani",
+    "Meera Amit Gingal",
+    "MEETA A BHUTADA",
+    "MEETA DEEPAK BHUTADA",
+    "Megji Morarji Karva",
+    "Mehul Mohanbhai Bhutada",
+    "Mimansha",
+    "Morarji Lalji Shah",
+    "Mr. Digvijay Kumar",
+    "Mr. G R Kriplani",
+    "Mr. Rupchand Chandwani",
+    "Mrs. Renuka Digvijay",
+    "Mrs. Surbhi Chandwani",
+    "Mrs. Varsha Kriplani",
+    "Mrudula Mahesh Ladhad",
+    "Mukta M Mandan",
+    "Mukta Mahendra Mandan",
+    "Naresh",
+    "NARMADABEN JAGDISH LADDHAD",
+    "NAVAL BABULAL BHUTADA",
+    "Navalben dineshbhai navdhare",
+    "Navin Manish Sheth",
+    "Neepa Amit Sharda",
+    "Neera Paresh Mall",
+    "Neeta Manish Gandhi",
+    "Nidhi Nirav mall",
+    "Nimisha sarda",
+    "Nirav mohanlal mall",
+    "Nirmalaben Arunbhai Sarda",
+    "Nirva Mall",
+    "Nirvika bhavesh Bhutada",
+    "Nishant Bhavesh Mall",
+    "Nishant Bhupendrabhai Gandhi",
+    "Nita ben SUNILBHAI LADHDHAD",
+    "Nitya vipul mundada",
+    "Paresh Karwa",
+    "Paresh mall",
+    "pareshkumar devchandbhai LADHAD",
+    "Pooja Prakash Mundada",
+    "Pooja Shah",
+    "Praful Jamnadas Bhutada",
+    "Prakash shah",
+    "Praveena Rajnikant Maniyar",
+    "Pravina jagdish rathi",
+    "Preeti Kirti Bhutada",
+    "PREETIBEN BHUTADA",
+    "Premila Sharda",
+    "Premilaben premjibhai mundada",
+    "Premji Sharda",
+    "Premjibhai Haridas Mundada",
+    "Prince Maniyar",
+    "Prisha hitrendra shah",
+    "Priti himatlal mall",
+    "Purvi Tapan Bhutada",
+    "Pushpa bipin sharda",
+    "Raj Gilda",
+    "Rajnikant Maniyar",
+    "RAKESH KUMAR SHAH",
+    "Ramesh Shamji Mall",
+    "Ramilaben Ragavjibhai mundada",
+    "Rathi Jayaben",
+    "Reena vipul Mandan",
+    "REKHA RAJIV SARDA",
+    "Richa suresh mall",
+    "Riddhi Jay Navdhare",
+    "Rupal jay Mandan",
+    "Sachi M Rathi",
+    "Sachi Mehul Bhutada",
+    "Sakxam S Gandhi",
+    "Sandeep suresh Mandan",
+    "Sandip Mall",
+    "Sangita champaklal mall",
+    "Sankutla Megji Karva",
+    "Sanvi hitrendra shah",
+    "Sarala ben GAGDANI",
+    "Saraswati Dheeraj Mandan",
+    "Saryu P Sharda",
+    "Shah Biral",
+    "Shah Daxaben Dhirajlal",
+    "Shah jiya Dipak",
+    "Shah Jyoti",
+    "Shah Jyotsana Hariram",
+    "Shah Mukesh",
+    "Shah Pranay",
+    "Shah Prince",
+    "Shah Rupal",
+    "Shah Sandhya",
+    "Shah Umesh",
+    "Shah Veeha",
+    "Shailesh Mohanlal Gagdani",
+    "Shakuntala M Rathi",
+    "Shantilal GAGDANI",
+    "SHARMILA J SHETH",
+    "Sharmila Jayantilal Seth",
+    "Sheetal Nitesh",
+    "SHOBHA N BHUTADA",
+    "Shravya Mall",
+    "Suresh dayalji mall",
+    "Suresh devji Mandan",
+    "Sushila Arun Seth",
+    "Sushilaben chamanlal mundada",
+    "Swati Bhaven Navdhare",
+    "Sweta jayesh Laddhad",
+    "Sweta Jayesh Mall",
+    "Tanushka Karwa",
+    "Tapan Arvind Bhutada",
+    "Tisha Karwa",
+    "Uannti P Mall",
+    "Urmila shard",
+    "Urvashi p Mall",
+    "Usha Praful Bhutada",
+    "USHABEN SHAH",
+    "Utsa sarda",
+    "VAIDEHI PARTH SAVAR",
+    "Vaishali Paresh mall",
+    "VAISHALIBEN SANDEEPBHAI SAVAR",
+    "Veera Mehul Bhutada",
+    "Vimla dinesh mandan",
+    "VIPUL PREMJI MUNDADA",
+    "Vipul suresh Mall",
+    "viren Purushottam Navdhare",
+    "Viren Purushottam Navdhare",
+    "VISHWA SHAH",
+    "Vivan Hiren Mall",
+    "Yash Paresh Ladhad",
+    "Yashika Amit Gingal",
+    "ZANKHANA BEN ARVIND SHARDA",
+    "મોહનભાઈ પ્રેમજીભાઈ ભૂતડા"
+  ],
+  "overCapacity": [
+    {
+      "room": "HOTEL / SMRUTI HILLS HOTEL / 202",
+      "capacity": 4,
+      "occupancy": 6
+    },
+    {
+      "room": "YAX MANDIR / NAVNEET COMPLEX / 113",
+      "capacity": 5,
+      "occupancy": 9
+    },
+    {
+      "room": "YAX MANDIR / NAVNEET COMPLEX / 114",
+      "capacity": 5,
+      "occupancy": 9
+    },
+    {
+      "room": "YAX MANDIR / S.P.M.COMPLEX / 403",
+      "capacity": 5,
+      "occupancy": 7
+    },
+    {
+      "room": "HOTEL / BHUJ VIEW HOTEL / 106",
+      "capacity": 5,
+      "occupancy": 6
+    },
+    {
+      "room": "HOTEL / BHUJ VIEW HOTEL / 103",
+      "capacity": 3,
+      "occupancy": 5
+    },
+    {
+      "room": "YAX MANDIR / JAKHIBAI COMPLEX / 1006",
+      "capacity": 5,
+      "occupancy": 6
+    },
+    {
+      "room": "YAX MANDIR / JAKHIBAI COMPLEX / 1110",
+      "capacity": 5,
+      "occupancy": 7
+    },
+    {
+      "room": "HOTEL / BHUJ VIEW HOTEL / 104",
+      "capacity": 3,
+      "occupancy": 4
+    },
+    {
+      "room": "YAX MANDIR / NAVNEET COMPLEX / 106",
+      "capacity": 5,
+      "occupancy": 6
+    },
+    {
+      "room": "V.S.C. / V.S.C. / 05",
+      "capacity": 4,
+      "occupancy": 5
+    },
+    {
+      "room": "YAX MANDIR / JAKHIBAI COMPLEX / 1017",
+      "capacity": 5,
+      "occupancy": 8
+    },
+    {
+      "room": "V.S.C. / V.S.C. / 03",
+      "capacity": 4,
+      "occupancy": 5
+    },
+    {
+      "room": "V.B.C. / VAGAD BE CHOVISI (V.B.C.)R.T.O. / 323",
+      "capacity": 7,
+      "occupancy": 8
+    },
+    {
+      "room": "YAX MANDIR / MARU COMPLEX / 208",
+      "capacity": 3,
+      "occupancy": 4
+    },
+    {
+      "room": "YAX MANDIR / MARU COMPLEX / 211",
+      "capacity": 4,
+      "occupancy": 11
+    },
+    {
+      "room": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 203",
+      "capacity": 3,
+      "occupancy": 4
+    }
+  ]
+}

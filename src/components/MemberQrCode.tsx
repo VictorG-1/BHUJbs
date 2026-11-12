@@ -36,7 +36,7 @@ export function qrPayload(member: {
   return lines.join("\n");
 }
 
-export function useQrDataUrl(member: { id: string; qr_token?: string; name?: string; age?: number; gender?: string; mobile?: string | null; event_date?: string | null; arrival_date?: string | null; departure_date?: string | null; family_code?: string; venue?: string; room?: string }) {
+export function useQrDataUrl(member: { id: string; qr_token?: string; name?: string; age?: number; gender?: string; mobile?: string | null; event_date?: string | null; arrival_date?: string | null; departure_date?: string | null; family_code?: string; venue?: string; room?: string; city?: string | null; pothi?: string | number | null }) {
   const [dataUrl, setDataUrl] = useState("");
   useEffect(() => {
     if (!member.qr_token) return;

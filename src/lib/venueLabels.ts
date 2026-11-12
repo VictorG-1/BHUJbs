@@ -55,6 +55,8 @@ export function shortVenue(room: RoomLabelSource) {
   if (haystack.includes("VSC")) return "VSC";
   if (haystack.includes("VBC") || haystack.includes("VAGAD")) return "VBC";
   if (haystack.includes("PRIVATEHOTEL")) return "PRIVATE HOTEL";
+  if (haystack.includes("LOHANA")) return "LOHANA VADI";
+  if (haystack.includes("SHYAMVILLA") || haystack.includes("SHYAM")) return "SHYAM VILLA";
   if (venue === "HOTEL") return String(room.section_name ?? "HOTEL").replace(/ HOTEL$/i, "");
   return String(room.section_name || room.venue_name || "").trim() || "Venue";
 }

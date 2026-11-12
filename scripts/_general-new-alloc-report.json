@@ -1,0 +1,1380 @@
+{
+  "summary": {
+    "apply": true,
+    "workbook": "C:/Users/DELL/Downloads/General Alloted - Copy.xlsx",
+    "excelNewAllocations": 92,
+    "moves": 45,
+    "inserts": 16,
+    "removes": 0,
+    "alreadyOk": 0,
+    "privateMoves": 0,
+    "issues": 31,
+    "issueCounts": {
+      "member_not_found": 15,
+      "family_not_found": 16
+    },
+    "sampleMoves": [
+      {
+        "name": "Anil Mulji Bhutada",
+        "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1106",
+        "to": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 106",
+        "newRaw": "RAJGOR 106"
+      },
+      {
+        "name": "Archana Ritesh Shah",
+        "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1110",
+        "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1108",
+        "newRaw": "JAKHIBAI 1108"
+      },
+      {
+        "name": "Arvind Bhutada",
+        "from": "YAX MANDIR / MARU COMPLEX / 213",
+        "to": "HOTEL / BHUJ VIEW HOTEL / 101",
+        "newRaw": "BV 101"
+      },
+      {
+        "name": "Ashwin Jadavji Bhutda",
+        "from": "YAX MANDIR / MARU COMPLEX / 208",
+        "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1118",
+        "newRaw": "JAKHIBAI 1118"
+      },
+      {
+        "name": "Bharat Udeshi",
+        "from": "YAX MANDIR / S.P.M.COMPLEX / HALL / F.F.",
+        "to": "LOHANA VADI / LOHANA VADI / HALL",
+        "newRaw": "LOHANA VADI"
+      },
+      {
+        "name": "bhavna gandhi",
+        "from": "YAX MANDIR / MARU COMPLEX / 211",
+        "to": "LOHANA VADI / LOHANA VADI / HALL",
+        "newRaw": "LOHANA VADI"
+      },
+      {
+        "name": "champaben Champshi Sharda",
+        "from": "YAX MANDIR / MARU COMPLEX / 211",
+        "to": "LOHANA VADI / LOHANA VADI / HALL",
+        "newRaw": "LOHANA VADI"
+      },
+      {
+        "name": "chetan kantilal kothari",
+        "from": "YAX MANDIR / S.P.M.COMPLEX / HALL / F.F.",
+        "to": "LOHANA VADI / LOHANA VADI / HALL",
+        "newRaw": "LOHANA VADI"
+      },
+      {
+        "name": "Deena Mandan",
+        "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1110",
+        "to": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 104",
+        "newRaw": "RAJGOR 104"
+      },
+      {
+        "name": "Dhirajlal Mandan",
+        "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1109",
+        "to": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 104",
+        "newRaw": "RAJGOR 104"
+      },
+      {
+        "name": "Dilip Jadavji Bhutda",
+        "from": "YAX MANDIR / MARU COMPLEX / 208",
+        "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1118",
+        "newRaw": "JAKHIBAI 1118"
+      },
+      {
+        "name": "dixita shah",
+        "from": "YAX MANDIR / MARU COMPLEX / 211",
+        "to": "YAX MANDIR / S.P.M.COMPLEX / 510",
+        "newRaw": "SPM 510"
+      },
+      {
+        "name": "Hansaben Bhanji Somani",
+        "from": "YAX MANDIR / MARU COMPLEX / 206",
+        "to": "LOHANA VADI / LOHANA VADI / HALL",
+        "newRaw": "LOHANA VADI"
+      },
+      {
+        "name": "HARIKRISHNA NAVDHARE",
+        "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1117",
+        "to": "V.S.C. / V.S.C. / 01",
+        "newRaw": "VSC 1"
+      },
+      {
+        "name": "Harilal Liladhar Bhutada",
+        "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1114",
+        "to": "SHYAM VILLA / SHYAM VILLA / HALL",
+        "newRaw": "SHYAM VILLA"
+      },
+      {
+        "name": "Harsh Rajesh Gagdani",
+        "from": "YAX MANDIR / S.P.M.COMPLEX / HALL / F.F.",
+        "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1114",
+        "newRaw": "JAKHIBAI 1114"
+      },
+      {
+        "name": "Jay Gandhi",
+        "from": "YAX MANDIR / S.P.M.COMPLEX / HALL / F.F.",
+        "to": "LOHANA VADI / LOHANA VADI / HALL",
+        "newRaw": "LOHANA VADI"
+      },
+      {
+        "name": "Jaydeep Ashwinbhai Bhutda",
+        "from": "YAX MANDIR / MARU COMPLEX / 208",
+        "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1118",
+        "newRaw": "JAKHIBAI 1118"
+      },
+      {
+        "name": "JAYMIN MALL",
+        "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1114",
+        "to": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 102",
+        "newRaw": "RAJGOR 102"
+      },
+      {
+        "name": "JYOSTNABEN JAYMIN MALL",
+        "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1113",
+        "to": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 102",
+        "newRaw": "RAJGOR 102"
+      },
+      {
+        "name": "Jyoti Ashwin Bhutda",
+        "from": "YAX MANDIR / MARU COMPLEX / 208",
+        "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1118",
+        "newRaw": "JAKHIBAI 1118"
+      },
+      {
+        "name": "Kavita prerak navdhare",
+        "from": "YAX MANDIR / MARU COMPLEX / 212",
+        "to": "YAX MANDIR / VALIBEN HALL / HALL / G.F.",
+        "newRaw": "VALIBEN GF HALL"
+      },
+      {
+        "name": "Meena Mukesh Rathi",
+        "from": "YAX MANDIR / MARU COMPLEX / 206",
+        "to": "LOHANA VADI / LOHANA VADI / HALL",
+        "newRaw": "LOHANA VADI"
+      },
+      {
+        "name": "Milan Bharat Shah",
+        "from": "YAX MANDIR / S.P.M.COMPLEX / HALL / F.F.",
+        "to": "LOHANA VADI / LOHANA VADI / HALL",
+        "newRaw": "LOHANA VADI"
+      },
+      {
+        "name": "Mukesh Revalal Kothari",
+        "from": "YAX MANDIR / MARU COMPLEX / 206",
+        "to": "LOHANA VADI / LOHANA VADI / HALL",
+        "newRaw": "LOHANA VADI"
+      },
+      {
+        "name": "Muljibhai Premjibhai Bhutada",
+        "from": "YAX MANDIR / S.P.M.COMPLEX / HALL / F.F.",
+        "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1109",
+        "newRaw": "JAKHIBAI 1109"
+      },
+      {
+        "name": "Navin Sheth",
+        "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1017",
+        "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1106",
+        "newRaw": "JAKHIBAI 1106"
+      },
+      {
+        "name": "needhi gandhi",
+        "from": "YAX MANDIR / MARU COMPLEX / 211",
+        "to": "LOHANA VADI / LOHANA VADI / HALL",
+        "newRaw": "LOHANA VADI"
+      },
+      {
+        "name": "Nitin M Shah",
+        "from": "YAX MANDIR / MARU COMPLEX / 213",
+        "to": "LOHANA VADI / LOHANA VADI / HALL",
+        "newRaw": "LOHANA VADI"
+      },
+      {
+        "name": "Prabha Dilipbhai Bhutda",
+        "from": "YAX MANDIR / MARU COMPLEX / 211",
+        "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1118",
+        "newRaw": "JAKHIBAI 1118"
+      },
+      {
+        "name": "PRAFUL BHUTADA",
+        "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1106",
+        "to": "YAX MANDIR / S.P.M.COMPLEX / HALL / F.F.",
+        "newRaw": "SPM FF HALL"
+      },
+      {
+        "name": "Pratham Anil Bhutada",
+        "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1106",
+        "to": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 106",
+        "newRaw": "RAJGOR 106"
+      },
+      {
+        "name": "Rajesh Dhanji Gagdani",
+        "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1109",
+        "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1114",
+        "newRaw": "JAKHIBAI 1114"
+      },
+      {
+        "name": "Ritaben Chetan Kothari",
+        "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1110",
+        "to": "LOHANA VADI / LOHANA VADI / HALL",
+        "newRaw": "LOHANA VADI"
+      },
+      {
+        "name": "Sandhya Udeshi",
+        "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1110",
+        "to": "LOHANA VADI / LOHANA VADI / HALL",
+        "newRaw": "LOHANA VADI"
+      },
+      {
+        "name": "Santokben P. Bhutada",
+        "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1110",
+        "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1108",
+        "newRaw": "JAKHIBAI 1108"
+      },
+      {
+        "name": "Sarita Mahindra Navadhare",
+        "from": "YAX MANDIR / MARU COMPLEX / 211",
+        "to": "LOHANA VADI / LOHANA VADI / HALL",
+        "newRaw": "LOHANA VADI"
+      },
+      {
+        "name": "Smita Ashwinbhai Bhutda",
+        "from": "YAX MANDIR / MARU COMPLEX / 211",
+        "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1117",
+        "newRaw": "JAKHIBAI 1117"
+      },
+      {
+        "name": "Umiya Ashwinbhai Bhutda",
+        "from": "YAX MANDIR / MARU COMPLEX / 211",
+        "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1117",
+        "newRaw": "JAKHIBAI 1117"
+      },
+      {
+        "name": "Usha Umesh Bhutada",
+        "from": "YAX MANDIR / MARU COMPLEX / 211",
+        "to": "LOHANA VADI / LOHANA VADI / HALL",
+        "newRaw": "LOHANA VADI"
+      }
+    ],
+    "sampleInserts": [
+      {
+        "name": "VIPUL P MUNDRA",
+        "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1017",
+        "newRaw": "JAKHIBAI 1017"
+      },
+      {
+        "name": "AVNI V MUNDRA",
+        "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1017",
+        "newRaw": "JAKHIBAI 1017"
+      },
+      {
+        "name": "NITYA V MUNDRA",
+        "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1017",
+        "newRaw": "JAKHIBAI 1017"
+      },
+      {
+        "name": "DIPAK LADHARAM SHARDA",
+        "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1114",
+        "newRaw": "JAKHIBAI 1114"
+      },
+      {
+        "name": "JAGDISH K LADDHAD",
+        "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1109",
+        "newRaw": "JAKHIBAI 1109"
+      },
+      {
+        "name": "LADHARAM H SHARDA",
+        "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1109",
+        "newRaw": "JAKHIBAI 1109"
+      },
+      {
+        "name": "PRAKASH JAMNADAS SHAH",
+        "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1112",
+        "newRaw": "JAKHIBAI 1112"
+      },
+      {
+        "name": "PRITI H MALL",
+        "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1110",
+        "newRaw": "JAKHIBAI 1110"
+      },
+      {
+        "name": "SURESH DAYALJI MALL",
+        "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1112",
+        "newRaw": "JAKHIBAI 1112"
+      },
+      {
+        "name": "SURESH DEVJI MANDAN",
+        "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1112",
+        "newRaw": "JAKHIBAI 1112"
+      },
+      {
+        "name": "SUSHILA ARUN SHAH",
+        "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1115",
+        "newRaw": "JAKHIBAI 1115"
+      },
+      {
+        "name": "MOHANBHAI PREMJI BHUTDA",
+        "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1116",
+        "newRaw": "JAKHIBAI 1116"
+      },
+      {
+        "name": "BHARAT D SAVAR",
+        "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1116",
+        "newRaw": "JAKHIBAI 1116"
+      },
+      {
+        "name": "KOKILABEN R MALL",
+        "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1115",
+        "newRaw": "JAKHIBAI 1115"
+      },
+      {
+        "name": "MANJULABEN B SAVAR",
+        "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1115",
+        "newRaw": "JAKHIBAI 1115"
+      },
+      {
+        "name": "RAMILABEN R MUNDRA",
+        "to": "YAX MANDIR / NAVNEET COMPLEX / 105",
+        "newRaw": "NAVNEET 105"
+      }
+    ],
+    "sampleRemoves": [],
+    "unmapped": [],
+    "missingPeople": [
+      "Bhupendra. N. Shah / 01489DACA0",
+      "Darshika / D9C684D81F",
+      "Darshika Govind Ram / D9C684D81F",
+      "Jainil prerak Navdhare / E80E9F517C",
+      "Jaisil prerak Navdhare / E80E9F517C",
+      "Jitendra Mohanlal Gingal / 73F01F1737",
+      "Khushal navadhare / 49532ED309",
+      "Meena / D9C684D81F",
+      "Meena Naresh Jhaveri / D9C684D81F",
+      "MEETA A BHUTADA / D3ED855010",
+      "Mimansha / D9C684D81F",
+      "Naresh / D9C684D81F",
+      "Naresh Javerchand Jhaveri / D9C684D81F",
+      "Prerak vasantlal Navdhare / E80E9F517C",
+      "Savita Bhupendra Shah / 01489DACA0",
+      "PREMJI H MUNDRA / ",
+      "PREMILA P MUNDRA / ",
+      "AARUSHI V MUNDRA / ",
+      "GOPI BHAVESH BHUTDA / 9898451539",
+      "HIRAL PARESH MALL / 9664700879",
+      "JAYESH JAGDISH  LADHAD / 9773390561",
+      "MAHESH K LADHAHD / 9773390561",
+      "NARMDABEN J LADHAD / 9773390561",
+      "NISHANT BHUPENDRA GANDHI / 8000287475",
+      "POOJA PRAKASH SHAH / 9037642202",
+      "PREMILA SHARDA / 9664878329",
+      "PREMJIBHAI SHARDA / 9664878329",
+      "CHAMANLAL D MUNDRA / 8320085930",
+      "JAYSHREEBEN D SHETH / 9930520693",
+      "NAVALBEN D NAVDHARE / 9328055175",
+      "SUSHILABEN C MUNDRA / 8320085930"
+    ]
+  },
+  "issues": [
+    {
+      "type": "member_not_found",
+      "rowIndex": 20,
+      "name": "Bhupendra. N. Shah",
+      "mobile": "9820502199",
+      "code": "01489DACA0",
+      "familyMobile": "9820502199",
+      "currentRoom": "1112/JAKHIBAI",
+      "newRaw": "PRIVATE",
+      "action": "private",
+      "label": "PRIVATE HOTEL",
+      "options": [
+        "Bhupendra. N. Shah ",
+        "Savita Bhupendra Shah "
+      ]
+    },
+    {
+      "type": "member_not_found",
+      "rowIndex": 27,
+      "name": "Darshika",
+      "mobile": "7733480992",
+      "code": "D9C684D81F",
+      "familyMobile": "7878088888",
+      "currentRoom": "1017/JAKHIBAI",
+      "newRaw": "DOUBLE-CANCEL",
+      "action": "remove",
+      "label": "DOUBLE-CANCEL",
+      "options": [
+        "Darshika",
+        "Darshika Govind Ram",
+        "Meena "
+      ]
+    },
+    {
+      "type": "member_not_found",
+      "rowIndex": 28,
+      "name": "Darshika Govind Ram",
+      "mobile": "7733480992",
+      "code": "D9C684D81F",
+      "familyMobile": "7878088888",
+      "currentRoom": "1017/JAKHIBAI",
+      "newRaw": "JAKHIBAI 1106",
+      "action": "assign",
+      "label": "1106/JAKHIBAI",
+      "options": [
+        "Darshika Govind Ram",
+        "Darshika",
+        "Meena "
+      ]
+    },
+    {
+      "type": "member_not_found",
+      "rowIndex": 51,
+      "name": "Jainil prerak Navdhare",
+      "mobile": "9725694594",
+      "code": "E80E9F517C",
+      "familyMobile": "9725694594",
+      "currentRoom": "MARU/212",
+      "newRaw": "SPM FF HALL",
+      "action": "assign",
+      "label": "SPM FF HALL",
+      "options": [
+        "Jainil prerak Navdhare ",
+        "Prerak vasantlal Navdhare ",
+        "Jaisil prerak Navdhare "
+      ]
+    },
+    {
+      "type": "member_not_found",
+      "rowIndex": 52,
+      "name": "Jaisil prerak Navdhare",
+      "mobile": "9725694594",
+      "code": "E80E9F517C",
+      "familyMobile": "9725694594",
+      "currentRoom": "MARU/212",
+      "newRaw": "SPM FF HALL",
+      "action": "assign",
+      "label": "SPM FF HALL",
+      "options": [
+        "Jaisil prerak Navdhare ",
+        "Prerak vasantlal Navdhare ",
+        "Jainil prerak Navdhare "
+      ]
+    },
+    {
+      "type": "member_not_found",
+      "rowIndex": 56,
+      "name": "Jitendra Mohanlal Gingal",
+      "mobile": "8087091535",
+      "code": "73F01F1737",
+      "familyMobile": "8087091535",
+      "currentRoom": "SPM HALL FF",
+      "newRaw": "RAJGOR 102",
+      "action": "assign",
+      "label": "RAJGOR/102",
+      "options": [
+        "Jitendra Mohanlal Gingal ",
+        "Deepa Jitendra Gagadani ",
+        "Payal Jitendra Gagadani"
+      ]
+    },
+    {
+      "type": "member_not_found",
+      "rowIndex": 62,
+      "name": "Khushal navadhare",
+      "mobile": "9426252818",
+      "code": "49532ED309",
+      "familyMobile": "9426252818",
+      "currentRoom": "1117/JAKHIBAI",
+      "newRaw": "CANCEL",
+      "action": "remove",
+      "label": "CANCEL",
+      "options": [
+        "Khushal navadhare",
+        "Kokila navadhare",
+        "Harsh Navadhare"
+      ]
+    },
+    {
+      "type": "member_not_found",
+      "rowIndex": 75,
+      "name": "Meena",
+      "mobile": "9408227474",
+      "code": "D9C684D81F",
+      "familyMobile": "7878088888",
+      "currentRoom": "1017/JAKHIBAI",
+      "newRaw": "DOUBLE-CANCEL",
+      "action": "remove",
+      "label": "DOUBLE-CANCEL",
+      "options": [
+        "Meena ",
+        "Meena Naresh Jhaveri",
+        "Naresh"
+      ]
+    },
+    {
+      "type": "member_not_found",
+      "rowIndex": 77,
+      "name": "Meena Naresh Jhaveri",
+      "mobile": "9408227474",
+      "code": "D9C684D81F",
+      "familyMobile": "7878088888",
+      "currentRoom": "1017/JAKHIBAI",
+      "newRaw": "JAKHIBAI 1106",
+      "action": "assign",
+      "label": "1106/JAKHIBAI",
+      "options": [
+        "Meena Naresh Jhaveri",
+        "Meena ",
+        "Naresh Javerchand Jhaveri"
+      ]
+    },
+    {
+      "type": "member_not_found",
+      "rowIndex": 79,
+      "name": "MEETA A BHUTADA",
+      "mobile": "",
+      "code": "D3ED855010",
+      "familyMobile": "9773450260",
+      "currentRoom": "RATANBEN FF",
+      "newRaw": "RAJGOR 106",
+      "action": "assign",
+      "label": "RAJGOR/106",
+      "options": [
+        "MEETA A BHUTADA",
+        "MEETA DEEPAK BHUTADA",
+        "SHOBHA N BHUTADA"
+      ]
+    },
+    {
+      "type": "member_not_found",
+      "rowIndex": 82,
+      "name": "Mimansha",
+      "mobile": "9429003993",
+      "code": "D9C684D81F",
+      "familyMobile": "7878088888",
+      "currentRoom": "1017/JAKHIBAI",
+      "newRaw": "DOUBLE-CANCEL",
+      "action": "remove",
+      "label": "DOUBLE-CANCEL",
+      "options": [
+        "Mimansha",
+        "Mimansha Ravi Patel",
+        "Meena "
+      ]
+    },
+    {
+      "type": "member_not_found",
+      "rowIndex": 90,
+      "name": "Naresh",
+      "mobile": "9426580494",
+      "code": "D9C684D81F",
+      "familyMobile": "7878088888",
+      "currentRoom": "1017/JAKHIBAI",
+      "newRaw": "DOUBLE-CANCEL",
+      "action": "remove",
+      "label": "DOUBLE-CANCEL",
+      "options": [
+        "Naresh",
+        "Naresh Javerchand Jhaveri",
+        "Meena Naresh Jhaveri"
+      ]
+    },
+    {
+      "type": "member_not_found",
+      "rowIndex": 91,
+      "name": "Naresh Javerchand Jhaveri",
+      "mobile": "9426580494",
+      "code": "D9C684D81F",
+      "familyMobile": "7878088888",
+      "currentRoom": "1017/JAKHIBAI",
+      "newRaw": "JAKHIBAI 1106",
+      "action": "assign",
+      "label": "1106/JAKHIBAI",
+      "options": [
+        "Naresh Javerchand Jhaveri",
+        "Naresh",
+        "Meena Naresh Jhaveri"
+      ]
+    },
+    {
+      "type": "member_not_found",
+      "rowIndex": 109,
+      "name": "Prerak vasantlal Navdhare",
+      "mobile": "9725694594",
+      "code": "E80E9F517C",
+      "familyMobile": "9725694594",
+      "currentRoom": "MARU/212",
+      "newRaw": "SPM FF HALL",
+      "action": "assign",
+      "label": "SPM FF HALL",
+      "options": [
+        "Prerak vasantlal Navdhare ",
+        "Jainil prerak Navdhare ",
+        "Jaisil prerak Navdhare "
+      ]
+    },
+    {
+      "type": "member_not_found",
+      "rowIndex": 125,
+      "name": "Savita Bhupendra Shah",
+      "mobile": "9820502199",
+      "code": "01489DACA0",
+      "familyMobile": "9820502199",
+      "currentRoom": "1112/JAKHIBAI",
+      "newRaw": "PRIVATE",
+      "action": "private",
+      "label": "PRIVATE HOTEL",
+      "options": [
+        "Savita Bhupendra Shah ",
+        "Bhupendra. N. Shah "
+      ]
+    },
+    {
+      "type": "family_not_found",
+      "rowIndex": 152,
+      "name": "PREMJI H MUNDRA",
+      "mobile": "",
+      "code": "",
+      "familyMobile": "",
+      "currentRoom": "",
+      "newRaw": "JAKHIBAI 1017",
+      "action": "assign",
+      "label": "1017/JAKHIBAI",
+      "options": [
+        "Premilaben premjibhai mundada",
+        "Premjibhai Haridas Mundada ",
+        "VIPUL PREMJI MUNDADA "
+      ]
+    },
+    {
+      "type": "family_not_found",
+      "rowIndex": 153,
+      "name": "PREMILA P MUNDRA",
+      "mobile": "",
+      "code": "",
+      "familyMobile": "",
+      "currentRoom": "",
+      "newRaw": "JAKHIBAI 1017",
+      "action": "assign",
+      "label": "1017/JAKHIBAI",
+      "options": [
+        "Premilaben premjibhai mundada",
+        "Premjibhai Haridas Mundada ",
+        "VIPUL PREMJI MUNDADA "
+      ]
+    },
+    {
+      "type": "family_not_found",
+      "rowIndex": 156,
+      "name": "AARUSHI V MUNDRA",
+      "mobile": "",
+      "code": "",
+      "familyMobile": "",
+      "currentRoom": "",
+      "newRaw": "JAKHIBAI 1017",
+      "action": "assign",
+      "label": "1017/JAKHIBAI",
+      "options": [
+        "Ramesh Mundada",
+        "Ramilaben Mundada ",
+        "Mehul Mundada"
+      ]
+    },
+    {
+      "type": "family_not_found",
+      "rowIndex": 159,
+      "name": "GOPI BHAVESH BHUTDA",
+      "mobile": "9898451539",
+      "code": "",
+      "familyMobile": "",
+      "currentRoom": "",
+      "newRaw": "JAKHIBAI 1113",
+      "action": "assign",
+      "label": "1113/JAKHIBAI",
+      "options": [
+        "Bhavesh Shah",
+        "Gopi Shah",
+        "Bhavesh Bhutada "
+      ]
+    },
+    {
+      "type": "family_not_found",
+      "rowIndex": 160,
+      "name": "HIRAL PARESH MALL",
+      "mobile": "9664700879",
+      "code": "",
+      "familyMobile": "",
+      "currentRoom": "",
+      "newRaw": "JAKHIBAI 1113",
+      "action": "assign",
+      "label": "1113/JAKHIBAI",
+      "options": [
+        "Biral Chetan Mall",
+        "Vaishali mall",
+        "Heral mall"
+      ]
+    },
+    {
+      "type": "family_not_found",
+      "rowIndex": 162,
+      "name": "JAYESH JAGDISH  LADHAD",
+      "mobile": "9773390561",
+      "code": "",
+      "familyMobile": "",
+      "currentRoom": "",
+      "newRaw": "JAKHIBAI 1109",
+      "action": "assign",
+      "label": "1109/JAKHIBAI",
+      "options": [
+        "JAGDISH KESHAVJI LADDHAD",
+        "NARMADABEN JAGDISH LADDHAD",
+        "MAHESH KESHAVJI LADDHAD"
+      ]
+    },
+    {
+      "type": "family_not_found",
+      "rowIndex": 164,
+      "name": "MAHESH K LADHAHD",
+      "mobile": "9773390561",
+      "code": "",
+      "familyMobile": "",
+      "currentRoom": "",
+      "newRaw": "JAKHIBAI 1109",
+      "action": "assign",
+      "label": "1109/JAKHIBAI",
+      "options": [
+        "Mahesh kuvrji ladhad",
+        "JAGDISH KESHAVJI LADDHAD",
+        "NARMADABEN JAGDISH LADDHAD"
+      ]
+    },
+    {
+      "type": "family_not_found",
+      "rowIndex": 165,
+      "name": "NARMDABEN J LADHAD",
+      "mobile": "9773390561",
+      "code": "",
+      "familyMobile": "",
+      "currentRoom": "",
+      "newRaw": "JAKHIBAI 1110",
+      "action": "assign",
+      "label": "1110/JAKHIBAI",
+      "options": [
+        "JAGDISH KESHAVJI LADDHAD",
+        "NARMADABEN JAGDISH LADDHAD",
+        "MAHESH KESHAVJI LADDHAD"
+      ]
+    },
+    {
+      "type": "family_not_found",
+      "rowIndex": 166,
+      "name": "NISHANT BHUPENDRA GANDHI",
+      "mobile": "8000287475",
+      "code": "",
+      "familyMobile": "",
+      "currentRoom": "",
+      "newRaw": "JAKHIBAI 1112",
+      "action": "assign",
+      "label": "1112/JAKHIBAI",
+      "options": [
+        "Nishant Bhupendrabhai Gandhi",
+        "Ditya Nishant Gandhi",
+        "Rasila bhupendra Gandhi"
+      ]
+    },
+    {
+      "type": "family_not_found",
+      "rowIndex": 168,
+      "name": "POOJA PRAKASH SHAH",
+      "mobile": "9037642202",
+      "code": "",
+      "familyMobile": "",
+      "currentRoom": "",
+      "newRaw": "JAKHIBAI 1110",
+      "action": "assign",
+      "label": "1110/JAKHIBAI",
+      "options": [
+        "Pooja Shah",
+        "Pooja shah ",
+        "Pooja Shah"
+      ]
+    },
+    {
+      "type": "family_not_found",
+      "rowIndex": 170,
+      "name": "PREMILA SHARDA",
+      "mobile": "9664878329",
+      "code": "",
+      "familyMobile": "",
+      "currentRoom": "",
+      "newRaw": "JAKHIBAI 1110",
+      "action": "assign",
+      "label": "1110/JAKHIBAI",
+      "options": [
+        "Premila Sharda",
+        "Premila Sharda",
+        "Premila javerlal sharada "
+      ]
+    },
+    {
+      "type": "family_not_found",
+      "rowIndex": 171,
+      "name": "PREMJIBHAI SHARDA",
+      "mobile": "9664878329",
+      "code": "",
+      "familyMobile": "",
+      "currentRoom": "",
+      "newRaw": "JAKHIBAI 1112",
+      "action": "assign",
+      "label": "1112/JAKHIBAI",
+      "options": [
+        "Premila javerlal sharada ",
+        "Premila Sharda",
+        "Premji Sharda"
+      ]
+    },
+    {
+      "type": "family_not_found",
+      "rowIndex": 178,
+      "name": "CHAMANLAL D MUNDRA",
+      "mobile": "8320085930",
+      "code": "",
+      "familyMobile": "",
+      "currentRoom": "",
+      "newRaw": "JAKHIBAI 1116",
+      "action": "assign",
+      "label": "1116/JAKHIBAI",
+      "options": [
+        "Chamanlal devji mundada ",
+        "Sushilaben chamanlal mundada ",
+        "champaben Champshi Sharda  "
+      ]
+    },
+    {
+      "type": "family_not_found",
+      "rowIndex": 179,
+      "name": "JAYSHREEBEN D SHETH",
+      "mobile": "9930520693",
+      "code": "",
+      "familyMobile": "",
+      "currentRoom": "",
+      "newRaw": "JAKHIBAI 1115",
+      "action": "assign",
+      "label": "1115/JAKHIBAI",
+      "options": [
+        "JAYSHREE DEEPAKKUMAR SHETH",
+        "Jayshreeben dipakbhai seth",
+        "Jayshree v shah"
+      ]
+    },
+    {
+      "type": "family_not_found",
+      "rowIndex": 182,
+      "name": "NAVALBEN D NAVDHARE",
+      "mobile": "9328055175",
+      "code": "",
+      "familyMobile": "",
+      "currentRoom": "",
+      "newRaw": "JAKHIBAI 1115",
+      "action": "assign",
+      "label": "1115/JAKHIBAI",
+      "options": [
+        "Navalben dineshbhai navdhare",
+        "Lataben Mahendra mundada",
+        "Praful Navdhare"
+      ]
+    },
+    {
+      "type": "family_not_found",
+      "rowIndex": 184,
+      "name": "SUSHILABEN C MUNDRA",
+      "mobile": "8320085930",
+      "code": "",
+      "familyMobile": "",
+      "currentRoom": "",
+      "newRaw": "NAVNEET 105",
+      "action": "assign",
+      "label": "105/NAVNEET",
+      "options": [
+        "Sushilaben chamanlal mundada ",
+        "Chamanlal devji mundada ",
+        "Ramesh Mundada"
+      ]
+    }
+  ],
+  "moves": [
+    {
+      "name": "Anil Mulji Bhutada",
+      "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1106",
+      "to": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 106",
+      "memberId": "6e4cd94d-e200-423a-9bf5-32dfbb810058",
+      "allocationId": "bad2f07b-6084-49ad-96e3-bf02d515aa7c",
+      "roomId": "0547c9d8-339c-4c45-9215-3a21b7508b9b"
+    },
+    {
+      "name": "Archana Ritesh Shah",
+      "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1110",
+      "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1108",
+      "memberId": "37813ecf-2f84-4cbe-b845-2c18c0790c1d",
+      "allocationId": "b4ff2d04-2496-4ffc-8f54-a241fb3bacd4",
+      "roomId": "59d29ad3-a62d-4c27-8424-36ab90cd874d"
+    },
+    {
+      "name": "Arvind Bhutada",
+      "from": "YAX MANDIR / MARU COMPLEX / 213",
+      "to": "HOTEL / BHUJ VIEW HOTEL / 101",
+      "memberId": "81b875f7-4d63-4aa5-8744-9a73323067a7",
+      "allocationId": "97b49954-fa6a-4812-8451-6c51f20f264c",
+      "roomId": "55ba365f-d6d0-49fd-bae9-a8a2fffab450"
+    },
+    {
+      "name": "Ashwin Jadavji Bhutda",
+      "from": "YAX MANDIR / MARU COMPLEX / 208",
+      "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1118",
+      "memberId": "1476f11c-3d52-414a-a06a-fbfaddf0c26c",
+      "allocationId": "aeafa845-ff44-4972-b1db-5c4802762eaa",
+      "roomId": "63c5e4a1-6d45-46f7-b887-ca113e0402ee"
+    },
+    {
+      "name": "Bharat Udeshi",
+      "from": "YAX MANDIR / S.P.M.COMPLEX / HALL / F.F.",
+      "to": "LOHANA VADI / LOHANA VADI / HALL",
+      "memberId": "7238fff3-4148-448d-855e-53f816ab766c",
+      "allocationId": "2c8bb5af-7afe-4c28-b3f4-8279df515053",
+      "roomId": "f75f7817-72f7-41c4-8a48-d2f871009b61"
+    },
+    {
+      "name": "bhavna gandhi",
+      "from": "YAX MANDIR / MARU COMPLEX / 211",
+      "to": "LOHANA VADI / LOHANA VADI / HALL",
+      "memberId": "ceaf3dd8-642a-47e3-9230-449131d69c94",
+      "allocationId": "99c26eae-1b48-44ca-8a90-0235d5dc1dc8",
+      "roomId": "f75f7817-72f7-41c4-8a48-d2f871009b61"
+    },
+    {
+      "name": "champaben Champshi Sharda",
+      "from": "YAX MANDIR / MARU COMPLEX / 211",
+      "to": "LOHANA VADI / LOHANA VADI / HALL",
+      "memberId": "4f278aea-a286-4de7-8b91-bb50f1a3ead9",
+      "allocationId": "95a7c770-420f-492b-a08c-fa0d21224157",
+      "roomId": "f75f7817-72f7-41c4-8a48-d2f871009b61"
+    },
+    {
+      "name": "chetan kantilal kothari",
+      "from": "YAX MANDIR / S.P.M.COMPLEX / HALL / F.F.",
+      "to": "LOHANA VADI / LOHANA VADI / HALL",
+      "memberId": "753806fb-599b-426a-ae96-ff3c08ecd5ba",
+      "allocationId": "c506ecf5-b7bb-4217-a435-31e3a1fddf7c",
+      "roomId": "f75f7817-72f7-41c4-8a48-d2f871009b61"
+    },
+    {
+      "name": "Deena Mandan",
+      "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1110",
+      "to": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 104",
+      "memberId": "57e1431b-afa2-4330-9930-53f86d9b99b9",
+      "allocationId": "91744471-03ee-46f9-9e40-ffb3ce1ff52d",
+      "roomId": "d5e77159-e8a8-4746-b444-cc751b039305"
+    },
+    {
+      "name": "Dhirajlal Mandan",
+      "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1109",
+      "to": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 104",
+      "memberId": "162b4885-2330-49d4-ad36-3934114a5389",
+      "allocationId": "93b668f7-661f-412c-9b62-df64d12a8f6f",
+      "roomId": "d5e77159-e8a8-4746-b444-cc751b039305"
+    },
+    {
+      "name": "Dilip Jadavji Bhutda",
+      "from": "YAX MANDIR / MARU COMPLEX / 208",
+      "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1118",
+      "memberId": "be17373d-9bb9-44d5-8e01-9540b6326578",
+      "allocationId": "13c0f038-c13a-40f8-988e-f08e089f2bac",
+      "roomId": "63c5e4a1-6d45-46f7-b887-ca113e0402ee"
+    },
+    {
+      "name": "dixita shah",
+      "from": "YAX MANDIR / MARU COMPLEX / 211",
+      "to": "YAX MANDIR / S.P.M.COMPLEX / 510",
+      "memberId": "8f56a2ee-3856-4e97-9875-061f5f5099e5",
+      "allocationId": "0084dcc4-cae8-47c3-ba79-a73b62e4970e",
+      "roomId": "dc58bf4c-2e1a-425f-aad5-b7d156c9eb02"
+    },
+    {
+      "name": "Hansaben Bhanji Somani",
+      "from": "YAX MANDIR / MARU COMPLEX / 206",
+      "to": "LOHANA VADI / LOHANA VADI / HALL",
+      "memberId": "8229249c-9a9a-45cb-a7d6-dd32b3578f9a",
+      "allocationId": "562e32f3-7317-43ae-bbe6-451f3b0ade85",
+      "roomId": "f75f7817-72f7-41c4-8a48-d2f871009b61"
+    },
+    {
+      "name": "HARIKRISHNA NAVDHARE",
+      "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1117",
+      "to": "V.S.C. / V.S.C. / 01",
+      "memberId": "91b45165-d4fc-4389-888d-6e34f49348ca",
+      "allocationId": "8ad34a30-9771-4dfc-b21f-e3fa9a6dae46",
+      "roomId": "881a0c93-aac7-40ae-a739-3595c5d17295"
+    },
+    {
+      "name": "Harilal Liladhar Bhutada",
+      "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1114",
+      "to": "SHYAM VILLA / SHYAM VILLA / HALL",
+      "memberId": "07f964a9-fe2f-4796-89f7-1e4ba85a09c6",
+      "allocationId": "d84a5ba8-ab9d-4da0-8d05-dccca78476b6",
+      "roomId": "4af68a0c-8672-48f4-8e7f-8984d367589c"
+    },
+    {
+      "name": "Harsh Rajesh Gagdani",
+      "from": "YAX MANDIR / S.P.M.COMPLEX / HALL / F.F.",
+      "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1114",
+      "memberId": "212fa243-ac00-490c-8763-2b8d27f46306",
+      "allocationId": "1f013771-b241-40fe-8bb8-538d40f3d361",
+      "roomId": "ba34d082-4a65-4af5-a627-d21b082cb097"
+    },
+    {
+      "name": "Jay Gandhi",
+      "from": "YAX MANDIR / S.P.M.COMPLEX / HALL / F.F.",
+      "to": "LOHANA VADI / LOHANA VADI / HALL",
+      "memberId": "b3edd54f-445e-40ba-bd77-d9178f748b0d",
+      "allocationId": "8dad27b6-878a-4355-a554-096c151b9ebb",
+      "roomId": "f75f7817-72f7-41c4-8a48-d2f871009b61"
+    },
+    {
+      "name": "Jaydeep Ashwinbhai Bhutda",
+      "from": "YAX MANDIR / MARU COMPLEX / 208",
+      "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1118",
+      "memberId": "9df99129-776b-4ed9-9307-3003d857a32d",
+      "allocationId": "022b06ea-06fc-42a7-a700-68c67ed3a4e5",
+      "roomId": "63c5e4a1-6d45-46f7-b887-ca113e0402ee"
+    },
+    {
+      "name": "JAYMIN MALL",
+      "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1114",
+      "to": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 102",
+      "memberId": "d01eaa8d-6dd9-434a-8b2c-a30e8ca4f161",
+      "allocationId": "39949a24-dd0f-4f00-a1fc-6bd18c8a8841",
+      "roomId": "0fd9ed15-7dad-4827-9f4d-e0edfed79e45"
+    },
+    {
+      "name": "JYOSTNABEN JAYMIN MALL",
+      "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1113",
+      "to": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 102",
+      "memberId": "dbed4383-7e0c-49a0-aa52-5bf832a17cf0",
+      "allocationId": "3d033109-bebc-4f40-bdcc-bb2b73394af6",
+      "roomId": "0fd9ed15-7dad-4827-9f4d-e0edfed79e45"
+    },
+    {
+      "name": "Jyoti Ashwin Bhutda",
+      "from": "YAX MANDIR / MARU COMPLEX / 208",
+      "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1118",
+      "memberId": "06df1a89-88d1-4761-ad60-2639a173e12e",
+      "allocationId": "3f1bc481-7844-4802-88d7-0866523dcbd6",
+      "roomId": "63c5e4a1-6d45-46f7-b887-ca113e0402ee"
+    },
+    {
+      "name": "Kavita prerak navdhare",
+      "from": "YAX MANDIR / MARU COMPLEX / 212",
+      "to": "YAX MANDIR / VALIBEN HALL / HALL / G.F.",
+      "memberId": "358c0398-3324-4cb9-892b-98d814944985",
+      "allocationId": "4d1b8bce-0c23-4b22-acd4-45a51c000060",
+      "roomId": "f2ea424b-b843-47e2-8580-976b5b67c126"
+    },
+    {
+      "name": "Meena Mukesh Rathi",
+      "from": "YAX MANDIR / MARU COMPLEX / 206",
+      "to": "LOHANA VADI / LOHANA VADI / HALL",
+      "memberId": "b3c48f46-e1c4-4aff-883d-e5a5799aca55",
+      "allocationId": "aaa1edd6-1fc9-40d8-8923-160ad902f198",
+      "roomId": "f75f7817-72f7-41c4-8a48-d2f871009b61"
+    },
+    {
+      "name": "Milan Bharat Shah",
+      "from": "YAX MANDIR / S.P.M.COMPLEX / HALL / F.F.",
+      "to": "LOHANA VADI / LOHANA VADI / HALL",
+      "memberId": "00f8c1b2-e476-4cb7-aae3-05068b4d7cd8",
+      "allocationId": "2c29a0ab-23b0-43dc-89b3-152928685c31",
+      "roomId": "f75f7817-72f7-41c4-8a48-d2f871009b61"
+    },
+    {
+      "name": "Mukesh Revalal Kothari",
+      "from": "YAX MANDIR / MARU COMPLEX / 206",
+      "to": "LOHANA VADI / LOHANA VADI / HALL",
+      "memberId": "52f21854-9593-4329-949b-4a1891125f1d",
+      "allocationId": "4603c882-59a5-49b3-a37e-53c61e46bf8f",
+      "roomId": "f75f7817-72f7-41c4-8a48-d2f871009b61"
+    },
+    {
+      "name": "Muljibhai Premjibhai Bhutada",
+      "from": "YAX MANDIR / S.P.M.COMPLEX / HALL / F.F.",
+      "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1109",
+      "memberId": "3d87ad47-0a9e-40d9-b27e-e6617527c48c",
+      "allocationId": "ef551460-94ec-4e18-84b2-580ff1bb5ec8",
+      "roomId": "bac92cdc-8708-4045-9eda-61c6d4792d8a"
+    },
+    {
+      "name": "Navin Sheth",
+      "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1017",
+      "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1106",
+      "memberId": "92a07464-128f-4a65-8aca-2803ba3f5a7b",
+      "allocationId": "33ddcd6f-d408-4533-b2a2-81636910e70c",
+      "roomId": "2303ad5f-bc26-404e-8540-f5b310b9f269"
+    },
+    {
+      "name": "needhi gandhi",
+      "from": "YAX MANDIR / MARU COMPLEX / 211",
+      "to": "LOHANA VADI / LOHANA VADI / HALL",
+      "memberId": "b44dd81d-97a9-40ca-bbb4-132ab2382fa9",
+      "allocationId": "d75df9bf-b769-4626-b908-0d7ff51bbded",
+      "roomId": "f75f7817-72f7-41c4-8a48-d2f871009b61"
+    },
+    {
+      "name": "Nitin M Shah",
+      "from": "YAX MANDIR / MARU COMPLEX / 213",
+      "to": "LOHANA VADI / LOHANA VADI / HALL",
+      "memberId": "7ef87380-c640-46a2-9c08-234d8bfea79e",
+      "allocationId": "a8e37f0f-f95c-4beb-bae5-dbecb28bbc32",
+      "roomId": "f75f7817-72f7-41c4-8a48-d2f871009b61"
+    },
+    {
+      "name": "Prabha Dilipbhai Bhutda",
+      "from": "YAX MANDIR / MARU COMPLEX / 211",
+      "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1118",
+      "memberId": "a32c6010-50f1-4fae-882b-823724033af2",
+      "allocationId": "f76f1bcc-092b-45bc-b1ac-b34922944a83",
+      "roomId": "63c5e4a1-6d45-46f7-b887-ca113e0402ee"
+    },
+    {
+      "name": "PRAFUL BHUTADA",
+      "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1106",
+      "to": "YAX MANDIR / S.P.M.COMPLEX / HALL / F.F.",
+      "memberId": "1118dd79-3492-4c03-8e05-ae94a51bf371",
+      "allocationId": "a5dd9462-b401-45b4-8a40-a489b99b0688",
+      "roomId": "ef8601a7-ac09-4cde-bb9e-f5251b61e7b6"
+    },
+    {
+      "name": "Pratham Anil Bhutada",
+      "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1106",
+      "to": "RAJGOR / RAJGOR SAMAJVADI R.T.O. / 106",
+      "memberId": "c16b347d-a14a-46a3-ad20-8bc2be4edbc4",
+      "allocationId": "f5ec7cf4-ba9d-4f65-900b-59d8cff925d4",
+      "roomId": "0547c9d8-339c-4c45-9215-3a21b7508b9b"
+    },
+    {
+      "name": "Rajesh Dhanji Gagdani",
+      "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1109",
+      "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1114",
+      "memberId": "ad3fa727-ebcd-4f37-9c1e-a2c6ff8ab970",
+      "allocationId": "339fda4b-ab11-426d-9d59-aabc6e66ba25",
+      "roomId": "ba34d082-4a65-4af5-a627-d21b082cb097"
+    },
+    {
+      "name": "Ritaben Chetan Kothari",
+      "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1110",
+      "to": "LOHANA VADI / LOHANA VADI / HALL",
+      "memberId": "58009272-1e8b-41d8-8e78-565635036f7e",
+      "allocationId": "9c6373a6-7cbf-4118-a6c4-7599c2f658cc",
+      "roomId": "f75f7817-72f7-41c4-8a48-d2f871009b61"
+    },
+    {
+      "name": "Sandhya Udeshi",
+      "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1110",
+      "to": "LOHANA VADI / LOHANA VADI / HALL",
+      "memberId": "7feda8d4-6bca-4ca2-9696-aa3920713868",
+      "allocationId": "35c5ac11-3316-46de-9698-5e3ba913ff16",
+      "roomId": "f75f7817-72f7-41c4-8a48-d2f871009b61"
+    },
+    {
+      "name": "Santokben P. Bhutada",
+      "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1110",
+      "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1108",
+      "memberId": "524004bf-2193-4499-a714-b82111d16586",
+      "allocationId": "9e06991f-68ea-4b0f-bcb7-dbb017e86896",
+      "roomId": "59d29ad3-a62d-4c27-8424-36ab90cd874d"
+    },
+    {
+      "name": "Sarita Mahindra Navadhare",
+      "from": "YAX MANDIR / MARU COMPLEX / 211",
+      "to": "LOHANA VADI / LOHANA VADI / HALL",
+      "memberId": "d3b77ca6-8e90-41cc-a6f5-f6cf38b437b4",
+      "allocationId": "bcae130a-01d9-4f29-b0c0-5e81fddbcdc8",
+      "roomId": "f75f7817-72f7-41c4-8a48-d2f871009b61"
+    },
+    {
+      "name": "Smita Ashwinbhai Bhutda",
+      "from": "YAX MANDIR / MARU COMPLEX / 211",
+      "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1117",
+      "memberId": "97e84f84-75ed-4568-a77f-b32232fee726",
+      "allocationId": "dd9ab2f5-df41-46f8-8094-1cbbe969f809",
+      "roomId": "7e0b09b7-6bf2-450b-9444-5115717b1594"
+    },
+    {
+      "name": "Umiya Ashwinbhai Bhutda",
+      "from": "YAX MANDIR / MARU COMPLEX / 211",
+      "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1117",
+      "memberId": "ac959c75-7ffc-4077-88d4-d0b4864aab99",
+      "allocationId": "fd35450f-3ff9-417d-9951-efa039c3ca8b",
+      "roomId": "7e0b09b7-6bf2-450b-9444-5115717b1594"
+    },
+    {
+      "name": "Usha Umesh Bhutada",
+      "from": "YAX MANDIR / MARU COMPLEX / 211",
+      "to": "LOHANA VADI / LOHANA VADI / HALL",
+      "memberId": "4e4ff643-1869-46d9-aa2a-84d29d5122a0",
+      "allocationId": "d8028e40-70a9-4b5d-8815-57f13fe927f1",
+      "roomId": "f75f7817-72f7-41c4-8a48-d2f871009b61"
+    },
+    {
+      "name": "Vasant Hirji Ladhad",
+      "from": "YAX MANDIR / MARU COMPLEX / 211",
+      "to": "LOHANA VADI / LOHANA VADI / HALL",
+      "memberId": "e53c608f-8ced-4397-8532-f68ededfcb76",
+      "allocationId": "989f76ff-64e9-4a6b-9161-04208b421140",
+      "roomId": "f75f7817-72f7-41c4-8a48-d2f871009b61"
+    },
+    {
+      "name": "venu shah",
+      "from": "YAX MANDIR / MARU COMPLEX / 211",
+      "to": "LOHANA VADI / LOHANA VADI / HALL",
+      "memberId": "d55695f5-638f-4929-a92d-66a3fac73386",
+      "allocationId": "4b494be5-c40b-4cad-8272-341b18ddb609",
+      "roomId": "f75f7817-72f7-41c4-8a48-d2f871009b61"
+    },
+    {
+      "name": "VIREN P NAVDHARE",
+      "from": "YAX MANDIR / JAKHIBAI COMPLEX / 1106",
+      "to": "YAX MANDIR / S.P.M.COMPLEX / HALL / F.F.",
+      "memberId": "3297903a-cb06-4058-ad14-a91e45c6e3d8",
+      "allocationId": "a912e6c2-5570-43af-ad1b-6b0796116120",
+      "roomId": "ef8601a7-ac09-4cde-bb9e-f5251b61e7b6"
+    },
+    {
+      "name": "Yash Patel",
+      "from": "YAX MANDIR / S.P.M.COMPLEX / HALL / F.F.",
+      "to": "LOHANA VADI / LOHANA VADI / HALL",
+      "memberId": "e8536f06-5cff-4753-bdc3-121bb49003b1",
+      "allocationId": "8ad04a43-f6fd-4b64-9a64-a67a8271be8d",
+      "roomId": "f75f7817-72f7-41c4-8a48-d2f871009b61"
+    },
+    {
+      "name": "NITA SUNIL LADHAHD",
+      "from": "YAX MANDIR / NAVNEET HALL / HALL / G.F.",
+      "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1110",
+      "memberId": "ec57f2bd-169c-466d-a47c-02ec9cb44547",
+      "allocationId": "45ff46e3-60a2-4836-a74a-20821f927220",
+      "roomId": "062d6b0c-adb3-40dc-99db-8feb7fe7a4df"
+    }
+  ],
+  "inserts": [
+    {
+      "name": "VIPUL P MUNDRA",
+      "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1017",
+      "memberId": "8309d899-f820-4456-b808-112cc1163b41",
+      "familyId": "f691930f-2bbc-4fbd-9f60-6f2990b4ab8d",
+      "roomId": "1fc5c38a-c06e-4ba0-8662-c4289cd4f4a7"
+    },
+    {
+      "name": "AVNI V MUNDRA",
+      "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1017",
+      "memberId": "b89dd404-05d4-4519-8896-0f6dce9bda12",
+      "familyId": "4690ff61-0e00-4c03-909e-e17ebcc8feff",
+      "roomId": "1fc5c38a-c06e-4ba0-8662-c4289cd4f4a7"
+    },
+    {
+      "name": "NITYA V MUNDRA",
+      "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1017",
+      "memberId": "ef8313d2-fdda-4e76-8ce9-32aa67ae98ee",
+      "familyId": "4690ff61-0e00-4c03-909e-e17ebcc8feff",
+      "roomId": "1fc5c38a-c06e-4ba0-8662-c4289cd4f4a7"
+    },
+    {
+      "name": "DIPAK LADHARAM SHARDA",
+      "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1114",
+      "memberId": "ecab0572-39bb-44f4-b736-9c5d3cea4468",
+      "familyId": "effe96ea-2bc2-4727-95b6-51b099d8e0b1",
+      "roomId": "ba34d082-4a65-4af5-a627-d21b082cb097"
+    },
+    {
+      "name": "JAGDISH K LADDHAD",
+      "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1109",
+      "memberId": "f75c9860-8a50-4f7d-941a-b704bad0fd87",
+      "familyId": "c040d36b-3634-40b5-9f77-2c6cff3edb56",
+      "roomId": "bac92cdc-8708-4045-9eda-61c6d4792d8a"
+    },
+    {
+      "name": "LADHARAM H SHARDA",
+      "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1109",
+      "memberId": "e81f7740-fbf5-494d-b7c8-81ce7618acca",
+      "familyId": "ff5945e3-0070-4b96-8e45-9d0bac8e9c1f",
+      "roomId": "bac92cdc-8708-4045-9eda-61c6d4792d8a"
+    },
+    {
+      "name": "PRAKASH JAMNADAS SHAH",
+      "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1112",
+      "memberId": "e8559c43-b796-4771-a5cd-fadeb6ca826f",
+      "familyId": "19bcab0c-83c4-4cc3-ac3f-a0bb92420811",
+      "roomId": "4c2dd7d8-36ba-4558-b3e9-f95641982219"
+    },
+    {
+      "name": "PRITI H MALL",
+      "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1110",
+      "memberId": "72c4f177-6868-43c4-9cb1-38b79bbf8c16",
+      "familyId": "3fa493c3-e0a0-414d-916c-39a2e14eed48",
+      "roomId": "062d6b0c-adb3-40dc-99db-8feb7fe7a4df"
+    },
+    {
+      "name": "SURESH DAYALJI MALL",
+      "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1112",
+      "memberId": "433d57a1-2c5e-4057-bdeb-df9c7a515b99",
+      "familyId": "90a3176a-f524-47b7-85a8-103d10d11d10",
+      "roomId": "4c2dd7d8-36ba-4558-b3e9-f95641982219"
+    },
+    {
+      "name": "SURESH DEVJI MANDAN",
+      "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1112",
+      "memberId": "2041ca12-2979-4f82-b9ba-03abe8f4c3cc",
+      "familyId": "ff56cf53-6d4f-41e0-83df-756da74bf93f",
+      "roomId": "4c2dd7d8-36ba-4558-b3e9-f95641982219"
+    },
+    {
+      "name": "SUSHILA ARUN SHAH",
+      "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1115",
+      "memberId": "d48d4470-ea6d-468a-b6ba-f234c20e2f16",
+      "familyId": "46549e91-2f3e-4cd7-bd7c-decce4d2e1ab",
+      "roomId": "e588f864-c55d-4a67-8094-cce70d50da6a"
+    },
+    {
+      "name": "MOHANBHAI PREMJI BHUTDA",
+      "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1116",
+      "memberId": "f1d55d71-dec4-401f-b2f2-261aba419a57",
+      "familyId": "3736491e-6e7b-4e12-b4c1-dfc166c9e59f",
+      "roomId": "845d19bb-c350-41d9-ad6d-da9c3a7bfb42"
+    },
+    {
+      "name": "BHARAT D SAVAR",
+      "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1116",
+      "memberId": "2f69478c-6424-4dc0-b62b-a84a9de811bb",
+      "familyId": "08a2d079-c62c-4ec5-bc48-13e46532300e",
+      "roomId": "845d19bb-c350-41d9-ad6d-da9c3a7bfb42"
+    },
+    {
+      "name": "KOKILABEN R MALL",
+      "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1115",
+      "memberId": "48984163-bfc4-4e37-86c5-97aa2a96df58",
+      "familyId": "4690ff61-0e00-4c03-909e-e17ebcc8feff",
+      "roomId": "e588f864-c55d-4a67-8094-cce70d50da6a"
+    },
+    {
+      "name": "MANJULABEN B SAVAR",
+      "to": "YAX MANDIR / JAKHIBAI COMPLEX / 1115",
+      "memberId": "fbf19348-2bdf-46b2-8194-eb32dce2d5ce",
+      "familyId": "08a2d079-c62c-4ec5-bc48-13e46532300e",
+      "roomId": "e588f864-c55d-4a67-8094-cce70d50da6a"
+    },
+    {
+      "name": "RAMILABEN R MUNDRA",
+      "to": "YAX MANDIR / NAVNEET COMPLEX / 105",
+      "memberId": "832c9107-9934-45fb-a0ed-b79a041fc5c0",
+      "familyId": "4690ff61-0e00-4c03-909e-e17ebcc8feff",
+      "roomId": "1ed0c429-160e-4b86-835b-776d3d71f8e2"
+    }
+  ],
+  "removes": []
+}

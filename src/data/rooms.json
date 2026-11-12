@@ -4126,5 +4126,53 @@
     "allotment_note": "General Entry V.S.C/05",
     "room_type": "general_room",
     "sort_order": 258
+  },
+  {
+    "room_number": "HOTEL / PRIVATE HOTEL",
+    "venue_name": "HOTEL",
+    "section_name": "PRIVATE HOTEL",
+    "source_room_number": "PRIVATE",
+    "floor": null,
+    "ac_type": null,
+    "bed_count": 50,
+    "extra_count": 0,
+    "total_capacity": 50,
+    "owner_type": "PRIVATE",
+    "linked_pothi_id": null,
+    "allotment_note": "General New Allocation PRIVATE",
+    "room_type": "private_room",
+    "sort_order": 9000
+  },
+  {
+    "room_number": "LOHANA VADI / LOHANA VADI / HALL",
+    "venue_name": "LOHANA VADI",
+    "section_name": "LOHANA VADI",
+    "source_room_number": "HALL",
+    "floor": null,
+    "ac_type": null,
+    "bed_count": 80,
+    "extra_count": 0,
+    "total_capacity": 80,
+    "owner_type": "SAMAJ",
+    "linked_pothi_id": null,
+    "allotment_note": "General New Allocation LOHANA VADI",
+    "room_type": "general_room",
+    "sort_order": 9001
+  },
+  {
+    "room_number": "SHYAM VILLA / SHYAM VILLA / HALL",
+    "venue_name": "SHYAM VILLA",
+    "section_name": "SHYAM VILLA",
+    "source_room_number": "HALL",
+    "floor": null,
+    "ac_type": null,
+    "bed_count": 40,
+    "extra_count": 0,
+    "total_capacity": 40,
+    "owner_type": "PRIVATE",
+    "linked_pothi_id": null,
+    "allotment_note": "General New Allocation SHYAM VILLA",
+    "room_type": "general_room",
+    "sort_order": 9002
   }
 ]
