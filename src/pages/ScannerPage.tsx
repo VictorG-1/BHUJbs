@@ -183,21 +183,24 @@ export function ScannerPage() {
       </div>
 
       <div className="scanner-panel">
-        <div className="meal-type-picker" role="group" aria-label="Meal type">
-          {MEAL_OPTIONS.map((option) => (
-            <button
-              key={option.id}
-              type="button"
-              className={mealType === option.id ? "meal-type-btn meal-type-btn--active" : "meal-type-btn"}
-              onClick={() => {
-                setMealType(option.id);
-                setMember(null);
-                setStatus(`Selected ${option.label}. Scan a card QR.`);
-              }}
-            >
-              {option.label}
-            </button>
-          ))}
+        <div className="meal-type-block">
+          <p className="meal-type-label">Select meal to validate</p>
+          <div className="meal-type-picker" role="group" aria-label="Meal type">
+            {MEAL_OPTIONS.map((option) => (
+              <button
+                key={option.id}
+                type="button"
+                className={mealType === option.id ? "meal-type-btn meal-type-btn--active" : "meal-type-btn"}
+                onClick={() => {
+                  setMealType(option.id);
+                  setMember(null);
+                  setStatus(`Selected ${option.label}. Scan a card QR.`);
+                }}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div id="qr-reader" className="qr-reader" />
