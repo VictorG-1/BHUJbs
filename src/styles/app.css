@@ -1080,7 +1080,23 @@ h2 {
 .scanner-hero { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
 .scanner-signout { width: auto; min-width: 0; padding: 0.45rem 0.75rem; font-size: 0.85rem; white-space: nowrap; }
 .qr-reader { min-height: 300px; overflow: hidden; border: 1px solid var(--line); border-radius: 8px; background: #111; }
+.meal-type-picker { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; }
+.meal-type-btn {
+  border: 1px solid var(--line);
+  background: #f7fafb;
+  color: var(--navy);
+  border-radius: 8px;
+  padding: 0.7rem 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.meal-type-btn--active {
+  border-color: #0b6e4f;
+  background: #0b6e4f;
+  color: #fff;
+}
 .scan-result { display: grid; gap: 0.3rem; padding: 1rem; border: 1px solid #75bd91; border-radius: 8px; background: #effaf2; color: var(--navy); }
+.scan-result--repeat { border-color: #d4a017; background: #fff8e8; }
 .scan-result span, .scan-result small { color: var(--muted); }
 .manual-qr-form { display: grid; gap: 0.65rem; padding-top: 0.75rem; border-top: 1px solid var(--line); }
 .manual-qr-form textarea { width: 100%; resize: vertical; }

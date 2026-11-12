@@ -9,7 +9,8 @@
     "preview": "vite preview --host 0.0.0.0",
     "lint": "eslint . --ext ts,tsx --max-warnings 0",
     "build:allotment-data": "node scripts/build-allotment-data.cjs",
-    "sync:allotment-data": "node scripts/sync-allotment-data.mjs"
+    "sync:allotment-data": "node scripts/sync-allotment-data.mjs",
+    "import:meal-qr": "node scripts/import-meal-qr-codes.mjs"
   },
   "dependencies": {
     "@prisma/client": "^7.8.0",

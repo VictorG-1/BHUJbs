@@ -3,8 +3,37 @@ import QRCode from "qrcode";
 
 export const QR_EVENT_CODE = "KMS-BHAGWAT-2026";
 
-export function qrPayload(member: { id: string; qr_token?: string; name?: string; age?: number; gender?: string; mobile?: string | null; event_date?: string | null; arrival_date?: string | null; departure_date?: string | null; family_code?: string; venue?: string; room?: string }) {
-  return JSON.stringify({ event: QR_EVENT_CODE, member_id: member.id, token: member.qr_token, guest: { name: member.name, age: member.age, gender: member.gender, mobile: member.mobile, event_date: member.event_date, arrival_date: member.arrival_date, departure_date: member.departure_date, family_code: member.family_code, venue: member.venue, room: member.room } });
+/** Printed ID-card format (matches All_QR_Codes_2400.xlsx) */
+export function qrPayload(member: {
+  id: string;
+  qr_token?: string;
+  name?: string;
+  age?: number;
+  gender?: string;
+  mobile?: string | null;
+  event_date?: string | null;
+  arrival_date?: string | null;
+  departure_date?: string | null;
+  family_code?: string;
+  venue?: string;
+  room?: string;
+  pothi?: string | number | null;
+  city?: string | null;
+}) {
+  const lines: string[] = [];
+  if (member.name) lines.push(`Name: ${member.name}`);
+  if (member.pothi != null && String(member.pothi).trim() !== "") lines.push(`Pothi: ${member.pothi}`);
+  if (member.room) lines.push(`Room: ${member.room}`);
+  if (member.arrival_date || member.departure_date) {
+    lines.push(`Stay: ${member.arrival_date ?? "-"} to ${member.departure_date ?? "-"}`);
+  }
+  if (member.city || member.venue) lines.push(`City: ${member.city || member.venue}`);
+  if (member.family_code) lines.push(`Reg: ${member.family_code}`);
+  // Fallback for incomplete records — still unique via token
+  if (lines.length === 0) {
+    return JSON.stringify({ event: QR_EVENT_CODE, member_id: member.id, token: member.qr_token });
+  }
+  return lines.join("\n");
 }
 
 export function useQrDataUrl(member: { id: string; qr_token?: string; name?: string; age?: number; gender?: string; mobile?: string | null; event_date?: string | null; arrival_date?: string | null; departure_date?: string | null; family_code?: string; venue?: string; room?: string }) {
@@ -14,7 +43,18 @@ export function useQrDataUrl(member: { id: string; qr_token?: string; name?: str
     QRCode.toDataURL(qrPayload(member), { width: 280, margin: 2, errorCorrectionLevel: "M" })
       .then(setDataUrl)
       .catch(() => setDataUrl(""));
-  }, [member.id, member.qr_token]);
+  }, [
+    member.id,
+    member.qr_token,
+    member.name,
+    member.room,
+    member.arrival_date,
+    member.departure_date,
+    member.family_code,
+    member.venue,
+    member.city,
+    member.pothi,
+  ]);
   return dataUrl;
 }
 
