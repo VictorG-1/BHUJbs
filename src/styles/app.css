@@ -1142,6 +1142,9 @@ h2 {
 }
 .meal-type-picker { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; }
 .meal-type-btn {
+  display: grid;
+  gap: 0.2rem;
+  justify-items: center;
   border: 1px solid #9fb8c4;
   background: #fff;
   color: var(--navy);
@@ -1156,6 +1159,130 @@ h2 {
   background: #0b6e4f;
   color: #fff;
   box-shadow: 0 0 0 2px rgba(11, 110, 79, 0.2);
+}
+.meal-type-count {
+  display: inline-block;
+  min-width: 1.5rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: rgba(9, 47, 85, 0.08);
+  color: inherit;
+}
+.meal-type-btn--active .meal-type-count {
+  background: rgba(255, 255, 255, 0.22);
+}
+.scanner-date-line {
+  margin: 0.35rem 0 0.55rem;
+  font-size: 1.05rem;
+  color: var(--navy);
+}
+.scanner-date-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.65rem;
+  align-items: end;
+}
+.scanner-date-field {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+.scanner-date-field input[type="date"] {
+  width: 100%;
+  min-height: 2.55rem;
+}
+.scan-logs-block {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.85rem;
+  border: 1px solid #c9dde6;
+  border-radius: 10px;
+  background: #f8fbfb;
+}
+.scan-logs-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.scan-logs-summary {
+  margin: 0.2rem 0 0;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+.scan-logs-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.scan-logs-actions .primary,
+.scan-logs-actions .secondary {
+  width: auto;
+  min-width: 0;
+  padding: 0.55rem 0.8rem;
+  font-size: 0.85rem;
+}
+.scan-logs-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.45rem;
+  max-height: 22rem;
+  overflow: auto;
+}
+.scan-log-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.65rem;
+  align-items: center;
+  padding: 0.65rem 0.7rem;
+  border: 1px solid #d7e2e6;
+  border-radius: 8px;
+  background: #fff;
+}
+.scan-log-meal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 4.6rem;
+  padding: 0.28rem 0.45rem;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #fff;
+  background: #0b6e4f;
+}
+.scan-log-row--lunch .scan-log-meal { background: #0b5f8a; }
+.scan-log-row--dinner .scan-log-meal { background: #7a3e12; }
+.scan-log-copy {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+.scan-log-copy strong {
+  color: var(--navy);
+  font-size: 0.95rem;
+}
+.scan-log-copy span {
+  color: var(--muted);
+  font-size: 0.8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.scan-log-time {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--muted);
+  white-space: nowrap;
 }
 .scan-result {
   display: grid;
@@ -2229,4 +2356,14 @@ th {
   .dashboard-summary-grid { grid-template-columns: 1fr; }
   .scanner-hero { align-items: stretch; }
   .scanner-signout { align-self: flex-start; }
+  .scan-log-row {
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      "meal time"
+      "copy copy";
+  }
+  .scan-log-meal { grid-area: meal; }
+  .scan-log-time { grid-area: time; justify-self: end; }
+  .scan-log-copy { grid-area: copy; }
+  .scanner-date-row { grid-template-columns: 1fr; }
 }

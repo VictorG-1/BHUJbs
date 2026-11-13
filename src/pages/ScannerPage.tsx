@@ -1,5 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Html5Qrcode } from "html5-qrcode";
+import {
+  downloadMealScanWorkbook,
+  fetchMealScanLogs,
+  formatIstDisplayDate,
+  formatIstTime,
+  todayIstDate,
+  type MealScanLogRow,
+} from "../lib/api";
 import { supabase } from "../lib/supabase";
 
 type MealType = "breakfast" | "lunch" | "dinner";
@@ -18,6 +26,10 @@ export function ScannerPage() {
   const validatingRef = useRef(false);
 
   const [mealType, setMealType] = useState<MealType>("breakfast");
+  const [logDate, setLogDate] = useState(todayIstDate);
+  const [logs, setLogs] = useState<MealScanLogRow[]>([]);
+  const [logsLoading, setLogsLoading] = useState(false);
+  const [exporting, setExporting] = useState(false);
   const [status, setStatus] = useState("Sign in with an event staff account to scan.");
   const [member, setMember] = useState<{
     name: string;
@@ -36,6 +48,26 @@ export function ScannerPage() {
   const [armed, setArmed] = useState(false);
   const [busy, setBusy] = useState(false);
 
+  const mealCounts = useMemo(() => {
+    const counts = { breakfast: 0, lunch: 0, dinner: 0 };
+    for (const row of logs) {
+      if (row.meal_type in counts) counts[row.meal_type] += 1;
+    }
+    return counts;
+  }, [logs]);
+
+  const loadLogs = useCallback(async (date: string) => {
+    setLogsLoading(true);
+    try {
+      const rows = await fetchMealScanLogs(date);
+      setLogs(rows);
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : "Could not load meal logs.");
+    } finally {
+      setLogsLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
     mealTypeRef.current = mealType;
   }, [mealType]);
@@ -53,6 +85,11 @@ export function ScannerPage() {
       void scannerRef.current?.stop().catch(() => undefined);
     };
   }, []);
+
+  useEffect(() => {
+    if (!sessionReady) return;
+    void loadLogs(logDate);
+  }, [sessionReady, logDate, loadLogs]);
 
   async function validate(decodedText: string) {
     const { data: { session } } = await supabase.auth.getSession();
@@ -89,6 +126,11 @@ export function ScannerPage() {
       } else {
         setOutcome("success");
         setStatus(`${mealTypeRef.current} validated successfully.`);
+        if (logDate === todayIstDate()) {
+          void loadLogs(logDate);
+        } else {
+          setLogDate(todayIstDate());
+        }
       }
     } catch {
       setMember(null);
@@ -170,6 +212,7 @@ export function ScannerPage() {
     setSessionReady(false);
     setMember(null);
     setOutcome(null);
+    setLogs([]);
     setStatus("Signed out. Sign in to open the scanner.");
   }
 
@@ -195,8 +238,24 @@ export function ScannerPage() {
       return;
     }
     setSessionReady(true);
+    setLogDate(todayIstDate());
     setStatus("Login successful. Select Breakfast, Lunch, or Dinner.");
     setCheckingLogin(false);
+  }
+
+  async function exportLogs() {
+    setExporting(true);
+    setStatus(`Preparing EOD export for ${formatIstDisplayDate(logDate)}...`);
+    try {
+      await downloadMealScanWorkbook(logDate, logs);
+      setStatus(
+        `Exported ${logs.length} scans · Breakfast ${mealCounts.breakfast}, Lunch ${mealCounts.lunch}, Dinner ${mealCounts.dinner}.`,
+      );
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : "Export failed.");
+    } finally {
+      setExporting(false);
+    }
   }
 
   if (!sessionReady) {
@@ -231,6 +290,9 @@ export function ScannerPage() {
         <div>
           <p className="eyebrow">Event staff</p>
           <h1>Meal QR scanner</h1>
+          <p className="scanner-date-line">
+            Date (IST): <strong>{formatIstDisplayDate(logDate)}</strong>
+          </p>
           <p>Only Breakfast, Lunch, and Dinner — each card can be validated once per meal per day.</p>
         </div>
         <button className="secondary scanner-signout" type="button" onClick={() => void signOut()}>
@@ -240,6 +302,25 @@ export function ScannerPage() {
 
       <div className="scanner-panel">
         <div className="meal-type-block">
+          <div className="scanner-date-row">
+            <label className="scanner-date-field">
+              Log date
+              <input
+                type="date"
+                value={logDate}
+                max={todayIstDate()}
+                onChange={(event) => setLogDate(event.target.value || todayIstDate())}
+              />
+            </label>
+            <button
+              className="secondary"
+              type="button"
+              disabled={logsLoading || logDate === todayIstDate()}
+              onClick={() => setLogDate(todayIstDate())}
+            >
+              Today
+            </button>
+          </div>
           <p className="meal-type-label">Select meal to validate</p>
           <div className="meal-type-picker" role="group" aria-label="Meal type">
             {MEAL_OPTIONS.map((option) => (
@@ -257,6 +338,7 @@ export function ScannerPage() {
                 }}
               >
                 {option.label}
+                <span className="meal-type-count">{mealCounts[option.id]}</span>
               </button>
             ))}
           </div>
@@ -334,6 +416,69 @@ export function ScannerPage() {
             </div>
           </div>
         ) : null}
+
+        <div className="scan-logs-block">
+          <div className="scan-logs-head">
+            <div>
+              <p className="meal-type-label">Meal logs · {formatIstDisplayDate(logDate)}</p>
+              <p className="scan-logs-summary">
+                Total {logs.length} · B {mealCounts.breakfast} · L {mealCounts.lunch} · D {mealCounts.dinner}
+              </p>
+            </div>
+            <div className="scan-logs-actions">
+              <button
+                className="secondary"
+                type="button"
+                disabled={logsLoading}
+                onClick={() => void loadLogs(logDate)}
+              >
+                {logsLoading ? "Refreshing…" : "Refresh"}
+              </button>
+              <button
+                className="primary"
+                type="button"
+                disabled={exporting || logsLoading}
+                onClick={() => void exportLogs()}
+              >
+                {exporting ? "Exporting…" : "Export EOD (3 sheets)"}
+              </button>
+            </div>
+          </div>
+
+          {logsLoading && !logs.length ? (
+            <p className="form-message">Loading logs…</p>
+          ) : logs.length === 0 ? (
+            <p className="form-message">No scans for this date yet.</p>
+          ) : (
+            <ul className="scan-logs-list">
+              {logs.map((row) => {
+                const card = row.meal_qr_codes;
+                const mealLabel = row.meal_type.charAt(0).toUpperCase() + row.meal_type.slice(1);
+                return (
+                  <li key={row.id} className={`scan-log-row scan-log-row--${row.meal_type}`}>
+                    <span className="scan-log-meal">{mealLabel}</span>
+                    <div className="scan-log-copy">
+                      <strong>{card?.member_name || "Guest"}</strong>
+                      <span>
+                        {[
+                          card?.category,
+                          card?.pothi ? `Pothi ${card.pothi}` : "",
+                          card?.room ? `Room ${card.room}` : "",
+                          card?.city,
+                        ]
+                          .filter(Boolean)
+                          .join(" · ") || "—"}
+                      </span>
+                    </div>
+                    <time className="scan-log-time" dateTime={row.scanned_at}>
+                      {formatIstTime(row.scanned_at)}
+                    </time>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
       </div>
     </section>
   );
