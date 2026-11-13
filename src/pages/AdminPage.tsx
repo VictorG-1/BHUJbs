@@ -8,7 +8,18 @@ import { GuestEditorPanel } from "../components/GuestEditorPanel";
 import { PothiGrid } from "../components/PothiGrid";
 import { qrPayload } from "../components/MemberQrCode";
 import { StatusPill } from "../components/StatusPill";
-import { cancelRegistration, downloadAdminWorkbook, downloadExportData, registerFamily } from "../lib/api";
+import {
+  cancelRegistration,
+  downloadAdminWorkbook,
+  downloadExportData,
+  downloadMealScanWorkbook,
+  fetchMealScanLogs,
+  formatIstDisplayDate,
+  formatIstTime,
+  registerFamily,
+  todayIstDate,
+  type MealScanLogRow,
+} from "../lib/api";
 import { supabase } from "../lib/supabase";
 import type { AdminMemberRow, FamilyMemberInput, Pothi, RoomInventory } from "../lib/types";
 import { shortRoom, shortVenue } from "../lib/venueLabels";
@@ -271,7 +282,10 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [members, setMembers] = useState<AdminMemberRow[]>([]);
-  const [scanLogs, setScanLogs] = useState<Array<{ id: string; scan_type: string; scanned_at: string; members?: { name?: string } | null }>>([]);
+  const [mealScanDate, setMealScanDate] = useState(todayIstDate);
+  const [mealScanLogs, setMealScanLogs] = useState<MealScanLogRow[]>([]);
+  const [mealScansLoading, setMealScansLoading] = useState(false);
+  const [mealScanFilter, setMealScanFilter] = useState<"all" | "breakfast" | "lunch" | "dinner">("all");
   const [pothis, setPothis] = useState<Pothi[]>(fallbackPothis);
   const [roomsInventory, setRoomsInventory] = useState<RoomInventory[]>(fallbackRooms);
   const [masterSearch, setMasterSearch] = useState("");
@@ -313,13 +327,12 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
             .order("room_number")
             .range(from, to)
         ),
-        supabase.from("qr_scans").select("id, scan_type, scanned_at, members(name)").order("scanned_at", { ascending: false }).limit(100)
         ]),
         new Promise<never>((_, reject) => {
           window.setTimeout(() => reject(new Error("Dashboard load timed out. Refresh to try again.")), 25000);
         })
       ]);
-      const [{ data: memberData, error: memberError }, { data: pothiData, error: pothiError }, { data: roomData, error: roomError }, { data: scanData, error: scanError }] = results;
+      const [{ data: memberData, error: memberError }, { data: pothiData, error: pothiError }, { data: roomData, error: roomError }] = results;
 
       const liveRooms = !roomError
         ? ((roomData ?? []) as Array<RoomInventory & { capacity?: number | null }>).map(normalizeRoom)
@@ -328,14 +341,26 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
       setRoomsInventory(liveRooms);
       if (!pothiError) setPothis(((pothiData ?? []) as Pothi[]).filter((pothi) => pothi.id >= 1 && pothi.id <= 74));
       if (!memberError) setMembers(attachRoomsToMembers(normalizeAdminMembers(memberData), liveRooms));
-      if (!scanError) setScanLogs((scanData ?? []) as typeof scanLogs);
-      const errors = [memberError, pothiError, roomError, scanError].filter(Boolean).map((error) => error!.message);
+      const errors = [memberError, pothiError, roomError].filter(Boolean).map((error) => error!.message);
       setStatus(errors.length ? `Dashboard loaded with warnings. ${errors.join(" ")}` : "");
+      void loadMealScans(mealScanDate);
     } catch (error) {
       if (loadRequestId.current !== requestId) return;
       setStatus(error instanceof Error ? `Dashboard refresh failed: ${error.message}` : "Dashboard refresh failed. Existing data is still shown.");
     } finally {
       if (loadRequestId.current === requestId) setLoading(false);
+    }
+  }
+
+  async function loadMealScans(date: string) {
+    setMealScansLoading(true);
+    try {
+      const rows = await fetchMealScanLogs(date);
+      setMealScanLogs(rows);
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : "Could not load scanned QRs.");
+    } finally {
+      setMealScansLoading(false);
     }
   }
 
@@ -399,6 +424,11 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
       return () => window.clearInterval(refreshTimer);
     }
   }, [session]);
+
+  useEffect(() => {
+    if (!session) return;
+    void loadMealScans(mealScanDate);
+  }, [session, mealScanDate]);
 
   function roomDetailsForMember(member: AdminMemberRow) {
     const allocated = member.room_allocations?.find((allocation) => allocation.room_id || allocation.rooms?.room_number);
@@ -536,6 +566,19 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
     occupiedPothis: pothis.filter((pothi) => pothi.family_id).length
   };
 
+  const mealScanCounts = useMemo(() => {
+    const counts = { breakfast: 0, lunch: 0, dinner: 0 };
+    for (const row of mealScanLogs) {
+      if (row.meal_type in counts) counts[row.meal_type] += 1;
+    }
+    return counts;
+  }, [mealScanLogs]);
+
+  const visibleMealScans = useMemo(() => {
+    if (mealScanFilter === "all") return mealScanLogs;
+    return mealScanLogs.filter((row) => row.meal_type === mealScanFilter);
+  }, [mealScanLogs, mealScanFilter]);
+
   const exportMembers = useMemo(
     () =>
       members.map((member) => {
@@ -632,12 +675,18 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
     } catch (error) { setStatus(error instanceof Error ? error.message : "QR download failed."); }
   }
 
-  function downloadScanLog() {
-    const rows = [["guest_name", "scan_type", "scanned_at"], ...scanLogs.map((scan) => [scan.members?.name ?? "", scan.scan_type, scan.scanned_at])];
-    const csv = rows.map((row) => row.map((value) => `"${String(value).replace(/"/g, '""')}"`).join(",")).join("\n");
-    const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
-    const anchor = document.createElement("a"); anchor.href = url; anchor.download = "bhagwat-saptah-qr-scan-log.csv"; anchor.click(); URL.revokeObjectURL(url);
-    setStatus(language === "gu" ? "સ્કેન લોગ ડાઉનલોડ થયો." : "Scan log downloaded.");
+  async function downloadScanLog() {
+    setStatus(language === "gu" ? "સ્કેન લોગ તૈયાર કરી રહ્યા છીએ..." : "Preparing meal scan log...");
+    try {
+      await downloadMealScanWorkbook(mealScanDate, mealScanLogs);
+      setStatus(
+        language === "gu"
+          ? `સ્કેન લોગ ડાઉનલોડ થયો · ${mealScanLogs.length} સ્કેન`
+          : `Scan log downloaded · ${mealScanLogs.length} scans`,
+      );
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : "Scan log download failed.");
+    }
   }
 
   async function cancelReservation(member: AdminMemberRow) {
@@ -743,7 +792,7 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
             <button className="secondary" type="button" onClick={handleWorkbookExport}>{language === "gu" ? "એક્સેલ" : "Excel"}</button>
             <button className="secondary" type="button" onClick={() => void handleExport()}>{t.exportCsv}</button>
             <button className="secondary" type="button" onClick={() => void handleQrBulkDownload()}>{language === "gu" ? "QR" : "QR codes"}</button>
-            <button className="secondary" type="button" onClick={downloadScanLog}>{language === "gu" ? "સ્કેન લોગ" : "Scan log"}</button>
+            <button className="secondary" type="button" onClick={() => void downloadScanLog()}>{language === "gu" ? "સ્કેન લોગ" : "Scan log"}</button>
             <button className="secondary" onClick={() => supabase.auth.signOut()}>{t.signOut}</button>
           </div>
         </div>
@@ -752,10 +801,111 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
           <div><strong>{stats.families}</strong><span>{t.families}</span></div>
           <div><strong>{stats.generalRooms}</strong><span>{t.generalRooms}</span></div>
           <div><strong>{stats.occupiedPothis}/{pothis.length}</strong><span>{t.pothis}</span></div>
+          <div><strong>{mealScanLogs.length}</strong><span>{language === "gu" ? "આજના સ્કેન" : "Scans (date)"}</span></div>
         </div>
       </div>
 
       {status ? <p className="form-message">{status}</p> : null}
+
+      <div className="dashboard-panel dashboard-panel-surface">
+        <div className="panel-header panel-header-inline">
+          <div>
+            <h2>{language === "gu" ? "સ્કેન થયેલા QR" : "Scanned QRs"}</h2>
+            <p>
+              {language === "gu"
+                ? `મીલ સ્કેન લોગ · ${formatIstDisplayDate(mealScanDate)} · કુલ ${mealScanLogs.length}`
+                : `Meal scan log · ${formatIstDisplayDate(mealScanDate)} · total ${mealScanLogs.length}`}
+            </p>
+          </div>
+          <div className="scan-logs-actions">
+            <label className="scanner-date-field">
+              {language === "gu" ? "તારીખ" : "Date"}
+              <input
+                type="date"
+                value={mealScanDate}
+                max={todayIstDate()}
+                onChange={(event) => setMealScanDate(event.target.value || todayIstDate())}
+              />
+            </label>
+            <button
+              className="secondary"
+              type="button"
+              disabled={mealScansLoading || mealScanDate === todayIstDate()}
+              onClick={() => setMealScanDate(todayIstDate())}
+            >
+              {language === "gu" ? "આજે" : "Today"}
+            </button>
+            <button
+              className="secondary"
+              type="button"
+              disabled={mealScansLoading}
+              onClick={() => void loadMealScans(mealScanDate)}
+            >
+              {mealScansLoading ? (language === "gu" ? "લોડ..." : "Loading...") : language === "gu" ? "રિફ્રેશ" : "Refresh"}
+            </button>
+            <button className="primary" type="button" disabled={mealScansLoading} onClick={() => void downloadScanLog()}>
+              {language === "gu" ? "એક્સપોર્ટ" : "Export EOD"}
+            </button>
+          </div>
+        </div>
+
+        <div className="scan-log-filters" role="group" aria-label="Filter scanned QRs">
+          {(
+            [
+              { id: "all" as const, label: language === "gu" ? "બધા" : "All", count: mealScanLogs.length },
+              { id: "breakfast" as const, label: language === "gu" ? "નાસ્તો" : "Breakfast", count: mealScanCounts.breakfast },
+              { id: "lunch" as const, label: language === "gu" ? "બપોરનું" : "Lunch", count: mealScanCounts.lunch },
+              { id: "dinner" as const, label: language === "gu" ? "રાત્રિ" : "Dinner", count: mealScanCounts.dinner },
+            ] as const
+          ).map((option) => (
+            <button
+              key={option.id}
+              type="button"
+              className={mealScanFilter === option.id ? "scan-log-filter scan-log-filter--active" : "scan-log-filter"}
+              onClick={() => setMealScanFilter(option.id)}
+            >
+              {option.label}
+              <span>{option.count}</span>
+            </button>
+          ))}
+        </div>
+
+        {mealScansLoading && !mealScanLogs.length ? (
+          <p className="form-message">{language === "gu" ? "સ્કેન લોડ થઈ રહ્યા છે..." : "Loading scanned QRs…"}</p>
+        ) : mealScanLogs.length === 0 ? (
+          <p className="form-message">{language === "gu" ? "આ તારીખે કોઈ સ્કેન નથી." : "No scans for this date yet."}</p>
+        ) : visibleMealScans.length === 0 ? (
+          <p className="form-message">{language === "gu" ? "આ ફિલ્ટરમાં સ્કેન નથી." : "No scans for this meal filter."}</p>
+        ) : (
+          <ul className="scan-logs-list admin-scan-logs-list">
+            {visibleMealScans.map((row) => {
+              const card = row.meal_qr_codes;
+              const mealLabel = row.meal_type.charAt(0).toUpperCase() + row.meal_type.slice(1);
+              return (
+                <li key={row.id} className={`scan-log-row scan-log-row--${row.meal_type}`}>
+                  <span className="scan-log-meal">{mealLabel}</span>
+                  <div className="scan-log-copy">
+                    <strong>{card?.member_name || "Guest"}</strong>
+                    <span>
+                      {[
+                        card?.category,
+                        card?.pothi ? `Pothi ${card.pothi}` : "",
+                        card?.room ? `Room ${card.room}` : "",
+                        card?.city,
+                      ]
+                        .filter(Boolean)
+                        .join(" · ") || "—"}
+                    </span>
+                  </div>
+                  <time className="scan-log-time" dateTime={row.scanned_at}>
+                    {formatIstTime(row.scanned_at)}
+                  </time>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </div>
 
       <div className="dashboard-panel dashboard-panel-surface pothi-occupancy-panel">
         <div className="panel-header panel-header-inline">

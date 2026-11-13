@@ -1265,14 +1265,55 @@ h2 {
   padding: 0.55rem 0.8rem;
   font-size: 0.85rem;
 }
+.scan-log-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.scan-log-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.2rem;
+  padding: 0.35rem 0.65rem;
+  border: 1px solid #c9dde6;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--navy);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.scan-log-filter span {
+  display: inline-flex;
+  min-width: 1.4rem;
+  justify-content: center;
+  padding: 0.05rem 0.35rem;
+  border-radius: 999px;
+  background: #e8f2f6;
+  font-size: 0.75rem;
+}
+.scan-log-filter--active {
+  border-color: var(--navy);
+  background: var(--navy);
+  color: #fff;
+}
+.scan-log-filter--active span {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+}
 .scan-logs-list {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
   gap: 0.45rem;
-  max-height: 22rem;
+  max-height: min(70vh, 36rem);
   overflow: auto;
+}
+.admin-scan-logs-list {
+  margin-top: 0.85rem;
+  max-height: min(65vh, 42rem);
 }
 .scan-log-row {
   display: grid;

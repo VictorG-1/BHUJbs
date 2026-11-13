@@ -93,7 +93,8 @@ export function ScannerPage() {
   const [logs, setLogs] = useState<MealScanLogRow[]>([]);
   const [logsLoading, setLogsLoading] = useState(false);
   const [exporting, setExporting] = useState(false);
-  const [logsOpen, setLogsOpen] = useState(() => !isMobileDevice());
+  const [logsOpen, setLogsOpen] = useState(true);
+  const [logMealFilter, setLogMealFilter] = useState<"all" | MealType>("all");
   const [status, setStatus] = useState("Sign in with an event staff account to scan.");
   const [member, setMember] = useState<{
     name: string;
@@ -120,6 +121,11 @@ export function ScannerPage() {
     }
     return counts;
   }, [logs]);
+
+  const visibleLogs = useMemo(() => {
+    if (logMealFilter === "all") return logs;
+    return logs.filter((row) => row.meal_type === logMealFilter);
+  }, [logs, logMealFilter]);
 
   const loadLogs = useCallback(async (date: string) => {
     setLogsLoading(true);
@@ -572,14 +578,15 @@ export function ScannerPage() {
         <div className="scan-logs-block">
           <div className="scan-logs-head">
             <div>
-              <p className="meal-type-label">Meal logs · {formatIstDisplayDate(logDate)}</p>
+              <p className="meal-type-label">All scanned QRs · {formatIstDisplayDate(logDate)}</p>
               <p className="scan-logs-summary">
                 Total {logs.length} · B {mealCounts.breakfast} · L {mealCounts.lunch} · D {mealCounts.dinner}
+                {logMealFilter !== "all" ? ` · showing ${visibleLogs.length}` : ""}
               </p>
             </div>
             <div className="scan-logs-actions">
               <button className="secondary" type="button" onClick={() => setLogsOpen((open) => !open)}>
-                {logsOpen ? "Hide logs" : "Show logs"}
+                {logsOpen ? "Hide list" : "Show list"}
               </button>
               <button
                 className="secondary"
@@ -601,39 +608,65 @@ export function ScannerPage() {
           </div>
 
           {logsOpen ? (
-            logsLoading && !logs.length ? (
-              <p className="form-message">Loading logs…</p>
-            ) : logs.length === 0 ? (
-              <p className="form-message">No scans for this date yet.</p>
-            ) : (
-              <ul className="scan-logs-list">
-                {logs.map((row) => {
-                  const card = row.meal_qr_codes;
-                  const mealLabel = row.meal_type.charAt(0).toUpperCase() + row.meal_type.slice(1);
-                  return (
-                    <li key={row.id} className={`scan-log-row scan-log-row--${row.meal_type}`}>
-                      <span className="scan-log-meal">{mealLabel}</span>
-                      <div className="scan-log-copy">
-                        <strong>{card?.member_name || "Guest"}</strong>
-                        <span>
-                          {[
-                            card?.category,
-                            card?.pothi ? `Pothi ${card.pothi}` : "",
-                            card?.room ? `Room ${card.room}` : "",
-                            card?.city,
-                          ]
-                            .filter(Boolean)
-                            .join(" · ") || "—"}
-                        </span>
-                      </div>
-                      <time className="scan-log-time" dateTime={row.scanned_at}>
-                        {formatIstTime(row.scanned_at)}
-                      </time>
-                    </li>
-                  );
-                })}
-              </ul>
-            )
+            <>
+              <div className="scan-log-filters" role="group" aria-label="Filter scanned QRs by meal">
+                {(
+                  [
+                    { id: "all" as const, label: "All", count: logs.length },
+                    { id: "breakfast" as const, label: "Breakfast", count: mealCounts.breakfast },
+                    { id: "lunch" as const, label: "Lunch", count: mealCounts.lunch },
+                    { id: "dinner" as const, label: "Dinner", count: mealCounts.dinner },
+                  ] as const
+                ).map((option) => (
+                  <button
+                    key={option.id}
+                    type="button"
+                    className={
+                      logMealFilter === option.id ? "scan-log-filter scan-log-filter--active" : "scan-log-filter"
+                    }
+                    onClick={() => setLogMealFilter(option.id)}
+                  >
+                    {option.label}
+                    <span>{option.count}</span>
+                  </button>
+                ))}
+              </div>
+              {logsLoading && !logs.length ? (
+                <p className="form-message">Loading scanned QRs…</p>
+              ) : logs.length === 0 ? (
+                <p className="form-message">No scans for this date yet.</p>
+              ) : visibleLogs.length === 0 ? (
+                <p className="form-message">No {logMealFilter} scans for this date.</p>
+              ) : (
+                <ul className="scan-logs-list">
+                  {visibleLogs.map((row) => {
+                    const card = row.meal_qr_codes;
+                    const mealLabel = row.meal_type.charAt(0).toUpperCase() + row.meal_type.slice(1);
+                    return (
+                      <li key={row.id} className={`scan-log-row scan-log-row--${row.meal_type}`}>
+                        <span className="scan-log-meal">{mealLabel}</span>
+                        <div className="scan-log-copy">
+                          <strong>{card?.member_name || "Guest"}</strong>
+                          <span>
+                            {[
+                              card?.category,
+                              card?.pothi ? `Pothi ${card.pothi}` : "",
+                              card?.room ? `Room ${card.room}` : "",
+                              card?.city,
+                            ]
+                              .filter(Boolean)
+                              .join(" · ") || "—"}
+                          </span>
+                        </div>
+                        <time className="scan-log-time" dateTime={row.scanned_at}>
+                          {formatIstTime(row.scanned_at)}
+                        </time>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </>
           ) : null}
         </div>
       </div>
