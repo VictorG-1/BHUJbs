@@ -1087,6 +1087,10 @@ h2 {
   border-radius: 10px;
   background: #111;
 }
+.qr-reader-wrap--live {
+  border-color: #0b6e4f;
+  box-shadow: 0 0 0 3px rgba(11, 110, 79, 0.18);
+}
 .qr-reader-wrap--armed {
   border-color: #0b6e4f;
   box-shadow: 0 0 0 3px rgba(11, 110, 79, 0.25);

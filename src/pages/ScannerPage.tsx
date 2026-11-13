@@ -19,11 +19,14 @@ const MEAL_OPTIONS: { id: MealType; label: string }[] = [
   { id: "dinner", label: "Dinner" },
 ];
 
+/** Pause between auto-scans so the same card is not validated repeatedly. */
+const SCAN_COOLDOWN_MS = 1800;
+
 export function ScannerPage() {
   const scannerRef = useRef<Html5Qrcode | null>(null);
   const mealTypeRef = useRef<MealType>("breakfast");
-  const armScanRef = useRef(false);
   const validatingRef = useRef(false);
+  const cooldownUntilRef = useRef(0);
 
   const [mealType, setMealType] = useState<MealType>("breakfast");
   const [logDate, setLogDate] = useState(todayIstDate);
@@ -45,7 +48,6 @@ export function ScannerPage() {
   const [password, setPassword] = useState("");
   const [checkingLogin, setCheckingLogin] = useState(false);
   const [cameraOn, setCameraOn] = useState(false);
-  const [armed, setArmed] = useState(false);
   const [busy, setBusy] = useState(false);
 
   const mealCounts = useMemo(() => {
@@ -73,10 +75,6 @@ export function ScannerPage() {
   }, [mealType]);
 
   useEffect(() => {
-    armScanRef.current = armed;
-  }, [armed]);
-
-  useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
       setSessionReady(Boolean(data.session));
       if (data.session) setStatus("Select a meal, then start the camera.");
@@ -99,6 +97,8 @@ export function ScannerPage() {
       return;
     }
     setBusy(true);
+    setOutcome(null);
+    setMember(null);
     setStatus(`Validating ${mealTypeRef.current}...`);
     try {
       const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/validate-qr`, {
@@ -138,8 +138,7 @@ export function ScannerPage() {
       setStatus("Validation failed. Try again.");
     } finally {
       setBusy(false);
-      setArmed(false);
-      armScanRef.current = false;
+      cooldownUntilRef.current = Date.now() + SCAN_COOLDOWN_MS;
       validatingRef.current = false;
     }
   }
@@ -148,8 +147,8 @@ export function ScannerPage() {
     if (!sessionReady || busy) return;
     setOutcome(null);
     setMember(null);
-    setArmed(false);
-    armScanRef.current = false;
+    cooldownUntilRef.current = 0;
+    validatingRef.current = false;
 
     if (scannerRef.current) {
       await scannerRef.current.stop().catch(() => undefined);
@@ -169,16 +168,15 @@ export function ScannerPage() {
           disableFlip: false,
         },
         (text) => {
-          if (!armScanRef.current || validatingRef.current) return;
+          if (validatingRef.current) return;
+          if (Date.now() < cooldownUntilRef.current) return;
           validatingRef.current = true;
-          armScanRef.current = false;
-          setArmed(false);
           void validate(text);
         },
         () => undefined,
       );
       setCameraOn(true);
-      setStatus(`Camera on for ${mealType}. Tap Scan QR when ready.`);
+      setStatus(`Camera on for ${mealType}. Point at a QR — scanning automatically.`);
     } catch (error) {
       scannerRef.current = null;
       setCameraOn(false);
@@ -187,22 +185,11 @@ export function ScannerPage() {
     }
   }
 
-  function armScan() {
-    if (!cameraOn || busy || !scannerRef.current) return;
-    setOutcome(null);
-    setMember(null);
-    setArmed(true);
-    armScanRef.current = true;
-    validatingRef.current = false;
-    setStatus("Point at the QR — scanning…");
-  }
-
   async function stopCamera() {
     await scannerRef.current?.stop().catch(() => undefined);
     scannerRef.current = null;
     setCameraOn(false);
-    setArmed(false);
-    armScanRef.current = false;
+    validatingRef.current = false;
     setStatus("Camera stopped. Start camera to scan again.");
   }
 
@@ -332,9 +319,11 @@ export function ScannerPage() {
                   setMealType(option.id);
                   setMember(null);
                   setOutcome(null);
-                  setArmed(false);
-                  armScanRef.current = false;
-                  setStatus(`Selected ${option.label}. Start camera, then tap Scan QR.`);
+                  setStatus(
+                    cameraOn
+                      ? `Selected ${option.label}. Point at a QR — scanning automatically.`
+                      : `Selected ${option.label}. Start camera to auto-scan.`,
+                  );
                 }}
               >
                 {option.label}
@@ -344,7 +333,7 @@ export function ScannerPage() {
           </div>
         </div>
 
-        <div className={`qr-reader-wrap${armed ? " qr-reader-wrap--armed" : ""}`}>
+        <div className={`qr-reader-wrap${cameraOn ? " qr-reader-wrap--live" : ""}`}>
           <div id="qr-reader" className="qr-reader" />
           {outcome === "success" ? (
             <div className="scan-mark scan-mark--ok" aria-hidden>
@@ -364,19 +353,9 @@ export function ScannerPage() {
               Start camera
             </button>
           ) : (
-            <>
-              <button
-                className="primary scan-qr-btn"
-                type="button"
-                disabled={busy || armed}
-                onClick={armScan}
-              >
-                {armed ? "Scanning…" : busy ? "Validating…" : "Scan QR"}
-              </button>
-              <button className="secondary" type="button" disabled={busy} onClick={() => void stopCamera()}>
-                Stop camera
-              </button>
-            </>
+            <button className="secondary" type="button" disabled={busy} onClick={() => void stopCamera()}>
+              {busy ? "Validating…" : "Stop camera"}
+            </button>
           )}
         </div>
 
