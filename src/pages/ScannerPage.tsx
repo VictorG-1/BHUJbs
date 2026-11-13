@@ -22,17 +22,78 @@ const MEAL_OPTIONS: { id: MealType; label: string }[] = [
 /** Pause between auto-scans so the same card is not validated repeatedly. */
 const SCAN_COOLDOWN_MS = 1800;
 
+function isMobileDevice() {
+  if (typeof navigator === "undefined") return false;
+  return /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) || window.innerWidth < 768;
+}
+
+function cameraErrorMessage(error: unknown) {
+  const raw = error instanceof Error ? error.message : String(error ?? "");
+  const lower = raw.toLowerCase();
+  if (typeof window !== "undefined" && !window.isSecureContext) {
+    return "Camera needs HTTPS (or localhost). Open the live site, not a plain http link.";
+  }
+  if (lower.includes("notallowed") || lower.includes("permission") || lower.includes("denied")) {
+    return "Camera permission blocked. Allow Camera in browser settings, then tap Start camera again.";
+  }
+  if (lower.includes("notfound") || lower.includes("requested device not found") || lower.includes("no cameras")) {
+    return "No camera found. Use a phone with a rear camera, or tap Switch camera.";
+  }
+  if (lower.includes("notreadable") || lower.includes("trackstart") || lower.includes("in use")) {
+    return "Camera is busy in another app. Close other camera apps and try again.";
+  }
+  if (lower.includes("overconstrained")) {
+    return "This phone rejected the camera mode. Tap Switch camera or Start camera again.";
+  }
+  return raw || "Could not start camera.";
+}
+
+function pickBackCameraId(cameras: { id: string; label: string }[]) {
+  if (!cameras.length) return null;
+  const ranked = cameras
+    .map((camera, index) => {
+      const label = camera.label.toLowerCase();
+      let score = 0;
+      if (/back|rear|environment|world|posterior|facing back/.test(label)) score += 40;
+      if (/ultra|wide|tele/.test(label)) score += 5;
+      if (/front|user|face|selfie/.test(label)) score -= 40;
+      if (!label) score += index === cameras.length - 1 ? 10 : 0;
+      return { id: camera.id, score };
+    })
+    .sort((a, b) => b.score - a.score);
+  return ranked[0]?.id ?? cameras[0].id;
+}
+
+function scanBoxSize() {
+  const el = document.getElementById("qr-reader");
+  const width = el?.clientWidth || Math.min(window.innerWidth - 32, 420);
+  const side = Math.max(160, Math.min(Math.floor(width * 0.72), isMobileDevice() ? 240 : 280));
+  return { width: side, height: side };
+}
+
+function tuneVideoElement() {
+  const video = document.querySelector("#qr-reader video") as HTMLVideoElement | null;
+  if (!video) return;
+  video.setAttribute("playsinline", "true");
+  video.setAttribute("webkit-playsinline", "true");
+  video.muted = true;
+  void video.play().catch(() => undefined);
+}
+
 export function ScannerPage() {
   const scannerRef = useRef<Html5Qrcode | null>(null);
   const mealTypeRef = useRef<MealType>("breakfast");
   const validatingRef = useRef(false);
   const cooldownUntilRef = useRef(0);
+  const cameraIdsRef = useRef<string[]>([]);
+  const cameraIndexRef = useRef(0);
 
   const [mealType, setMealType] = useState<MealType>("breakfast");
   const [logDate, setLogDate] = useState(todayIstDate);
   const [logs, setLogs] = useState<MealScanLogRow[]>([]);
   const [logsLoading, setLogsLoading] = useState(false);
   const [exporting, setExporting] = useState(false);
+  const [logsOpen, setLogsOpen] = useState(() => !isMobileDevice());
   const [status, setStatus] = useState("Sign in with an event staff account to scan.");
   const [member, setMember] = useState<{
     name: string;
@@ -48,7 +109,9 @@ export function ScannerPage() {
   const [password, setPassword] = useState("");
   const [checkingLogin, setCheckingLogin] = useState(false);
   const [cameraOn, setCameraOn] = useState(false);
+  const [startingCamera, setStartingCamera] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [cameraCount, setCameraCount] = useState(0);
 
   const mealCounts = useMemo(() => {
     const counts = { breakfast: 0, lunch: 0, dinner: 0 };
@@ -90,7 +153,9 @@ export function ScannerPage() {
   }, [sessionReady, logDate, loadLogs]);
 
   async function validate(decodedText: string) {
-    const { data: { session } } = await supabase.auth.getSession();
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
     if (!session) {
       setStatus("Please sign in first.");
       setOutcome("denied");
@@ -143,51 +208,134 @@ export function ScannerPage() {
     }
   }
 
-  async function startCamera() {
-    if (!sessionReady || busy) return;
+  async function stopScannerInstance() {
+    if (!scannerRef.current) return;
+    await scannerRef.current.stop().catch(() => undefined);
+    try {
+      scannerRef.current.clear();
+    } catch {
+      /* ignore */
+    }
+    scannerRef.current = null;
+  }
+
+  async function startWithConfig(scanner: Html5Qrcode, cameraConfig: string | MediaTrackConstraints) {
+    const mobile = isMobileDevice();
+    const config = {
+      fps: mobile ? 12 : 20,
+      qrbox: scanBoxSize,
+      disableFlip: false,
+      ...(mobile ? {} : { aspectRatio: 1.333 }),
+    };
+    await scanner.start(
+      cameraConfig,
+      config,
+      (text) => {
+        if (validatingRef.current) return;
+        if (Date.now() < cooldownUntilRef.current) return;
+        validatingRef.current = true;
+        void validate(text);
+      },
+      () => undefined,
+    );
+    tuneVideoElement();
+  }
+
+  async function startCamera(preferredIndex?: number) {
+    if (!sessionReady || busy || startingCamera) return;
+    setStartingCamera(true);
     setOutcome(null);
     setMember(null);
     cooldownUntilRef.current = 0;
     validatingRef.current = false;
+    setStatus("Opening camera… Allow permission if asked.");
 
-    if (scannerRef.current) {
-      await scannerRef.current.stop().catch(() => undefined);
-      scannerRef.current = null;
-      setCameraOn(false);
-    }
+    await stopScannerInstance();
+    setCameraOn(false);
 
-    const scanner = new Html5Qrcode("qr-reader");
+    const reader = document.getElementById("qr-reader");
+    if (reader) reader.innerHTML = "";
+
+    const scanner = new Html5Qrcode("qr-reader", {
+      verbose: false,
+      useBarCodeDetectorIfSupported: true,
+    });
     scannerRef.current = scanner;
+
     try {
-      await scanner.start(
-        { facingMode: "environment" },
-        {
-          fps: 30,
-          qrbox: { width: 280, height: 280 },
-          aspectRatio: 1,
-          disableFlip: false,
-        },
-        (text) => {
-          if (validatingRef.current) return;
-          if (Date.now() < cooldownUntilRef.current) return;
-          validatingRef.current = true;
-          void validate(text);
-        },
-        () => undefined,
-      );
+      let cameras: { id: string; label: string }[] = [];
+      try {
+        cameras = await Html5Qrcode.getCameras();
+      } catch {
+        cameras = [];
+      }
+
+      cameraIdsRef.current = cameras.map((camera) => camera.id);
+      setCameraCount(cameras.length);
+
+      if (cameras.length) {
+        const backId = pickBackCameraId(cameras);
+        const backIndex = Math.max(
+          0,
+          cameras.findIndex((camera) => camera.id === backId),
+        );
+        const index =
+          typeof preferredIndex === "number"
+            ? ((preferredIndex % cameras.length) + cameras.length) % cameras.length
+            : backIndex;
+        cameraIndexRef.current = index;
+
+        const order = [cameras[index].id, ...cameras.map((camera) => camera.id).filter((_, i) => i !== index)];
+        let started = false;
+        let lastError: unknown;
+        for (const cameraId of order) {
+          try {
+            await startWithConfig(scanner, cameraId);
+            cameraIndexRef.current = cameras.findIndex((camera) => camera.id === cameraId);
+            started = true;
+            break;
+          } catch (error) {
+            lastError = error;
+            await scanner.stop().catch(() => undefined);
+            try {
+              scanner.clear();
+            } catch {
+              /* ignore */
+            }
+          }
+        }
+        if (!started) throw lastError ?? new Error("Could not start camera.");
+      } else {
+        try {
+          await startWithConfig(scanner, { facingMode: "environment" });
+        } catch {
+          await startWithConfig(scanner, { facingMode: "user" });
+        }
+      }
+
       setCameraOn(true);
-      setStatus(`Camera on for ${mealType}. Point at a QR — scanning automatically.`);
+      setStatus(`Camera on for ${mealType}. Hold phone steady — scanning automatically.`);
     } catch (error) {
-      scannerRef.current = null;
+      await stopScannerInstance();
       setCameraOn(false);
-      setStatus(error instanceof Error ? error.message : "Could not start camera.");
+      setStatus(cameraErrorMessage(error));
       setOutcome("denied");
+    } finally {
+      setStartingCamera(false);
     }
   }
 
+  async function switchCamera() {
+    if (!cameraIdsRef.current.length) {
+      await startCamera();
+      return;
+    }
+    const next = (cameraIndexRef.current + 1) % cameraIdsRef.current.length;
+    await startCamera(next);
+  }
+
   async function stopCamera() {
-    await scannerRef.current?.stop().catch(() => undefined);
-    scannerRef.current = null;
+    await stopScannerInstance();
     setCameraOn(false);
     validatingRef.current = false;
     setStatus("Camera stopped. Start camera to scan again.");
@@ -256,7 +404,15 @@ export function ScannerPage() {
         <form className="auth-card auth-form" onSubmit={signIn}>
           <label>
             Email
-            <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} required />
+            <input
+              type="email"
+              inputMode="email"
+              autoCapitalize="none"
+              autoCorrect="off"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              required
+            />
           </label>
           <label>
             Password
@@ -280,7 +436,7 @@ export function ScannerPage() {
           <p className="scanner-date-line">
             Date (IST): <strong>{formatIstDisplayDate(logDate)}</strong>
           </p>
-          <p>Only Breakfast, Lunch, and Dinner — each card can be validated once per meal per day.</p>
+          <p>Use rear camera · hold QR inside the box · keep phone steady.</p>
         </div>
         <button className="secondary scanner-signout" type="button" onClick={() => void signOut()}>
           Sign out
@@ -347,15 +503,32 @@ export function ScannerPage() {
           ) : null}
         </div>
 
-        <div className="scanner-actions">
+        <div className={`scanner-actions${cameraOn && cameraCount > 1 ? " scanner-actions--split" : ""}`}>
           {!cameraOn ? (
-            <button className="primary" type="button" disabled={busy} onClick={() => void startCamera()}>
-              Start camera
+            <button
+              className="primary"
+              type="button"
+              disabled={busy || startingCamera}
+              onClick={() => void startCamera()}
+            >
+              {startingCamera ? "Opening camera…" : "Start camera"}
             </button>
           ) : (
-            <button className="secondary" type="button" disabled={busy} onClick={() => void stopCamera()}>
-              {busy ? "Validating…" : "Stop camera"}
-            </button>
+            <>
+              {cameraCount > 1 ? (
+                <button
+                  className="secondary"
+                  type="button"
+                  disabled={busy || startingCamera}
+                  onClick={() => void switchCamera()}
+                >
+                  Switch camera
+                </button>
+              ) : null}
+              <button className="secondary" type="button" disabled={busy || startingCamera} onClick={() => void stopCamera()}>
+                {busy ? "Validating…" : "Stop camera"}
+              </button>
+            </>
           )}
         </div>
 
@@ -405,6 +578,9 @@ export function ScannerPage() {
               </p>
             </div>
             <div className="scan-logs-actions">
+              <button className="secondary" type="button" onClick={() => setLogsOpen((open) => !open)}>
+                {logsOpen ? "Hide logs" : "Show logs"}
+              </button>
               <button
                 className="secondary"
                 type="button"
@@ -424,39 +600,41 @@ export function ScannerPage() {
             </div>
           </div>
 
-          {logsLoading && !logs.length ? (
-            <p className="form-message">Loading logs…</p>
-          ) : logs.length === 0 ? (
-            <p className="form-message">No scans for this date yet.</p>
-          ) : (
-            <ul className="scan-logs-list">
-              {logs.map((row) => {
-                const card = row.meal_qr_codes;
-                const mealLabel = row.meal_type.charAt(0).toUpperCase() + row.meal_type.slice(1);
-                return (
-                  <li key={row.id} className={`scan-log-row scan-log-row--${row.meal_type}`}>
-                    <span className="scan-log-meal">{mealLabel}</span>
-                    <div className="scan-log-copy">
-                      <strong>{card?.member_name || "Guest"}</strong>
-                      <span>
-                        {[
-                          card?.category,
-                          card?.pothi ? `Pothi ${card.pothi}` : "",
-                          card?.room ? `Room ${card.room}` : "",
-                          card?.city,
-                        ]
-                          .filter(Boolean)
-                          .join(" · ") || "—"}
-                      </span>
-                    </div>
-                    <time className="scan-log-time" dateTime={row.scanned_at}>
-                      {formatIstTime(row.scanned_at)}
-                    </time>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
+          {logsOpen ? (
+            logsLoading && !logs.length ? (
+              <p className="form-message">Loading logs…</p>
+            ) : logs.length === 0 ? (
+              <p className="form-message">No scans for this date yet.</p>
+            ) : (
+              <ul className="scan-logs-list">
+                {logs.map((row) => {
+                  const card = row.meal_qr_codes;
+                  const mealLabel = row.meal_type.charAt(0).toUpperCase() + row.meal_type.slice(1);
+                  return (
+                    <li key={row.id} className={`scan-log-row scan-log-row--${row.meal_type}`}>
+                      <span className="scan-log-meal">{mealLabel}</span>
+                      <div className="scan-log-copy">
+                        <strong>{card?.member_name || "Guest"}</strong>
+                        <span>
+                          {[
+                            card?.category,
+                            card?.pothi ? `Pothi ${card.pothi}` : "",
+                            card?.room ? `Room ${card.room}` : "",
+                            card?.city,
+                          ]
+                            .filter(Boolean)
+                            .join(" · ") || "—"}
+                        </span>
+                      </div>
+                      <time className="scan-log-time" dateTime={row.scanned_at}>
+                        {formatIstTime(row.scanned_at)}
+                      </time>
+                    </li>
+                  );
+                })}
+              </ul>
+            )
+          ) : null}
         </div>
       </div>
     </section>
