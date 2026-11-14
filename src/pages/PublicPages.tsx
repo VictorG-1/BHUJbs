@@ -10,8 +10,10 @@ const eventDates = "13 November 2026 - 20 November 2026";
 
 /** Official YouTube live telecast */
 export const LIVE_STREAM_ID = "Adn3IL_xgD0";
-export const LIVE_STREAM_WATCH_URL = `https://www.youtube.com/live/${LIVE_STREAM_ID}`;
-export const LIVE_STREAM_EMBED_URL = `https://www.youtube.com/embed/${LIVE_STREAM_ID}?autoplay=0&rel=0`;
+export const LIVE_STREAM_WATCH_URL = `https://www.youtube.com/live/${LIVE_STREAM_ID}?si=nEsS66YgLsACpf5a`;
+export const LIVE_STREAM_EMBED_URL =
+  `https://www.youtube.com/embed/${LIVE_STREAM_ID}?rel=0&modestbranding=1&playsinline=1&autoplay=1&mute=1`;
+export const LIVE_STREAM_THUMB_URL = `https://i.ytimg.com/vi/${LIVE_STREAM_ID}/hqdefault.jpg`;
 
 export function LandingPage({ language, onNavigate }: PublicPageProps) {
   const gu = language === "gu";
@@ -28,7 +30,12 @@ export function LandingPage({ language, onNavigate }: PublicPageProps) {
           </p>
           <p className="event-date-badge">{eventDates}</p>
           <div className="button-row">
-            <button className="secondary" onClick={() => onNavigate("itinerary")}>{gu ? "કાર્યક્રમ જુઓ" : "View itinerary"}</button>
+            <button className="primary" type="button" onClick={() => onNavigate("broadcast")}>
+              {gu ? "લાઇવ જુઓ" : "Watch live"}
+            </button>
+            <button className="secondary" type="button" onClick={() => onNavigate("itinerary")}>
+              {gu ? "કાર્યક્રમ જુઓ" : "View itinerary"}
+            </button>
           </div>
         </div>
         <aside className="landing-travel-panel" aria-label={gu ? "ઇવેન્ટની ઝલક" : "Event overview"}>
@@ -101,22 +108,29 @@ export function BroadcastPage({ language, onNavigate }: PublicPageProps) {
       <div className="broadcast-live">
         <div className="broadcast-live-head">
           <span className="live-dot" aria-hidden="true" />
-          <p className="eyebrow">{gu ? "લાઇવ પ્રસારણ" : "Live broadcast"}</p>
+          <p className="eyebrow">{gu ? "લાઇવ પ્રસારણ · અત્યારે ચાલુ" : "Live broadcast · on air"}</p>
         </div>
         <h1>{gu ? "અધિકૃત લાઇવ ટેલિકાસ્ટ" : "Official live telecast"}</h1>
         <p>
           {gu
-            ? "શ્રીમદ સમૂહ ભાગવત સપ્તાહનું અધિકૃત યુટ્યૂબ લાઇવ પ્રસારણ અહીં જુઓ."
-            : "Watch the official YouTube live telecast of Shrimad Samuha Bhagwat Saptah here."}
+            ? "શ્રીમદ સમૂહ ભાગવત સપ્તાહનું અધિકૃત યુટ્યૂબ લાઇવ પ્રસારણ. જો વિડિયો અહીં ન ચાલે તો નીચેનું બટન દબાવો."
+            : "Official YouTube live telecast of Shrimad Samuha Bhagwat Saptah. If the player does not load here, use the button below."}
         </p>
+
+        <a className="broadcast-open-card" href={LIVE_STREAM_WATCH_URL} target="_blank" rel="noreferrer">
+          <img src={LIVE_STREAM_THUMB_URL} alt="" width={480} height={360} />
+          <span>
+            <strong>{gu ? "યુટ્યૂબ પર લાઇવ ખોલો" : "Open live on YouTube"}</strong>
+            <small>youtube.com/live/{LIVE_STREAM_ID}</small>
+          </span>
+        </a>
 
         <div className="broadcast-embed">
           <iframe
             title={gu ? "ભાગવત સપ્તાહ લાઇવ" : "Bhagwat Saptah live"}
             src={LIVE_STREAM_EMBED_URL}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
             allowFullScreen
-            loading="lazy"
             referrerPolicy="strict-origin-when-cross-origin"
           />
         </div>
