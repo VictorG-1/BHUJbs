@@ -8,6 +8,11 @@ type PublicPageProps = {
 
 const eventDates = "13 November 2026 - 20 November 2026";
 
+/** Official YouTube live telecast */
+export const LIVE_STREAM_ID = "Adn3IL_xgD0";
+export const LIVE_STREAM_WATCH_URL = `https://www.youtube.com/live/${LIVE_STREAM_ID}`;
+export const LIVE_STREAM_EMBED_URL = `https://www.youtube.com/embed/${LIVE_STREAM_ID}?autoplay=0&rel=0`;
+
 export function LandingPage({ language, onNavigate }: PublicPageProps) {
   const gu = language === "gu";
   return (
@@ -46,7 +51,7 @@ export function LandingPage({ language, onNavigate }: PublicPageProps) {
         <button className="event-action-card" onClick={() => onNavigate("broadcast")}>
           <span className="action-number">02</span>
           <strong>{gu ? "લાઇવ પ્રસારણ" : "Event live broadcast"}</strong>
-          <small>{gu ? "લાઇવ લિંક ટૂંક સમયમાં ઉપલબ્ધ થશે" : "Live link will be available soon"}</small>
+          <small>{gu ? "હવે યુટ્યૂબ પર લાઇવ જુઓ" : "Watch live now on YouTube"}</small>
         </button>
         <button className="event-action-card" onClick={() => onNavigate("sponsors")}>
           <span className="action-number">03</span>
@@ -93,12 +98,37 @@ export function BroadcastPage({ language, onNavigate }: PublicPageProps) {
   const gu = language === "gu";
   return (
     <section className="public-page content-page">
-      <div className="broadcast-placeholder">
-        <span className="live-dot" />
-        <p className="eyebrow">{gu ? "લાઇવ પ્રસારણ" : "Live broadcast"}</p>
-        <h1>{gu ? "પ્રસારણ લિંક ટૂંક સમયમાં" : "Broadcast link coming soon"}</h1>
-        <p>{gu ? "ઇવેન્ટ શરૂ થાય તે પહેલાં અહીં અધિકૃત લાઇવ સ્ટ્રીમ લિંક પ્રકાશિત કરવામાં આવશે." : "The official live stream link will be published here before the event begins."}</p>
-        <button className="secondary" onClick={() => onNavigate("landing")}>{gu ? "મુખ્ય પેજ" : "Back to home"}</button>
+      <div className="broadcast-live">
+        <div className="broadcast-live-head">
+          <span className="live-dot" aria-hidden="true" />
+          <p className="eyebrow">{gu ? "લાઇવ પ્રસારણ" : "Live broadcast"}</p>
+        </div>
+        <h1>{gu ? "અધિકૃત લાઇવ ટેલિકાસ્ટ" : "Official live telecast"}</h1>
+        <p>
+          {gu
+            ? "શ્રીમદ સમૂહ ભાગવત સપ્તાહનું અધિકૃત યુટ્યૂબ લાઇવ પ્રસારણ અહીં જુઓ."
+            : "Watch the official YouTube live telecast of Shrimad Samuha Bhagwat Saptah here."}
+        </p>
+
+        <div className="broadcast-embed">
+          <iframe
+            title={gu ? "ભાગવત સપ્તાહ લાઇવ" : "Bhagwat Saptah live"}
+            src={LIVE_STREAM_EMBED_URL}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="strict-origin-when-cross-origin"
+          />
+        </div>
+
+        <div className="button-row broadcast-actions">
+          <a className="primary" href={LIVE_STREAM_WATCH_URL} target="_blank" rel="noreferrer">
+            {gu ? "યુટ્યૂબ પર ખોલો" : "Open on YouTube"}
+          </a>
+          <button className="secondary" type="button" onClick={() => onNavigate("landing")}>
+            {gu ? "મુખ્ય પેજ" : "Back to home"}
+          </button>
+        </div>
       </div>
     </section>
   );

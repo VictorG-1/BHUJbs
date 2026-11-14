@@ -428,6 +428,10 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
   useEffect(() => {
     if (!session) return;
     void loadMealScans(mealScanDate);
+    const timer = window.setInterval(() => {
+      if (document.visibilityState === "visible") void loadMealScans(mealScanDate);
+    }, 20_000);
+    return () => window.clearInterval(timer);
   }, [session, mealScanDate]);
 
   function roomDetailsForMember(member: AdminMemberRow) {
@@ -799,22 +803,25 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
         <div className="metric-row admin-metric-row">
           <div><strong>{stats.members}</strong><span>{t.members}</span></div>
           <div><strong>{stats.families}</strong><span>{t.families}</span></div>
-          <div><strong>{stats.generalRooms}</strong><span>{t.generalRooms}</span></div>
           <div><strong>{stats.occupiedPothis}/{pothis.length}</strong><span>{t.pothis}</span></div>
-          <div><strong>{mealScanLogs.length}</strong><span>{language === "gu" ? "આજના સ્કેન" : "Scans (date)"}</span></div>
+          <div><strong>{mealScanLogs.length}</strong><span>{language === "gu" ? "સ્કેન કુલ" : "Scans total"}</span></div>
+          <div><strong>{mealScanCounts.breakfast}</strong><span>{language === "gu" ? "નાસ્તો" : "Breakfast"}</span></div>
+          <div><strong>{mealScanCounts.lunch}</strong><span>{language === "gu" ? "બપોરનું" : "Lunch"}</span></div>
+          <div><strong>{mealScanCounts.dinner}</strong><span>{language === "gu" ? "રાત્રિ" : "Dinner"}</span></div>
         </div>
       </div>
 
       {status ? <p className="form-message">{status}</p> : null}
 
-      <div className="dashboard-panel dashboard-panel-surface">
+      <div className="dashboard-panel dashboard-panel-surface admin-scan-logs-panel" id="admin-scan-logs">
         <div className="panel-header panel-header-inline">
           <div>
-            <h2>{language === "gu" ? "સ્કેન થયેલા QR" : "Scanned QRs"}</h2>
+            <p className="eyebrow">{language === "gu" ? "મુખ્ય ડેશબોર્ડ" : "Main dashboard"}</p>
+            <h2>{language === "gu" ? "સ્કેન લોગ" : "Scan logs"}</h2>
             <p>
               {language === "gu"
-                ? `મીલ સ્કેન લોગ · ${formatIstDisplayDate(mealScanDate)} · કુલ ${mealScanLogs.length}`
-                : `Meal scan log · ${formatIstDisplayDate(mealScanDate)} · total ${mealScanLogs.length}`}
+                ? `${formatIstDisplayDate(mealScanDate)} · કુલ ${mealScanLogs.length} · દર 20 સેકન્ડે અપડેટ`
+                : `${formatIstDisplayDate(mealScanDate)} · ${mealScanLogs.length} scans · refreshes every 20s`}
             </p>
           </div>
           <div className="scan-logs-actions">
@@ -849,7 +856,7 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
           </div>
         </div>
 
-        <div className="scan-log-filters" role="group" aria-label="Filter scanned QRs">
+        <div className="scan-log-filters" role="group" aria-label="Filter scan logs">
           {(
             [
               { id: "all" as const, label: language === "gu" ? "બધા" : "All", count: mealScanLogs.length },
@@ -871,39 +878,50 @@ function AdminPageContent({ language = "en" }: AdminPageProps) {
         </div>
 
         {mealScansLoading && !mealScanLogs.length ? (
-          <p className="form-message">{language === "gu" ? "સ્કેન લોડ થઈ રહ્યા છે..." : "Loading scanned QRs…"}</p>
+          <p className="form-message">{language === "gu" ? "સ્કેન લોગ લોડ થઈ રહ્યા છે..." : "Loading scan logs…"}</p>
         ) : mealScanLogs.length === 0 ? (
           <p className="form-message">{language === "gu" ? "આ તારીખે કોઈ સ્કેન નથી." : "No scans for this date yet."}</p>
         ) : visibleMealScans.length === 0 ? (
           <p className="form-message">{language === "gu" ? "આ ફિલ્ટરમાં સ્કેન નથી." : "No scans for this meal filter."}</p>
         ) : (
-          <ul className="scan-logs-list admin-scan-logs-list">
-            {visibleMealScans.map((row) => {
-              const card = row.meal_qr_codes;
-              const mealLabel = row.meal_type.charAt(0).toUpperCase() + row.meal_type.slice(1);
-              return (
-                <li key={row.id} className={`scan-log-row scan-log-row--${row.meal_type}`}>
-                  <span className="scan-log-meal">{mealLabel}</span>
-                  <div className="scan-log-copy">
-                    <strong>{card?.member_name || "Guest"}</strong>
-                    <span>
-                      {[
-                        card?.category,
-                        card?.pothi ? `Pothi ${card.pothi}` : "",
-                        card?.room ? `Room ${card.room}` : "",
-                        card?.city,
-                      ]
-                        .filter(Boolean)
-                        .join(" · ") || "—"}
-                    </span>
-                  </div>
-                  <time className="scan-log-time" dateTime={row.scanned_at}>
-                    {formatIstTime(row.scanned_at)}
-                  </time>
-                </li>
-              );
-            })}
-          </ul>
+          <div className="admin-scan-table-wrap">
+            <table className="admin-scan-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>{language === "gu" ? "સમય" : "Time"}</th>
+                  <th>{language === "gu" ? "મીલ" : "Meal"}</th>
+                  <th>{language === "gu" ? "નામ" : "Name"}</th>
+                  <th>{language === "gu" ? "રૂમ" : "Room"}</th>
+                  <th>{language === "gu" ? "પોથી" : "Pothi"}</th>
+                  <th>{language === "gu" ? "શહેર" : "City"}</th>
+                  <th>{language === "gu" ? "પ્રકાર" : "Category"}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {visibleMealScans.map((row, index) => {
+                  const card = row.meal_qr_codes;
+                  const mealLabel = row.meal_type.charAt(0).toUpperCase() + row.meal_type.slice(1);
+                  return (
+                    <tr key={row.id} className={`admin-scan-tr admin-scan-tr--${row.meal_type}`}>
+                      <td>{index + 1}</td>
+                      <td>
+                        <time dateTime={row.scanned_at}>{formatIstTime(row.scanned_at)}</time>
+                      </td>
+                      <td>
+                        <span className="scan-log-meal scan-log-meal--table">{mealLabel}</span>
+                      </td>
+                      <td>{card?.member_name || "—"}</td>
+                      <td>{card?.room || "—"}</td>
+                      <td>{card?.pothi || "—"}</td>
+                      <td>{card?.city || "—"}</td>
+                      <td>{card?.category || "—"}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
 
